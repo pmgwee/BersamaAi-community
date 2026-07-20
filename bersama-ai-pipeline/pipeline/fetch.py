@@ -1,18 +1,31 @@
 """Fetch video metadata + transcript.
 
-Transcript strategy (corrected after validation — youtube-transcript-api gets
-IP-banned on cloud/GH Actions IPs, so it must NOT be primary):
+HARDENED FOR GITHUB ACTIONS (mid-2026): YouTube bot-blocks Microsoft Azure
+datacenter IPs (yt-dlp #12475, #15865, #16229). There is NO fully-reliable
+code-only fix — even cookies are now IP-bound (#16229) and PO-token providers
+need a Node/Deno server and don't unblock datacenter IPs anyway (#11053). The
+strategy below is the best code-only shot: try hard, degrade gracefully.
 
-  1. yt-dlp info -> pick the best caption track URL (preferred language first,
-     manual preferred over auto for the SAME language). Fetch + parse.  <- primary
-  2. youtube-transcript-api.get_transcript(video_id)  <- fallback (works locally)
+Transcript strategy:
+  1. yt-dlp info across several `player_client` orderings with skip_download=True
+     (we only want caption-track URLs, never the heavily-gated format URLs).
+     YouTube rotates which clients are LOGIN_REQUIRED ~weekly (#15751), so we try
+     a handful and take the first that survives.  <- primary
+  2. youtube-transcript-api .fetch(video_id)  <- fallback (works locally; usually
+     RequestBlocked on cloud IPs, but cheap to try)
   3. None  -> caller skips the video (Whisper fallback is v1.1)
+
+Metadata safety net: if EVERY player_client returns LOGIN_REQUIRED, fall back to
+YouTube oEmbed (no key; the one call reliably reachable from datacenter IPs) so
+the pipeline logs a clean, titled skip instead of a hard fetch error.
 
 Returns (transcript_text, source_lang_hint) where source_lang_hint is "en"/"zh"/"other".
 """
 from __future__ import annotations
 
+import os
 import re
+import time
 from typing import Optional
 
 import requests
@@ -24,6 +37,18 @@ LANG_ORDER = ["en", "en-US", "en-Origin", "en-GB", "zh-Hans", "zh-CN", "zh", "zh
 # Format preference within a language: json3 carries timing + clean text; vtt is the fallback.
 FMT_ORDER = ["json3", "vtt", "srv1"]
 
+# Mid-2026 best-hope YouTube player_client orderings. YouTube rotates which
+# clients are LOGIN_REQUIRED roughly weekly (yt-dlp #15751, #15865), so we try
+# several and take the first that returns real metadata. None is guaranteed.
+PLAYER_CLIENT_ORDERINGS = [
+    None,                                              # yt-dlp's built-in default client set (best on residential IPs)
+    ["default", "-web"],                               # drop the PO-token-gated web client (most-cited CI fix)
+    ["ios", "mediaconnect", "web_safari"],
+    ["default", "-tv", "web_safari", "web_embedded"],  # r/youtubedl "some tv client https formats" fix
+    ["android_vr", "web_safari"],
+    ["mediaconnect"],                                  # sparse 2026 reports; may need nightly yt-dlp
+]
+
 
 class FetchError(Exception):
     pass
@@ -31,23 +56,120 @@ class FetchError(Exception):
 
 # ── metadata + playlist ──────────────────────────────────────────────────────
 
-def _ydl_opts() -> dict:
-    return {
+def _ydl_opts(*, player_client=None, playlist: bool = False) -> dict:
+    opts: dict = {
         "quiet": True,
         "no_warnings": True,
-        "skip_download": True,
-        "noplaylist": True,  # a single video URL must not expand to its whole playlist
-        "extract_flat": False,
+        "skip_download": True,        # NEVER request format/streaming URLs (most PO-token-gated)
+        "writesubtitles": True,
+        "writeautomaticsub": True,
+        "subtitleslangs": ["all"],
+        "socket_timeout": 30,
+        "retries": 5,
+    }
+    if playlist:
+        opts["extract_flat"] = "in_playlist"
+    else:
+        opts["noplaylist"] = True
+        opts["extract_flat"] = False
+    if player_client:
+        opts["extractor_args"] = {"youtube": {"player_client": player_client}}
+    return opts
+
+
+def _rotate_extract(url: str, *, playlist: bool = False) -> dict:
+    """yt-dlp extract_info across PLAYER_CLIENT_ORDERINGS.
+
+    Best code-only shot at evading YouTube's datacenter-IP bot-block. Returns
+    the first info dict that has a real title (video) or an entries list
+    (playlist), or raises FetchError if every client failed.
+    """
+    last_err: Optional[Exception] = None
+    for i, client in enumerate(PLAYER_CLIENT_ORDERINGS):
+        info = None
+        try:
+            with yt_dlp.YoutubeDL(_ydl_opts(player_client=client, playlist=playlist)) as ydl:
+                info = ydl.extract_info(url, download=False)
+        except yt_dlp.utils.DownloadError as e:
+            last_err = e
+            print(f"[fetch] player_client={client} failed: {str(e)[:160]}")
+        # usable = real title (video) or an entries list (playlist); a LOGIN_REQUIRED
+        # block makes yt-dlp fall back to initial_data with no title -> keep trying.
+        usable = bool(info) and (("entries" in info) if playlist else info.get("title"))
+        if usable:
+            return info
+        if i < len(PLAYER_CLIENT_ORDERINGS) - 1:
+            time.sleep(min(2 ** i, 8))   # short backoff; helps when the block is transient
+    raise FetchError(
+        f"yt-dlp could not extract {url} on any player_client "
+        f"(YouTube likely bot-blocked this datacenter IP; last error: {last_err})"
+    )
+
+
+def _video_id_from_url(url: str) -> str:
+    m = re.search(r"(?:v=|youtu\.be/|shorts/|embed/|live/)([A-Za-z0-9_-]{6,})", url or "")
+    return m.group(1) if m else ""
+
+
+def _oembed_lookup(url: str) -> dict:
+    """YouTube oEmbed (no API key; reliably reachable from datacenter IPs).
+
+    Used as a metadata safety net when yt-dlp is fully blocked — gives
+    title/author so the pipeline can log a clean, titled skip. Returns {} on any failure.
+    """
+    try:
+        r = requests.get(
+            "https://www.youtube.com/oembed",
+            params={"url": url, "format": "json"},
+            timeout=10,
+        )
+        if r.status_code == 200:
+            return r.json() or {}
+    except requests.RequestException as e:  # noqa: BLE001
+        print(f"[fetch] oEmbed lookup failed: {e}")
+    return {}
+
+
+def _oembed_stub(url: str) -> dict:
+    """Minimal info dict from oEmbed when yt-dlp is fully blocked.
+
+    Shaped so downstream (get_transcript, _pick_track, the skip logger) won't
+    crash: empty caption stores => _pick_track returns None => the run routes to
+    SKIPPED_NOCAPTION with the real title instead of FETCH_FAILED.
+    """
+    data = _oembed_lookup(url)
+    if not data:
+        return {}
+    author = data.get("author_name") or ""
+    return {
+        "id": _video_id_from_url(url),
+        "title": data.get("title") or "(unknown)",
+        "uploader": author,
+        "channel": author,
+        "webpage_url": url,
+        "url": url,
+        "duration": None,
+        "subtitles": {},
+        "automatic_captions": {},
+        "_oembed_only": True,
     }
 
 
 def get_video_info(url: str) -> dict:
-    """Return yt-dlp info dict for a single video (raises FetchError on failure)."""
+    """Return yt-dlp info dict for a single video (raises FetchError on failure).
+
+    Tries several player_client orderings to evade YouTube's datacenter-IP
+    bot-block; if all fail, falls back to an oEmbed-only stub so downstream can
+    still log a titled skip instead of a hard fetch error.
+    """
     try:
-        with yt_dlp.YoutubeDL(_ydl_opts()) as ydl:
-            return ydl.extract_info(url, download=False)
-    except yt_dlp.utils.DownloadError as e:
-        raise FetchError(f"yt-dlp could not extract {url}: {e}") from e
+        return _rotate_extract(url)
+    except FetchError:
+        stub = _oembed_stub(url)
+        if stub:
+            print(f"[fetch] yt-dlp fully blocked on all clients; using oEmbed-only metadata for {url}")
+            return stub
+        raise
 
 
 def list_playlist_entries(playlist_url: str) -> list[dict]:
@@ -55,16 +177,9 @@ def list_playlist_entries(playlist_url: str) -> list[dict]:
 
     Uses --flat-playlist so we don't fetch each video's full metadata here.
     """
-    opts = {
-        "quiet": True,
-        "no_warnings": True,
-        "extract_flat": "in_playlist",
-        "skip_download": True,
-    }
     try:
-        with yt_dlp.YoutubeDL(opts) as ydl:
-            res = ydl.extract_info(playlist_url, download=False)
-    except yt_dlp.utils.DownloadError as e:
+        res = _rotate_extract(playlist_url, playlist=True)
+    except FetchError as e:
         raise FetchError(f"could not list playlist {playlist_url}: {e}") from e
 
     entries = []
@@ -172,7 +287,8 @@ def get_transcript(info: dict) -> tuple[Optional[str], str]:
     """Return (transcript_text, source_lang_hint) or (None, hint) if unavailable.
 
     Primary: yt-dlp caption track URL -> fetch + parse.
-    Fallback: youtube-transcript-api (works locally, often blocked on cloud IPs).
+    Fallback: youtube-transcript-api instance .fetch() (works locally; on cloud IPs
+    usually raises RequestBlocked — broad-except logs it and we fall through).
 
     NOTE: yt-dlp caption URLs are signed and expire (minutes–hours). We fetch the
     caption immediately after extract_info (sub-second gap), so staleness is a
@@ -201,17 +317,16 @@ def get_transcript(info: dict) -> tuple[Optional[str], str]:
     except Exception as e:  # noqa: BLE001 — caption fetch is best-effort
         print(f"[fetch] yt-dlp caption path failed: {e}; trying fallback")
 
-    # --- fallback: youtube-transcript-api (by video id) ---
-    # Broad except: we don't import youtube_transcript_api's private error classes
-    # (they moved between minor versions); any failure here means "no transcript
-    # via this path" and we fall through to a skip. Includes RequestBlocked (cloud IPs).
+    # --- fallback: youtube-transcript-api (instance API, >= 1.0) ---
+    # Broad except: on older library versions .fetch doesn't exist (AttributeError);
+    # on cloud IPs it raises RequestBlocked/IpBlocked. Either way, fall through.
     vid = info.get("id")
-    if vid:
+    if vid and not info.get("_oembed_only"):
         try:
-            chunks = YouTubeTranscriptApi.get_transcript(
+            fetched = YouTubeTranscriptApi().fetch(
                 vid, languages=["en", "en-US", "zh-Hans", "zh-CN", "zh"]
             )
-            text = _clean(" ".join(c.get("text", "") for c in chunks))
+            text = _clean(" ".join(snippet.text for snippet in fetched))
             if text:
                 lang_hint = "zh" if re.search(r"[一-鿿]", text) else "en"
                 return text, lang_hint

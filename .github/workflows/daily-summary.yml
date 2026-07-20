@@ -37,11 +37,16 @@ jobs:
           cache: pip
           cache-dependency-path: bersama-ai-pipeline/requirements.txt
 
+      - name: Setup Deno (yt-dlp JS-challenge solver)
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt
-          python -m pip install -U yt-dlp   # always-latest extractor on run day
+          python -m pip install -U --pre yt-dlp   # freshest client keys; extractor fixes land nightly
 
       - name: Run scheduled scan
         env:
