@@ -65,14 +65,19 @@ Open `.env` and set:
 ## Step 4 — Test it locally
 
 ```bash
-python bot.py
+python -u bot.py
 ```
+
+`-u` unbuffers stdout. The bot also forces UTF-8 on its own stdout/stderr (so emoji role
+names never crash a Windows cp1252 console) and writes timestamped log lines.
 
 You should see:
 ```
-[BersamaAi] Logged in as BersamaAi#....
-[BersamaAi] Reaction-role menus: ['1528687776801886249']
-[BersamaAi] AI (GLM via Z.ai): ON   (or OFF)
+[2026-07-21 01:47:53] [INFO    ] discord.client: logging in using static token
+[2026-07-21 01:47:57] [INFO    ] bersama: Logged in as BersamaAi#2383 (1528479915635245258)
+[2026-07-21 01:47:57] [INFO    ] bersama: Reaction-role menus: ['1528687776801886249']
+[2026-07-21 01:47:57] [INFO    ] bersama: AI (GLM via Z.ai): ON (glm-5.2)
+[2026-07-21 01:47:58] [INFO    ] bersama: Synced 3 slash commands.
 ```
 
 Try it in the server: react in **#get-roles**, type `/rank`, post `!rules`, or `@BersamaAi hello`.
@@ -86,12 +91,20 @@ The bot **must stay running** or those five features stop. Pick ONE option.
 Use **NSSM** to run it as a Windows service that restarts on crash/reboot:
 ```powershell
 # Install NSSM: https://nssm.cc/download
-nssm install BersamaAiBot "C:\path\to\.venv\Scripts\python.exe" "C:\path\to\bersama-bot\bot.py"
+nssm install BersamaAiBot "C:\path\to\.venv\Scripts\python.exe" "-u C:\path\to\bersama-bot\bot.py"
 nssm set BersamaAiBot AppDirectory "C:\path\to\bersama-bot"
 nssm set BersamaAiBot AppEnvironmentExtra "DISCORD_TOKEN=..." "ZAI_API_KEY=..."
+# Capture timestamped logs to a rotating file:
+nssm set BersamaAiBot AppStdout "C:\path\to\bersama-bot\bersama.log"
+nssm set BersamaAiBot AppStderr "C:\path\to\bersama-bot\bersama.log"
+nssm set BersamaAiBot AppRotateFiles 1
+nssm set BersamaAiBot AppRotateOnline 1
+nssm set BersamaAiBot AppRotateBytes 10485760
 nssm start BersamaAiBot
 ```
-Downside: the PC must never sleep / shut down.
+Downside: the PC must never sleep / shut down. The bot also force-restarts itself
+(`os._exit(1)`) if the Discord Gateway is unreachable for 10+ minutes, and NSSM's
+default restart-on-failure relaunches it with a clean connection.
 
 ### Option B — Raspberry Pi (one-time ~RM 200–400, ~RM 1–2/month power)
 A Pi 3B or 4 plugged in at home, running 24/7:
@@ -150,6 +163,37 @@ For anything native AutoMod can't express, ask Claude (via the MCP) to handle it
 - **AI cost:** the bot uses **GLM-5.2 via Z.ai** (set `ZAI_API_KEY`). The Z.ai GLM Coding Plan is ~US$3/month — far cheaper than Anthropic. The bot also bounds usage four ways — a **30 s per-user cooldown** (`AI_COOLDOWN`), a **server-wide cap of 20 calls/min** (`AI_GLOBAL_MAX`), at most **3 concurrent calls** (`AI_CONCURRENCY`), **input truncated to 1 500 chars** (`AI_INPUT_MAX`), plus an 800-token reply cap. Tune any of these constants at the top of `bot.py`. To disable AI entirely, clear `ZAI_API_KEY`.
 - **Token safety:** `DISCORD_TOKEN` is a full-admin credential. Never commit `.env` to git, never paste it in public. This folder's `.gitignore` already excludes it.
 - **Shared token:** because the bot and the MCP share one token, if you ever **reset/regenerate** the token in the Developer Portal, update it in **both** the MCP `.env` and this bot's `.env`.
+
+## Hardening (pre-launch security / ops pass)
+
+Before going 24/7 the bot was put through an adversarial code review; these are now
+baked in (see `bot.py`):
+
+- **Single-guild allowlist.** `on_message`, a global `@bot.check`, and an `on_guild_join`
+  auto-leave ensure the bot only ever serves *this* guild. Without it, anyone who copies
+  the bot's client ID could add it to a private server and drain the Z.ai budget / farm the
+  leaderboard. (Still: set the bot to **Private** in the Developer Portal for defense-in-depth.)
+- **No pings from AI replies.** `allowed_mentions=AllowedMentions.none()` + a mention-stripping
+  regex mean prompt-injected GLM output can never mass-ping roles or `@everyone`.
+- **Z.ai call timeout (30 s).** A hung provider request can no longer pin one of the 3 AI
+  slots for up to 30 minutes; it times out, refunds its global-quota slot, and replies gracefully.
+- **Fair cooldowns.** The per-user 30 s lockout and the global 20/min slot are only consumed
+  by *real* attempts — empty pings, "AI disabled", and "busy" replies no longer penalise the user.
+- **Loud permission errors.** `Forbidden` (bot role too low) is logged as a `PERMISSIONS:`
+  banner in the auto-role / level-up / reaction paths, not buried as a generic HTTP error.
+- **Timestamped, UTF-8, crash-safe logging.** All diagnostics go through `logging` (per-line
+  flush, timestamps); stdout is forced to UTF-8 so emoji role/user names never crash the
+  Windows console.
+- **Config audit on boot.** Every channel/role/reaction/level ID is checked against the live
+  guild at startup — stale config warns loudly instead of failing silently.
+- **Gateway heartbeat.** If the Gateway is unreachable for two consecutive 5-min checks, the
+  process exits so the service manager restarts it.
+- **Inputs validated at boot.** Missing `DISCORD_TOKEN` or `ai_system_prompt` fail fast with a
+  clear message instead of a mid-run `KeyError`.
+
+> Not applied (deliberate): a 10-minute membership-age gate before the AI can be used
+> (anti-alt). It's a one-line add in `handle_ai` if abuse appears; skipped for now so first-time
+> members can try the AI immediately, and because the global cap already bounds the cost.
 
 ## Troubleshooting
 

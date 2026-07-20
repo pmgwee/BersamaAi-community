@@ -19,9 +19,12 @@ Privileged intents REQUIRED in the Developer Portal
 """
 import asyncio
 import json
+import logging
 import os
 import random
+import re
 import sqlite3
+import sys
 import time
 from collections import deque
 from contextlib import contextmanager
@@ -29,8 +32,10 @@ from pathlib import Path
 
 import discord
 from discord import app_commands
-from discord.ext import commands
+from discord.ext import commands, tasks
 from dotenv import load_dotenv
+
+log = logging.getLogger("bersama")
 
 # OpenAI SDK is optional — the bot runs without it (AI just disabled).
 # Z.ai exposes an OpenAI-compatible endpoint, so we drive it with this SDK.
@@ -47,7 +52,7 @@ BASE = Path(__file__).resolve().parent
 load_dotenv(BASE / ".env")          # auto-load .env when present (local runs)
 CONFIG = json.loads((BASE / "config.json").read_text(encoding="utf-8"))
 
-TOKEN = os.environ["DISCORD_TOKEN"]            # same token as the MCP jar
+TOKEN = os.environ.get("DISCORD_TOKEN")        # same token as the MCP jar; validated in main()
 ZAI_API_KEY = os.environ.get("ZAI_API_KEY", "")
 ZAI_BASE_URL = os.environ.get("ZAI_BASE_URL", "https://api.z.ai/api/coding/paas/v4")
 GLM_MODEL = os.environ.get("GLM_MODEL", "glm-5.2")
@@ -55,10 +60,17 @@ GLM_MODEL = os.environ.get("GLM_MODEL", "glm-5.2")
 GUILD_ID = int(CONFIG["guild_id"])
 CHANNELS = {k: int(v) for k, v in CONFIG["channels"].items()}
 ROLES = {k: int(v) for k, v in CONFIG["roles"].items()}
-# Normalize emoji keys once (strip variation selector U+FE0F) so client-side
-# differences never break reaction-role matching.
+
+
+def _norm_emoji(emoji: str) -> str:
+    """Strip U+FE0F variation selectors ANYWHERE (trailing or inside ZWJ / keycap /
+    flag sequences) so client-side rendering differences never break reaction matching."""
+    return emoji.replace("️", "")
+
+
+# Normalize emoji keys once so client-side rendering differences never break matching.
 REACTION_ROLES = {
-    msg_id: {emo.rstrip("️"): role_id for emo, role_id in mapping.items()}
+    msg_id: {_norm_emoji(emo): int(role_id) for emo, role_id in mapping.items()}
     for msg_id, mapping in CONFIG["reaction_roles"].items()
 }
 LEVEL_REWARDS = {int(k): int(v) for k, v in CONFIG["level_rewards"].items()}
@@ -71,6 +83,13 @@ AI_INPUT_MAX = 1500       # truncate user input to bound cost
 AI_GLOBAL_MAX = 20        # max AI calls per rolling window (server-wide)
 AI_GLOBAL_WINDOW = 60     # ...seconds
 AI_CONCURRENCY = 3        # max simultaneous in-flight AI calls
+AI_TIMEOUT = 30           # seconds to wait for one Z.ai response (bounds hung calls)
+
+# Replies never need to ping anyone — suppress all mentions on every AI send so
+# prompt-injected GLM output can't mass-ping roles / @everyone.
+AI_ALLOWED = discord.AllowedMentions.none()
+# Belt-and-suspenders: strip mention syntax from GLM output before sending.
+_MENTION_RE = re.compile(r"<@!?\d+>|<@&\d+>|@(?:everyone|here)\b")
 
 DB_PATH = BASE / "bersama.db"
 
@@ -83,7 +102,6 @@ def db():
     conn = sqlite3.connect(DB_PATH, timeout=10)
     conn.row_factory = sqlite3.Row
     try:
-        conn.execute("PRAGMA journal_mode=WAL")
         yield conn
         conn.commit()
     finally:
@@ -92,6 +110,8 @@ def db():
 
 def init_db():
     with db() as c:
+        c.execute("PRAGMA journal_mode=WAL")          # set once, not per connection
+        c.execute("PRAGMA synchronous=NORMAL")        # safe pairing with WAL
         c.execute(
             """CREATE TABLE IF NOT EXISTS xp (
                 user_id   INTEGER PRIMARY KEY,
@@ -99,9 +119,15 @@ def init_db():
                 last_msg  REAL    DEFAULT 0
             )"""
         )
+        c.execute("CREATE INDEX IF NOT EXISTS idx_xp_desc ON xp(xp DESC)")
 
 
 def validate_config():
+    if not TOKEN:
+        raise SystemExit(
+            "[BersamaAi] DISCORD_TOKEN is not set. Copy .env.example to .env and paste "
+            "the bot token (the SAME token the MCP jar uses)."
+        )
     required_channels = [
         "welcome", "introductions", "rules", "get_roles", "ai_chat",
         "level_ups", "ask_anything", "curated_resources", "tools_directory",
@@ -111,6 +137,10 @@ def validate_config():
         raise SystemExit(f"[BersamaAi] config.json missing channels: {missing}")
     if "newcomer" not in ROLES:
         raise SystemExit("[BersamaAi] config.json missing 'newcomer' role")
+    if ai_client is not None and not CONFIG.get("ai_system_prompt"):
+        raise SystemExit(
+            "[BersamaAi] config.json missing 'ai_system_prompt' — required when AI is enabled."
+        )
 
 
 # --------------------------------------------------------------------------- #
@@ -140,6 +170,24 @@ intents.reactions = True
 bot = commands.Bot(command_prefix="!", intents=intents)
 bot.remove_command("help")        # we provide /help
 
+
+@bot.event
+async def on_guild_join(guild: discord.Guild):
+    """Defense-in-depth: this bot serves ONE guild. If the shared token ever gets the
+    bot added elsewhere, leave immediately so AI budget / XP can't be drained there."""
+    if guild.id != GUILD_ID:
+        log.warning("Added to non-allowlisted guild %s (%s) — leaving.", guild.id, guild.name)
+        try:
+            await guild.leave()
+        except discord.HTTPException as exc:
+            log.error("Failed to leave guild %s: %s", guild.id, exc)
+
+
+@bot.check
+async def _guild_only(ctx: commands.Context) -> bool:
+    """Reject prefix commands from any guild that isn't ours."""
+    return ctx.guild is not None and ctx.guild.id == GUILD_ID
+
 _ai_last_use: dict[int, float] = {}
 _ai_calls: deque[float] = deque()              # global rolling-window gate
 _ai_sem: asyncio.Semaphore | None = None       # created in main() once a loop exists
@@ -155,10 +203,32 @@ ai_client = (
 
 @bot.event
 async def on_ready():
-    global _synced
-    print(f"[BersamaAi] Logged in as {bot.user} ({getattr(bot.user, 'id', '?')})")
-    print(f"[BersamaAi] Reaction-role menus: {list(REACTION_ROLES)}")
-    print(f"[BersamaAi] AI (GLM via Z.ai): {'ON (' + GLM_MODEL + ')' if ai_client else 'OFF'}")
+    global _synced, _hb_started
+    log.info("Logged in as %s (%s)", bot.user, getattr(bot.user, "id", "?"))
+    log.info("Reaction-role menus: %s", list(REACTION_ROLES))
+    log.info("AI (GLM via Z.ai): %s", f"ON ({GLM_MODEL})" if ai_client else "OFF")
+
+    if not _hb_started:
+        _hb_started = True
+        heartbeat.start()          # must run inside the loop; on_ready guarantees that
+
+    # Audit configured IDs against the live guild so stale config fails loudly, not silently.
+    guild_obj = bot.get_guild(GUILD_ID)
+    if guild_obj is not None:
+        for name, cid in CHANNELS.items():
+            if guild_obj.get_channel(cid) is None:
+                log.warning("config channel '%s' (id=%s) not found in guild", name, cid)
+        for name, rid in ROLES.items():
+            if guild_obj.get_role(rid) is None:
+                log.warning("config role '%s' (id=%s) not found in guild", name, rid)
+        for lvl, rid in LEVEL_REWARDS.items():
+            if guild_obj.get_role(rid) is None:
+                log.warning("level-reward role for level %s (id=%s) not found in guild", lvl, rid)
+        for msg_id, mapping in REACTION_ROLES.items():
+            for emo, rid in mapping.items():
+                if guild_obj.get_role(rid) is None:
+                    log.warning("reaction-role %r on msg %s -> missing role id=%s", emo, msg_id, rid)
+
     if _synced:
         return
     try:
@@ -166,9 +236,9 @@ async def on_ready():
         bot.tree.copy_global_to(guild=guild)
         synced = await bot.tree.sync(guild=guild)
         _synced = True
-        print(f"[BersamaAi] Synced {len(synced)} slash commands.")
+        log.info("Synced %d slash commands.", len(synced))
     except discord.HTTPException as exc:
-        print(f"[BersamaAi] FAILED to sync slash commands: {exc}")
+        log.error("FAILED to sync slash commands: %s", exc)
 
 
 # ---- Welcome ------------------------------------------------------------- #
@@ -178,8 +248,13 @@ async def on_member_join(member: discord.Member):
         role = member.guild.get_role(ROLES["newcomer"])
         if role:
             await member.add_roles(role, reason="Auto-role on join")
+    except discord.Forbidden:
+        log.error(
+            "PERMISSIONS: cannot add 'newcomer' role on join — bot role is too low or "
+            "Manage Roles is missing. Auto-role will fail on EVERY join until fixed."
+        )
     except discord.HTTPException as exc:
-        print(f"[BersamaAi] on_member_join role error: {exc}")
+        log.error("on_member_join role error: %s", exc)
     ch = member.guild.get_channel(CHANNELS["welcome"])
     if ch:
         try:
@@ -190,10 +265,10 @@ async def on_member_join(member: discord.Member):
                 f"2️⃣ Pick your roles in <#{CHANNELS['get_roles']}>\n"
                 f"3️⃣ Say hi in <#{CHANNELS['introductions']}>\n\n"
                 f"💬 You can also ask our AI anything in <#{CHANNELS['ai_chat']}> "
-                f"— just type `@BersamaAi` + your question."
+                f"— just type `@{bot.user.name}` + your question."
             )
         except discord.HTTPException as exc:
-            print(f"[BersamaAi] welcome send error: {exc}")
+            log.error("welcome send error: %s", exc)
 
 
 # ---- Reaction roles ------------------------------------------------------ #
@@ -211,7 +286,7 @@ async def handle_reaction(payload: discord.RawReactionActionEvent, add: bool):
     menu = REACTION_ROLES.get(str(payload.message_id))
     if menu is None:
         return
-    emoji = str(payload.emoji).rstrip("️")   # normalize variant selector
+    emoji = _norm_emoji(str(payload.emoji))   # normalize variant selectors
     role_id = menu.get(emoji)
     if role_id is None:
         return
@@ -232,9 +307,9 @@ async def handle_reaction(payload: discord.RawReactionActionEvent, add: bool):
         else:
             await member.remove_roles(role, reason="Reaction role removed")
     except discord.Forbidden:
-        print(f"[BersamaAi] Missing permissions to manage role {role.name}")
+        log.error("PERMISSIONS: cannot manage reaction role %r — bot role too low?", role.name)
     except discord.HTTPException as exc:
-        print(f"[BersamaAi] Reaction-role HTTP error: {exc}")
+        log.error("reaction-role HTTP error: %s", exc)
 
 
 async def safe_fetch_member(guild: discord.Guild, user_id: int):
@@ -248,6 +323,8 @@ async def safe_fetch_member(guild: discord.Guild, user_id: int):
 @bot.event
 async def on_message(message: discord.Message):
     if message.author.bot or message.guild is None:
+        return
+    if message.guild.id != GUILD_ID:        # hard allowlist — ignore any other guild
         return
     await award_xp(message)
     # Treat as an AI request only on an EXPLICIT @mention in the text body,
@@ -278,7 +355,7 @@ async def award_xp(message: discord.Message):
                 new_xp = gain
                 c.execute("INSERT INTO xp (user_id, xp, last_msg) VALUES (?,?,?)", (uid, new_xp, now))
     except sqlite3.Error as exc:
-        print(f"[BersamaAi] XP db error: {exc}")
+        log.error("XP db error for uid=%s: %s", uid, exc)
         return
 
     old_level = level_from_xp(before)
@@ -295,27 +372,46 @@ async def on_level_up(member: discord.Member, guild: discord.Guild, level: int):
         try:
             await ch.send(f"🎉 {member.mention} just reached **level {level}**! Keep it up. 💪")
         except discord.HTTPException as exc:
-            print(f"[BersamaAi] level-up send error: {exc}")
+            log.error("level-up send error: %s", exc)
     reward = LEVEL_REWARDS.get(level)
     if reward:
         role = guild.get_role(reward)
         if role:
             try:
                 await member.add_roles(role, reason=f"Reached level {level}")
+            except discord.Forbidden:
+                log.error(
+                    "PERMISSIONS: cannot add level-%s reward role %r — bot role too low.",
+                    level, role.name,
+                )
             except discord.HTTPException as exc:
-                print(f"[BersamaAi] level-up role error: {exc}")
+                log.error("level-up role error: %s", exc)
 
 
 # ---- AI (@mention and !ai) — GLM via Z.ai (OpenAI-compatible) ------------ #
-def _ai_global_allowed() -> bool:
-    """Rolling-window gate. Returns True and records a slot if a call is allowed."""
+def _ai_global_reserve() -> float | None:
+    """Rolling-window gate. If a call is allowed, reserve+return its timestamp (to be
+    refunded on failure via _refund_slot); if the window is full, return None.
+    Also reaps stale per-user cooldowns so _ai_last_use can't leak forever."""
     now = time.time()
     while _ai_calls and now - _ai_calls[0] > AI_GLOBAL_WINDOW:
         _ai_calls.popleft()
+    if len(_ai_last_use) > 256:
+        cutoff = now - 3600
+        for u in [u for u, t in _ai_last_use.items() if t < cutoff]:
+            del _ai_last_use[u]
     if len(_ai_calls) >= AI_GLOBAL_MAX:
-        return False
+        return None
     _ai_calls.append(now)
-    return True
+    return now
+
+
+def _refund_slot(slot: float) -> None:
+    """Release a global slot that never reached Z.ai successfully (timeout/error)."""
+    try:
+        _ai_calls.remove(slot)
+    except ValueError:
+        pass
 
 
 async def handle_ai(message: discord.Message, override_text: str | None = None):
@@ -325,7 +421,6 @@ async def handle_ai(message: discord.Message, override_text: str | None = None):
     if waited < AI_COOLDOWN:
         await _safe_reply(message, f"⏳ Slow down — try again in {int(AI_COOLDOWN - waited)}s (fair-use limit).")
         return
-    _ai_last_use[uid] = now   # throttle further retries regardless of outcome
 
     # Build + validate the question (truncate to bound cost).
     question = override_text if override_text is not None else message.content
@@ -335,7 +430,7 @@ async def handle_ai(message: discord.Message, override_text: str | None = None):
     if not question:
         await _safe_reply(
             message,
-            "Ask me something! Example: `@BersamaAi what's the best free AI for slides?`",
+            f"Ask me something! Example: `@{bot.user.name} what's the best free AI for slides?`",
         )
         return
 
@@ -347,25 +442,42 @@ async def handle_ai(message: discord.Message, override_text: str | None = None):
         )
         return
 
-    if not _ai_global_allowed():
+    slot = _ai_global_reserve()
+    if slot is None:
+        log.warning("AI global cap hit — rejecting uid=%s", uid)
         await _safe_reply(message, "🏭 The AI is really busy right now — please try again in a minute.")
         return
 
-    async with message.channel.typing():
-        async with _ai_sem:
+    # Count this as a real attempt only now (after every early return), so no-op pings
+    # and "AI disabled"/"busy" paths don't lock the user out for 30s.
+    _ai_last_use[uid] = time.time()
+
+    async with _ai_sem:
+        async with message.channel.typing():   # typing only while actually generating
             try:
-                resp = await ai_client.chat.completions.create(
-                    model=GLM_MODEL,
-                    max_tokens=800,
-                    messages=[
-                        {"role": "system", "content": CONFIG["ai_system_prompt"]},
-                        {"role": "user", "content": question},
-                    ],
+                resp = await asyncio.wait_for(
+                    ai_client.chat.completions.create(
+                        model=GLM_MODEL,
+                        max_tokens=800,
+                        messages=[
+                            {"role": "system", "content": CONFIG["ai_system_prompt"]},
+                            {"role": "user", "content": question},
+                        ],
+                    ),
+                    timeout=AI_TIMEOUT,
                 )
                 answer = (resp.choices[0].message.content or "").strip() or "…"
+            except asyncio.TimeoutError:
+                _refund_slot(slot)
+                log.warning("AI timeout (%ss) for uid=%s", AI_TIMEOUT, uid)
+                answer = "⚠️ The AI took too long — please try again in a moment."
             except Exception as exc:  # noqa: BLE001 — never crash the bot on an AI error
-                print(f"[BersamaAi] AI error: {exc}")
+                _refund_slot(slot)
+                log.error("AI error for uid=%s: %s", uid, exc)
                 answer = "⚠️ The AI hit an error. Please try again in a moment."
+
+    # Defense-in-depth: strip any mention syntax GLM might emit (allowed_mentions is the real fix).
+    answer = _MENTION_RE.sub("", answer).strip() or "…"
 
     for i in range(0, len(answer), AI_MAX_CHARS):
         if not await _safe_reply(message, answer[i:i + AI_MAX_CHARS]):
@@ -373,12 +485,13 @@ async def handle_ai(message: discord.Message, override_text: str | None = None):
 
 
 async def _safe_reply(message: discord.Message, text: str) -> bool:
-    """Reply, swallowing HTTP errors. Returns False if the send failed."""
+    """Reply, swallowing HTTP errors. Returns False if the send failed.
+    Suppresses all mentions (AI_ALLOWED) so injected output can't ping."""
     try:
-        await message.reply(text)
+        await message.reply(text, allowed_mentions=AI_ALLOWED)
         return True
     except discord.HTTPException as exc:
-        print(f"[BersamaAi] reply send error: {exc}")
+        log.error("reply send error: %s", exc)
         return False
 
 
@@ -405,7 +518,9 @@ async def cmd_ai(ctx: commands.Context, *, question: str = ""):
 async def on_command_error(ctx: commands.Context, error):
     if isinstance(error, commands.CommandNotFound):
         return
-    print(f"[BersamaAi] command error ({ctx.command}): {error}")
+    if isinstance(error, commands.CheckFailure):
+        return          # silently ignore prefix commands rejected by the guild allowlist
+    log.error("command error (%s): %s", ctx.command, error)
     try:
         await ctx.send("⚠️ Couldn't run that command. Try `/help` or ask a moderator.")
     except discord.HTTPException:
@@ -465,7 +580,7 @@ async def cmd_help(interaction: discord.Interaction):
         description=(
             "**Slash:** `/rank` `/leaderboard` `/help`\n"
             "**Prefix:** `!rules` `!resources` `!ai <question>`\n"
-            "**AI:** mention me — `@BersamaAi <question>`\n"
+            f"**AI:** mention me — `@{bot.user.name} <question>`\n"
             f"**Roles:** react in <#{CHANNELS['get_roles']}>"
         ),
     )
@@ -474,7 +589,7 @@ async def cmd_help(interaction: discord.Interaction):
 
 @bot.tree.error
 async def on_app_command_error(interaction: discord.Interaction, error: app_commands.AppCommandError):
-    print(f"[BersamaAi] slash error: {error}")
+    log.error("slash error: %s", error)
     msg = "⚠️ Something went wrong — a moderator will look into it."
     try:
         if interaction.response.is_done():
@@ -485,12 +600,61 @@ async def on_app_command_error(interaction: discord.Interaction, error: app_comm
         pass
 
 
+# ---- Liveness (24/7) ----------------------------------------------------- #
+_heartbeat_misses = 0
+_hb_started = False
+
+
+@tasks.loop(minutes=5)
+async def heartbeat():
+    """Force a restart if the Gateway has been unreachable for two consecutive checks.
+    NSSM/systemd Restart=always then relaunch us with a clean connection."""
+    global _heartbeat_misses
+    lat = bot.latency
+    broken = (lat != lat) or (lat > 60.0)   # NaN, or no heartbeat for >60s
+    if broken:
+        _heartbeat_misses += 1
+        log.error("HEARTBEAT: gateway latency=%s (miss #%d)", lat, _heartbeat_misses)
+        if _heartbeat_misses >= 2:
+            log.critical("HEARTBEAT: gateway broken for 10+ min — forcing process restart.")
+            os._exit(1)
+    else:
+        if _heartbeat_misses:
+            log.info("HEARTBEAT: recovered (latency=%dms).", int(lat * 1000))
+        _heartbeat_misses = 0
+
+
+@heartbeat.before_loop
+async def _heartbeat_before():
+    await bot.wait_until_ready()
+
+
+def _configure_logging() -> None:
+    handler = logging.StreamHandler()
+    handler.setFormatter(logging.Formatter(
+        fmt="[%(asctime)s] [%(levelname)-8s] %(name)s: %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S",
+    ))
+    root = logging.getLogger()
+    root.setLevel(logging.INFO)
+    if not root.handlers:
+        root.addHandler(handler)
+
+
 def main():
+    # Windows consoles default to cp1252; force UTF-8 so logging an emoji role/user
+    # name never raises UnicodeEncodeError. No-op on Linux/macOS.
+    for stream in (sys.stdout, sys.stderr):
+        try:
+            stream.reconfigure(encoding="utf-8", errors="replace")  # type: ignore[union-attr]
+        except (AttributeError, ValueError):
+            pass
+    _configure_logging()
     validate_config()
     init_db()
     global _ai_sem
     _ai_sem = asyncio.Semaphore(AI_CONCURRENCY)
-    bot.run(TOKEN)
+    bot.run(TOKEN, log_handler=None)   # we configured root logging in _configure_logging()
 
 
 if __name__ == "__main__":
