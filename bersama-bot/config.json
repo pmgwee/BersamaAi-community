@@ -1,0 +1,39 @@
+{
+  "guild_id": "1528524602861420625",
+  "channels": {
+    "welcome": "1528525139841650758",
+    "introductions": "1528525146988482761",
+    "rules": "1528686519584555008",
+    "faq": "1528686526282727424",
+    "get_roles": "1528686528870482092",
+    "ai_chat": "1528686928835252286",
+    "bot_commands": "1528686931687247882",
+    "level_ups": "1528686939245514802",
+    "ask_anything": "1528525163522687109",
+    "curated_resources": "1528525183772790855",
+    "tools_directory": "1528525187178430734",
+    "announcements": "1528525143494627521",
+    "mod_log": "1528686941502050456"
+  },
+  "roles": {
+    "newcomer": "1528686245562155068",
+    "member": "1528686235613134870",
+    "muted": "1528686247441334314"
+  },
+  "reaction_roles": {
+    "1528687776801886249": {
+      "🎨": "1528686300947939359",
+      "🎓": "1528686302801821697",
+      "💼": "1528686305167540317",
+      "💻": "1528686307138863175",
+      "📈": "1528686308913057926"
+    }
+  },
+  "level_rewards": {
+    "5": "1528686310951223326",
+    "10": "1528686313987899413",
+    "20": "1528686315854626947",
+    "35": "1528686317632880711"
+  },
+  "ai_system_prompt": "You are BersamaAi, the friendly AI assistant for a Malaysia-based AI community on Discord. Help members learn and use AI in daily life and work. Be concise, practical, and encouraging. Answer in the language the user wrote in (English, Malay, or Mandarin). Recommend free or best-value tools when relevant. Keep replies under ~250 words. Never help with anything illegal, harmful, or that violates Discord's Terms of Service."
+}

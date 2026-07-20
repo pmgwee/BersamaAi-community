@@ -1,0 +1,16 @@
+# secrets — never commit
+.env
+
+# python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+
+# pipeline runtime artifacts (kept: state/ and content/ ARE committed on purpose —
+# EXCEPT raw transcripts, which are large + a soft copyright/PII concern if public)
+content/**/transcript.txt
+tmp/
+*.log

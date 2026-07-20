@@ -1,0 +1,29 @@
+# ── secrets — NEVER commit ───────────────────────────────────────────────
+.env
+**/.env
+.env.local
+
+# ── local Claude Code config (machine-specific permissions) ──────────────
+.claude/settings.local.json
+
+# ── Python ───────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+
+# ── pipeline runtime artifacts ───────────────────────────────────────────
+# NOTE: state/ and content/ ARE committed on purpose (dedup + bundles),
+# EXCEPT raw transcripts (large + soft copyright concern).
+bersama-ai-pipeline/content/**/transcript.txt
+tmp/
+*.log
+
+# ── bot ──────────────────────────────────────────────────────────────────
+bersama-bot/bersama.db
+
+# ── build / stray run artifacts ──────────────────────────────────────────
+target/
+**/target/

@@ -1,0 +1,11 @@
+# BersamaAi summarization pipeline — v1
+# Install with:  python -m pip install -r requirements.txt
+openai>=1.50            # GLM (Zhipu/Z.ai) is OpenAI-compatible; we point this at its endpoint
+youtube-transcript-api>=0.6,<1
+yt-dlp>=2026.7.1
+requests>=2.32
+python-dotenv>=1.0
+
+# Optional (v1.1): uncomment for Whisper audio fallback
+# faster-whisper>=1.0
+# Pillow>=10.0          # card image generation

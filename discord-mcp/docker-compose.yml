@@ -1,0 +1,11 @@
+services:
+  discord-mcp:
+    image: saseq/discord-mcp:latest
+    container_name: discord-mcp
+    restart: unless-stopped
+    ports:
+      - "8085:8085"
+    environment:
+      SPRING_PROFILES_ACTIVE: http
+      DISCORD_TOKEN: ${DISCORD_TOKEN}
+      DISCORD_GUILD_ID: ${DISCORD_GUILD_ID:-}
