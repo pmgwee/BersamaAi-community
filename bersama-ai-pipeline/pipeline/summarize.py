@@ -23,6 +23,7 @@ from .prompts import SYSTEM_PROMPT, EMIT_SUMMARY_TOOL, build_user_message
 
 GLM_DEFAULT_BASE_URL = "https://open.bigmodel.cn/api/paas/v4/"  # trailing slash matters
 GLM_DEFAULT_MODEL = "glm-4.6"
+MAX_SUMMARY_ATTEMPTS = 3   # GLM doesn't strictly enforce the tool schema; retry a malformed reply
 
 
 @dataclass
@@ -61,32 +62,36 @@ def summarize(
             "parameters": EMIT_SUMMARY_TOOL["input_schema"],
         },
     }
-    user_msg = build_user_message(meta, transcript)
+    messages = [
+        {"role": "system", "content": SYSTEM_PROMPT},
+        {"role": "user", "content": build_user_message(meta, transcript)},
+    ]
 
-    try:
-        resp = client.chat.completions.create(
-            model=model,
-            max_tokens=2048,
-            messages=[
-                {"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user", "content": user_msg},
-            ],
-            tools=[tool],
-            tool_choice="required",  # force a tool call; only one tool => emit_summary
-        )
-    except Exception as e:  # noqa: BLE001
-        raise SummarizeError(f"GLM API call failed: {e}") from e
-
-    data = _extract_function_args(resp)
-    if data is None:
-        raise SummarizeError("Model did not return the emit_summary function call.")
-
-    try:
-        return _coerce(data, meta)
-    except SummarizeError:
-        raise
-    except Exception as e:  # noqa: BLE001 — schema/validation surprises (e.g. non-int duration)
-        raise SummarizeError(f"summary validation failed: {e}") from e
+    # GLM does not strictly enforce the emit_summary schema, so a call can
+    # occasionally return the wrong point count or malformed JSON. A fresh call
+    # almost always succeeds — retry rather than fail the whole video on a
+    # transient variance.
+    last_err = None
+    for attempt in range(1, MAX_SUMMARY_ATTEMPTS + 1):
+        try:
+            resp = client.chat.completions.create(
+                model=model,
+                max_tokens=2048,
+                messages=messages,
+                tools=[tool],
+                tool_choice="required",  # force a tool call; only one tool => emit_summary
+            )
+            data = _extract_function_args(resp)
+            if data is None:
+                raise SummarizeError("Model did not return the emit_summary function call.")
+            return _coerce(data, meta)
+        except SummarizeError as e:
+            last_err = e
+        except Exception as e:  # noqa: BLE001 — transport/schema surprises
+            last_err = SummarizeError(f"summary attempt {attempt} failed: {e}")
+        if attempt < MAX_SUMMARY_ATTEMPTS:
+            print(f"[summarize] attempt {attempt}/{MAX_SUMMARY_ATTEMPTS} rejected ({last_err}); retrying…")
+    raise last_err or SummarizeError("summarize failed after retries")
 
 
 def _extract_function_args(resp) -> Optional[dict]:
