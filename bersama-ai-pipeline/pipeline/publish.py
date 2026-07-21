@@ -14,7 +14,8 @@ import requests
 
 from .summarize import Summary
 
-DISCORD_MESSAGE_LIMIT = 2000   # plain-text message cap (rich cards, not embeds)
+DISCORD_EMBED_DESC_LIMIT = 4096   # embed description cap (the rich card body lives here)
+BRAND_COLOR = 0x5865F2            # the embed color bar = the card frame
 TELEGRAM_TEXT_LIMIT = 4000   # 4096 hard cap; 4000 leaves headroom for markup + emoji
 
 DISCORD_USERNAME = "BersamaAi"
@@ -30,50 +31,54 @@ def _mask_url(url: str) -> str:
 
 # ── Discord ──────────────────────────────────────────────────────────────────
 
-def _talk_messages(summary: Summary, meta: dict) -> list[str]:
-    """Rich plain-text card matching the #ai-dev-tools news style: divider + badge
-    + bold title + bare source URL (auto-unfurls a YouTube preview) + byline +
-    'Why it matters' + 'Key takeaways' bullets. Splits into <=2000-char messages
-    at bullet boundaries if needed."""
+def _yt_thumbnail(meta: dict):
+    """YouTube thumbnail URL — prefer yt-dlp's, else build from the video id."""
+    thumb = meta.get("thumbnail")
+    if thumb:
+        return thumb
+    vid = meta.get("id")
+    return f"https://img.youtube.com/vi/{vid}/hqdefault.jpg" if vid else None
+
+
+def _talk_card_text(summary: Summary, meta: dict) -> str:
+    """The rich markdown body inside the embed card (news-style: divider + badge +
+    bold title + source link + byline + 'Why it matters' + 'Key takeaways')."""
     title = meta.get("title") or "AI talk"
     url = summary.source_url or meta.get("webpage_url") or meta.get("url") or ""
     speaker = summary.speaker or meta.get("uploader") or meta.get("channel") or ""
     mins = (summary.duration_sec or 0) // 60
     dur = f"{mins} min" if mins else ""
     byline = " · ".join(p for p in (speaker, dur) if p)
-    header = (
+    points = "\n".join(f"• {p}" for p in summary.points)
+    text = (
         "━━━━━━━━━━━━━━━━━━━━━━━━\n"
         "**🎬 Curated Talk**\n\n"
         f"**{title}**\n"
         + (f"🔗 {url}\n" if url else "")
         + (f"*By {byline}*\n" if byline else "")
-        + f"\n**Why it matters**\n{summary.hook}\n\n**Key takeaways**\n"
+        + f"\n**Why it matters**\n{summary.hook}\n\n**Key takeaways**\n{points}"
     )
-    msgs: list[str] = []
-    cur = header
-    for pt in summary.points:
-        line = f"• {pt}"
-        if len(cur) + len(line) + 1 > DISCORD_MESSAGE_LIMIT:
-            msgs.append(cur.rstrip())
-            cur = "*(continued)*\n"
-        cur += line + "\n"
-    if cur.strip():
-        msgs.append(cur.rstrip())
-    return msgs or [header[:DISCORD_MESSAGE_LIMIT]]
+    return text[:DISCORD_EMBED_DESC_LIMIT]
 
 
 def build_discord_payload(summary: Summary, meta: dict) -> dict:
-    return {"username": DISCORD_USERNAME, "messages": _talk_messages(summary, meta)}
+    """One embed = one card. The color bar is the frame; the rich body is the
+    description; the YouTube thumbnail sits top-right inside the card."""
+    thumb = _yt_thumbnail(meta)
+    return {"username": DISCORD_USERNAME, "embeds": [{
+        "description": _talk_card_text(summary, meta),
+        "color": BRAND_COLOR,
+        "thumbnail": {"url": thumb} if thumb else None,
+    }]}
 
 
 def send_discord(webhook_url: str, payload: dict, dry_run: bool = False) -> None:
-    for content in payload.get("messages", []):
+    for embed in payload.get("embeds", []):
+        body = {"username": payload.get("username"), "embeds": [embed]}
         if dry_run:
-            print(f"\n[discord DRY-RUN] POST {_mask_url(webhook_url)}\n{content}\n")
+            print(f"\n[discord DRY-RUN] POST {_mask_url(webhook_url)}\n{body}\n")
             continue
-        r = requests.post(webhook_url,
-                          json={"username": payload.get("username"), "content": content},
-                          timeout=15)
+        r = requests.post(webhook_url, json=body, timeout=15)
         if r.status_code not in (200, 204):
             raise RuntimeError(f"Discord webhook failed: {r.status_code} {r.text[:300]}")
 

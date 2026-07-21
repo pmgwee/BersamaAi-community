@@ -1,9 +1,10 @@
 """GitHub Trending source — trending repos via the GitHub Search API.
 
 GitHub has no official trending API, so we use the Search API as a "trending
-proxy": repos pushed in the last `since_days` with >`min_stars`, filtered by
-topic keywords. This reliably surfaces viral/community repos (the kind that blow
-up on GitHub Trending) without scraping the trending page.
+proxy": repos CREATED in the last `since_days` (new this week) with >`min_stars`,
+sorted by stars. `created:` (not `pushed:`) is the key — `pushed:` surfaces active
+incumbents (LangChain pushes daily), while `created:` + high stars = genuinely new
+repos that are blowing up, i.e. the real "supernewstar" signal.
 
 Auth: optional GITHUB_TOKEN raises the rate limit. The Search endpoint is capped
 at ~10 req/min unauthenticated — we sleep between queries so a small per-run
@@ -27,7 +28,7 @@ def fetch_trending(
     per_query: int = 15,
     token: str = "",
 ) -> list[dict]:
-    """Return candidate repo dicts for the given keywords (recently pushed, high stars).
+    """Return candidate repo dicts for the given keywords (created this week, high stars).
 
     Each dict is shaped like the Reddit/HN candidates so the news judge can treat
     them uniformly: {title, url, discussion, source, score, snippet}.
@@ -40,7 +41,7 @@ def fetch_trending(
 
     out: list[dict] = []
     for kw in keywords:
-        q = f"{kw} stars:>{min_stars} pushed:>{since}"
+        q = f"{kw} stars:>{min_stars} created:>{since}"
         try:
             r = requests.get(
                 SEARCH_URL,

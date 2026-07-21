@@ -170,16 +170,31 @@ def fetch_hn(topn: int = HN_TOPN) -> list[dict]:
     return out
 
 
-def gather_candidates() -> list[dict]:
-    """Pull Reddit (LIVE topics' subs) + HN + GitHub (LIVE topics' keywords)."""
-    subs = list({s for t in LIVE_TOPICS for s in t.reddit_subs})
-    cand = fetch_reddit(subs) + fetch_hn()
-    token = os.environ.get("GITHUB_TOKEN", "")
-    for t in LIVE_TOPICS:
-        cand += fetch_trending(t.github_keywords, min_stars=t.github_min_stars, token=token)
+# Per-source quotas so the judge sees all three worlds each run. Without this,
+# GitHub's tens-of-thousands star counts dominate a raw-score sort and crowd
+# Reddit/HN out of the candidate pool (the judge ends up seeing almost only GitHub).
+REDDIT_QUOTA = 15
+HN_QUOTA = 10
+GITHUB_QUOTA = 15
 
-    cand = [c for c in cand if _looks_ai(c["title"]) or _looks_ai(c["snippet"])]
-    cand.sort(key=lambda c: c.get("score", 0), reverse=True)
+
+def gather_candidates() -> list[dict]:
+    """Pull Reddit (LIVE topics' subs) + HN + GitHub (LIVE topics' keywords),
+    with per-source quotas so the judge sees all three worlds (not just GitHub)."""
+    subs = list({s for t in LIVE_TOPICS for s in t.reddit_subs})
+    token = os.environ.get("GITHUB_TOKEN", "")
+    github: list[dict] = []
+    for t in LIVE_TOPICS:
+        github += fetch_trending(t.github_keywords, min_stars=t.github_min_stars, token=token)
+
+    def _ai(c: dict) -> bool:
+        return _looks_ai(c["title"]) or _looks_ai(c["snippet"])
+
+    def _top(items: list[dict], n: int) -> list[dict]:
+        return sorted([c for c in items if _ai(c)],
+                      key=lambda c: c.get("score", 0), reverse=True)[:n]
+
+    cand = _top(fetch_reddit(subs), REDDIT_QUOTA) + _top(fetch_hn(), HN_QUOTA) + _top(github, GITHUB_QUOTA)
     seen, dedup = set(), []
     for c in cand:
         k = c.get("url") or c.get("title")
@@ -369,9 +384,8 @@ TOPIC_LABEL = {
 
 
 def build_news_payload(item: NewsItem, thumbnail: str = "") -> dict:
-    """Rich plain-text card (seeded-resource style). The bare source URL auto-unfurls
-    a preview in Discord (GitHub repo card / Reddit image / article), so we don't need
-    an embed thumbnail — and the divider + section headers match the curated-resources look."""
+    """One embed = one card: color-bar frame + the rich body in the description +
+    the source preview as the thumbnail (GitHub avatar / Reddit image)."""
     emoji = CATEGORY_EMOJI.get(item.category, "📡")
     cat = item.category.replace("_", " ").title()
     topic_lbl = TOPIC_LABEL.get(item.topic, item.topic)
@@ -384,9 +398,11 @@ def build_news_payload(item: NewsItem, thumbnail: str = "") -> dict:
         f"{byline}\n\n"
         f"**Why it matters**\n{item.body}"
     )
-    if len(content) > 1990:   # Discord message cap is 2000
-        content = content[:1989].rstrip() + "…"
-    return {"username": "BersamaAi", "content": content}
+    return {"username": "BersamaAi", "embeds": [{
+        "description": content[:4096],
+        "color": BRAND_COLOR,
+        "thumbnail": {"url": thumbnail} if thumbnail else None,
+    }]}
 
 
 
