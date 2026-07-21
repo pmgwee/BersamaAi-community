@@ -172,27 +172,36 @@ def fetch_hn(topn: int = HN_TOPN) -> list[dict]:
     return out
 
 
+# HuggingFace is technical/LLM-narrow, so we reserve it for GENUINELY viral launches
+# (Kimi K3 / GLM-5.2 / GPT-5.6 class). Models below this 7-day-like bar are skipped —
+# GitHub carries the broad cross-field breadth; HF only flags the boombastic drops.
+HF_VIRAL_LIKES = 200
+
+
 def fetch_hf_trending() -> list[dict]:
-    """HuggingFace models with the most likes in the last 7 days — clean early signal
-    for fresh model launches (Kimi / DeepSeek / Qwen drops land here fast)."""
+    """HuggingFace models trending by 7-day likes — but ONLY the boombastic ones
+    (>= HF_VIRAL_LIKES). Captures downloads + task so the card reads richly."""
     out = []
     try:
         r = requests.get("https://huggingface.co/api/models",
-                         params={"sort": "likes7d", "direction": "-1", "limit": 20},
+                         params={"sort": "likes7d", "direction": "-1", "limit": 30},
                          headers=HEADERS, timeout=15)
         if r.status_code != 200:
             return out
         items = r.json() or []
     except Exception:  # noqa: BLE001
         return out
-    for it in items[:20]:
+    for it in items:
+        likes = int(it.get("likes") or 0)
+        if likes < HF_VIRAL_LIKES:
+            continue   # not boombastic enough — skip HF's long technical tail
         rid = it.get("id") or it.get("modelId") or ""
         if not rid:
             continue
         out.append({
             "title": rid, "url": f"https://huggingface.co/{rid}",
             "discussion": f"https://huggingface.co/{rid}", "source": "huggingface",
-            "score": int(it.get("likes") or 0),
+            "score": likes, "downloads": int(it.get("downloads") or 0),
             "snippet": (it.get("pipeline_tag") or "")[:120],
         })
     return out
@@ -250,7 +259,7 @@ def fetch_rss(feeds: list[str] = OFFICIAL_RSS) -> list[dict]:
 # before the judge sees them. Shared sources (HN/HF/RSS) get their own quotas.
 PER_TOPIC_QUOTA = 8
 HN_QUOTA = 8
-HF_QUOTA = 6
+HF_QUOTA = 3
 RSS_QUOTA = 8
 VELOCITY_THRESHOLD = 150   # GitHub repos gaining > this many stars/day bypass the score cut
 
@@ -495,7 +504,11 @@ def _metric(cand: dict | None) -> str:
             base += " · " + " · ".join(bits)
         return base
     if src == "huggingface":
-        return f"🤗 {_fmt(score)} likes" if score else "🤗 HuggingFace"
+        dl = int(cand.get("downloads") or 0)
+        base = f"🤗 {_fmt(score)} likes"
+        if dl > 0:
+            base += f" · {_fmt(dl)} downloads"
+        return base
     if src == "official":
         return "📢 official blog"
     if src == "HN":
