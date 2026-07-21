@@ -107,41 +107,30 @@ Downside: the PC must never sleep / shut down. The bot also force-restarts itsel
 default restart-on-failure relaunches it with a clean connection.
 
 ### Option B — Raspberry Pi (one-time ~RM 200–400, ~RM 1–2/month power)
-A Pi 3B or 4 plugged in at home, running 24/7:
+A Pi 3B or 4 plugged in at home, running 24/7. Same `setup.sh` as Oracle:
 ```bash
-sudo apt install python3 python3-venv -y
-git clone <your-repo> bersama-bot && cd bersama-bot
-python3 -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-cp .env.example .env && nano .env   # fill DISCORD_TOKEN + ZAI_API_KEY
-```
-Auto-start via systemd — create `/etc/systemd/system/bersama.service`:
-```ini
-[Unit]
-Description=BersamaAi Bot
-After=network.target
-
-[Service]
-WorkingDirectory=/home/pi/bersama-bot
-ExecStart=/home/pi/bersama-bot/.venv/bin/python bot.py
-Restart=always
-User=pi
-EnvironmentFile=/home/pi/bersama-bot/.env
-
-[Install]
-WantedBy=multi-user.target
-```
-```bash
-sudo systemctl enable --now bersama
-sudo systemctl status bersama   # check it's running
+sudo apt-get update && sudo apt-get install -y git python3 python3-venv
+git clone https://github.com/pmgwee/BersamaAi-community.git
+cd BersamaAi-community/bersama-bot
+bash setup.sh          # venv + deps + .env + systemd, all in one
 ```
 
-### Option C — Oracle Cloud Always Free (cloud, free forever, no home machine)
-1. Sign up at <https://www.oracle.com/cloud/free> → create an **Always Free AMD VM** (Ubuntu).
-2. Open the OCI Console → Instance → **Edit security list / add Ingress** isn't even needed (bot is outbound-only).
-3. SSH in and follow the **Option B** commands (it's Ubuntu, same as a Pi).
-4. Use the same systemd unit. The VM runs 24/7 free.
-   - *Other cheap clouds: any ~RM14–36/month VPS (Shinjiru, LightNode, DigitalOcean) works identically.*
+### Option C — Oracle Cloud Always Free (recommended; free forever, no home machine)
+1. Sign up at <https://www.oracle.com/cloud/free> → create an **Always Free** VM
+   (AMD micro **or** Ampere A1 ARM — both work; either is plenty for this bot). Pick
+   Ubuntu 22.04/24.04 and add your public SSH key when creating it.
+2. No firewall / ingress changes needed — the bot is **outbound-only**.
+3. Push this repo to GitHub, then on the VM:
+   ```bash
+   sudo apt-get update && sudo apt-get install -y git
+   git clone https://github.com/pmgwee/BersamaAi-community.git
+   cd BersamaAi-community/bersama-bot
+   bash setup.sh          # installs python+deps, writes .env, enables systemd
+   ```
+4. `setup.sh` installs + starts a systemd service (`bersama`) with `Restart=always`,
+   so the bot survives crashes and reboots. The VM runs 24/7 free. Verify:
+   `sudo systemctl status bersama` · logs: `tail -f bersama.log`.
+   - *Other cheap clouds: any ~RM14–36/month VPS (Shinjiru, LightNode, DigitalOcean) works identically — just run `bash setup.sh`.*
 
 ## Step 6 — Turn on Discord's free native AutoMod (auto-moderation)
 
