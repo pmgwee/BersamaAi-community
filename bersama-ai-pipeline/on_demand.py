@@ -23,6 +23,12 @@ import urllib.parse
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
+try:
+    from dotenv import load_dotenv
+    load_dotenv(Path(__file__).resolve().parent / ".env")  # pick up ON_DEMAND_TOKEN etc.
+except ImportError:
+    pass
+
 PORT = int(os.environ.get("ON_DEMAND_PORT", "8080"))
 TOKEN = os.environ.get("ON_DEMAND_TOKEN", "")
 ROOT = Path(__file__).resolve().parent  # bersama-ai-pipeline/
