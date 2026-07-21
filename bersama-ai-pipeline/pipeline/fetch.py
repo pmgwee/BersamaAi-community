@@ -333,4 +333,22 @@ def get_transcript(info: dict) -> tuple[Optional[str], str]:
         except Exception as e:  # noqa: BLE001
             print(f"[fetch] youtube-transcript-api fallback unavailable: {e}")
 
+    # --- tier 3: ASR fallback for caption-less videos (Groq Whisper) ---
+    # Opt-in via GROQ_API_KEY; multilingual, so non-English audio is transcribed
+    # and the summarizer then writes an English card. Skipped for the oEmbed-only
+    # stub (no audio path there, and yt-dlp would be blocked anyway).
+    groq_key = os.environ.get("GROQ_API_KEY", "")
+    if groq_key and not info.get("_oembed_only"):
+        url = info.get("webpage_url") or info.get("url")
+        if url:
+            print("[fetch] no captions available — transcribing audio via Groq Whisper")
+            from . import asr  # lazy import; the groq package is optional
+            model = os.environ.get("GROQ_WHISPER_MODEL") or asr.GROQ_DEFAULT_MODEL
+            text = asr.transcribe(url, groq_key, model=model)
+            if text:
+                text = _clean(text)
+                if text:
+                    lang_hint = "zh" if re.search(r"[一-鿿]", text) else "en"
+                    return text, lang_hint
+
     return None, "other"

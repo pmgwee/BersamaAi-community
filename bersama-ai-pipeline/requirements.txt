@@ -6,6 +6,6 @@ yt-dlp>=2026.7.1
 requests>=2.32
 python-dotenv>=1.0
 
-# Optional (v1.1): uncomment for Whisper audio fallback
-# faster-whisper>=1.0
+# Audio transcription fallback (videos without captions) — Groq Whisper
+groq>=0.11
 # Pillow>=10.0          # card image generation
