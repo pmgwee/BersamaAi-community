@@ -1,9 +1,9 @@
-"""Publish to Discord (webhook embed) and Telegram (sendMessage), length-safe.
+"""Publish to Discord (rich plain-text webhook message) and Telegram (sendMessage).
 
-Both platforms cap message size. We use a Discord embed (description limit 4096)
-and hard-wrap into multiple embeds only if a single 5-point summary somehow
-overflows. Telegram caps at 4096 UTF-16 code units, so we send one English
-message (summary + source link).
+Discord posts a readable card matching the #ai-dev-tools news style (divider +
+badge + bold title + bare source URL that auto-unfurls a preview + byline +
+'Why it matters' + 'Key takeaways'), split into <=2000-char messages if needed.
+Telegram caps at 4096 UTF-16 code units, so we send one English message.
 
 Security: dry-run NEVER prints the webhook URL or bot token — both are bearer
 credentials. They are masked in all log output.
@@ -14,12 +14,10 @@ import requests
 
 from .summarize import Summary
 
-DISCORD_EMBED_DESC_LIMIT = 4096
+DISCORD_MESSAGE_LIMIT = 2000   # plain-text message cap (rich cards, not embeds)
 TELEGRAM_TEXT_LIMIT = 4000   # 4096 hard cap; 4000 leaves headroom for markup + emoji
-BRAND_COLOR = 0x5865F2       # blurple; change to your brand
 
 DISCORD_USERNAME = "BersamaAi"
-DISCORD_FOOTER = "BersamaAi · curated AI talks"
 
 
 def _mask_url(url: str) -> str:
@@ -32,53 +30,50 @@ def _mask_url(url: str) -> str:
 
 # ── Discord ──────────────────────────────────────────────────────────────────
 
-def _discord_blocks(summary: Summary) -> list[str]:
-    """One or more embed `description` chunks, each <= DISCORD_EMBED_DESC_LIMIT."""
-    body = f"**{summary.hook}**\n\n" + "\n\n".join(f"• {p}" for p in summary.points)
-    if len(body) <= DISCORD_EMBED_DESC_LIMIT:
-        return [body]
-    # hard-wrap an unexpectedly long body at the limit (rare; may split markdown)
-    return [body[i:i + DISCORD_EMBED_DESC_LIMIT]
-            for i in range(0, len(body), DISCORD_EMBED_DESC_LIMIT)]
-
-
-def _yt_thumbnail(meta: dict):
-    """YouTube thumbnail URL — prefer yt-dlp's, else build from the video id."""
-    thumb = meta.get("thumbnail")
-    if thumb:
-        return thumb
-    vid = meta.get("id")
-    return f"https://img.youtube.com/vi/{vid}/hqdefault.jpg" if vid else None
+def _talk_messages(summary: Summary, meta: dict) -> list[str]:
+    """Rich plain-text card matching the #ai-dev-tools news style: divider + badge
+    + bold title + bare source URL (auto-unfurls a YouTube preview) + byline +
+    'Why it matters' + 'Key takeaways' bullets. Splits into <=2000-char messages
+    at bullet boundaries if needed."""
+    title = meta.get("title") or "AI talk"
+    url = summary.source_url or meta.get("webpage_url") or meta.get("url") or ""
+    speaker = summary.speaker or meta.get("uploader") or meta.get("channel") or ""
+    mins = (summary.duration_sec or 0) // 60
+    dur = f"{mins} min" if mins else ""
+    byline = " · ".join(p for p in (speaker, dur) if p)
+    header = (
+        "━━━━━━━━━━━━━━━━━━━━━━━━\n"
+        "**🎬 Curated Talk**\n\n"
+        f"**{title}**\n"
+        + (f"🔗 {url}\n" if url else "")
+        + (f"*By {byline}*\n" if byline else "")
+        + f"\n**Why it matters**\n{summary.hook}\n\n**Key takeaways**\n"
+    )
+    msgs: list[str] = []
+    cur = header
+    for pt in summary.points:
+        line = f"• {pt}"
+        if len(cur) + len(line) + 1 > DISCORD_MESSAGE_LIMIT:
+            msgs.append(cur.rstrip())
+            cur = "*(continued)*\n"
+        cur += line + "\n"
+    if cur.strip():
+        msgs.append(cur.rstrip())
+    return msgs or [header[:DISCORD_MESSAGE_LIMIT]]
 
 
 def build_discord_payload(summary: Summary, meta: dict) -> dict:
-    title = (meta.get("title") or "AI talk summary")[:256]
-    chunks = _discord_blocks(summary)
-    thumb = _yt_thumbnail(meta)
-    embeds = []
-    for i, desc in enumerate(chunks):
-        embeds.append({
-            "title": title if i == 0 else f"{title} (cont’d {i + 1})",
-            "description": desc,
-            "url": summary.source_url or None,
-            "color": BRAND_COLOR,
-            "footer": {"text": DISCORD_FOOTER},
-            "author": {"name": summary.speaker[:256]} if summary.speaker else None,
-            # thumbnail on the first embed only; Discord omits null fields
-            "thumbnail": {"url": thumb} if (i == 0 and thumb) else None,
-        })
-    return {"username": DISCORD_USERNAME, "embeds": embeds}
+    return {"username": DISCORD_USERNAME, "messages": _talk_messages(summary, meta)}
 
 
 def send_discord(webhook_url: str, payload: dict, dry_run: bool = False) -> None:
-    # Discord caps total embed payload; if we built >10 embeds, send in batches.
-    embeds = payload.get("embeds", [])
-    for i in range(0, len(embeds), 10):
-        batch = {**payload, "embeds": embeds[i:i + 10]}
+    for content in payload.get("messages", []):
         if dry_run:
-            print(f"\n[discord DRY-RUN] POST {_mask_url(webhook_url)}\n{batch}\n")
+            print(f"\n[discord DRY-RUN] POST {_mask_url(webhook_url)}\n{content}\n")
             continue
-        r = requests.post(webhook_url, json=batch, timeout=15)
+        r = requests.post(webhook_url,
+                          json={"username": payload.get("username"), "content": content},
+                          timeout=15)
         if r.status_code not in (200, 204):
             raise RuntimeError(f"Discord webhook failed: {r.status_code} {r.text[:300]}")
 
