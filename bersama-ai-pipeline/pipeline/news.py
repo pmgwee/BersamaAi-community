@@ -1,121 +1,109 @@
-"""Trending AI news aggregator → #subscription-value.
+"""Topic-routed trending-AI news → Discord channels.
 
-Polls free, no-auth sources (Reddit AI subs + Hacker News), an LLM judge picks
-the few items genuinely worth a Malaysian mass-market AI community's attention
-(launches, pricing/resets, benchmarks, open-source releases), and posts each as
-a category-tagged card to Discord.
+Sources: Reddit (per-topic subs) + Hacker News + GitHub Trending (Search API).
+A GLM judge tags each candidate with a TOPIC + HEAT + card; each item routes to
+its topic's channel webhook. Per-topic dedup (state/news_seen.json).
 
-Twitter/X is intentionally NOT a source: its API is paid ($200/mo Basic) and
-scraping is fragile. The same news reaches Reddit/HN within hours. An X API key
-can be wired in later as an optional extra source.
+Topics are configured in TOPICS below; only `live=True` topics gather + post.
+**Coding (#ai-dev-tools) is live now.** Creative (image/video/voice) + research
+(study/productivity) are wired but OFF until their webhooks are added — set the
+env var (topic.webhook_env) + flip live=True to turn one on.
 
-Dedup: state/news_seen.json — a list of seen keys (url or title hash), committed
-back to the repo like state/processed.json. Anything already seen is skipped.
+Heat bar = viral / popular (GitHub star velocity, Reddit upvotes, HN points),
+NOT brand recognition — a fresh startup or community repo blowing up qualifies.
 """
 from __future__ import annotations
 
 import hashlib
 import json
+import os
 import time
 from dataclasses import dataclass, asdict
 from pathlib import Path
-from typing import Optional
 
 import requests
 from openai import OpenAI
 
+from .github_trending import fetch_trending
+
 STATE_FILE = Path(__file__).resolve().parent.parent / "state" / "news_seen.json"
 HEADERS = {"User-Agent": "BersamaAi-news/1.0 (community bot)"}
 
-REDDIT_SUBS = ["LocalLLaMA", "singularity", "OpenAI", "ClaudeAI"]
-HN_TOPN = 30          # pull top-N HN stories, then keyword-filter locally
-LOCAL_LIMIT = 24      # max candidates sent to the LLM judge per run
-MAX_POST_PER_RUN = 4  # never spam the channel
+HN_TOPN = 30
+LOCAL_LIMIT = 40          # max candidates sent to the judge per run
+MAX_POST_PER_RUN = 6
 
-# Local pre-filter: only keep items that look AI-relevant (cheap, before the LLM).
-AI_KEYWORDS = (
-    "ai", "llm", "gpt", "chatgpt", "claude", "anthropic", "openai", "gemini",
-    "deepmind", "grok", "xai", "elon", "kimi", "moonshot", "deepseek", "qwen",
-    "glm", "z.ai", "zhipu", "mistral", "llama", "meta ai", "muse", "sora", "veo",
-    "model", "benchmark", "open source", "open-source", "open weight", "open-weight",
-    "api", "subscription", "pricing", "reset", "rate limit", "credits", "free tier",
-    "agent", "reasoning", "frontier",
-)
 
-GLM_DEFAULT_BASE_URL = "https://open.bigmodel.cn/api/paas/v4/"
-GLM_DEFAULT_MODEL = "glm-4.6"
-
-SYSTEM_PROMPT = """\
-You are the news editor for BersamaAi, a Malaysian mass-market AI community's
-#subscription-value channel. You receive a batch of candidate AI items pulled
-from Reddit and Hacker News. Your job: pick the FEW that are genuinely worth a
-busy member's attention right now, and write each as a tight, sober, no-hype card.
-
-What qualifies (be selective — most candidates are NOT worth posting):
-- A new model or major product LAUNCH (e.g. "Grok 4.5 released", "Kimi K3 ships").
-- PRICING or access changes (e.g. "Fable 5 added to Max at 50% limits", a price cut).
-- USAGE RESETS / rate-limit / free-tier changes that affect subscribers.
-- A BENCHMARK record or ranking shake-up (e.g. "Kimi K3 hits #1").
-- A notable OPEN-SOURCE / open-weight release.
-Skip: rumors with no source, drama/flamewars, opinion hot-takes, niche dev trivia,
-security scare-stories without confirmation, duplicates.
-
-For each picked item, write:
-- category: one of LAUNCH | PRICING | USAGE_RESET | BENCHMARK | OPEN_SOURCE | DEAL.
-- headline: one crisp line (<= 110 chars), the news itself (no clickbait).
-- body: 1-2 sentences — what happened + why it matters to an ordinary Malaysian
-  AI user (subscription value, a cheaper/free alternative, something to try).
-  Ground it in the candidate text; never invent facts or numbers.
-- source_url: the candidate's url (pass through unchanged).
-- when: a short relative time label if available (e.g. "today", "this week"),
-  else "".
-
-English only. If nothing in the batch is worth posting, return items: [].
-"""
-
-EMIT_NEWS_TOOL = {
-    "name": "emit_news",
-    "description": "Emit the selected news items to post. Call exactly once.",
-    "input_schema": {
-        "type": "object",
-        "required": ["items"],
-        "properties": {
-            "items": {
-                "type": "array",
-                "maxItems": 6,
-                "items": {
-                    "type": "object",
-                    "required": ["category", "headline", "body", "source_url"],
-                    "properties": {
-                        "category": {"type": "string",
-                                     "enum": ["LAUNCH", "PRICING", "USAGE_RESET",
-                                              "BENCHMARK", "OPEN_SOURCE", "DEAL"]},
-                        "headline": {"type": "string", "maxLength": 200},
-                        "body": {"type": "string", "maxLength": 600},
-                        "source_url": {"type": "string"},
-                        "when": {"type": "string", "maxLength": 40},
-                    },
-                },
-            }
-        },
-    },
-}
-
+# ── topics ───────────────────────────────────────────────────────────────────
 
 @dataclass
-class NewsItem:
-    category: str
-    headline: str
-    body: str
-    source_url: str
-    when: str = ""
+class Topic:
+    key: str
+    channel: str
+    webhook_env: str
+    reddit_subs: list[str]
+    github_keywords: list[str]
+    github_min_stars: int = 200
+    live: bool = False
 
-    def to_dict(self) -> dict:
-        return asdict(self)
+
+TOPICS: list[Topic] = [
+    Topic("coding", "#ai-dev-tools", "DISCORD_NEWS_WEBHOOK_URL",
+          reddit_subs=["LocalLLaMA", "ClaudeAI", "OpenAI", "ChatGPTCoding"],
+          github_keywords=["ai agent", "coding agent", "agentic", "llm", "mcp", "code review"],
+          github_min_stars=150, live=True),
+    Topic("creative_image", "#image-creation", "DISCORD_IMAGE_WEBHOOK_URL",
+          reddit_subs=["StableDiffusion"],
+          github_keywords=["stable diffusion", "image generation", "flux", "comfyui"],
+          github_min_stars=200, live=False),
+    Topic("creative_video", "#video-creation-aigc-tvc", "DISCORD_VIDEO_WEBHOOK_URL",
+          reddit_subs=["aivideo"],
+          github_keywords=["video generation", "text to video", "ai video editor", "sora", "veo"],
+          github_min_stars=200, live=False),
+    Topic("creative_voice", "#voice-studio", "DISCORD_VOICE_WEBHOOK_URL",
+          reddit_subs=["SunoAI"],
+          github_keywords=["text to speech", "voice clone", "tts", "suno", "music generation"],
+          github_min_stars=150, live=False),
+    Topic("research_study", "#study-with-ai", "DISCORD_STUDY_WEBHOOK_URL",
+          reddit_subs=["learnmachinelearning", "ArtificialIntelligence"],
+          github_keywords=["learn ai", "ai course", "ml tutorial", "ai from scratch", "ai book"],
+          github_min_stars=100, live=False),
+    Topic("research_productivity", "#research-with-ai", "DISCORD_RESEARCH_WEBHOOK_URL",
+          reddit_subs=["Productivity", "ChatGPT"],
+          github_keywords=["deep research", "research agent", "ai notes", "knowledge graph"],
+          github_min_stars=150, live=False),
+]
+TOPIC_BY_KEY = {t.key: t for t in TOPICS}
+LIVE_TOPICS = [t for t in TOPICS if t.live]
+
+# Broad local pre-filter (cheap, before the LLM) — keep anything AI-relevant.
+AI_KEYWORDS = (
+    "ai", "llm", "gpt", "chatgpt", "claude", "anthropic", "openai", "gemini",
+    "deepmind", "grok", "xai", "kimi", "moonshot", "deepseek", "qwen", "glm",
+    "z.ai", "zhipu", "mistral", "llama", "muse", "sora", "veo", "runway",
+    "model", "agent", "agentic", "mcp", "coding", "copilot", "cursor", "devin",
+    "replit", "hermes", "openclaw", "open source", "open-source", "api",
+    "pricing", "benchmark", "swe-bench", "stable diffusion", "flux", "comfyui",
+    "midjourney", "suno", "elevenlabs", "tts", "video gen", "image gen",
+    "research", "study", "tutorial",
+)
 
 
 class NewsError(Exception):
     pass
+
+
+@dataclass
+class NewsItem:
+    topic: str
+    category: str
+    headline: str
+    body: str
+    source_url: str
+    heat_reason: str = ""
+
+    def to_dict(self) -> dict:
+        return asdict(self)
 
 
 # ── sources ──────────────────────────────────────────────────────────────────
@@ -125,10 +113,9 @@ def _looks_ai(text: str) -> bool:
     return any(k in t for k in AI_KEYWORDS)
 
 
-def fetch_reddit() -> list[dict]:
-    """Hot items from a few AI subreddits. Returns candidate dicts."""
+def fetch_reddit(subs: list[str]) -> list[dict]:
     out = []
-    for sub in REDDIT_SUBS:
+    for sub in subs:
         url = f"https://www.reddit.com/r/{sub}/hot.json?limit=20"
         try:
             r = requests.get(url, headers=HEADERS, timeout=15)
@@ -142,37 +129,29 @@ def fetch_reddit() -> list[dict]:
                     continue
                 ext = d.get("url") or ""
                 perma = f"https://www.reddit.com{(d.get('permalink') or '')}"
-                # prefer the external link if it's not a self-post
                 link = ext if ext and "reddit.com" not in ext else perma
-                snippet = (d.get("selftext") or "")[:300]
                 out.append({
-                    "title": title,
-                    "url": link,
-                    "discussion": perma,
-                    "source": f"r/{sub}",
-                    "score": int(d.get("score") or 0),
-                    "snippet": snippet,
+                    "title": title, "url": link, "discussion": perma,
+                    "source": f"r/{sub}", "score": int(d.get("score") or 0),
+                    "snippet": (d.get("selftext") or "")[:300],
                 })
-        except Exception:  # noqa: BLE001 — one sub failing shouldn't kill the run
+        except Exception:  # noqa: BLE001
             continue
-        time.sleep(0.5)  # be polite to reddit
+        time.sleep(0.5)
     return out
 
 
-def fetch_hn() -> list[dict]:
-    """Top HN stories, keyword-filtered to AI. Returns candidate dicts."""
+def fetch_hn(topn: int = HN_TOPN) -> list[dict]:
     out = []
     try:
-        ids = requests.get(
-            "https://hacker-news.firebaseio.com/v0/topstories.json",
-            headers=HEADERS, timeout=15).json()[:HN_TOPN]
+        ids = requests.get("https://hacker-news.firebaseio.com/v0/topstories.json",
+                           headers=HEADERS, timeout=15).json()[:topn]
     except Exception:  # noqa: BLE001
         return out
     for i in ids:
         try:
-            it = requests.get(
-                f"https://hacker-news.firebaseio.com/v0/item/{i}.json",
-                headers=HEADERS, timeout=10).json()
+            it = requests.get(f"https://hacker-news.firebaseio.com/v0/item/{i}.json",
+                              headers=HEADERS, timeout=10).json()
         except Exception:  # noqa: BLE001
             continue
         if not it or it.get("type") != "story":
@@ -184,22 +163,91 @@ def fetch_hn() -> list[dict]:
             "title": title,
             "url": it.get("url") or f"https://news.ycombinator.com/item?id={i}",
             "discussion": f"https://news.ycombinator.com/item?id={i}",
-            "source": "HN",
-            "score": int(it.get("score") or 0),
-            "snippet": "",
+            "source": "HN", "score": int(it.get("score") or 0), "snippet": "",
         })
     return out
 
 
 def gather_candidates() -> list[dict]:
-    """All candidates, AI-relevant, sorted by score, capped to LOCAL_LIMIT."""
-    cand = fetch_reddit() + fetch_hn()
+    """Pull Reddit (LIVE topics' subs) + HN + GitHub (LIVE topics' keywords)."""
+    subs = list({s for t in LIVE_TOPICS for s in t.reddit_subs})
+    cand = fetch_reddit(subs) + fetch_hn()
+    token = os.environ.get("GITHUB_TOKEN", "")
+    for t in LIVE_TOPICS:
+        cand += fetch_trending(t.github_keywords, min_stars=t.github_min_stars, token=token)
+
     cand = [c for c in cand if _looks_ai(c["title"]) or _looks_ai(c["snippet"])]
     cand.sort(key=lambda c: c.get("score", 0), reverse=True)
-    return cand[:LOCAL_LIMIT]
+    seen, dedup = set(), []
+    for c in cand:
+        k = c.get("url") or c.get("title")
+        if k and k not in seen:
+            seen.add(k)
+            dedup.append(c)
+    return dedup[:LOCAL_LIMIT]
 
 
 # ── LLM judge ────────────────────────────────────────────────────────────────
+
+SYSTEM_PROMPT = """\
+You are the news editor for BersamaAi's topic channels. You get AI candidates
+from Reddit, Hacker News, and GitHub Trending. Pick only the HOTTEST items
+(viral / popular — high GitHub stars, Reddit upvotes, or HN points; NOT brand
+recognition — a fresh startup or community repo blowing up absolutely counts).
+For each, assign a TOPIC and write a sober, no-hype card.
+
+TOPICS (assign exactly one):
+- coding — AI coding agents / agentic / dev tools / LLM releases / chat & assistants.
+  ANY maker: bigco + startup + community/open-source; US + Chinese. e.g. Claude Code,
+  Cursor, Cline, Aider, Windsurf, Copilot, Replit, pi coding, command code, Hermes,
+  OpenClaw, Devin; ChatGPT/Claude/Gemini/Perplexity; Kimi, DeepSeek, Qwen, GLM,
+  Meta Muse Spark, Grok Build / Grok 4.5.
+- creative_image — image generation (Flux, SD, Midjourney, Ideogram).
+- creative_video — video generation + AI editing (Sora, Veo, Runway, Kling, opencut, palmier-pro).
+- creative_voice — voice / audio / TTS / music (ElevenLabs, Suno, voicebox).
+- research_study — study / learning AI tools.
+- research_productivity — research / productivity AI tools (deep-research, notes, knowledge work).
+
+For each item return:
+- topic (one of the above)
+- category: LAUNCH | RELEASE | PRICING | BENCHMARK | OPEN_SOURCE | DEAL | UPDATE
+- headline (<= 110 chars; the news itself; no clickbait)
+- body (1-2 sentences: what + why it matters to a busy developer/creator; grounded
+  in the candidate text; never invent facts or numbers)
+- source_url (pass through unchanged)
+- heat_reason (one line on why it's hot, e.g. "12k stars in 3 days", "top of r/LocalLLaMA", "#1 on HN")
+
+Be selective — only the genuinely hot. English only. If nothing qualifies, items: [].
+"""
+
+EMIT_NEWS_TOOL = {
+    "name": "emit_news",
+    "description": "Emit the selected hot items, each tagged with its topic. Call exactly once.",
+    "input_schema": {
+        "type": "object",
+        "required": ["items"],
+        "properties": {
+            "items": {
+                "type": "array", "maxItems": 10,
+                "items": {
+                    "type": "object",
+                    "required": ["topic", "category", "headline", "body", "source_url"],
+                    "properties": {
+                        "topic": {"type": "string", "enum": [t.key for t in TOPICS]},
+                        "category": {"type": "string",
+                                     "enum": ["LAUNCH", "RELEASE", "PRICING", "BENCHMARK",
+                                              "OPEN_SOURCE", "DEAL", "UPDATE"]},
+                        "headline": {"type": "string", "maxLength": 200},
+                        "body": {"type": "string", "maxLength": 600},
+                        "source_url": {"type": "string"},
+                        "heat_reason": {"type": "string", "maxLength": 160},
+                    },
+                },
+            }
+        },
+    },
+}
+
 
 def _build_judge_user_message(candidates: list[dict]) -> str:
     lines = [f"CANDIDATES ({len(candidates)}):"]
@@ -209,39 +257,29 @@ def _build_judge_user_message(candidates: list[dict]) -> str:
             f"title: {c['title']}\nurl: {c['url']}"
             + (f"\nexcerpt: {c['snippet']}" if c["snippet"] else "")
         )
-    lines.append(
-        "\nPick the few worth posting to #subscription-value. "
-        "Call emit_news with the selected items (or items: [] if none qualify)."
-    )
+    lines.append("\nPick the hottest. Call emit_news with each tagged by topic (or items: [] if none).")
     return "\n".join(lines)
 
 
-def judge(
-    candidates: list[dict], api_key: str, model: str, base_url: str
-) -> list[NewsItem]:
-    """Force a GLM emit_news tool call; return validated NewsItems (may be empty)."""
+def judge(candidates: list[dict], *, api_key: str, model: str, base_url: str) -> list[NewsItem]:
     if not api_key:
         raise NewsError("ZAI_API_KEY is missing — cannot judge news.")
     client = OpenAI(api_key=api_key, base_url=base_url)
     tool = {"type": "function", "function": {
-        "name": EMIT_NEWS_TOOL["name"],
-        "description": EMIT_NEWS_TOOL["description"],
+        "name": EMIT_NEWS_TOOL["name"], "description": EMIT_NEWS_TOOL["description"],
         "parameters": EMIT_NEWS_TOOL["input_schema"],
     }}
     try:
         resp = client.chat.completions.create(
             model=model, max_completion_tokens=2048,  # Z.ai GLM ignores max_tokens
-            messages=[
-                {"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user", "content": _build_judge_user_message(candidates)},
-            ],
+            messages=[{"role": "system", "content": SYSTEM_PROMPT},
+                      {"role": "user", "content": _build_judge_user_message(candidates)}],
             tools=[tool], tool_choice="required",
         )
     except Exception as e:  # noqa: BLE001
         raise NewsError(f"GLM API call failed: {e}") from e
 
-    msg = resp.choices[0].message
-    tc = getattr(msg, "tool_calls", None)
+    tc = getattr(resp.choices[0].message, "tool_calls", None)
     if not tc:
         return []
     try:
@@ -251,20 +289,21 @@ def judge(
 
     out = []
     for raw in (data.get("items") or [])[:MAX_POST_PER_RUN]:
-        try:
-            out.append(NewsItem(
-                category=str(raw.get("category", "LAUNCH")).strip(),
-                headline=str(raw.get("headline", "")).strip(),
-                body=str(raw.get("body", "")).strip(),
-                source_url=str(raw.get("source_url", "")).strip(),
-                when=str(raw.get("when", "")).strip(),
-            ))
-        except Exception:  # noqa: BLE001
+        topic = str(raw.get("topic", "")).strip()
+        if topic not in TOPIC_BY_KEY:
             continue
+        out.append(NewsItem(
+            topic=topic,
+            category=str(raw.get("category", "UPDATE")).strip(),
+            headline=str(raw.get("headline", "")).strip(),
+            body=str(raw.get("body", "")).strip(),
+            source_url=str(raw.get("source_url", "")).strip(),
+            heat_reason=str(raw.get("heat_reason", "")).strip(),
+        ))
     return out
 
 
-# ── dedup state ───────────────────────────────────────────────────────────────
+# ── dedup state ──────────────────────────────────────────────────────────────
 
 def _load_seen() -> set[str]:
     if not STATE_FILE.exists():
@@ -277,62 +316,66 @@ def _load_seen() -> set[str]:
 
 def _save_seen(seen: set[str]) -> None:
     STATE_FILE.parent.mkdir(parents=True, exist_ok=True)
-    # keep the file bounded — only the most recent 500 keys
-    recent = sorted(seen)[-500:]
-    STATE_FILE.write_text(json.dumps(recent, ensure_ascii=False, indent=2), encoding="utf-8")
+    STATE_FILE.write_text(json.dumps(sorted(seen)[-500:], ensure_ascii=False, indent=2),
+                          encoding="utf-8")
 
 
 def _key(item: NewsItem, candidate_by_url: dict) -> str:
-    """Stable dedup key: prefer the matched candidate's discussion url, else headline hash."""
     c = candidate_by_url.get(item.source_url)
     base = (c["discussion"] if c else item.source_url) or item.headline
     return hashlib.sha1(base.encode("utf-8")).hexdigest()[:16]
 
 
-# ── orchestration ────────────────────────────────────────────────────────────
+# ── posting ──────────────────────────────────────────────────────────────────
 
-CATEGORY_EMOJI = {
-    "LAUNCH": "🚀", "PRICING": "💰", "USAGE_RESET": "♻️",
-    "BENCHMARK": "📊", "OPEN_SOURCE": "🔓", "DEAL": "🎁",
-}
+CATEGORY_EMOJI = {"LAUNCH": "🚀", "RELEASE": "🆕", "PRICING": "💰", "BENCHMARK": "📊",
+                  "OPEN_SOURCE": "🔓", "DEAL": "🎁", "UPDATE": "🔁"}
 BRAND_COLOR = 0x5865F2
 
 
 def build_news_payload(item: NewsItem) -> dict:
     emoji = CATEGORY_EMOJI.get(item.category, "📡")
-    when = f" · {item.when}" if item.when else ""
+    heat = f" · 🔥 {item.heat_reason}" if item.heat_reason else ""
     desc = f"{item.body}\n\n🔗 {item.source_url}"
-    return {
-        "username": "BersamaAi",
-        "embeds": [{
-            "title": f"{emoji} {item.category.replace('_', ' ')}{when} — {item.headline}"[:256],
-            "description": desc[:4096],
-            "url": item.source_url or None,
-            "color": BRAND_COLOR,
-            "footer": {"text": "BersamaAi · trending AI moves"},
-        }],
-    }
+    chan = TOPIC_BY_KEY[item.topic].channel
+    return {"username": "BersamaAi", "embeds": [{
+        "title": f"{emoji} {item.category.replace('_', ' ')} → {chan}{heat} — {item.headline}"[:256],
+        "description": desc[:4096],
+        "url": item.source_url or None,
+        "color": BRAND_COLOR,
+        "footer": {"text": "BersamaAi · trending AI moves"},
+    }]}
 
 
-def run_news(
-    *, dry_run: bool, stub: bool,
-    api_key: str, model: str, base_url: str,
-    webhook_url: str, alert_fn=None,
-) -> list[str]:
+def _post(webhook_url: str, payload: dict) -> None:
+    r = requests.post(webhook_url, json=payload, timeout=15)
+    if r.status_code not in (200, 204):
+        raise RuntimeError(f"{r.status_code} {r.text[:200]}")
+
+
+# ── orchestration ────────────────────────────────────────────────────────────
+
+def run_news(*, dry_run: bool, stub: bool,
+             api_key: str, model: str, base_url: str,
+             webhook_url: str = "", alert_fn=None) -> list[str]:
     """Full news run. Returns a list of one-line status strings."""
     print("\n=== news run ===")
+    if not LIVE_TOPICS:
+        return ["NEWS_NO_LIVE_TOPICS"]
+
     candidates = gather_candidates()
-    print(f"gathered {len(candidates)} AI-relevant candidates")
+    print(f"gathered {len(candidates)} candidates across live topic(s): "
+          + ", ".join(t.key for t in LIVE_TOPICS))
     if not candidates:
         return ["NEWS_NO_CANDIDATES"]
 
     if stub:
-        items = [NewsItem("LAUNCH", "[STUB] A notable AI launch happened",
-                          "This is a canned news item for local testing (no API key).",
-                          candidates[0]["url"], "today")]
+        items = [NewsItem(LIVE_TOPICS[0].key, "LAUNCH", "[STUB] a hot item",
+                          "Canned item for local testing (no API key).",
+                          candidates[0]["url"], "stub")]
     else:
         try:
-            items = judge(candidates, api_key, model, base_url)
+            items = judge(candidates, api_key=api_key, model=model, base_url=base_url)
         except NewsError as e:
             if alert_fn:
                 alert_fn(f"news judge failed: {e}", dry_run)
@@ -350,28 +393,30 @@ def run_news(
         if key in seen:
             results.append(f"NEWS_DEDUPED {item.headline[:40]}")
             continue
+        topic = TOPIC_BY_KEY[item.topic]
+        # webhook: the topic's env var, else the passed fallback for live topics
+        wh = os.environ.get(topic.webhook_env, "") or (webhook_url if topic.live else "")
+        if not wh:
+            results.append(f"NEWS_NO_WEBHOOK {item.topic} {item.headline[:40]}")
+            continue
         payload = build_news_payload(item)
         if dry_run:
-            print(f"\n[discord DRY-RUN] news\n{payload}\n")
-        elif webhook_url:
+            print(f"\n[discord DRY-RUN] -> {topic.channel}\n{payload}\n")
+        else:
             try:
-                r = requests.post(webhook_url, json=payload, timeout=15)
-                if r.status_code not in (200, 204):
-                    raise RuntimeError(f"{r.status_code} {r.text[:200]}")
+                _post(wh, payload)
             except Exception as e:  # noqa: BLE001
                 if alert_fn:
                     alert_fn(f"news post failed: {item.headline[:60]}: {e}", dry_run)
                 results.append(f"NEWS_POST_FAILED {item.headline[:40]}")
                 continue
-        else:
-            print("[discord] skipped — no DISCORD_NEWS_WEBHOOK_URL set")
         seen.add(key)
         posted += 1
-        results.append(f"NEWS_POSTED {item.headline[:40]}")
+        results.append(f"NEWS_POSTED {item.topic} {item.headline[:40]}")
         if posted >= MAX_POST_PER_RUN:
             break
 
     if not dry_run:
         _save_seen(seen)
-    print(f"\nposted {posted} news item(s)")
+    print(f"\nposted {posted} item(s)")
     return results
