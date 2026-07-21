@@ -62,6 +62,7 @@ def fetch_trending(
                     "score": int(item.get("stargazers_count") or 0),
                     "snippet": (item.get("description") or "")[:300],
                     "language": item.get("language") or "",
+                    "thumbnail": (item.get("owner") or {}).get("avatar_url", ""),
                 })
         except Exception as e:  # noqa: BLE001 — one query failing shouldn't kill the run
             print(f"[github] {q!r} failed: {e}")

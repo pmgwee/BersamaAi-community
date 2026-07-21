@@ -50,6 +50,7 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_DM_CHAT_ID: ${{ secrets.TELEGRAM_DM_CHAT_ID }}
           GLM_MODEL: ${{ vars.GLM_MODEL || 'glm-5.2' }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   # authenticated GitHub search -> no rate limit
         run: python -m pipeline.main --mode news
 
       - name: Commit news dedup state

@@ -130,10 +130,12 @@ def fetch_reddit(subs: list[str]) -> list[dict]:
                 ext = d.get("url") or ""
                 perma = f"https://www.reddit.com{(d.get('permalink') or '')}"
                 link = ext if ext and "reddit.com" not in ext else perma
+                thumb = d.get("thumbnail") or ""
                 out.append({
                     "title": title, "url": link, "discussion": perma,
                     "source": f"r/{sub}", "score": int(d.get("score") or 0),
                     "snippet": (d.get("selftext") or "")[:300],
+                    "thumbnail": thumb if thumb.startswith("http") else "",
                 })
         except Exception:  # noqa: BLE001
             continue
@@ -333,7 +335,30 @@ CATEGORY_EMOJI = {"LAUNCH": "🚀", "RELEASE": "🆕", "PRICING": "💰", "BENCH
 BRAND_COLOR = 0x5865F2
 
 
-def build_news_payload(item: NewsItem) -> dict:
+def _fmt(n: int) -> str:
+    if n >= 1_000_000:
+        return f"{n / 1_000_000:.1f}M"
+    if n >= 1_000:
+        return f"{n / 1_000:.1f}k"
+    return str(n)
+
+
+def _metric(cand: dict | None) -> str:
+    """Reliable heat label from the candidate's real score (don't trust LLM flavor text)."""
+    if not cand:
+        return ""
+    score = int(cand.get("score") or 0)
+    src = cand.get("source") or ""
+    if src == "github":
+        return f"⭐ {_fmt(score)} stars"
+    if src == "HN":
+        return f"{_fmt(score)} HN points"
+    if src.startswith("r/"):
+        return f"▲ {_fmt(score)} upvotes on {src}"
+    return ""
+
+
+def build_news_payload(item: NewsItem, thumbnail: str = "") -> dict:
     emoji = CATEGORY_EMOJI.get(item.category, "📡")
     heat = f" · 🔥 {item.heat_reason}" if item.heat_reason else ""
     desc = f"{item.body}\n\n🔗 {item.source_url}"
@@ -344,6 +369,7 @@ def build_news_payload(item: NewsItem) -> dict:
         "url": item.source_url or None,
         "color": BRAND_COLOR,
         "footer": {"text": "BersamaAi · trending AI moves"},
+        "thumbnail": {"url": thumbnail} if thumbnail else None,
     }]}
 
 
@@ -399,7 +425,11 @@ def run_news(*, dry_run: bool, stub: bool,
         if not wh:
             results.append(f"NEWS_NO_WEBHOOK {item.topic} {item.headline[:40]}")
             continue
-        payload = build_news_payload(item)
+        cand = by_url.get(item.source_url)
+        metric = _metric(cand)
+        if metric:
+            item.heat_reason = metric  # real stars/upvotes/points, not LLM flavor text
+        payload = build_news_payload(item, thumbnail=(cand or {}).get("thumbnail", ""))
         if dry_run:
             print(f"\n[discord DRY-RUN] -> {topic.channel}\n{payload}\n")
         else:
