@@ -18,6 +18,7 @@ Privileged intents REQUIRED in the Developer Portal
 (Bot > Privileged Gateway Intents): Server Members + Message Content.
 """
 import asyncio
+import ipaddress
 import json
 import logging
 import os
@@ -29,7 +30,9 @@ import time
 from collections import deque
 from contextlib import contextmanager
 from pathlib import Path
+from urllib.parse import urlparse
 
+import aiohttp
 import discord
 from discord import app_commands
 from discord.ext import commands, tasks
@@ -84,14 +87,20 @@ AI_GLOBAL_MAX = 20        # max AI calls per rolling window (server-wide)
 AI_GLOBAL_WINDOW = 60     # ...seconds
 AI_CONCURRENCY = 3        # max simultaneous in-flight AI calls
 AI_TIMEOUT = 30           # seconds to wait for one Z.ai response (bounds hung calls)
-AI_CONTEXT_MSGS = 12      # recent channel messages included as live conversation context
-AI_CONTEXT_PER_MSG = 280  # cap each context message length (bounds token cost)
+AI_CONTEXT_MSGS = 50      # recent channel messages fed as conversation context (raise for longer "memory"; cost scales linearly)
+AI_CONTEXT_PER_MSG = 500  # cap each context message (text + link-preview embed) length
+AI_LINK_FETCH = True       # fetch full page content for recent links via Jina Reader (JS pages too)
+AI_LINK_FETCH_MAX = 2      # max links fetched per @mention (most recent first)
+AI_LINK_FETCH_CHARS = 4000  # truncate each fetched page (bounds token cost; ~1k tokens/page)
+AI_LINK_FETCH_TIMEOUT = 8  # seconds per fetch — best-effort, never blocks the bot
 
 # Replies never need to ping anyone — suppress all mentions on every AI send so
 # prompt-injected GLM output can't mass-ping roles / @everyone.
 AI_ALLOWED = discord.AllowedMentions.none()
 # Belt-and-suspenders: strip mention syntax from GLM output before sending.
 _MENTION_RE = re.compile(r"<@!?\d+>|<@&\d+>|@(?:everyone|here)\b")
+# Bare http(s) URLs in message text — used to optionally fetch full page content.
+_URL_RE = re.compile(r"https?://[^\s<>\"'\])]+", re.IGNORECASE)
 
 DB_PATH = BASE / "bersama.db"
 
@@ -416,28 +425,95 @@ def _refund_slot(slot: float) -> None:
         pass
 
 
+def _is_safe_fetch_url(url: str) -> bool:
+    """SSRF guard: only allow public http(s) URLs — block localhost, private/loopback/link-local
+    IPs, and cloud-metadata hosts so a malicious link can't probe the VM's internals."""
+    p = urlparse(url)
+    if p.scheme not in ("http", "https"):
+        return False
+    host = (p.hostname or "").lower()
+    if not host or host in ("localhost", "metadata.google.internal") or host.endswith(".internal"):
+        return False
+    try:
+        ip = ipaddress.ip_address(host)
+        if ip.is_private or ip.is_loopback or ip.is_link_local or ip.is_reserved or ip.is_multicast:
+            return False
+    except ValueError:
+        pass  # hostname (not an IP literal) — allowed
+    return True
+
+
+async def _fetch_url_markdown(url: str) -> str:
+    """Fetch a URL's content as clean markdown via Jina Reader (handles JS-rendered pages like
+    Luma). Best-effort: returns truncated text or '' on any failure/timeout. Never raises."""
+    if not _is_safe_fetch_url(url):
+        return ""
+    try:
+        headers = {"Accept": "text/plain"}
+        key = os.environ.get("JINA_API_KEY")
+        if key:
+            headers["Authorization"] = f"Bearer {key}"
+        timeout = aiohttp.ClientTimeout(total=AI_LINK_FETCH_TIMEOUT)
+        async with aiohttp.ClientSession(timeout=timeout) as session:
+            async with session.get("https://r.jina.ai/" + url, headers=headers) as resp:
+                if resp.status != 200:
+                    return ""
+                text = await resp.text(errors="replace")
+        return text.strip()[:AI_LINK_FETCH_CHARS]
+    except Exception:
+        return ""
+
+
+def _format_msg_for_context(m: discord.Message) -> str:
+    """One-line summary of a message for LLM context: "<author>: <text> [link preview: …]".
+    Includes Discord's auto-generated link embed (title + description) so the bot understands
+    pages members share (e.g. an event) without needing to browse the web itself."""
+    bot_id = bot.user.id if bot.user else None
+    if m.author.id == bot_id:
+        who = "BersamaAi (you, earlier)"
+    elif m.author.bot:
+        return ""
+    else:
+        who = m.author.display_name
+    text = m.clean_content.replace("\n", " ").strip()
+    for emb in m.embeds:
+        title = (emb.title or "").strip()
+        desc = (emb.description or "").replace("\n", " ").strip()
+        if title or desc:
+            text += " [link preview: " + title + (f" — {desc[:240]}" if desc else "") + "]"
+    if not text:
+        return ""
+    return f"{who}: {text[:AI_CONTEXT_PER_MSG]}"
+
+
 async def _gather_channel_context(message: discord.Message) -> str:
     """Recent messages before this one (oldest→newest) so the bot can answer questions about
     the live conversation — e.g. "is that event worth joining?" right after a member shared a
-    link + commentary. Bounded to AI_CONTEXT_MSGS messages, each capped to AI_CONTEXT_PER_MSG."""
+    link + commentary. Includes each message's text + Discord link embed, and (optionally) the
+    full page content of the most recent links via Jina Reader for richer answers."""
     try:
         recent = [m async for m in message.channel.history(limit=AI_CONTEXT_MSGS + 1, before=message)]
     except discord.HTTPException:
         return ""
     recent.reverse()  # oldest first
-    lines = []
-    for m in recent:
-        if m.author.id == bot.user.id:
-            who = "BersamaAi (you, earlier)"
-        elif m.author.bot:
-            continue
-        else:
-            who = m.author.display_name
-        text = m.clean_content.replace("\n", " ").strip()
-        if not text:
-            continue
-        lines.append(f"{who}: {text[:AI_CONTEXT_PER_MSG]}")
-    return "\n".join(lines)
+    transcript = "\n".join(line for line in (_format_msg_for_context(m) for m in recent) if line)
+
+    # Optionally enrich with full page content for the most recent links (handles JS-rendered
+    # pages like Luma — gives the LLM agenda/FAQ/etc., not just the embed preview).
+    if AI_LINK_FETCH and transcript:
+        seen: set[str] = set()
+        unique: list[str] = []
+        for u in _URL_RE.findall(transcript):
+            if u not in seen and _is_safe_fetch_url(u):
+                seen.add(u)
+                unique.append(u)
+        targets = unique[-AI_LINK_FETCH_MAX:]  # most recent N links
+        if targets:
+            pages = await asyncio.gather(*[_fetch_url_markdown(u) for u in targets])
+            fetched = [f"\n[{u} — full page content:]\n{md}" for u, md in zip(targets, pages) if md]
+            if fetched:
+                transcript += "\n\n" + "\n".join(fetched)
+    return transcript
 
 
 def _ai_messages_for(question: str, message: discord.Message, context: str) -> list[dict]:
@@ -445,8 +521,10 @@ def _ai_messages_for(question: str, message: discord.Message, context: str) -> l
     parts: list[str] = []
     if context:
         parts.append(
-            "Recent conversation in this channel (oldest first). Use it as context; the "
-            "question you must answer is on the last line:\n" + context
+            "Recent conversation in this channel (oldest first) plus any fetched link content. "
+            "For specific facts (names, times, places, links) use only this context; if a detail "
+            "isn't here, say you're not sure rather than inventing it. The question is on the last line:\n"
+            + context
         )
     parts.append(f"---\n{message.author.display_name} (@you): {question}")
     return [

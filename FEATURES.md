@@ -57,6 +57,8 @@ Runs on **GitHub Actions** so it works while your PC is off. LLM = **GLM `glm-5.
 | # | Feature | What it does | Posts to | Schedule | Status |
 |---|---|---|---|---|---|
 | A1 | **Talk summarizer** | YouTube talk → transcript → **5-point English summary** + Threads/FB caption bundle | `#curated-resources` (+ optional Telegram) | daily ~09:03 MYT | 🟡 pending |
+### no captions → yt-dlp downloads audio → ffmpeg → 16kHz mono mp3 → Groq Whisper transcribes → GLM summarizes → post
+
 | A2 | **Trending news digest** | Reddit (4 AI subs) + Hacker News → GLM judge picks **0–4** → category-tagged cards | `#subscription-value` | every ~3h | 🟡 pending |
 | A3 | **On-demand summarizer** | Paste a URL in the Actions UI → summary + post | `#curated-resources` | manual | 🟡 pending |
 
