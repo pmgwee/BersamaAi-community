@@ -639,6 +639,10 @@ def _configure_logging() -> None:
     root.setLevel(logging.INFO)
     if not root.handlers:
         root.addHandler(handler)
+    # Silence chatty per-request loggers so bersama.log isn't flooded with an httpx INFO
+    # line on every GLM call. Warnings/errors still come through.
+    for noisy in ("httpx", "openai", "discord.http"):
+        logging.getLogger(noisy).setLevel(logging.WARNING)
 
 
 def main():

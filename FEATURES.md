@@ -79,11 +79,11 @@ discord.py event bot. Privileged intents **required**: Server Members + Message 
 
 | # | Feature | What it does | MEE6 equivalent | Status |
 |---|---|---|---|---|
-| B1 | **Welcome + auto-role** | Greets new members in `#welcome`, assigns `@Newcomer` on join | Welcome + Autorole | 🟡 pending |
-| B2 | **Self-assign reaction roles** | 5 emoji → role, add/remove on react | Reaction Roles | 🟡 pending |
-| B3 | **Leveling** | MEE6-curve XP per message · `/rank` `/leaderboard` · auto role-rewards at Lv 5/10/20/35 | Leveling + Premium role-rewards | 🟡 pending |
-| B4 | **Prefix commands** | `!rules` · `!resources` · `!ai` | Custom Commands | 🟡 pending |
-| B5 | **`@BersamaAi` / `!ai` AI** | GLM-5.2 replies, async + cost-guardrailed | "AI" tier | 🟡 pending |
+| B1 | **Welcome + auto-role** | Greets new members in `#welcome`, assigns `@Newcomer` on join | Welcome + Autorole | ✅ verified |
+| B2 | **Self-assign reaction roles** | 5 emoji → role, add/remove on react | Reaction Roles | ✅ verified |
+| B3 | **Leveling** | MEE6-curve XP per message · `/rank` `/leaderboard` · auto role-rewards at Lv 5/10/20/35 | Leveling + Premium role-rewards | ✅ verified |
+| B4 | **Prefix commands** | `!rules` · `!resources` · `!ai` | Custom Commands | ✅ verified |
+| B5 | **`@BersamaAi` / `!ai` AI** | GLM-5.2 replies, async + cost-guardrailed | "AI" tier | ✅ verified |
 
 **B5 cost guardrails** (tune in `bot.py` top constants):
 - 30 s per-user cooldown · 20 calls/min server-wide · 3 concurrent max
