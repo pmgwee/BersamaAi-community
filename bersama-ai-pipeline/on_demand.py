@@ -35,7 +35,7 @@ ROOT = Path(__file__).resolve().parent  # bersama-ai-pipeline/
 
 FORM = """<!doctype html><html><head><meta charset=utf-8>
 <meta name=viewport content='width=device-width,initial-scale=1'>
-<title>BersamaAi summarize</title></head>
+<title>BersamaAi</title></head>
 <body style='font-family:system-ui,sans-serif;max-width:520px;margin:40px auto;padding:0 16px'>
 <h2>🎬 Summarize a YouTube video</h2>
 <p style='color:#666'>Posts a 5-point summary to <b>#curated-resources</b>.</p>
@@ -43,7 +43,16 @@ FORM = """<!doctype html><html><head><meta charset=utf-8>
 <input name=url placeholder='Paste YouTube URL'
   style='width:100%;padding:14px;font-size:16px;border:1px solid #ccc;border-radius:8px' required>
 <button style='width:100%;padding:14px;margin-top:12px;font-size:16px;background:#5865F2;color:#fff;
-  border:0;border-radius:8px'>Summarize &amp; post</button>
+  border:0;border-radius:8px'>Summarize &rarr; #curated-resources</button>
+</form>
+<hr style='margin:28px 0;border:0;border-top:1px solid #eee'>
+<h2>📣 Share a link</h2>
+<p style='color:#666'>Threads / X / article / repo &rarr; a news card in the matching channel.</p>
+<form method=post action='/share?token={tok}'>
+<input name=url placeholder='Paste any link (Threads, X, blog, GitHub…)'
+  style='width:100%;padding:14px;font-size:16px;border:1px solid #ccc;border-radius:8px' required>
+<button style='width:100%;padding:14px;margin-top:12px;font-size:16px;background:#5865F2;color:#fff;
+  border:0;border-radius:8px'>Share &rarr; topic channel</button>
 </form></body></html>"""
 
 DONE = """<!doctype html><html><head><meta charset=utf-8>
@@ -52,7 +61,15 @@ DONE = """<!doctype html><html><head><meta charset=utf-8>
 <h2>✅ Started</h2>
 <p>Summarizing in the background — check <b>#curated-resources</b> in ~1–3 min.</p>
 <p style='color:#666'>Caption-less videos take longer (audio transcription).</p>
-<p><a href='/?token={tok}'>← summarize another</a></p>
+<p><a href='/?token={tok}'>← back</a></p>
+</body></html>"""
+
+SHARED = """<!doctype html><html><head><meta charset=utf-8>
+<meta name=viewport content='width=device-width,initial-scale=1'></head>
+<body style='font-family:system-ui,sans-serif;max-width:520px;margin:40px auto;padding:0 16px'>
+<h2>✅ Shared</h2>
+<p>Building the card in the background — it'll appear in the matching topic channel in ~10–20s.</p>
+<p><a href='/?token={tok}'>← back</a></p>
 </body></html>"""
 
 
@@ -65,6 +82,17 @@ def _summarize_async(url: str) -> None:
         )
     except Exception as e:  # noqa: BLE001
         print(f"[on-demand] summarize failed for {url}: {e}")
+
+
+def _share_async(url: str) -> None:
+    """Share a link as a news card in the background (fire-and-forget)."""
+    try:
+        subprocess.run(
+            ["python", "-m", "pipeline.main", "--mode", "share", "--url", url],
+            cwd=str(ROOT), capture_output=True, text=True, timeout=300,
+        )
+    except Exception as e:  # noqa: BLE001
+        print(f"[on-demand] share failed for {url}: {e}")
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -88,16 +116,23 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self):  # noqa: N802
         path = self.path.split("?", 1)[0]
-        if path != "/run" or not self._token_ok():
+        if not self._token_ok():
             return self._send(403, "forbidden — bad or missing token")
         length = int(self.headers.get("Content-Length") or 0)
         data = urllib.parse.parse_qs(self.rfile.read(length).decode("utf-8"))
         url = (data.get("url", [""])[0]).strip()
         if not url or "://" not in url:
             return self._send(400, "missing or invalid url")
-        threading.Thread(target=_summarize_async, args=(url,), daemon=True).start()
-        print(f"[on-demand] queued: {url}")
-        self._send(200, DONE.format(tok=html.escape(TOKEN)))
+        if path == "/run":
+            threading.Thread(target=_summarize_async, args=(url,), daemon=True).start()
+            print(f"[on-demand] summarize queued: {url}")
+            self._send(200, DONE.format(tok=html.escape(TOKEN)))
+        elif path == "/share":
+            threading.Thread(target=_share_async, args=(url,), daemon=True).start()
+            print(f"[on-demand] share queued: {url}")
+            self._send(200, SHARED.format(tok=html.escape(TOKEN)))
+        else:
+            self._send(404, "not found")
 
     def log_message(self, *args):  # quieter access log
         pass

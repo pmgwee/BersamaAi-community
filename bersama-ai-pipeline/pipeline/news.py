@@ -479,6 +479,147 @@ def _post(webhook_url: str, payload: dict) -> None:
         raise RuntimeError(f"{r.status_code} {r.text[:200]}")
 
 
+# ── share (Threads / link human-in-the-loop) ─────────────────────────────────
+# The owner is the taste algorithm for social sources (Threads/X) the engine
+# can't/shouldn't auto-scrape. This turns ONE chosen public URL into a posted card:
+# fetch og: meta -> GLM writes a topic-tagged card -> post to that topic's channel.
+
+URL_FETCH_HEADERS = {"User-Agent": "Mozilla/5.0 (BersamaAi-news/1.0; +share)"}
+
+
+def _meta_content(html: str, prop: str) -> str:
+    """Value of <meta name/property=prop content=...> (attribute-order-insensitive)."""
+    pat = re.compile(rf"<meta[^>]+(?:name|property)=[\"']({re.escape(prop)})[\"'][^>]*content=[\"']([^\"']*)",
+                     re.IGNORECASE)
+    m = pat.search(html)
+    if m:
+        return m.group(2)
+    pat2 = re.compile(rf"<meta[^>]+content=[\"']([^\"']*)[\"'][^>]*(?:name|property)=[\"']({re.escape(prop)})[\"']",
+                      re.IGNORECASE)
+    m = pat2.search(html)
+    return m.group(1) if m else ""
+
+
+def _html_title(html: str) -> str:
+    m = re.search(r"<title[^>]*>([^<]*)</title>", html, re.IGNORECASE)
+    return m.group(1).strip() if m else ""
+
+
+def fetch_url_meta(url: str) -> dict:
+    """Fetch a public URL; extract {title, description, image} via og: meta tags."""
+    try:
+        r = requests.get(url, headers=URL_FETCH_HEADERS, timeout=15)
+        if r.status_code != 200:
+            return {}
+        html = r.text
+    except Exception:  # noqa: BLE001
+        return {}
+    return {
+        "title": _meta_content(html, "og:title") or _html_title(html),
+        "description": _meta_content(html, "og:description") or _meta_content(html, "description"),
+        "image": _meta_content(html, "og:image"),
+        "url": url,
+    }
+
+
+SINGLE_CARD_PROMPT = """\
+You are the BersamaAi news editor. The owner shared ONE item (a Threads/X post,
+article, or product/repo link) they judged worth the community's attention. Write
+ONE news card — sober, no hype, grounded strictly in the given text.
+
+Assign exactly one TOPIC:
+- coding — AI coding agents / agentic / dev tools / LLM / chat & assistants
+- creative_image — image generation
+- creative_video — video generation + AI editing
+- creative_voice — voice / audio / TTS / music
+- research_study — study / learning AI tools
+- research_productivity — research / productivity AI tools
+
+Return: topic, category (LAUNCH|RELEASE|PRICING|BENCHMARK|OPEN_SOURCE|DEAL|UPDATE),
+headline (<=110 chars, the news itself), body (1-2 sentences: what + why it matters),
+source_url (pass through unchanged). English only.
+"""
+
+EMIT_ONE_TOOL = {
+    "name": "emit_card",
+    "description": "Emit the one news card for the shared item. Call exactly once.",
+    "input_schema": {
+        "type": "object",
+        "required": ["topic", "category", "headline", "body", "source_url"],
+        "properties": {
+            "topic": {"type": "string", "enum": [t.key for t in TOPICS]},
+            "category": {"type": "string",
+                         "enum": ["LAUNCH", "RELEASE", "PRICING", "BENCHMARK",
+                                  "OPEN_SOURCE", "DEAL", "UPDATE"]},
+            "headline": {"type": "string", "maxLength": 200},
+            "body": {"type": "string", "maxLength": 600},
+            "source_url": {"type": "string"},
+        },
+    },
+}
+
+
+def post_url_as_news(url: str, *, api_key: str, model: str, base_url: str,
+                     dry_run: bool = False, alert_fn=None) -> str:
+    """Threads/link HITL: fetch a public URL -> GLM writes a topic-tagged card -> post."""
+    if not api_key:
+        return "SHARE_NO_API_KEY"
+    meta = fetch_url_meta(url)
+    if not meta.get("title"):
+        print(f"[share] could not fetch content for {url}")
+        return "SHARE_FETCH_FAILED"
+    client = OpenAI(api_key=api_key, base_url=base_url)
+    tool = {"type": "function", "function": {
+        "name": EMIT_ONE_TOOL["name"], "description": EMIT_ONE_TOOL["description"],
+        "parameters": EMIT_ONE_TOOL["input_schema"],
+    }}
+    user_msg = (f"title: {meta['title']}\n"
+                f"description: {meta.get('description', '')}\n"
+                f"url: {url}")
+    try:
+        resp = client.chat.completions.create(
+            model=model, max_completion_tokens=1024,
+            messages=[{"role": "system", "content": SINGLE_CARD_PROMPT},
+                      {"role": "user", "content": user_msg}],
+            tools=[tool], tool_choice="required",
+        )
+    except Exception as e:  # noqa: BLE001
+        return f"SHARE_LLM_FAILED {e}"
+    tc = getattr(resp.choices[0].message, "tool_calls", None)
+    if not tc:
+        return "SHARE_LLM_EMPTY"
+    try:
+        data = json.loads(tc[0].function.arguments or "{}")
+    except (json.JSONDecodeError, TypeError):
+        return "SHARE_LLM_BADJSON"
+    topic = str(data.get("topic", "")).strip()
+    if topic not in TOPIC_BY_KEY:
+        return f"SHARE_BAD_TOPIC {topic}"
+    item = NewsItem(
+        topic=topic,
+        category=str(data.get("category", "UPDATE")).strip(),
+        headline=str(data.get("headline", "")).strip(),
+        body=str(data.get("body", "")).strip(),
+        source_url=str(data.get("source_url", url)).strip() or url,
+        heat_reason="📣 shared by the owner",
+    )
+    t = TOPIC_BY_KEY[topic]
+    wh = os.environ.get(t.webhook_env, "")
+    if not wh:
+        return f"SHARE_NO_WEBHOOK {topic}"
+    payload = build_news_payload(item, thumbnail=meta.get("image", ""))
+    if dry_run:
+        print(f"\n[share DRY-RUN] -> {t.channel}\n{payload}\n")
+        return f"SHARED_DRY {topic} {item.headline[:40]}"
+    try:
+        _post(wh, payload)
+    except Exception as e:  # noqa: BLE001
+        if alert_fn:
+            alert_fn(f"share post failed: {item.headline[:60]}: {e}", dry_run)
+        return f"SHARE_POST_FAILED {e}"
+    return f"SHARED {topic} {item.headline[:40]}"
+
+
 # ── orchestration ────────────────────────────────────────────────────────────
 
 def run_news(*, dry_run: bool, stub: bool,

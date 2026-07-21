@@ -31,7 +31,7 @@ for _stream in (sys.stdout, sys.stderr):
 
 from . import fetch, publish, state, bundle
 from .summarize import summarize, stub_summary, SummarizeError, Summary
-from .news import run_news
+from .news import run_news, post_url_as_news
 
 # Guards
 MAX_PER_RUN = 5                 # cap scheduled backlog so we never blow the 30-min job
@@ -219,7 +219,7 @@ def run_scheduled(*, dry_run: bool, stub: bool) -> list[str]:
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description="BersamaAi summarization pipeline")
-    ap.add_argument("--mode", required=True, choices=["scheduled", "url", "news"])
+    ap.add_argument("--mode", required=True, choices=["scheduled", "url", "news", "share"])
     ap.add_argument("--url", help="a single video URL (mode=url)")
     ap.add_argument("--dry-run", action="store_true", help="print payloads, don't post")
     ap.add_argument("--stub-summary", action="store_true",
@@ -228,7 +228,7 @@ def main(argv=None) -> int:
                     help="LOCAL TEST (mode=news): canned news item, skip the LLM call")
     args = ap.parse_args(argv)
 
-    if args.mode == "url" and not args.url:
+    if args.mode in ("url", "share") and not args.url:
         ap.error("--url is required when --mode=url")
 
     try:
@@ -242,6 +242,12 @@ def main(argv=None) -> int:
                 webhook_url=cfg("DISCORD_NEWS_WEBHOOK_URL") or cfg("DISCORD_WEBHOOK_URL"),
                 alert_fn=alert,
             )
+        elif args.mode == "share":
+            creds = llm_creds()
+            results = [post_url_as_news(
+                args.url, api_key=creds["api_key"], model=creds["model"],
+                base_url=creds["base_url"], dry_run=args.dry_run, alert_fn=alert,
+            )]
         else:
             results = run_scheduled(dry_run=args.dry_run, stub=args.stub_summary)
     except state.StateCorruptError as e:
