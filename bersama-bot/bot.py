@@ -84,6 +84,8 @@ AI_GLOBAL_MAX = 20        # max AI calls per rolling window (server-wide)
 AI_GLOBAL_WINDOW = 60     # ...seconds
 AI_CONCURRENCY = 3        # max simultaneous in-flight AI calls
 AI_TIMEOUT = 30           # seconds to wait for one Z.ai response (bounds hung calls)
+AI_CONTEXT_MSGS = 12      # recent channel messages included as live conversation context
+AI_CONTEXT_PER_MSG = 280  # cap each context message length (bounds token cost)
 
 # Replies never need to ping anyone — suppress all mentions on every AI send so
 # prompt-injected GLM output can't mass-ping roles / @everyone.
@@ -414,6 +416,45 @@ def _refund_slot(slot: float) -> None:
         pass
 
 
+async def _gather_channel_context(message: discord.Message) -> str:
+    """Recent messages before this one (oldest→newest) so the bot can answer questions about
+    the live conversation — e.g. "is that event worth joining?" right after a member shared a
+    link + commentary. Bounded to AI_CONTEXT_MSGS messages, each capped to AI_CONTEXT_PER_MSG."""
+    try:
+        recent = [m async for m in message.channel.history(limit=AI_CONTEXT_MSGS + 1, before=message)]
+    except discord.HTTPException:
+        return ""
+    recent.reverse()  # oldest first
+    lines = []
+    for m in recent:
+        if m.author.id == bot.user.id:
+            who = "BersamaAi (you, earlier)"
+        elif m.author.bot:
+            continue
+        else:
+            who = m.author.display_name
+        text = m.clean_content.replace("\n", " ").strip()
+        if not text:
+            continue
+        lines.append(f"{who}: {text[:AI_CONTEXT_PER_MSG]}")
+    return "\n".join(lines)
+
+
+def _ai_messages_for(question: str, message: discord.Message, context: str) -> list[dict]:
+    """Build the LLM message list: persona (system) + recent channel context + the question."""
+    parts: list[str] = []
+    if context:
+        parts.append(
+            "Recent conversation in this channel (oldest first). Use it as context; the "
+            "question you must answer is on the last line:\n" + context
+        )
+    parts.append(f"---\n{message.author.display_name} (@you): {question}")
+    return [
+        {"role": "system", "content": CONFIG["ai_system_prompt"]},
+        {"role": "user", "content": "\n\n".join(parts)},
+    ]
+
+
 async def handle_ai(message: discord.Message, override_text: str | None = None):
     uid = message.author.id
     now = time.time()
@@ -452,6 +493,11 @@ async def handle_ai(message: discord.Message, override_text: str | None = None):
     # and "AI disabled"/"busy" paths don't lock the user out for 30s.
     _ai_last_use[uid] = time.time()
 
+    # Give the bot awareness of the live conversation so it can answer questions like
+    # "is that event worth joining?" right after a member shared a link + details.
+    context = await _gather_channel_context(message)
+    messages_for_llm = _ai_messages_for(question, message, context)
+
     async with _ai_sem:
         async with message.channel.typing():   # typing only while actually generating
             try:
@@ -459,10 +505,7 @@ async def handle_ai(message: discord.Message, override_text: str | None = None):
                     ai_client.chat.completions.create(
                         model=GLM_MODEL,
                         max_completion_tokens=800,  # Z.ai GLM-5.2 ignores max_tokens; this is the honored param
-                        messages=[
-                            {"role": "system", "content": CONFIG["ai_system_prompt"]},
-                            {"role": "user", "content": question},
-                        ],
+                        messages=messages_for_llm,
                     ),
                     timeout=AI_TIMEOUT,
                 )
