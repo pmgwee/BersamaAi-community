@@ -358,19 +358,36 @@ def _metric(cand: dict | None) -> str:
     return ""
 
 
+TOPIC_LABEL = {
+    "coding": "Coding & Agents",
+    "creative_image": "Creative · Image",
+    "creative_video": "Creative · Video",
+    "creative_voice": "Creative · Voice",
+    "research_study": "Research · Study",
+    "research_productivity": "Research · Productivity",
+}
+
+
 def build_news_payload(item: NewsItem, thumbnail: str = "") -> dict:
+    """Rich plain-text card (seeded-resource style). The bare source URL auto-unfurls
+    a preview in Discord (GitHub repo card / Reddit image / article), so we don't need
+    an embed thumbnail — and the divider + section headers match the curated-resources look."""
     emoji = CATEGORY_EMOJI.get(item.category, "📡")
-    heat = f" · 🔥 {item.heat_reason}" if item.heat_reason else ""
-    desc = f"{item.body}\n\n🔗 {item.source_url}"
-    chan = TOPIC_BY_KEY[item.topic].channel
-    return {"username": "BersamaAi", "embeds": [{
-        "title": f"{emoji} {item.category.replace('_', ' ')} → {chan}{heat} — {item.headline}"[:256],
-        "description": desc[:4096],
-        "url": item.source_url or None,
-        "color": BRAND_COLOR,
-        "footer": {"text": "BersamaAi · trending AI moves"},
-        "thumbnail": {"url": thumbnail} if thumbnail else None,
-    }]}
+    cat = item.category.replace("_", " ").title()
+    topic_lbl = TOPIC_LABEL.get(item.topic, item.topic)
+    byline = f"\n*🔥 {item.heat_reason}*" if item.heat_reason else ""
+    content = (
+        "━━━━━━━━━━━━━━━━━━━━━━━━\n"
+        f"**{emoji} {cat} · {topic_lbl}**\n\n"
+        f"**{item.headline}**\n"
+        f"🔗 {item.source_url}"
+        f"{byline}\n\n"
+        f"**Why it matters**\n{item.body}"
+    )
+    if len(content) > 1990:   # Discord message cap is 2000
+        content = content[:1989].rstrip() + "…"
+    return {"username": "BersamaAi", "content": content}
+
 
 
 def _post(webhook_url: str, payload: dict) -> None:
