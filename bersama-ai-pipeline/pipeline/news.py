@@ -532,22 +532,20 @@ def _fetch_image(url: str) -> str:
 
 
 def build_news_payload(item: NewsItem, image: str = "") -> dict:
-    """One embed = one card: color-bar frame + rich body in the description + a
-    full-width image at the bottom (og:image from the source, else the candidate
-    thumbnail such as a GitHub avatar / Reddit image)."""
+    """One embed = one full-width card: the category·topic badge leads as the author
+    (top), the headline is the clickable embed title (hyperlink, no raw URL), the
+    body sits in the description, and the source preview is the bottom image.
+    embed.title forces the card to 100% width (description-only embeds render narrow)."""
     emoji = CATEGORY_EMOJI.get(item.category, "📡")
     cat = item.category.replace("_", " ").title()
     topic_lbl = TOPIC_LABEL.get(item.topic, item.topic)
-    byline = f"\n*🔥 {item.heat_reason}*" if item.heat_reason else ""
-    content = (
-        f"**{emoji} {cat} · {topic_lbl}**\n\n"
-        f"**{item.headline}**\n"
-        f"🔗 {item.source_url}"
-        f"{byline}\n\n"
-        f"**Why it matters**\n{item.body}"
-    )
+    badge = f"{emoji} {cat} · {topic_lbl}"
+    heat = f"\n\n*🔥 {item.heat_reason}*" if item.heat_reason else ""
     return {"username": "BersamaAi", "embeds": [{
-        "description": content[:4096],
+        "author": {"name": badge[:256]},
+        "title": item.headline[:256],
+        "url": item.source_url or None,
+        "description": (f"**Why it matters**\n{item.body}{heat}")[:4096],
         "color": BRAND_COLOR,
         "image": {"url": image} if image else None,
     }]}

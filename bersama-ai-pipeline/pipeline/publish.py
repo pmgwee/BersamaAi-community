@@ -40,30 +40,32 @@ def _yt_thumbnail(meta: dict):
     return f"https://img.youtube.com/vi/{vid}/hqdefault.jpg" if vid else None
 
 
-def _talk_card_text(summary: Summary, meta: dict) -> str:
-    """Rich markdown body inside the embed card: the CREATOR leads (bold, + duration),
-    then the video title, source link, 'Why it matters', and 'Key takeaways'."""
-    title = meta.get("title") or "AI talk"
-    url = summary.source_url or meta.get("webpage_url") or meta.get("url") or ""
-    speaker = summary.speaker or meta.get("uploader") or meta.get("channel") or ""
-    mins = (summary.duration_sec or 0) // 60
-    lead = speaker + (f" · {mins} min" if mins else "")
-    points = "\n".join(f"• {p}" for p in summary.points)
-    text = (
-        (f"**{lead}**\n" if lead else "")
-        + f"**{title}**\n"
-        + (f"🔗 {url}\n" if url else "")
-        + f"\n**Why it matters**\n{summary.hook}\n\n**Key takeaways**\n{points}"
-    )
-    return text[:DISCORD_EMBED_DESC_LIMIT]
+def _talk_body(summary: Summary) -> str:
+    """Embed description body: 'Why it matters' + the 5 takeaways, each on its own
+    line with a blank line between them for breathing room."""
+    points = "\n\n".join(f"• {p}" for p in summary.points)
+    return (
+        f"**Why it matters**\n{summary.hook}\n\n"
+        f"**Key takeaways**\n{points}"
+    )[:DISCORD_EMBED_DESC_LIMIT]
 
 
 def build_discord_payload(summary: Summary, meta: dict) -> dict:
-    """One embed = one card. The color bar is the frame; the rich body is the
-    description; the YouTube thumbnail sits at the bottom, full-width."""
+    """One embed = one card, rendered at full width. The creator leads as the author
+    (top), the video title is the clickable embed title (hyperlink via url — no raw
+    YouTube link shown), and the body sits in the description. embed.title is what
+    forces the card to 100% width (a description-only embed renders narrow)."""
+    title = (meta.get("title") or "AI talk")[:256]
+    url = summary.source_url or meta.get("webpage_url") or meta.get("url") or ""
+    speaker = summary.speaker or meta.get("uploader") or meta.get("channel") or ""
+    mins = (summary.duration_sec or 0) // 60
+    author = speaker + (f" · {mins} min" if mins else "")
     thumb = _yt_thumbnail(meta)
     return {"username": DISCORD_USERNAME, "embeds": [{
-        "description": _talk_card_text(summary, meta),
+        "author": {"name": author[:256]} if author else None,
+        "title": title,
+        "url": url or None,
+        "description": _talk_body(summary),
         "color": BRAND_COLOR,
         "image": {"url": thumb} if thumb else None,
     }]}
