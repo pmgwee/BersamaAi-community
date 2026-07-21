@@ -23,15 +23,23 @@ DEPLOY_USER="$(whoami)"
 
 echo "== BersamaAi bot setup on $(hostname) as $DEPLOY_USER =="
 
-# 1. System packages.
-if ! command -v python3 >/dev/null 2>&1 || ! python3 -c 'import venv' >/dev/null 2>&1; then
+# 1. System packages. On Ubuntu, `import venv` can succeed even when ensurepip is missing
+#    (ensurepip lives in the separate python3.X-venv package), which makes
+#    `python3 -m venv` fail with "ensurepip is not available". So we check ensurepip and
+#    install the versioned venv package + pip + git.
+if ! command -v python3 >/dev/null 2>&1 || ! python3 -c 'import ensurepip' >/dev/null 2>&1; then
   sudo apt-get update -y
-  sudo apt-get install -y python3 python3-venv
+  sudo apt-get install -y python3
+  PYVER="$(python3 -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')"
+  sudo apt-get install -y python3-venv "python${PYVER}-venv" python3-pip git
 fi
 
 # 2. Virtualenv + dependencies.
 cd "$REPO_DIR"
-[ -d .venv ] || python3 -m venv .venv
+# Create the venv, or repair it if a previous run left a broken/partial one.
+if [ ! -x .venv/bin/python ] || ! .venv/bin/python -c 'import ensurepip' >/dev/null 2>&1; then
+  python3 -m venv --clear .venv
+fi
 .venv/bin/python -m pip install --upgrade pip
 .venv/bin/pip install -r requirements.txt
 
