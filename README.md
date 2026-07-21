@@ -5,12 +5,17 @@ and admin tooling, all in one repo.
 
 > 👉 **Full feature registry, status, and architecture: [FEATURES.md](FEATURES.md)**
 
+> 👉 **New session, new agent, or new LLM? Start with [PROJECT-CONTEXT.md](PROJECT-CONTEXT.md)** —
+> the single-file onboarding doc covering mission, market position, architecture, live
+> server state, and decisions log, so you never have to re-explain the project from scratch.
+
 ## What's in this repo
 
 | Path | What it is | Runs where |
 |---|---|---|
-| [`bersama-ai-pipeline/`](bersama-ai-pipeline/) | Content engine — talk summarizer + trending news digest → `#curated-resources` + `#subscription-value` | GitHub Actions (cloud cron) |
-| [`bersama-bot/`](bersama-bot/) | discord.py event bot — welcome, reaction roles, leveling, commands, `@mention` AI | Always-on host (24/7) |
+| [`PROJECT-CONTEXT.md`](PROJECT-CONTEXT.md) | **Start here** — full project onboarding doc | — |
+| [`bersama-ai-pipeline/`](bersama-ai-pipeline/) | Content engine — talk summarizer + trending news digest → `#curated-resources` + `#subscription-value` | GCP VM (cron) |
+| [`bersama-bot/`](bersama-bot/) | discord.py event bot — welcome, reaction roles, leveling, commands, `@mention` AI | GCP VM, systemd (24/7) |
 | [`discord-mcp/`](discord-mcp/) | SaseQ discord-mcp jar — interactive admin via the claude.ai connector | On demand (localhost:8085) |
 | [`FEATURES.md`](FEATURES.md) | Feature registry & community tracker | — |
 | [`MARKET-RESEARCH-REPORT.md`](MARKET-RESEARCH-REPORT.md) | Founding market research | — |
