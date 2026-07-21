@@ -32,7 +32,8 @@ HEADERS = {"User-Agent": "BersamaAi-news/1.0 (community bot)"}
 
 HN_TOPN = 30
 LOCAL_LIMIT = 50          # max candidates sent to the judge per run
-MAX_POST_PER_RUN = 6
+MAX_POST_PER_RUN = 15     # global safety cap (rarely hit; per-topic cap below governs)
+MAX_PER_TOPIC = 3         # max posts per channel per run — every channel gets a turn
 
 
 # ── topics ───────────────────────────────────────────────────────────────────
@@ -337,7 +338,7 @@ EMIT_NEWS_TOOL = {
         "required": ["items"],
         "properties": {
             "items": {
-                "type": "array", "maxItems": 10,
+                "type": "array", "maxItems": 15,
                 "items": {
                     "type": "object",
                     "required": ["topic", "category", "headline", "body", "source_url"],
@@ -734,12 +735,18 @@ def run_news(*, dry_run: bool, stub: bool,
     seen = _load_seen()
     by_url = {c["url"]: c for c in candidates}
     posted, results = 0, []
+    per_topic: dict = {}
     for item in items:
         key = _key(item, by_url)
         if key in seen:
             results.append(f"NEWS_DEDUPED {item.headline[:40]}")
             continue
         topic = TOPIC_BY_KEY[item.topic]
+        # per-channel cap: every channel gets up to MAX_PER_TOPIC posts (no one channel
+        # starves the others); once a channel is full it's skipped for the rest of the run.
+        if per_topic.get(topic.key, 0) >= MAX_PER_TOPIC:
+            results.append(f"NEWS_TOPIC_CAPPED {topic.key}")
+            continue
         # webhook: the topic's env var, else the passed fallback for live topics
         wh = os.environ.get(topic.webhook_env, "") or (webhook_url if topic.live else "")
         if not wh:
@@ -763,9 +770,10 @@ def run_news(*, dry_run: bool, stub: bool,
                 continue
         seen.add(key)
         posted += 1
+        per_topic[topic.key] = per_topic.get(topic.key, 0) + 1
         results.append(f"NEWS_POSTED {item.topic} {item.headline[:40]}")
         if posted >= MAX_POST_PER_RUN:
-            break
+            break  # global safety cap
 
     if not dry_run:
         _save_seen(seen)
