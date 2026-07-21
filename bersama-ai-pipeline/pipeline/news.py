@@ -688,7 +688,7 @@ def post_url_as_news(url: str, *, api_key: str, model: str, base_url: str,
     wh = os.environ.get(t.webhook_env, "")
     if not wh:
         return f"SHARE_NO_WEBHOOK {topic}"
-    payload = build_news_payload(item, thumbnail=meta.get("image", ""))
+    payload = build_news_payload(item, image=meta.get("image", ""))
     if dry_run:
         print(f"\n[share DRY-RUN] -> {t.channel}\n{payload}\n")
         return f"SHARED_DRY {topic} {item.headline[:40]}"
