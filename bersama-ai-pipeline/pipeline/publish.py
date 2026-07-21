@@ -51,7 +51,6 @@ def _talk_card_text(summary: Summary, meta: dict) -> str:
     byline = " · ".join(p for p in (speaker, dur) if p)
     points = "\n".join(f"• {p}" for p in summary.points)
     text = (
-        "━━━━━━━━━━━━━━━━━━━━━━━━\n"
         "**🎬 Curated Talk**\n\n"
         f"**{title}**\n"
         + (f"🔗 {url}\n" if url else "")

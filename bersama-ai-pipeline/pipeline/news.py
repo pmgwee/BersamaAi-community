@@ -391,7 +391,6 @@ def build_news_payload(item: NewsItem, thumbnail: str = "") -> dict:
     topic_lbl = TOPIC_LABEL.get(item.topic, item.topic)
     byline = f"\n*🔥 {item.heat_reason}*" if item.heat_reason else ""
     content = (
-        "━━━━━━━━━━━━━━━━━━━━━━━━\n"
         f"**{emoji} {cat} · {topic_lbl}**\n\n"
         f"**{item.headline}**\n"
         f"🔗 {item.source_url}"
