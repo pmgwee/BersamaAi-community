@@ -41,20 +41,18 @@ def _yt_thumbnail(meta: dict):
 
 
 def _talk_card_text(summary: Summary, meta: dict) -> str:
-    """The rich markdown body inside the embed card (news-style: divider + badge +
-    bold title + source link + byline + 'Why it matters' + 'Key takeaways')."""
+    """Rich markdown body inside the embed card: the CREATOR leads (bold, + duration),
+    then the video title, source link, 'Why it matters', and 'Key takeaways'."""
     title = meta.get("title") or "AI talk"
     url = summary.source_url or meta.get("webpage_url") or meta.get("url") or ""
     speaker = summary.speaker or meta.get("uploader") or meta.get("channel") or ""
     mins = (summary.duration_sec or 0) // 60
-    dur = f"{mins} min" if mins else ""
-    byline = " · ".join(p for p in (speaker, dur) if p)
+    lead = speaker + (f" · {mins} min" if mins else "")
     points = "\n".join(f"• {p}" for p in summary.points)
     text = (
-        "**🎬 Curated Talk**\n\n"
-        f"**{title}**\n"
+        (f"**{lead}**\n" if lead else "")
+        + f"**{title}**\n"
         + (f"🔗 {url}\n" if url else "")
-        + (f"*By {byline}*\n" if byline else "")
         + f"\n**Why it matters**\n{summary.hook}\n\n**Key takeaways**\n{points}"
     )
     return text[:DISCORD_EMBED_DESC_LIMIT]
