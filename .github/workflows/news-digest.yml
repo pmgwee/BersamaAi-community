@@ -51,6 +51,10 @@ jobs:
           TELEGRAM_DM_CHAT_ID: ${{ secrets.TELEGRAM_DM_CHAT_ID }}
           GLM_MODEL: ${{ vars.GLM_MODEL || 'glm-5.2' }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   # authenticated GitHub search -> no rate limit
+          DISCORD_IMAGE_CREATION_WEBHOOK_URL: ${{ secrets.DISCORD_IMAGE_CREATION_WEBHOOK_URL }}
+          DISCORD_VIDEO_CREATION_WEBHOOK_URL: ${{ secrets.DISCORD_VIDEO_CREATION_WEBHOOK_URL }}
+          DISCORD_VOICE_STUDIO_WEBHOOK_URL: ${{ secrets.DISCORD_VOICE_STUDIO_WEBHOOK_URL }}
+          DISCORD_EDUCATION_WEBHOOK_URL: ${{ secrets.DISCORD_EDUCATION_WEBHOOK_URL }}
         run: python -m pipeline.main --mode news
 
       - name: Commit news dedup state

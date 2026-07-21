@@ -66,5 +66,5 @@ def fetch_trending(
                 })
         except Exception as e:  # noqa: BLE001 — one query failing shouldn't kill the run
             print(f"[github] {q!r} failed: {e}")
-        time.sleep(2)  # respect the Search rate limit (~10/min unauthenticated)
+        time.sleep(3)  # respect the Search rate limit (30/min authenticated, 10/min unauth)
     return out
