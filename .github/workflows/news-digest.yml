@@ -62,7 +62,7 @@ jobs:
         run: |
           git config user.email "actions@github.com"
           git config user.name "bersama-ai-bot"
-          git add state/news_seen.json 2>/dev/null || true
+          git add state/news_seen.json state/github_stars.json 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "nothing to commit"
             exit 0

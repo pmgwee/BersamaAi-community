@@ -170,12 +170,42 @@ def fetch_hn(topn: int = HN_TOPN) -> list[dict]:
     return out
 
 
+def fetch_hf_trending() -> list[dict]:
+    """HuggingFace trending models/datasets/spaces — official source for fresh model
+    launches (Kimi / DeepSeek / Qwen releases land here fast)."""
+    out = []
+    try:
+        r = requests.get("https://huggingface.co/api/trending", headers=HEADERS, timeout=15)
+        if r.status_code != 200:
+            return out
+        data = r.json() or {}
+    except Exception:  # noqa: BLE001
+        return out
+    items: list = []
+    for key in ("recentlyTrending", "models", "datasets", "spaces"):
+        v = data.get(key)
+        if isinstance(v, list):
+            items.extend(v)
+    for it in items[:20]:
+        rid = it.get("id") or it.get("repoId") or ""
+        if not rid or "/" not in rid:
+            continue
+        out.append({
+            "title": rid, "url": f"https://huggingface.co/{rid}",
+            "discussion": f"https://huggingface.co/{rid}", "source": "huggingface",
+            "score": int(it.get("likes") or it.get("score") or 0),
+            "snippet": (it.get("label") or it.get("description") or "")[:300],
+        })
+    return out
+
+
 # Per-source quotas so the judge sees all three worlds each run. Without this,
 # GitHub's tens-of-thousands star counts dominate a raw-score sort and crowd
 # Reddit/HN out of the candidate pool (the judge ends up seeing almost only GitHub).
-REDDIT_QUOTA = 15
-HN_QUOTA = 10
+REDDIT_QUOTA = 12
+HN_QUOTA = 8
 GITHUB_QUOTA = 15
+HF_QUOTA = 5
 
 
 def gather_candidates() -> list[dict]:
@@ -194,7 +224,10 @@ def gather_candidates() -> list[dict]:
         return sorted([c for c in items if _ai(c)],
                       key=lambda c: c.get("score", 0), reverse=True)[:n]
 
-    cand = _top(fetch_reddit(subs), REDDIT_QUOTA) + _top(fetch_hn(), HN_QUOTA) + _top(github, GITHUB_QUOTA)
+    cand = (_top(fetch_reddit(subs), REDDIT_QUOTA)
+            + _top(fetch_hn(), HN_QUOTA)
+            + _top(github, GITHUB_QUOTA)
+            + _top(fetch_hf_trending(), HF_QUOTA))
     seen, dedup = set(), []
     for c in cand:
         k = c.get("url") or c.get("title")
@@ -365,7 +398,13 @@ def _metric(cand: dict | None) -> str:
     score = int(cand.get("score") or 0)
     src = cand.get("source") or ""
     if src == "github":
-        return f"⭐ {_fmt(score)} stars"
+        delta = int(cand.get("star_delta") or 0)
+        base = f"⭐ {_fmt(score)} stars"
+        if delta > 0:
+            base += f" · ▲ {_fmt(delta)} since last run"
+        return base
+    if src == "huggingface":
+        return f"🤗 {_fmt(score)} likes" if score else "🤗 HuggingFace trending"
     if src == "HN":
         return f"{_fmt(score)} HN points"
     if src.startswith("r/"):
