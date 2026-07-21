@@ -31,7 +31,7 @@ STATE_FILE = Path(__file__).resolve().parent.parent / "state" / "news_seen.json"
 HEADERS = {"User-Agent": "BersamaAi-news/1.0 (community bot)"}
 
 HN_TOPN = 30
-LOCAL_LIMIT = 40          # max candidates sent to the judge per run
+LOCAL_LIMIT = 50          # max candidates sent to the judge per run
 MAX_POST_PER_RUN = 6
 
 
@@ -172,31 +172,75 @@ def fetch_hn(topn: int = HN_TOPN) -> list[dict]:
 
 
 def fetch_hf_trending() -> list[dict]:
-    """HuggingFace trending models/datasets/spaces — official source for fresh model
-    launches (Kimi / DeepSeek / Qwen releases land here fast)."""
+    """HuggingFace models with the most likes in the last 7 days — clean early signal
+    for fresh model launches (Kimi / DeepSeek / Qwen drops land here fast)."""
     out = []
     try:
-        r = requests.get("https://huggingface.co/api/trending", headers=HEADERS, timeout=15)
+        r = requests.get("https://huggingface.co/api/models",
+                         params={"sort": "likes7d", "direction": "-1", "limit": 20},
+                         headers=HEADERS, timeout=15)
         if r.status_code != 200:
             return out
-        data = r.json() or {}
+        items = r.json() or []
     except Exception:  # noqa: BLE001
         return out
-    items: list = []
-    for key in ("recentlyTrending", "models", "datasets", "spaces"):
-        v = data.get(key)
-        if isinstance(v, list):
-            items.extend(v)
     for it in items[:20]:
-        rid = it.get("id") or it.get("repoId") or ""
-        if not rid or "/" not in rid:
+        rid = it.get("id") or it.get("modelId") or ""
+        if not rid:
             continue
         out.append({
             "title": rid, "url": f"https://huggingface.co/{rid}",
             "discussion": f"https://huggingface.co/{rid}", "source": "huggingface",
-            "score": int(it.get("likes") or it.get("score") or 0),
-            "snippet": (it.get("label") or it.get("description") or "")[:300],
+            "score": int(it.get("likes") or 0),
+            "snippet": (it.get("pipeline_tag") or "")[:120],
         })
+    return out
+
+
+# Official company blog RSS/Atom feeds — earliest signal for "Kimi K3 / Grok Build
+# dropped", hours before Reddit. Add verified feed URLs here; 404/parse errors skip.
+OFFICIAL_RSS = [
+    "https://openai.com/news/rss.xml",
+    "https://www.anthropic.com/news/rss.xml",
+    "https://blog.google/technology/ai/rss/",
+    "https://huggingface.co/blog/feed.xml",
+]
+
+
+def _rss_field(el, names: set[str]) -> str:
+    """First non-empty text/href of a child whose local tag is in `names` (namespace-agnostic)."""
+    for child in el:
+        if child.tag.split("}")[-1] in names:
+            t = (child.text or child.get("href") or "").strip()
+            if t:
+                return t
+    return ""
+
+
+def fetch_rss(feeds: list[str] = OFFICIAL_RSS) -> list[dict]:
+    """Poll official blog RSS/Atom feeds (RSS 2.0 + Atom). Defensive: 404/parse → skip."""
+    import xml.etree.ElementTree as ET
+    out = []
+    for feed in feeds:
+        try:
+            r = requests.get(feed, headers=URL_FETCH_HEADERS, timeout=15)
+            if r.status_code != 200:
+                continue
+            root = ET.fromstring(r.content)
+        except Exception:  # noqa: BLE001
+            continue
+        for el in root.iter():
+            if el.tag.split("}")[-1] not in ("item", "entry"):
+                continue
+            title = _rss_field(el, {"title"})
+            link = _rss_field(el, {"link"})
+            if not title:
+                continue
+            out.append({
+                "title": title, "url": link, "discussion": link,
+                "source": "official", "score": 0,
+                "snippet": _rss_field(el, {"description", "summary", "content"})[:300],
+            })
     return out
 
 
@@ -205,8 +249,9 @@ def fetch_hf_trending() -> list[dict]:
 # Reddit/HN out of the candidate pool (the judge ends up seeing almost only GitHub).
 REDDIT_QUOTA = 12
 HN_QUOTA = 8
-GITHUB_QUOTA = 15
-HF_QUOTA = 5
+GITHUB_QUOTA = 12
+HF_QUOTA = 6
+RSS_QUOTA = 8
 
 
 def gather_candidates() -> list[dict]:
@@ -228,7 +273,8 @@ def gather_candidates() -> list[dict]:
     cand = (_top(fetch_reddit(subs), REDDIT_QUOTA)
             + _top(fetch_hn(), HN_QUOTA)
             + _top(github, GITHUB_QUOTA)
-            + _top(fetch_hf_trending(), HF_QUOTA))
+            + _top(fetch_hf_trending(), HF_QUOTA)
+            + _top(fetch_rss(), RSS_QUOTA))
     seen, dedup = set(), []
     for c in cand:
         k = c.get("url") or c.get("title")
@@ -267,6 +313,10 @@ For each item return:
   in the candidate text; never invent facts or numbers)
 - source_url (pass through unchanged)
 - heat_reason (one line on why it's hot, e.g. "12k stars in 3 days", "top of r/LocalLLaMA", "#1 on HN")
+
+OFFICIAL-SOURCE items (source: official = a company blog announcement; huggingface = a new
+model) are LAUNCH/RELEASE signals on their own — post them even with zero score; an official
+announcement IS the heat. Don't bury them just because they have no upvotes yet.
 
 Be selective — only the genuinely hot. English only. If nothing qualifies, items: [].
 """
@@ -405,7 +455,9 @@ def _metric(cand: dict | None) -> str:
             base += f" · ▲ {_fmt(delta)} since last run"
         return base
     if src == "huggingface":
-        return f"🤗 {_fmt(score)} likes" if score else "🤗 HuggingFace trending"
+        return f"🤗 {_fmt(score)} likes" if score else "🤗 HuggingFace"
+    if src == "official":
+        return "📢 official blog"
     if src == "HN":
         return f"{_fmt(score)} HN points"
     if src.startswith("r/"):
