@@ -322,10 +322,11 @@ OFFICIAL-SOURCE items (source: official = a company blog announcement; huggingfa
 model) are LAUNCH/RELEASE signals on their own — post them even with zero score; an official
 announcement IS the heat. Don't bury them just because they have no upvotes yet.
 
-DIVERSITY: the candidate pool is balanced across topics. Pick the hottest items, but aim to
-represent MULTIPLE topics each run — don't fill all slots with one topic. If a topic
-(image/video/voice/research) has a genuinely hot item, include it even if a coding item has
-a higher raw score. Each channel should get content when its domain has something worth posting.
+This is a TRENDING tracker, NOT a balance exercise. Pick purely by what's hottest/viral right
+now. If the whole market is one topic this week (e.g. a run of coding-LLM launches), fill the
+slots with that topic — do NOT pad with weaker items from other topics just for spread. The
+candidate pool already guarantees you SEE every category each run; your only job is to post
+what's genuinely hot, whatever category it lands in (and 0 from a quiet category is correct).
 
 Be selective — only the genuinely hot. English only. If nothing qualifies, items: [].
 """
