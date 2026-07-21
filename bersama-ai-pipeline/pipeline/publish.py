@@ -42,9 +42,19 @@ def _discord_blocks(summary: Summary) -> list[str]:
             for i in range(0, len(body), DISCORD_EMBED_DESC_LIMIT)]
 
 
+def _yt_thumbnail(meta: dict):
+    """YouTube thumbnail URL — prefer yt-dlp's, else build from the video id."""
+    thumb = meta.get("thumbnail")
+    if thumb:
+        return thumb
+    vid = meta.get("id")
+    return f"https://img.youtube.com/vi/{vid}/hqdefault.jpg" if vid else None
+
+
 def build_discord_payload(summary: Summary, meta: dict) -> dict:
     title = (meta.get("title") or "AI talk summary")[:256]
     chunks = _discord_blocks(summary)
+    thumb = _yt_thumbnail(meta)
     embeds = []
     for i, desc in enumerate(chunks):
         embeds.append({
@@ -54,6 +64,8 @@ def build_discord_payload(summary: Summary, meta: dict) -> dict:
             "color": BRAND_COLOR,
             "footer": {"text": DISCORD_FOOTER},
             "author": {"name": summary.speaker[:256]} if summary.speaker else None,
+            # thumbnail on the first embed only; Discord omits null fields
+            "thumbnail": {"url": thumb} if (i == 0 and thumb) else None,
         })
     return {"username": DISCORD_USERNAME, "embeds": embeds}
 
