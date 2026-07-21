@@ -245,45 +245,40 @@ def fetch_rss(feeds: list[str] = OFFICIAL_RSS) -> list[dict]:
     return out
 
 
-# Per-source quotas so the judge sees all three worlds each run. Without this,
-# GitHub's tens-of-thousands star counts dominate a raw-score sort and crowd
-# Reddit/HN out of the candidate pool (the judge ends up seeing almost only GitHub).
-REDDIT_QUOTA = 12
+# Per-TOPIC quotas: each live topic contributes its own top Reddit+GitHub candidates
+# to the pool, so coding (hotter/more numerous) can't crowd creative/research out
+# before the judge sees them. Shared sources (HN/HF/RSS) get their own quotas.
+PER_TOPIC_QUOTA = 8
 HN_QUOTA = 8
-GITHUB_QUOTA = 12
 HF_QUOTA = 6
 RSS_QUOTA = 8
 VELOCITY_THRESHOLD = 150   # GitHub repos gaining > this many stars/day bypass the score cut
 
 
 def gather_candidates() -> list[dict]:
-    """Pull Reddit (LIVE topics' subs) + HN + GitHub (LIVE topics' keywords),
-    with per-source quotas so the judge sees all three worlds (not just GitHub)."""
-    subs = list({s for t in LIVE_TOPICS for s in t.reddit_subs})
+    """Per-topic quotas: each live topic contributes its top Reddit+GitHub candidates
+    (so every channel's domain reaches the judge — coding no longer crowds out creative),
+    plus shared HN/HuggingFace/RSS for the judge to classify by topic."""
     token = os.environ.get("GITHUB_TOKEN", "")
-    github: list[dict] = []
-    for t in LIVE_TOPICS:
-        github += fetch_trending(t.github_keywords, min_stars=t.github_min_stars, token=token)
 
     def _ai(c: dict) -> bool:
         return _looks_ai(c["title"]) or _looks_ai(c["snippet"])
 
     def _top(items: list[dict], n: int) -> list[dict]:
-        return sorted([c for c in items if _ai(c)],
-                      key=lambda c: c.get("score", 0), reverse=True)[:n]
+        return sorted([c for c in items if _ai(c)], key=lambda c: c.get("score", 0), reverse=True)[:n]
 
-    # GitHub: top-by-score, PLUS any repo on a star-velocity tear (bypasses the score cut,
-    # so a fast-rising 800-star repo isn't buried under a 90k-star incumbent).
-    github_sel = _top(github, GITHUB_QUOTA)
-    in_sel = {c.get("url") for c in github_sel}
-    github_sel += [c for c in github
-                   if int(c.get("star_velocity") or 0) >= VELOCITY_THRESHOLD
-                   and c.get("url") not in in_sel]
-    cand = (_top(fetch_reddit(subs), REDDIT_QUOTA)
-            + _top(fetch_hn(), HN_QUOTA)
-            + github_sel
-            + _top(fetch_hf_trending(), HF_QUOTA)
-            + _top(fetch_rss(), RSS_QUOTA))
+    cand: list[dict] = []
+    for t in LIVE_TOPICS:
+        raw = fetch_reddit(t.reddit_subs) + fetch_trending(t.github_keywords, min_stars=t.github_min_stars, token=token)
+        top = _top(raw, PER_TOPIC_QUOTA)
+        # velocity bypass: a fast-rising repo in this topic still reaches the judge
+        in_top = {c.get("url") for c in top}
+        top += [c for c in raw
+                if int(c.get("star_velocity") or 0) >= VELOCITY_THRESHOLD and c.get("url") not in in_top]
+        cand += top
+    # shared cross-topic sources — the judge tags these by topic
+    cand += _top(fetch_hn(), HN_QUOTA) + _top(fetch_hf_trending(), HF_QUOTA) + _top(fetch_rss(), RSS_QUOTA)
+
     seen, dedup = set(), []
     for c in cand:
         k = c.get("url") or c.get("title")
@@ -326,6 +321,11 @@ For each item return:
 OFFICIAL-SOURCE items (source: official = a company blog announcement; huggingface = a new
 model) are LAUNCH/RELEASE signals on their own — post them even with zero score; an official
 announcement IS the heat. Don't bury them just because they have no upvotes yet.
+
+DIVERSITY: the candidate pool is balanced across topics. Pick the hottest items, but aim to
+represent MULTIPLE topics each run — don't fill all slots with one topic. If a topic
+(image/video/voice/research) has a genuinely hot item, include it even if a coding item has
+a higher raw score. Each channel should get content when its domain has something worth posting.
 
 Be selective — only the genuinely hot. English only. If nothing qualifies, items: [].
 """
