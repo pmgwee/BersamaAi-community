@@ -76,7 +76,7 @@ def summarize(
         try:
             resp = client.chat.completions.create(
                 model=model,
-                max_tokens=2048,
+                max_completion_tokens=2048,  # Z.ai GLM ignores max_tokens -> truncated tool JSON
                 messages=messages,
                 tools=[tool],
                 tool_choice="required",  # force a tool call; only one tool => emit_summary

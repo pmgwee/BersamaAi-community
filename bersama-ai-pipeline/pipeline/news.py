@@ -230,7 +230,7 @@ def judge(
     }}
     try:
         resp = client.chat.completions.create(
-            model=model, max_tokens=2048,
+            model=model, max_completion_tokens=2048,  # Z.ai GLM ignores max_tokens
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": _build_judge_user_message(candidates)},

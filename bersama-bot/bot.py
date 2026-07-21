@@ -458,7 +458,7 @@ async def handle_ai(message: discord.Message, override_text: str | None = None):
                 resp = await asyncio.wait_for(
                     ai_client.chat.completions.create(
                         model=GLM_MODEL,
-                        max_tokens=800,
+                        max_completion_tokens=800,  # Z.ai GLM-5.2 ignores max_tokens; this is the honored param
                         messages=[
                             {"role": "system", "content": CONFIG["ai_system_prompt"]},
                             {"role": "user", "content": question},
