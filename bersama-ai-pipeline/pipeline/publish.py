@@ -62,12 +62,12 @@ def _talk_card_text(summary: Summary, meta: dict) -> str:
 
 def build_discord_payload(summary: Summary, meta: dict) -> dict:
     """One embed = one card. The color bar is the frame; the rich body is the
-    description; the YouTube thumbnail sits top-right inside the card."""
+    description; the YouTube thumbnail sits at the bottom, full-width."""
     thumb = _yt_thumbnail(meta)
     return {"username": DISCORD_USERNAME, "embeds": [{
         "description": _talk_card_text(summary, meta),
         "color": BRAND_COLOR,
-        "thumbnail": {"url": thumb} if thumb else None,
+        "image": {"url": thumb} if thumb else None,
     }]}
 
 

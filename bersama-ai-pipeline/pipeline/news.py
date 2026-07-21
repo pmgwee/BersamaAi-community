@@ -17,6 +17,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import re
 import time
 from dataclasses import dataclass, asdict
 from pathlib import Path
@@ -422,9 +423,37 @@ TOPIC_LABEL = {
 }
 
 
-def build_news_payload(item: NewsItem, thumbnail: str = "") -> dict:
-    """One embed = one card: color-bar frame + the rich body in the description +
-    the source preview as the thumbnail (GitHub avatar / Reddit image)."""
+_OG_IMG = re.compile(
+    r'<meta[^>]+(?:property|name)=["\'](?:og:image|twitter:image)(?::secure_url)?["\'][^>]+content=["\']([^"\']+)["\']'
+    r'|<meta[^>]+content=["\']([^"\']+)["\'][^>]+(?:property|name)=["\'](?:og:image|twitter:image)(?::secure_url)?["\']',
+    re.IGNORECASE,
+)
+
+
+def _fetch_image(url: str) -> str:
+    """Best-effort: fetch the URL and return its og:image / twitter:image for the
+    card. '' on any failure (timeout, non-200, no tag). Used so items without a
+    built-in thumbnail still get an informative banner image at the bottom."""
+    if not url:
+        return ""
+    try:
+        r = requests.get(
+            url,
+            headers={"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) BersamaAi-news/1.0"},
+            timeout=8,
+        )
+        if r.status_code != 200:
+            return ""
+        m = _OG_IMG.search(r.text[:60000])  # og:image lives in <head>
+        return ((m.group(1) or m.group(2) or "")).strip() if m else ""
+    except Exception:  # noqa: BLE001
+        return ""
+
+
+def build_news_payload(item: NewsItem, image: str = "") -> dict:
+    """One embed = one card: color-bar frame + rich body in the description + a
+    full-width image at the bottom (og:image from the source, else the candidate
+    thumbnail such as a GitHub avatar / Reddit image)."""
     emoji = CATEGORY_EMOJI.get(item.category, "📡")
     cat = item.category.replace("_", " ").title()
     topic_lbl = TOPIC_LABEL.get(item.topic, item.topic)
@@ -439,7 +468,7 @@ def build_news_payload(item: NewsItem, thumbnail: str = "") -> dict:
     return {"username": "BersamaAi", "embeds": [{
         "description": content[:4096],
         "color": BRAND_COLOR,
-        "thumbnail": {"url": thumbnail} if thumbnail else None,
+        "image": {"url": image} if image else None,
     }]}
 
 
@@ -500,7 +529,8 @@ def run_news(*, dry_run: bool, stub: bool,
         metric = _metric(cand)
         if metric:
             item.heat_reason = metric  # real stars/upvotes/points, not LLM flavor text
-        payload = build_news_payload(item, thumbnail=(cand or {}).get("thumbnail", ""))
+        img = _fetch_image(item.source_url) or (cand or {}).get("thumbnail", "")
+        payload = build_news_payload(item, image=img)
         if dry_run:
             print(f"\n[discord DRY-RUN] -> {topic.channel}\n{payload}\n")
         else:
