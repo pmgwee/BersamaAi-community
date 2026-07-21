@@ -107,7 +107,7 @@ Downside: the PC must never sleep / shut down. The bot also force-restarts itsel
 default restart-on-failure relaunches it with a clean connection.
 
 ### Option B — Raspberry Pi (one-time ~RM 200–400, ~RM 1–2/month power)
-A Pi 3B or 4 plugged in at home, running 24/7. Same `setup.sh` as Oracle:
+A Pi 3B or 4 plugged in at home, running 24/7. Same `setup.sh` as the cloud options below:
 ```bash
 sudo apt-get update && sudo apt-get install -y git python3 python3-venv
 git clone https://github.com/pmgwee/BersamaAi-community.git
@@ -115,21 +115,30 @@ cd BersamaAi-community/bersama-bot
 bash setup.sh          # venv + deps + .env + systemd, all in one
 ```
 
-### Option C — Oracle Cloud Always Free (recommended; free forever, no home machine)
-1. Sign up at <https://www.oracle.com/cloud/free> → create an **Always Free** VM
-   (AMD micro **or** Ampere A1 ARM — both work; either is plenty for this bot). Pick
-   Ubuntu 22.04/24.04 and add your public SSH key when creating it.
-2. No firewall / ingress changes needed — the bot is **outbound-only**.
-3. Push this repo to GitHub, then on the VM:
-   ```bash
-   sudo apt-get update && sudo apt-get install -y git
-   git clone https://github.com/pmgwee/BersamaAi-community.git
-   cd BersamaAi-community/bersama-bot
-   bash setup.sh          # installs python+deps, writes .env, enables systemd
-   ```
-4. `setup.sh` installs + starts a systemd service (`bersama`) with `Restart=always`,
-   so the bot survives crashes and reboots. The VM runs 24/7 free. Verify:
-   `sudo systemctl status bersama` · logs: `tail -f bersama.log`.
+### Option C — GCP or AWS (you have free credits; no home machine needed)
+A tiny always-on Linux VM is plenty — the bot idles under ~150 MB RAM, so 1 vCPU / 1 GB
+is more than enough. The bot is **outbound-only**, so you do NOT open any inbound port on
+either cloud (both allow egress by default — no firewall/security-group changes).
+
+**GCP** (recommended — simplest UX; `e2-micro` stays always-free-eligible after your credits run out):
+1. Console → **Compute Engine → VM Instances → Create**.
+2. Machine: **e2-micro** · Boot disk: **Ubuntu 22.04 or 24.04** · Region: `us-central1` / `us-east1` / `us-west1` (always-free-eligible).
+3. No firewall change needed.
+
+**AWS** (identical result):
+1. Console → **EC2 → Launch instance**.
+2. AMI: **Ubuntu Server 22.04/24.04** · Instance type: **t3.micro** (Free Tier / credits).
+3. The default security group allows outbound — no inbound rule needed.
+
+Then on the VM (same for both):
+```bash
+sudo apt-get update && sudo apt-get install -y git
+git clone https://github.com/pmgwee/BersamaAi-community.git
+cd BersamaAi-community/bersama-bot
+bash setup.sh          # installs python+deps, writes .env, enables systemd
+```
+`setup.sh` installs + starts a systemd service (`bersama`) with `Restart=always`, so the
+bot survives crashes and reboots. Verify: `sudo systemctl status bersama` · logs: `tail -f bersama.log`.
    - *Other cheap clouds: any ~RM14–36/month VPS (Shinjiru, LightNode, DigitalOcean) works identically — just run `bash setup.sh`.*
 
 ## Step 6 — Turn on Discord's free native AutoMod (auto-moderation)

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # BersamaAi event bot — first-boot provisioning for an Ubuntu VM
-# (Oracle Cloud Always Free / Raspberry Pi / any systemd Linux).
+# (GCP / AWS / Raspberry Pi / any systemd Linux).
 #
 # Run this ON the VM, from inside the bersama-bot directory, as your normal user:
 #
