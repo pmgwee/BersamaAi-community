@@ -1,12 +1,10 @@
-# Curated YouTube playlists to scan on the daily run.
-# One URL per line. Lines starting with # are ignored. Blank lines ignored.
+# BersamaAi creator-watch — YouTube channels to watch for NEW uploads.
+# One channel URL per line. Lines starting with # are ignored. Blank lines ignored.
 #
-# Aim for "talks by the people who built the tools" — the resources-library concept:
-#   - Anthropic / Claude team talks
-#   - OpenAI DevDay
-#   - Andrej Karpathy, Jim Fan, etc.
-#   - AI-for-daily-life use-case walkthroughs
+# The daily scan summarizes only uploads from the last ~3 days (NEW videos), not the
+# channel backlog. Already-summarized videos are deduped (state/processed.json).
+# Caption-less videos are transcribed via Groq Whisper (if GROQ_API_KEY is set).
 #
-# Examples (uncomment or replace with your own):
-# https://www.youtube.com/playlist?list=PL...
-# https://www.youtube.com/playlist?list=PL...
+# Add more creators any time — one URL per line:
+https://www.youtube.com/@kellytsaii          # Kelly Tsai — tech / CS careers
+https://www.youtube.com/@lingdujieshuo        # 零度解说 — viral AI news & reviews

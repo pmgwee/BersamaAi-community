@@ -194,6 +194,7 @@ def list_playlist_entries(playlist_url: str) -> list[dict]:
             "url": e.get("url") or f"https://www.youtube.com/watch?v={vid}",
             "title": e.get("title") or "",
             "duration": e.get("duration") or 0,
+            "upload_date": e.get("upload_date") or "",
         })
     return entries
 

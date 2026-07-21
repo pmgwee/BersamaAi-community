@@ -37,6 +37,7 @@ from .news import run_news
 MAX_PER_RUN = 5                 # cap scheduled backlog so we never blow the 30-min job
 TRANSCRIPT_FLOOR_CHARS = 1500   # below this a >10min video looks like a bad auto-caption
 SHORT_VIDEO_SEC = 600           # 10 min
+RECENCY_DAYS = 3                # creator-watch: only summarize uploads from the last N days
 
 
 def cfg(key: str, default: str = "") -> str:
@@ -155,7 +156,20 @@ def process_video(url: str, *, dry_run: bool, stub: bool) -> str:
     return f"PUBLISHED {vid}"
 
 
-# ── scheduled scan ──────────────────────────────────────────────────────────
+# ── scheduled scan (creator-watch) ──────────────────────────────────────────
+
+def _is_recent(upload_date: str, days: int = RECENCY_DAYS) -> bool:
+    """Creator-watch: only process videos uploaded in the last `days` days (yt-dlp
+    gives upload_date as YYYYMMDD). Unknown/unparseable => allow (never block on it)."""
+    if not upload_date or len(upload_date) < 8:
+        return True
+    try:
+        from datetime import datetime, timezone, timedelta
+        d = datetime.strptime(upload_date[:8], "%Y%m%d").replace(tzinfo=timezone.utc)
+        return d >= datetime.now(timezone.utc) - timedelta(days=days)
+    except Exception:  # noqa: BLE001
+        return True
+
 
 def read_playlists() -> list[str]:
     p = Path(__file__).resolve().parent.parent / "playlists.txt"
@@ -189,6 +203,8 @@ def run_scheduled(*, dry_run: bool, stub: bool) -> list[str]:
         for e in entries:
             if e["id"] in done:
                 continue
+            if not _is_recent(e.get("upload_date")):
+                continue   # creator-watch: skip the backlog; only NEW uploads
             if processed_this_run >= MAX_PER_RUN:
                 print(f"hit MAX_PER_RUN={MAX_PER_RUN}; remaining entries wait for next run")
                 break
