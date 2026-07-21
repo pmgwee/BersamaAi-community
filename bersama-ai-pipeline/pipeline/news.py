@@ -431,10 +431,19 @@ def _save_seen(seen: set[str]) -> None:
                           encoding="utf-8")
 
 
-def _key(item: NewsItem, candidate_by_url: dict) -> str:
+def _keys(item: NewsItem, candidate_by_url: dict) -> set:
+    """Dedup keys for an item: the source/discussion URL key PLUS a normalized-headline
+    key — so the same story surfacing on two sources (e.g. Reddit + HN, different URLs)
+    still dedupes instead of posting twice."""
     c = candidate_by_url.get(item.source_url)
-    base = (c["discussion"] if c else item.source_url) or item.headline
-    return hashlib.sha1(base.encode("utf-8")).hexdigest()[:16]
+    keys: set = set()
+    url_base = (c["discussion"] if c else "") or item.source_url
+    if url_base:
+        keys.add(hashlib.sha1(url_base.encode("utf-8")).hexdigest()[:16])
+    norm = re.sub(r"[^a-z0-9]", "", (item.headline or "").lower())
+    if len(norm) >= 12:   # only dedup on a headline long enough to be meaningful
+        keys.add("h" + hashlib.sha1(norm.encode("utf-8")).hexdigest()[:16])
+    return keys
 
 
 # ── posting ──────────────────────────────────────────────────────────────────
@@ -738,8 +747,8 @@ def run_news(*, dry_run: bool, stub: bool,
     posted, results = 0, []
     per_topic: dict = {}
     for item in items:
-        key = _key(item, by_url)
-        if key in seen:
+        keys = _keys(item, by_url)
+        if seen & keys:   # any key already seen -> same story already posted this run
             results.append(f"NEWS_DEDUPED {item.headline[:40]}")
             continue
         topic = TOPIC_BY_KEY[item.topic]
@@ -769,7 +778,7 @@ def run_news(*, dry_run: bool, stub: bool,
                     alert_fn(f"news post failed: {item.headline[:60]}: {e}", dry_run)
                 results.append(f"NEWS_POST_FAILED {item.headline[:40]}")
                 continue
-        seen.add(key)
+        seen |= keys
         posted += 1
         per_topic[topic.key] = per_topic.get(topic.key, 0) + 1
         results.append(f"NEWS_POSTED {item.topic} {item.headline[:40]}")
