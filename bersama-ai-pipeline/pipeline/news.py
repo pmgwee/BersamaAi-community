@@ -252,6 +252,7 @@ HN_QUOTA = 8
 GITHUB_QUOTA = 12
 HF_QUOTA = 6
 RSS_QUOTA = 8
+VELOCITY_THRESHOLD = 150   # GitHub repos gaining > this many stars/day bypass the score cut
 
 
 def gather_candidates() -> list[dict]:
@@ -270,9 +271,16 @@ def gather_candidates() -> list[dict]:
         return sorted([c for c in items if _ai(c)],
                       key=lambda c: c.get("score", 0), reverse=True)[:n]
 
+    # GitHub: top-by-score, PLUS any repo on a star-velocity tear (bypasses the score cut,
+    # so a fast-rising 800-star repo isn't buried under a 90k-star incumbent).
+    github_sel = _top(github, GITHUB_QUOTA)
+    in_sel = {c.get("url") for c in github_sel}
+    github_sel += [c for c in github
+                   if int(c.get("star_velocity") or 0) >= VELOCITY_THRESHOLD
+                   and c.get("url") not in in_sel]
     cand = (_top(fetch_reddit(subs), REDDIT_QUOTA)
             + _top(fetch_hn(), HN_QUOTA)
-            + _top(github, GITHUB_QUOTA)
+            + github_sel
             + _top(fetch_hf_trending(), HF_QUOTA)
             + _top(fetch_rss(), RSS_QUOTA))
     seen, dedup = set(), []
@@ -442,6 +450,18 @@ def _fmt(n: int) -> str:
     return str(n)
 
 
+def _age_days(created_at) -> int | None:
+    """Days since a repo's created_at (ISO), or None."""
+    if not created_at:
+        return None
+    try:
+        from datetime import datetime, timezone
+        dt = datetime.fromisoformat(str(created_at).replace("Z", "+00:00"))
+        return max((datetime.now(timezone.utc) - dt).days, 0)
+    except Exception:  # noqa: BLE001
+        return None
+
+
 def _metric(cand: dict | None) -> str:
     """Reliable heat label from the candidate's real score (don't trust LLM flavor text)."""
     if not cand:
@@ -449,10 +469,19 @@ def _metric(cand: dict | None) -> str:
     score = int(cand.get("score") or 0)
     src = cand.get("source") or ""
     if src == "github":
+        vel = int(cand.get("star_velocity") or 0)
         delta = int(cand.get("star_delta") or 0)
+        age = _age_days(cand.get("created_at"))
         base = f"⭐ {_fmt(score)} stars"
-        if delta > 0:
-            base += f" · ▲ {_fmt(delta)} since last run"
+        bits = []
+        if vel > 0:
+            bits.append(f"▲ {_fmt(vel)}/day")
+        elif delta > 0:
+            bits.append(f"▲ {_fmt(delta)} since last run")
+        if age is not None:
+            bits.append(f"{age}d old")
+        if bits:
+            base += " · " + " · ".join(bits)
         return base
     if src == "huggingface":
         return f"🤗 {_fmt(score)} likes" if score else "🤗 HuggingFace"

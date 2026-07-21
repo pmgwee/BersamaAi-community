@@ -19,7 +19,7 @@ from __future__ import annotations
 
 import json
 import time
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 import requests
@@ -40,7 +40,9 @@ def _load_stars() -> dict:
 def _save_stars(d: dict) -> None:
     STARS_STATE.parent.mkdir(parents=True, exist_ok=True)
     # bound: keep the 1000 highest-star repos so the file doesn't grow forever
-    top = dict(sorted(d.items(), key=lambda kv: -kv[1])[:1000])
+    def _stars(v):
+        return int((v or {}).get("stars", 0)) if isinstance(v, dict) else int(v or 0)
+    top = dict(sorted(d.items(), key=lambda kv: -_stars(kv[1]))[:1000])
     STARS_STATE.write_text(json.dumps(top, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
@@ -88,19 +90,30 @@ def fetch_trending(
                     "snippet": (item.get("description") or "")[:300],
                     "language": item.get("language") or "",
                     "thumbnail": (item.get("owner") or {}).get("avatar_url", ""),
+                    "created_at": item.get("created_at") or "",
                 })
         except Exception as e:  # noqa: BLE001 — one query failing shouldn't kill the run
             print(f"[github] {q!r} failed: {e}")
         time.sleep(3)  # respect the Search rate limit (30/min authenticated, 10/min unauth)
 
-    # velocity: tag repos whose stars rose since the last run, then persist current counts
+    # velocity: per-day star growth since the last run, then persist {stars, ts}
     prev = _load_stars()
+    now = datetime.now(timezone.utc)
+    now_iso = now.isoformat(timespec="seconds")
     updated = dict(prev)
     for c in out:
         repo, cur = c["title"], c["score"]
         p = prev.get(repo)
-        if p is not None and cur > p:
-            c["star_delta"] = cur - p
-        updated[repo] = cur
+        if isinstance(p, dict):
+            delta = cur - int(p.get("stars") or 0)
+            if delta > 0:
+                c["star_delta"] = delta
+                try:
+                    prev_dt = datetime.fromisoformat(str(p.get("ts", "")).replace("Z", "+00:00"))
+                    elapsed_d = max((now - prev_dt).total_seconds() / 86400, 0.04)  # min ~1h window
+                    c["star_velocity"] = round(delta / elapsed_d)   # stars per day
+                except Exception:  # noqa: BLE001
+                    pass
+        updated[repo] = {"stars": cur, "ts": now_iso}
     _save_stars(updated)
     return out
