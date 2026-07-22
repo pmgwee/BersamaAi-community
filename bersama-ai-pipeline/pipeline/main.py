@@ -262,7 +262,8 @@ def main(argv=None) -> int:
 
     # Red the Actions run only if we attempted videos and NONE produced a good outcome
     # (a single transient failure should not fail the whole daily run).
-    OK = {"PUBLISHED", "SKIPPED_LONG", "SKIPPED_NOCAPTION", "REVIEW_SHORT", "NEWS_POSTED"}
+    OK = {"PUBLISHED", "SKIPPED_LONG", "SKIPPED_NOCAPTION", "REVIEW_SHORT", "NEWS_POSTED",
+          "SHARED", "SHARED_DRY"}
     SKIP = ("DEDUPED", "NEWS_DEDUPED", "NEWS_NOTHING_TO_POST", "NEWS_NO_CANDIDATES")
     attempted = [r.split(maxsplit=1)[0] for r in results if not r.startswith(SKIP)]
     if attempted and not any(s in OK for s in attempted):
