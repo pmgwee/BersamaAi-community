@@ -26,6 +26,8 @@ import requests
 from openai import OpenAI
 
 from .github_trending import fetch_trending
+from .stateutil import append_jsonl, POSTED_LOG
+from .preferences import load_preferences, MIN_EVENTS
 
 STATE_FILE = Path(__file__).resolve().parent.parent / "state" / "news_seen.json"
 HEADERS = {"User-Agent": "BersamaAi-news/1.0 (community bot)"}
@@ -264,7 +266,33 @@ RSS_QUOTA = 8
 VELOCITY_THRESHOLD = 150   # GitHub repos gaining > this many stars/day bypass the score cut
 
 
-def gather_candidates() -> list[dict]:
+def _clamp(x, lo, hi):
+    return max(lo, min(hi, x))
+
+
+# ── engagement loop: dynamic quotas (bandit actuator) ────────────────────────
+# Active only when prefs.enabled (PREFS_ENABLED=true AND n_events>=MIN_EVENTS);
+# otherwise callers use the static constants above (byte-identical to pre-loop).
+# Each center equals today's static default so a NEUTRAL preference score changes
+# nothing, and every transform keeps a floor so each arm stays pulled (ε-greedy
+# exploration — a topic can recover when taste shifts). See ENGAGEMENT-LOOP-PLAN §4.
+
+def _quota_for_topic(pref: float) -> int:
+    """Per-topic candidate quota: center 8, floor 4, ceil 14. pref=0 → 8."""
+    return _clamp(8 + round(2 * pref), 4, 14)
+
+
+def _quota_for_shared(base: int, pref: float) -> int:
+    """Shared-source quota (HN/HF/RSS): swings ±2 around its base, floor 1."""
+    return _clamp(base + round(2 * pref), max(1, base - 2), base + 2)
+
+
+def _cap_for_topic(pref: float) -> int:
+    """Per-channel post cap (MAX_PER_TOPIC): center 3, range 1–4. pref=0 → 3."""
+    return _clamp(3 + round(pref), 1, 4)
+
+
+def gather_candidates(prefs=None) -> list[dict]:
     """Per-topic quotas: each live topic contributes its top Reddit+GitHub candidates
     (so every channel's domain reaches the judge — coding no longer crowds out creative),
     plus shared HN/HuggingFace/RSS for the judge to classify by topic."""
@@ -277,16 +305,31 @@ def gather_candidates() -> list[dict]:
         return sorted([c for c in items if _ai(c)], key=lambda c: c.get("score", 0), reverse=True)[:n]
 
     cand: list[dict] = []
+    on = bool(prefs and prefs.enabled)   # bandit actuator active only with enough signal
+    quota_log: dict[str, int] = {}
     for t in LIVE_TOPICS:
         raw = fetch_reddit(t.reddit_subs) + fetch_trending(t.github_keywords, min_stars=t.github_min_stars, token=token)
-        top = _top(raw, PER_TOPIC_QUOTA)
+        q = _quota_for_topic(prefs.score("topic", t.key)) if on else PER_TOPIC_QUOTA
+        quota_log[f"topic:{t.key}"] = q
+        top = _top(raw, q)
         # velocity bypass: a fast-rising repo in this topic still reaches the judge
         in_top = {c.get("url") for c in top}
         top += [c for c in raw
                 if int(c.get("star_velocity") or 0) >= VELOCITY_THRESHOLD and c.get("url") not in in_top]
         cand += top
     # shared cross-topic sources — the judge tags these by topic
-    cand += _top(fetch_hn(), HN_QUOTA) + _top(fetch_hf_trending(), HF_QUOTA) + _top(fetch_rss(), RSS_QUOTA)
+    hn_q = _quota_for_shared(HN_QUOTA, prefs.score("source", "HN")) if on else HN_QUOTA
+    hf_q = _quota_for_shared(HF_QUOTA, prefs.score("source", "huggingface")) if on else HF_QUOTA
+    rss_q = _quota_for_shared(RSS_QUOTA, prefs.score("source", "official")) if on else RSS_QUOTA
+    quota_log.update({"source:HN": hn_q, "source:huggingface": hf_q, "source:official": rss_q})
+    cand += _top(fetch_hn(), hn_q) + _top(fetch_hf_trending(), hf_q) + _top(fetch_rss(), rss_q)
+    # Drift visibility (plan §4.3): always log which quotas governed this run.
+    if on:
+        print(f"[prefs] actuator ON (n_events={prefs.n_events}); dynamic quotas: {quota_log}")
+    else:
+        nevt = getattr(prefs, "n_events", 0)
+        print(f"[prefs] actuator dormant (n_events={nevt} < {MIN_EVENTS} or PREFS_ENABLED=false); "
+              f"static quotas — byte-identical to pre-loop.")
 
     seen, dedup = set(), []
     for c in cand:
@@ -381,7 +424,8 @@ def _build_judge_user_message(candidates: list[dict]) -> str:
     return "\n".join(lines)
 
 
-def judge(candidates: list[dict], *, api_key: str, model: str, base_url: str) -> list[NewsItem]:
+def judge(candidates: list[dict], *, api_key: str, model: str, base_url: str,
+          prefs_section: str = "") -> list[NewsItem]:
     if not api_key:
         raise NewsError("ZAI_API_KEY is missing — cannot judge news.")
     client = OpenAI(api_key=api_key, base_url=base_url)
@@ -392,7 +436,7 @@ def judge(candidates: list[dict], *, api_key: str, model: str, base_url: str) ->
     try:
         resp = client.chat.completions.create(
             model=model, max_completion_tokens=2048,  # Z.ai GLM ignores max_tokens
-            messages=[{"role": "system", "content": SYSTEM_PROMPT},
+            messages=[{"role": "system", "content": SYSTEM_PROMPT + prefs_section},
                       {"role": "user", "content": _build_judge_user_message(candidates)}],
             tools=[tool], tool_choice="required",
         )
@@ -576,10 +620,43 @@ def build_news_payload(item: NewsItem, image: str = "") -> dict:
 
 
 
-def _post(webhook_url: str, payload: dict) -> None:
-    r = requests.post(webhook_url, json=payload, timeout=15)
-    if r.status_code not in (200, 204):
-        raise RuntimeError(f"{r.status_code} {r.text[:200]}")
+def _post(webhook_url: str, payload: dict) -> dict | None:
+    """POST a webhook payload with ?wait=true so Discord returns the created
+    message object (HTTP 200 + {id, channel_id}) instead of 204 No Content.
+    Returns that message dict (used to log telemetry), or None if Discord 204'd
+    despite wait=true — the post still succeeded, but there's no id to sweep so
+    the caller skips logging. Raises on any other status (caller handles)."""
+    sep = "&" if "?" in webhook_url else "?"
+    r = requests.post(webhook_url + sep + "wait=true", json=payload, timeout=15)
+    if r.status_code == 200:
+        try:
+            return r.json()
+        except ValueError:
+            return None
+    if r.status_code == 204:
+        return None
+    raise RuntimeError(f"{r.status_code} {r.text[:200]}")
+
+
+def _log_posted(msg: dict, item: NewsItem, cand: dict | None, topic: Topic) -> None:
+    """Append one row per posted card to state/posted_log.jsonl — the engagement
+    sweep's list of messages to read reactions from. Telemetry collects
+    unconditionally (even while the actuator is dormant) so the model has data
+    the day the owner flips PREFS_ENABLED on."""
+    from datetime import datetime, timezone
+    append_jsonl(POSTED_LOG, {
+        "message_id": str(msg.get("id", "")),
+        "channel_id": str(msg.get("channel_id", "")),
+        "channel": topic.channel,
+        "topic": item.topic,
+        "category": item.category,
+        "source": (cand or {}).get("source", ""),
+        "source_url": item.source_url,
+        "headline": item.headline,
+        "score": int((cand or {}).get("score") or 0),
+        "star_velocity": int((cand or {}).get("star_velocity") or 0),
+        "posted_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+    })
 
 
 # ── share (Threads / link human-in-the-loop) ─────────────────────────────────
@@ -733,7 +810,8 @@ def run_news(*, dry_run: bool, stub: bool,
     if not LIVE_TOPICS:
         return ["NEWS_NO_LIVE_TOPICS"]
 
-    candidates = gather_candidates()
+    prefs = load_preferences()
+    candidates = gather_candidates(prefs)
     print(f"gathered {len(candidates)} candidates across live topic(s): "
           + ", ".join(t.key for t in LIVE_TOPICS))
     if not candidates:
@@ -745,7 +823,8 @@ def run_news(*, dry_run: bool, stub: bool,
                           candidates[0]["url"], "stub")]
     else:
         try:
-            items = judge(candidates, api_key=api_key, model=model, base_url=base_url)
+            items = judge(candidates, api_key=api_key, model=model, base_url=base_url,
+                          prefs_section=prefs.profile_section)
         except NewsError as e:
             if alert_fn:
                 alert_fn(f"news judge failed: {e}", dry_run)
@@ -765,9 +844,11 @@ def run_news(*, dry_run: bool, stub: bool,
             results.append(f"NEWS_DEDUPED {item.headline[:40]}")
             continue
         topic = TOPIC_BY_KEY[item.topic]
-        # per-channel cap: every channel gets up to MAX_PER_TOPIC posts (no one channel
-        # starves the others); once a channel is full it's skipped for the rest of the run.
-        if per_topic.get(topic.key, 0) >= MAX_PER_TOPIC:
+        # per-channel cap: every channel gets up to its cap posts (no one channel
+        # starves the others); once a channel is full it's skipped for the rest of
+        # the run. Cap is dynamic when the actuator is on, else MAX_PER_TOPIC.
+        cap = _cap_for_topic(prefs.score("topic", topic.key)) if prefs.enabled else MAX_PER_TOPIC
+        if per_topic.get(topic.key, 0) >= cap:
             results.append(f"NEWS_TOPIC_CAPPED {topic.key}")
             continue
         # webhook: the topic's env var, else the passed fallback for live topics
@@ -785,12 +866,16 @@ def run_news(*, dry_run: bool, stub: bool,
             print(f"\n[discord DRY-RUN] -> {topic.channel}\n{payload}\n")
         else:
             try:
-                _post(wh, payload)
+                msg = _post(wh, payload)
             except Exception as e:  # noqa: BLE001
                 if alert_fn:
                     alert_fn(f"news post failed: {item.headline[:60]}: {e}", dry_run)
                 results.append(f"NEWS_POST_FAILED {item.headline[:40]}")
                 continue
+            # Telemetry: record the posted card so the engagement sweep can later
+            # read its reactions. Skip silently if ?wait=true returned no message id.
+            if msg and msg.get("id"):
+                _log_posted(msg, item, cand, topic)
         seen |= keys
         posted += 1
         per_topic[topic.key] = per_topic.get(topic.key, 0) + 1

@@ -1,0 +1,46 @@
+name: engagement-digest
+
+# Weekly window into what the engagement loop has learned. Reads committed
+# state/ files and posts one analytics card to #staff-chat. No bot token —
+# posts via the staff-chat webhook (DISCORD_STAFF_CHAT_WEBHOOK_URL secret).
+# Runs Sunday 22:23 UTC (off the :17 news cadence to avoid the concurrency group).
+
+on:
+  schedule:
+    - cron: "23 22 * * 0"   # Sun 22:23 UTC weekly
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: engagement-digest
+  cancel-in-progress: false
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    defaults:
+      run:
+        working-directory: bersama-ai-pipeline
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: bersama-ai-pipeline/requirements.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+
+      - name: Post weekly digest
+        env:
+          DISCORD_STAFF_CHAT_WEBHOOK_URL: ${{ secrets.DISCORD_STAFF_CHAT_WEBHOOK_URL }}
+        run: python -m pipeline.digest

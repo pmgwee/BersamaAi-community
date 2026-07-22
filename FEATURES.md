@@ -41,7 +41,7 @@
 
 | Component | Location | Reaches Discord via | Runs where |
 |---|---|---|---|
-| Content engine | `bersama-ai-pipeline/` | Webhook (no token) | **Summarizer**: GCP VM cron · **News**: GitHub Actions every 3h |
+| Content engine | `bersama-ai-pipeline/` | Webhook (posts) + bot token (engagement sweep, read-only REST) | **Summarizer**: GCP VM cron · **News**: GitHub Actions every 3h |
 | Community bot | `bersama-bot/` | Bot token (Gateway) | GCP VM, systemd (`bersama`), 24/7 |
 | Admin console | `discord-mcp/` | Same bot token (concurrent) | Local, on-demand |
 
@@ -58,7 +58,8 @@ LLM = **GLM `glm-5.2`** (Z.ai). ASR = **Groq Whisper** (`whisper-large-v3`).
 | A1 | **Creator-watch summarizer** | Watched channels (Kelly Tsai, 零度解说) → only NEW uploads (last ~3 days) → transcript (captions, or Groq Whisper for caption-less) → 5-point English summary + **thumbnail** | `#curated-resources` | daily ~09:03 MYT (GCP cron) | 🟢 live |
 | A2 | **On-demand summarizer** | Paste any YouTube URL → summary + post | `#curated-resources` | manual (VM HTTP trigger or SSH) | 🟡 needs firewall |
 | A3 | **Topic-routed news (coding)** | Reddit (r/LocalLLaMA, r/ClaudeAI, r/OpenAI, r/ChatGPTCoding) + Hacker News + **GitHub Trending** → GLM judge tags topic + heat → **thumbnail** cards | `#ai-dev-tools` | every ~3h (GH Actions) | 🟢 live |
-| A4 | **Topic-routed news (creative + research)** | Same engine, other topics | `#image-creation` / `#video-creation-aigc-tvc` / `#voice-studio` / `#study-with-ai` / `#research-with-ai` | every ~3h | 🟡 wired-off (pending webhooks) |
+| A4 | **Topic-routed news (creative + research)** | Same engine, other topics | `#image-creation` / `#video-creation-aigc-tvc` / `#voice-studio` / `#study-with-ai` | every ~3h | 🟢 live |
+| A5 | **Engagement feedback loop** | Member reactions (👍🔥😐) + replies on news cards → reward → EMA preference scores per topic/source/category → biases candidate quotas + a judge "taste memo" (ε-greedy bandit; heat still wins). Seed reactions added by the bot; swept by the pipeline; weekly digest to `#staff-chat`. Gated by `PREFS_ENABLED` + `n_events≥20` — dormant (byte-identical) until flipped on. | `#staff-chat` (digest) | sweep+prefs ride the 3h news run; digest weekly | 🟢 telemetry live · 🟡 actuator dormant |
 
 - **Creator-watch list:** `playlists.txt` (channel URLs, recency-filtered). Add creators anytime → push → `git pull` on VM.
 - **News topics:** `pipeline/news.py` `TOPICS`. Enable one = set its webhook env var + flip `live=True`.
@@ -102,6 +103,8 @@ discord.py event bot on the GCP VM (systemd `bersama`). Privileged intents requi
 |---|---|---|---|
 | Creator-watch summarizer | `3 1 * * *` UTC | ~09:03 MYT daily | GCP VM (`run-daily.sh`) |
 | News digest (coding) | `17 */3 * * *` UTC | every 3h | GitHub Actions (`news-digest.yml`) |
+| Engagement sweep + preferences | rides the news run | every 3h | GitHub Actions (steps in `news-digest.yml`) |
+| Engagement weekly digest | `23 22 * * 0` UTC | Sun weekly | GitHub Actions (`engagement-digest.yml`) |
 | On-demand summarizer | manual | — | GCP VM (`on_demand.py` HTTP) or SSH |
 
 > Cron is UTC; GitHub Actions can drift ~5–15 min under load.
@@ -119,9 +122,12 @@ discord.py event bot on the GCP VM (systemd `bersama`). Privileged intents requi
 | `DISCORD_NEWS_WEBHOOK_URL` (`#ai-dev-tools`) | ✅ | — | ✅ |
 | `GITHUB_TOKEN` (news GitHub search) | optional | — | ✅ (built-in) |
 | `ON_DEMAND_TOKEN` (HTTP trigger) | ✅ | — | — |
-| `DISCORD_TOKEN` | — | ✅ | — |
+| `DISCORD_TOKEN` (engagement sweep — read-only REST) | — | ✅ | ✅ ⚠️ private repo only |
+| `DISCORD_STAFF_CHAT_WEBHOOK_URL` (`#staff-chat` weekly digest) | — | — | ✅ |
+| `PREFS_ENABLED` (engagement actuator on/off; default `false`) | optional | — | ✅ (var) |
 
-⚠️ Keep in sync: `DISCORD_TOKEN` (bot + MCP) · `ZAI_API_KEY` (pipeline + bot).
+⚠️ Keep in sync: `DISCORD_TOKEN` (bot + MCP + GH sweep secret) · `ZAI_API_KEY` (pipeline + bot).
+⚠️ **Security:** the `DISCORD_TOKEN` GH Actions secret grants full bot admin (Discord tokens aren't scoped). **Only add it if this repo is PRIVATE.** If public, run the engagement sweep on the GCP VM cron instead. Verify with `gh repo view --json visibility` before adding.
 
 ---
 
@@ -135,6 +141,9 @@ discord.py event bot on the GCP VM (systemd `bersama`). Privileged intents requi
 | On-demand from phone | open `http://<VM_IP>:8080/?token=<T>`, paste URL |
 | Add a watched creator | edit `playlists.txt` → push → `git pull` on VM |
 | Enable a creative/research news topic | set its webhook env var + flip `live=True` in `news.py` `TOPICS` |
+| Turn the engagement actuator ON | set GH secret `PREFS_ENABLED=true` (only after `n_events≥~100`; needs `DISCORD_TOKEN` secret + private repo) |
+| Self-check the engagement math | `cd bersama-ai-pipeline && python verify_engagement.py` |
+| Run the news + loop locally (offline) | `python -m pipeline.main --mode news --dry-run --stub-news` |
 | Edit bot channels/roles | `bersama-bot/config.json` |
 
 ---
@@ -143,6 +152,7 @@ discord.py event bot on the GCP VM (systemd `bersama`). Privileged intents requi
 
 | Date | Change |
 |---|---|
+| 2026-07-22 | **Engagement feedback loop (A5)** shipped: news cards now log to `state/posted_log.jsonl` (`?wait=true`); bot seeds 👍🔥😐 on news cards every 15 min; a 3h sweep (`pipeline/engagement.py`) reads reactions via bot-token REST → reward → `state/engagement.jsonl` + `state/activity_baseline.json`; `pipeline/preferences.py` computes 14-day-half-life EMA preference scores → `state/preferences.json`; the news actuator (dynamic quotas + judge taste memo) is wired but **dormant** behind `PREFS_ENABLED=false` + `n_events≥20` (byte-identical to pre-loop). Weekly analytics digest → `#staff-chat` (`engagement-digest.yml`). Creative/research channels now **live** (A4). ⚠️ needs `DISCORD_TOKEN` + `DISCORD_STAFF_CHAT_WEBHOOK_URL` GH secrets (private repo only). |
 | 2026-07-21 | Content engine overhauled: summarizer on **GCP VM** (creator-watch + Groq ASR + thumbnails + on-demand HTTP trigger); news became **topic-routed** (Reddit + HN + GitHub Trending → `#ai-dev-tools`, every 3h on GH Actions); creative/research channels wired-off pending webhooks. |
 | 2026-07-21 | Repo consolidated to `pmgwee/BersamaAi-community`; GH Actions summarizer workflows retired (YouTube bot-blocked on Azure IPs). |
 | 2026-07-20 | Server went English-only; summarizer switched to GLM; news digest added. |

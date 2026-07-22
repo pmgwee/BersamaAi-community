@@ -63,6 +63,13 @@ GLM_MODEL = os.environ.get("GLM_MODEL", "glm-5.2")
 GUILD_ID = int(CONFIG["guild_id"])
 CHANNELS = {k: int(v) for k, v in CONFIG["channels"].items()}
 ROLES = {k: int(v) for k, v in CONFIG["roles"].items()}
+NEWS_CHANNELS = [int(x) for x in CONFIG.get("news_channels", [])]
+
+# Engagement loop: seed these on every webhook-authored news card so members
+# have something to click (raises reaction signal ~5–10×, the TLDR pattern).
+# MUST match pipeline/engagement.py SEED_EMOJIS so the sweep subtracts exactly
+# these (the bot's own reactions carry the `me` flag and are excluded upstream).
+SEED_EMOJIS = ("👍", "🔥", "😐")   # useful / amazing / meh
 
 
 def _norm_emoji(emoji: str) -> str:
@@ -214,14 +221,19 @@ ai_client = (
 
 @bot.event
 async def on_ready():
-    global _synced, _hb_started
+    global _synced, _hb_started, _seed_started
     log.info("Logged in as %s (%s)", bot.user, getattr(bot.user, "id", "?"))
     log.info("Reaction-role menus: %s", list(REACTION_ROLES))
     log.info("AI (GLM via Z.ai): %s", f"ON ({GLM_MODEL})" if ai_client else "OFF")
+    log.info("Seed reactions: %s",
+             f"{len(NEWS_CHANNELS)} news channel(s)" if NEWS_CHANNELS else "OFF (no news_channels in config)")
 
     if not _hb_started:
         _hb_started = True
         heartbeat.start()          # must run inside the loop; on_ready guarantees that
+    if not _seed_started and NEWS_CHANNELS:
+        _seed_started = True
+        seed_reactions.start()
 
     # Audit configured IDs against the live guild so stale config fails loudly, not silently.
     guild_obj = bot.get_guild(GUILD_ID)
@@ -747,6 +759,47 @@ async def heartbeat():
 
 @heartbeat.before_loop
 async def _heartbeat_before():
+    await bot.wait_until_ready()
+
+
+# ---- Engagement loop: seed reactions on news cards ----------------------- #
+_seed_started = False
+
+
+@tasks.loop(minutes=15)
+async def seed_reactions():
+    """Every 15 min, add 👍🔥😐 to any webhook-authored news card missing them.
+
+    Stateless + idempotent — no posted_log read, no cross-repo coupling: "a
+    webhook-authored message in a news channel" is the entire filter. Only
+    webhook messages pass (`webhook_id is not None`); the bot's own messages,
+    the MCP jar's messages, and member messages all have webhook_id=None, so it
+    never reacts to itself. Re-runs add nothing — existing reactions are checked
+    first. Emoji are normalized through _norm_emoji so variation-selector
+    differences never cause a double-add."""
+    if not NEWS_CHANNELS:
+        return
+    for cid in NEWS_CHANNELS:
+        ch = bot.get_channel(cid) or await bot.fetch_channel(cid)
+        if ch is None:
+            continue
+        try:
+            async for msg in ch.history(limit=20):
+                if msg.webhook_id is None:
+                    continue  # only seed the webhook-authored news cards
+                have = {_norm_emoji(str(r.emoji)) for r in msg.reactions}
+                for emo in SEED_EMOJIS:
+                    if _norm_emoji(emo) not in have:
+                        try:
+                            await msg.add_reaction(emo)
+                        except discord.HTTPException as exc:
+                            log.warning("seed_reactions: add %r on msg %s failed: %s", emo, msg.id, exc)
+        except discord.HTTPException as exc:
+            log.warning("seed_reactions: channel %s history failed: %s", cid, exc)
+
+
+@seed_reactions.before_loop
+async def _seed_before():
     await bot.wait_until_ready()
 
 

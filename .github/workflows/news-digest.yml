@@ -41,6 +41,20 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt
 
+      - name: Sweep engagement
+        # Read-only REST sweep of reactions on posted news cards (needs the bot
+        # token). Exits 0 if DISCORD_TOKEN is unset, so this never fails the run.
+        # ⚠️ Only add the DISCORD_TOKEN secret if this repo is PRIVATE — a public
+        # repo leak = full bot admin. See ENGAGEMENT-LOOP-PLAN security note.
+        env:
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+        run: python -m pipeline.engagement
+
+      - name: Compute preferences
+        # Pure compute: engagement.jsonl + posted_log.jsonl → preferences.json.
+        # No secret, no network.
+        run: python -m pipeline.preferences
+
       - name: Run news digest
         env:
           ZAI_API_KEY: ${{ secrets.ZAI_API_KEY }}
@@ -62,7 +76,9 @@ jobs:
         run: |
           git config user.email "actions@github.com"
           git config user.name "bersama-ai-bot"
-          git add state/news_seen.json state/github_stars.json 2>/dev/null || true
+          git add state/news_seen.json state/github_stars.json \
+                state/posted_log.jsonl state/engagement.jsonl \
+                state/preferences.json state/activity_baseline.json 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "nothing to commit"
             exit 0
