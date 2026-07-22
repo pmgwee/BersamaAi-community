@@ -15,12 +15,14 @@ NOT brand recognition — a fresh startup or community repo blowing up qualifies
 from __future__ import annotations
 
 import hashlib
+import html as html_mod
 import json
 import os
 import re
 import time
 from dataclasses import dataclass, asdict
 from pathlib import Path
+from urllib.parse import urljoin, unquote
 
 import requests
 from openai import OpenAI
@@ -380,7 +382,9 @@ slots with that topic — do NOT pad with weaker items from other topics just fo
 candidate pool already guarantees you SEE every category each run; your only job is to post
 what's genuinely hot, whatever category it lands in (and 0 from a quiet category is correct).
 
-Be selective — only the genuinely hot. English only. If nothing qualifies, items: [].
+Be selective — only the genuinely hot. LANGUAGE RULE: write each card (headline + body)
+in the SAME language as the source item — do NOT translate. English source → English card;
+Chinese source → Chinese card; Malay → Malay; and so on. If nothing qualifies, items: [].
 """
 
 EMIT_NEWS_TOOL = {
@@ -577,26 +581,121 @@ _OG_IMG = re.compile(
     r'|<meta[^>]+content=["\']([^"\']+)["\'][^>]+(?:property|name)=["\'](?:og:image|twitter:image)(?::secure_url)?["\']',
     re.IGNORECASE,
 )
+_IMG_TAG = re.compile(r"<img\b[^>]*>", re.IGNORECASE)
+# Filenames/attributes that mark an <img> as decorative, not a content image.
+_BAD_IMG = re.compile(
+    r"(logo|icon|avatar|sprite|blank|placeholder|pixel|\b1x1\b|tracker|gravatar|"
+    r"favicon|spinner|loader|btn|button|badge|tracking|beacon|noscript)",
+    re.IGNORECASE,
+)
+_TRACKER_HOSTS = ("facebook.com/tr", "google-analytics.com", "googletagmanager",
+                  "doubleclick.net", "bat.bing", "connect.facebook.net", "redditmedia", "taboola")
+
+
+def _usable_image(url: str) -> bool:
+    """A URL Discord can render as an embed thumbnail: http(s), not SVG (Discord
+    doesn't render SVG), not a data/javascript URI."""
+    if not url or not url.startswith(("http://", "https://")):
+        return False
+    return not url.lower().split("?", 1)[0].endswith(".svg")
+
+
+def _resolve(src: str, base: str) -> str:
+    """Resolve a (possibly relative, HTML-entity-encoded) image URL against the
+    page base. Decodes &amp; → & (OpenAI's og:image ships encoded, which breaks
+    Discord fetches) and decodes Next.js _next/image?url= proxy URLs."""
+    if not src:
+        return ""
+    src = html_mod.unescape(src).strip()
+    if src.startswith(("data:", "javascript:")):
+        return ""
+    nm = re.search(r"_next/image\?url=([^&\"']+)", src)
+    if nm:  # Next.js image proxy → the real CDN url
+        src = unquote(nm.group(1))
+    try:
+        return urljoin(base, src)
+    except Exception:  # noqa: BLE001
+        return ""
+
+
+def _is_content_image(src: str, tag: str) -> bool:
+    """Filter out tracking pixels, icons, logos, avatars, and tiny UI images so
+    the 'first <img>' is a real hero/content image (e.g. skip the 1×1 pixel before
+    the real hero on ads.openai.com)."""
+    low = src.lower()
+    if src.startswith(("data:", "javascript:")) or low.endswith(".svg"):
+        return False
+    if any(t in low for t in _TRACKER_HOSTS):
+        return False
+    for dim in ("width", "height"):
+        dm = re.search(rf'\b{dim}\s*=\s*["\'](\d+)', tag, re.IGNORECASE)
+        if dm and int(dm.group(1)) < 50:  # icon-sized
+            return False
+    return not (_BAD_IMG.search(low) or _BAD_IMG.search(tag.lower()))
+
+
+def _extract_first_image(html_text: str, base_url: str) -> str:
+    """Find the best thumbnail in server-rendered HTML, in priority order:
+    1) og:image / twitter:image   2) <link rel=image_src>   3) JSON-LD "image"
+    4) first plausible <img> (icons/logos/pixels skipped). SVGs are always skipped
+    (Discord can't render them). Returns '' if the HTML has no usable image."""
+    m = _OG_IMG.search(html_text)
+    if m:
+        u = _resolve(m.group(1) or m.group(2) or "", base_url)
+        if _usable_image(u):
+            return u
+    lm = (re.search(r'<link\b[^>]*rel=["\']image_src["\'][^>]*href=["\']([^"\']+)["\']', html_text, re.I)
+          or re.search(r'<link\b[^>]*href=["\']([^"\']+)["\'][^>]*rel=["\']image_src["\']', html_text, re.I))
+    if lm:
+        u = _resolve(lm.group(1), base_url)
+        if _usable_image(u):
+            return u
+    for jm in re.finditer(r'"image"\s*:\s*\[?\s*"([^"]+)"', html_text):
+        u = _resolve(jm.group(1), base_url)
+        if _usable_image(u):
+            return u
+    for tag in _IMG_TAG.findall(html_text):
+        sm = re.search(r'src\s*=\s*["\']([^"\']+)["\']', tag, re.IGNORECASE)
+        if sm and _is_content_image(sm.group(1), tag):
+            u = _resolve(sm.group(1), base_url)
+            if _usable_image(u):
+                return u
+    return ""
+
+
+def _microlink_image(url: str) -> str:
+    """Fallback for JS-rendered pages (Threads, X) whose server HTML has NO image
+    at all — microlink.io renders the page server-side and returns its real preview
+    image. Best-effort; free tier (~50/day, ample for our volume). The URL is
+    already public (a source the bot is posting about)."""
+    try:
+        r = requests.get("https://api.microlink.io/", params={"url": url}, timeout=25)
+        if r.status_code != 200:
+            return ""
+        img = (r.json().get("data") or {}).get("image") or {}
+        u = img.get("url") if isinstance(img, dict) else img
+        return u if _usable_image(u or "") else ""
+    except Exception:  # noqa: BLE001
+        return ""
 
 
 def _fetch_image(url: str) -> str:
-    """Best-effort: fetch the URL and return its og:image / twitter:image for the
-    card. '' on any failure (timeout, non-200, no tag). Used so items without a
-    built-in thumbnail still get an informative banner image at the bottom."""
+    """Best-effort thumbnail for a card: the page's own HTML (og:image → first
+    content <img>), then a rendered preview for JS-only sites (Threads/X). Strict
+    rule — returns '' only when the source genuinely has no usable image."""
     if not url:
         return ""
+    ua = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+                        "(KHTML, like Gecko) Chrome/124 Safari/537.36"}
     try:
-        r = requests.get(
-            url,
-            headers={"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) BersamaAi-news/1.0"},
-            timeout=8,
-        )
-        if r.status_code != 200:
-            return ""
-        m = _OG_IMG.search(r.text[:60000])  # og:image lives in <head>
-        return ((m.group(1) or m.group(2) or "")).strip() if m else ""
+        r = requests.get(url, headers=ua, timeout=10)
+        if r.status_code == 200:
+            found = _extract_first_image(r.text, url)
+            if found:
+                return found
     except Exception:  # noqa: BLE001
-        return ""
+        pass
+    return _microlink_image(url)  # JS shell or fetch failed → rendered preview
 
 
 def build_news_payload(item: NewsItem, image: str = "") -> dict:
@@ -686,7 +785,10 @@ def _html_title(html: str) -> str:
 
 
 def fetch_url_meta(url: str) -> dict:
-    """Fetch a public URL; extract {title, description, image} via og: meta tags."""
+    """Fetch a public URL; extract {title, description, image}. The image uses the
+    robust extractor (og:image → first content <img>) with a microlink fallback for
+    JS-only sites like Threads, so a shared post always gets a thumbnail when one
+    exists. Title/description stay og:-based."""
     try:
         r = requests.get(url, headers=URL_FETCH_HEADERS, timeout=15)
         if r.status_code != 200:
@@ -694,10 +796,11 @@ def fetch_url_meta(url: str) -> dict:
         html = r.text
     except Exception:  # noqa: BLE001
         return {}
+    image = _extract_first_image(html, url) or _microlink_image(url)
     return {
         "title": _meta_content(html, "og:title") or _html_title(html),
         "description": _meta_content(html, "og:description") or _meta_content(html, "description"),
-        "image": _meta_content(html, "og:image"),
+        "image": image,
         "url": url,
     }
 
@@ -717,7 +820,8 @@ Assign exactly one TOPIC:
 
 Return: topic, category (LAUNCH|RELEASE|PRICING|BENCHMARK|OPEN_SOURCE|DEAL|UPDATE),
 headline (<=110 chars, the news itself), body (1-2 sentences: what + why it matters),
-source_url (pass through unchanged). English only.
+source_url (pass through unchanged). LANGUAGE: write the card (headline + body) in the
+SAME language as the source item — do NOT translate (Chinese source → Chinese card, etc.).
 """
 
 EMIT_ONE_TOOL = {
