@@ -13,3 +13,19 @@ The engine is topic-parameterized: each topic is just { Reddit subs + GitHub sea
 Launching the research + design pass now (6 domains in parallel → unified engine design), then I implement:
 
 ## Add .env token into GCP VM 
+
+
+## REstat handphone on-demand endpoint 
+
+# 1. Stop the old server (it's still holding the pre-pull code from Jul 21)
+kill 40387 && sleep 1
+
+# 2. Relaunch with the new code — detached so it survives logout (matches how it ran)
+cd ~/bersama/bersama-ai-pipeline && source .venv/bin/activate && nohup python on_demand.py > on_demand.log 2>&1 &
+
+# 3. Confirm it's back up (you should see a NEW pid, not 40387)
+sleep 2 && ps -ef | grep on_demand | grep -v grep && echo "--- log ---" && tail -n 8 on_demand.log
+
+pkill -f on_demand.py; sleep 1
+cd ~/bersama/bersama-ai-pipeline && source .venv/bin/activate && nohup python on_demand.py > on_demand.log 2>&1 &
+
