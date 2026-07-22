@@ -1,83 +1,83 @@
 {
   "lopopolo/harness-engineering": {
-    "stars": 2162,
-    "ts": "2026-07-22T19:46:09+00:00"
+    "stars": 2182,
+    "ts": "2026-07-22T22:17:34+00:00"
   },
   "nethical6/conversation-steganography": {
-    "stars": 946,
-    "ts": "2026-07-22T19:46:09+00:00"
+    "stars": 965,
+    "ts": "2026-07-22T22:17:34+00:00"
+  },
+  "Jakubantalik/thinking-orbs": {
+    "stars": 579,
+    "ts": "2026-07-22T22:17:34+00:00"
   },
   "pyang5166/gbro-collage-broll": {
     "stars": 549,
     "ts": "2026-07-21T22:13:34+00:00"
   },
-  "Jakubantalik/thinking-orbs": {
-    "stars": 538,
-    "ts": "2026-07-22T19:46:09+00:00"
-  },
   "EthanXiang777/circuit-framework": {
     "stars": 489,
-    "ts": "2026-07-22T19:47:24+00:00"
+    "ts": "2026-07-22T22:18:48+00:00"
   },
   "pireel/pireel": {
-    "stars": 396,
-    "ts": "2026-07-22T19:46:38+00:00"
+    "stars": 412,
+    "ts": "2026-07-22T22:18:03+00:00"
   },
   "gnipbao/story-to-handdrawn-video": {
-    "stars": 387,
-    "ts": "2026-07-22T19:46:09+00:00"
+    "stars": 390,
+    "ts": "2026-07-22T22:17:34+00:00"
   },
   "KinetiNode/claude-fable-5-system-prompt-clean": {
-    "stars": 374,
-    "ts": "2026-07-22T19:46:09+00:00"
+    "stars": 377,
+    "ts": "2026-07-22T22:17:34+00:00"
   },
   "thesysdev/appless": {
     "stars": 322,
-    "ts": "2026-07-22T19:46:09+00:00"
+    "ts": "2026-07-22T22:17:34+00:00"
   },
   "yc-duan/fastctx": {
-    "stars": 320,
-    "ts": "2026-07-22T19:46:09+00:00"
+    "stars": 321,
+    "ts": "2026-07-22T22:17:34+00:00"
+  },
+  "Kritt-ai/open-kritt": {
+    "stars": 317,
+    "ts": "2026-07-22T22:17:34+00:00"
   },
   "PromptPartner/agentsmith": {
     "stars": 314,
-    "ts": "2026-07-22T19:46:09+00:00"
-  },
-  "Kritt-ai/open-kritt": {
-    "stars": 313,
-    "ts": "2026-07-22T19:46:09+00:00"
+    "ts": "2026-07-22T22:17:34+00:00"
   },
   "paxlabs-inc/machine-genome": {
     "stars": 283,
-    "ts": "2026-07-22T19:46:09+00:00"
+    "ts": "2026-07-22T22:17:34+00:00"
   },
   "livetennisapi/livetennisapi-mcp": {
     "stars": 271,
-    "ts": "2026-07-22T19:46:09+00:00"
+    "ts": "2026-07-22T22:17:34+00:00"
   },
   "eli-labz/Agent-Execution-Partnership": {
     "stars": 251,
-    "ts": "2026-07-22T19:46:09+00:00"
+    "ts": "2026-07-22T22:17:34+00:00"
   },
   "0xsline/OpenChatCut": {
     "stars": 249,
     "ts": "2026-07-21T22:14:04+00:00"
   },
   "KlaatAI/klaatcode": {
-    "stars": 240,
-    "ts": "2026-07-22T19:46:09+00:00"
+    "stars": 245,
+    "ts": "2026-07-22T22:17:34+00:00"
+  },
+  "SeanJ1ang/design-judge-skills": {
+    "stars": 241,
+    "ts": "2026-07-22T22:18:48+00:00"
   },
   "joeseesun/qiaomu-cut-skill": {
     "stars": 235,
-    "ts": "2026-07-22T19:46:09+00:00"
-  },
-  "SeanJ1ang/design-judge-skills": {
-    "stars": 234,
-    "ts": "2026-07-22T19:47:24+00:00"
+    "ts": "2026-07-22T22:17:34+00:00"
   },
   "h9-tec/Awesome_ai_learning": {
-    "stars": 233,
-    "ts": "2026-07-22T19:47:11+00:00"
+    "stars": 234,
+    "ts": "2026-07-22T22:18:35+00:00"
   },
   "CodeDrobe/skills": {
     "stars": 221,
@@ -96,7 +96,11 @@
     "ts": "2026-07-22T03:49:43+00:00"
   },
   "0xwilliamortiz/andrej-karpathy-skills": {
-    "stars": 163,
-    "ts": "2026-07-22T19:46:09+00:00"
+    "stars": 164,
+    "ts": "2026-07-22T22:17:34+00:00"
+  },
+  "risa-labs-inc/BossConsole": {
+    "stars": 152,
+    "ts": "2026-07-22T22:18:48+00:00"
   }
 }
