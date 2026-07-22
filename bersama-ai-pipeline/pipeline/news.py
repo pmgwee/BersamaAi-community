@@ -810,6 +810,10 @@ You are the BersamaAi news editor. The owner shared ONE item (a Threads/X post,
 article, or product/repo link) they judged worth the community's attention. Write
 ONE news card — sober, no hype, grounded strictly in the given text.
 
+If a VIDEO TRANSCRIPT is included, base the body on what the video actually shows or
+demonstrates — the caption is often promotional ("comment X to get Y"), so trust the
+transcript for the real content and pick the topic from what the video is about.
+
 Assign exactly one TOPIC:
 - coding — AI coding agents / agentic / dev tools / LLM / chat & assistants
 - creative_image — image generation
@@ -848,8 +852,15 @@ def post_url_as_news(url: str, *, api_key: str, model: str, base_url: str,
     """Threads/link HITL: fetch a public URL -> GLM writes a topic-tagged card -> post."""
     if not api_key:
         return "SHARE_NO_API_KEY"
-    meta = fetch_url_meta(url)
-    if not meta.get("title"):
+    from . import social  # lazy: yt-dlp is a heavier import
+    if social.is_social_video_url(url):
+        # IG reels / XHS / TikTok: JS-shell pages → yt-dlp gets the real metadata +
+        # cover frame, and ASR transcribes the audio so the card is accurate (the
+        # caption is often engagement-bait, not a description of the video).
+        meta = social.fetch_social_video(url)
+    else:
+        meta = fetch_url_meta(url)
+    if not meta.get("title") and not meta.get("transcript"):
         print(f"[share] could not fetch content for {url}")
         return "SHARE_FETCH_FAILED"
     client = OpenAI(api_key=api_key, base_url=base_url)
@@ -857,9 +868,15 @@ def post_url_as_news(url: str, *, api_key: str, model: str, base_url: str,
         "name": EMIT_ONE_TOOL["name"], "description": EMIT_ONE_TOOL["description"],
         "parameters": EMIT_ONE_TOOL["input_schema"],
     }}
-    user_msg = (f"title: {meta['title']}\n"
-                f"description: {meta.get('description', '')}\n"
-                f"url: {url}")
+    parts = [f"title: {meta.get('title', '')}", f"description: {meta.get('description', '')}"]
+    if meta.get("transcript"):
+        # Prefer what the video actually says over the (often promotional) caption.
+        parts.append(
+            f"video transcript (what is actually said/shown — trust this over the caption, "
+            f"which may be promotional): {meta['transcript'][:1500]}"
+        )
+    parts.append(f"url: {url}")
+    user_msg = "\n".join(parts)
     try:
         resp = client.chat.completions.create(
             model=model, max_completion_tokens=1024,

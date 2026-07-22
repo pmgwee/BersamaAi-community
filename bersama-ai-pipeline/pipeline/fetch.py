@@ -338,7 +338,7 @@ def get_transcript(info: dict) -> tuple[Optional[str], str]:
     # Opt-in via GROQ_API_KEY; multilingual, so non-English audio is transcribed
     # and the summarizer then writes an English card. Skipped for the oEmbed-only
     # stub (no audio path there, and yt-dlp would be blocked anyway).
-    groq_key = os.environ.get("GROQ_API_KEY", "")
+    groq_key = os.environ.get("GROQ_API_KEY") or os.environ.get("GROQ_KEY") or ""
     if groq_key and not info.get("_oembed_only"):
         url = info.get("webpage_url") or info.get("url")
         if url:
