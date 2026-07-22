@@ -124,7 +124,7 @@ discord.py event bot on the GCP VM (systemd `bersama`). Privileged intents requi
 | `ON_DEMAND_TOKEN` (HTTP trigger) | ✅ | — | — |
 | `DISCORD_TOKEN` (engagement sweep — read-only REST) | — | ✅ | ✅ ⚠️ private repo only |
 | `DISCORD_STAFF_CHAT_WEBHOOK_URL` (`#staff-chat` weekly digest) | — | — | ✅ |
-| `PREFS_ENABLED` (engagement actuator on/off; default `false`) | optional | — | ✅ (var) |
+| `PREFS_ENABLED` (engagement actuator on/off; default `false`) | optional | — | ✅ |
 
 ⚠️ Keep in sync: `DISCORD_TOKEN` (bot + MCP + GH sweep secret) · `ZAI_API_KEY` (pipeline + bot).
 ⚠️ **Security:** the `DISCORD_TOKEN` GH Actions secret grants full bot admin (Discord tokens aren't scoped). **Only add it if this repo is PRIVATE.** If public, run the engagement sweep on the GCP VM cron instead. Verify with `gh repo view --json visibility` before adding.

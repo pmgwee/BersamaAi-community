@@ -52,7 +52,9 @@ jobs:
 
       - name: Compute preferences
         # Pure compute: engagement.jsonl + posted_log.jsonl → preferences.json.
-        # No secret, no network.
+        # No network. PREFS_ENABLED gates whether the actuator engages (default false).
+        env:
+          PREFS_ENABLED: ${{ secrets.PREFS_ENABLED }}
         run: python -m pipeline.preferences
 
       - name: Run news digest
@@ -69,6 +71,7 @@ jobs:
           DISCORD_VIDEO_CREATION_WEBHOOK_URL: ${{ secrets.DISCORD_VIDEO_CREATION_WEBHOOK_URL }}
           DISCORD_VOICE_STUDIO_WEBHOOK_URL: ${{ secrets.DISCORD_VOICE_STUDIO_WEBHOOK_URL }}
           DISCORD_EDUCATION_WEBHOOK_URL: ${{ secrets.DISCORD_EDUCATION_WEBHOOK_URL }}
+          PREFS_ENABLED: ${{ secrets.PREFS_ENABLED }}   # engagement actuator on/off (unset/false = dormant)
         run: python -m pipeline.main --mode news
 
       - name: Commit news dedup state
