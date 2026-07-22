@@ -26,6 +26,12 @@ from .news import (
 
 WINDOW_DAYS = 7
 
+# Readiness thresholds for flipping PREFS_ENABLED=true (tunable). The digest uses
+# these to give the owner a plain-language 🟢/🟡/🔴 verdict on whether to enable
+# the actuator — so they can decide from the digest alone, no guessing.
+READY_MIN_EVENTS_TOTAL = 40      # ~20 posts swept — enough that the EMA isn't pure noise
+READY_MIN_ENGAGEMENT = 0.15      # at least ~1 in 7 swept posts got a member reaction/reply
+
 
 def _parse_ts(ts) -> datetime | None:
     if not ts:
@@ -63,6 +69,29 @@ def _line(prefix: str, s: str, width: int = 22) -> str:
     return f"`{prefix.ljust(width)}` {s}"
 
 
+def _readiness() -> tuple[str, str]:
+    """Should the owner flip PREFS_ENABLED=true yet? Based on sweep volume + real
+    reaction signal across all engagement logs. Returns (status_emoji, recommendation)."""
+    total = engaged = 0
+    for r in read_jsonl(ENGAGEMENT_LOG):
+        total += 1
+        reacts = r.get("reactions") or {}
+        member_engaged = any(isinstance(v, (int, float)) and v > 0 for v in reacts.values()) \
+            or int(r.get("reply_count") or 0) > 0
+        if member_engaged:
+            engaged += 1
+    rate = (engaged / total) if total else 0.0
+    if total < MIN_EVENTS:
+        return "🔴", (f"NOT ready — only {total} events (code floor is {MIN_EVENTS}; the actuator "
+                      f"can't engage below this). Keep collecting — do nothing.")
+    if total < READY_MIN_EVENTS_TOTAL or rate < READY_MIN_ENGAGEMENT:
+        return "🟡", (f"Almost — {total} events, {int(rate * 100)}% got member reactions. "
+                      f"Wait for ~{READY_MIN_EVENTS_TOTAL}+ events at {int(READY_MIN_ENGAGEMENT * 100)}%+ engagement.")
+    return "🟢", (f"READY — {total} events, {int(rate * 100)}% engagement. Set the GitHub secret "
+                  f"PREFS_ENABLED=true (repo → Settings → Secrets and variables → Actions). "
+                  f"Reversible: set it back to false anytime.")
+
+
 def build_text() -> str:
     now = datetime.now(timezone.utc)
     prefs = load_preferences()
@@ -82,6 +111,8 @@ def build_text() -> str:
     state = "ENABLED" if prefs.enabled else "dormant"
     lines.append(f"n_events **{prefs.n_events}** (actuator {state}; needs {MIN_EVENTS}+ and PREFS_ENABLED) · "
                  f"active_members_7d **{base.get('active_members_7d', '–')}**")
+    rd_emoji, rd_rec = _readiness()
+    lines.append(f"**{rd_emoji} Flip PREFS_ENABLED?** {rd_rec}")
 
     lines.append(f"\n**🔥 Top {len(top)} posts by reward (last {WINDOW_DAYS}d):**")
     if top:

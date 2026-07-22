@@ -33,10 +33,11 @@ from .preferences import (
 
 API = "https://discord.com/api/v10"
 
-# MUST match bersama-bot/bot.py SEED_EMOJIS. The bot seeds these on every news
-# card so members have something to click; the sweep subtracts the bot's own
-# reaction (the `me` flag) so only MEMBER engagement counts toward the reward.
-SEED_EMOJIS = ("👍", "🔥", "😐")
+# The three seeded reactions. MUST match bersama-bot/bot.py SEED_EMOJIS exactly.
+# Order is a contract: [0]=useful (+2), [1]=amazing (+3), [2]=not-for-me (−2).
+# Change the emoji HERE only — _reactions + _reward key off these positions, and
+# the bot's own seed reaction (the `me` flag) is subtracted so only MEMBER clicks count.
+SEED_EMOJIS = ("👍", "🔥", "👎")
 
 SWEEP_MIN_AGE_DAYS = 1     # don't sweep a card until it has had ~24h to collect reactions
 SWEEP_MAX_AGE_DAYS = 8     # beyond this the card is stale; stop sweeping it
@@ -147,7 +148,7 @@ def _reactions(msg: dict) -> dict:
     """Member-only reaction counts per seeded emoji + an 'other' bucket. Uses the
     per-reaction `me` flag to subtract the bot's own seed (strictly more correct
     than a blanket −1: handles a partial seed if the bot was briefly down)."""
-    seed = {"👍": 0, "🔥": 0, "😐": 0}
+    seed = {e: 0 for e in SEED_EMOJIS}
     other = 0
     for r in (msg.get("reactions") or []):
         name = _norm_emoji((r.get("emoji") or {}).get("name", ""))
@@ -163,10 +164,11 @@ def _reactions(msg: dict) -> dict:
 
 
 def _reward(reacts: dict, reply_count: int, baseline: int | float) -> float:
+    up, fire, meh = SEED_EMOJIS  # positional roles (see SEED_EMOJIS contract)
     raw = (
-        W_REACT_UP * reacts.get("👍", 0)
-        + W_REACT_FIRE * reacts.get("🔥", 0)
-        + W_REACT_MEH * reacts.get("😐", 0)
+        W_REACT_UP * reacts.get(up, 0)
+        + W_REACT_FIRE * reacts.get(fire, 0)
+        + W_REACT_MEH * reacts.get(meh, 0)
         + W_REACT_OTHER * reacts.get("other", 0)
         + W_REPLY * reply_count
     )

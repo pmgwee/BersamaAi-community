@@ -44,24 +44,27 @@ check("cap pref=-3 → 1 (floor)", news._cap_for_topic(-3.0) == 1, str(news._cap
 
 # ── Test 2: reward math ───────────────────────────────────────────────────────
 print("\n[2] reward + reaction parsing")
-r = engagement._reward({"👍": 2, "🔥": 1, "😐": 0, "other": 1}, 1, 10)
+r = engagement._reward({"👍": 2, "🔥": 1, "👎": 0, "other": 1}, 1, 10)
 # 2*2 + 3*1 + (-2)*0 + 1*1 + 4*1 = 4+3+0+1+4 = 12 ; /10 = 1.2
 check("reward(2👍,1🔥,1other,1reply,baseline10) == 1.2", abs(r - 1.2) < 1e-6, str(r))
 rhi = engagement._reward({"🔥": 10}, 0, 10)  # 3*10/10 = 3.0
 check("reward(10🔥) == 3.0", abs(rhi - 3.0) < 1e-6, str(rhi))
-rlo = engagement._reward({"😐": 20}, 0, 10)  # -2*20/10 = -4.0 → clamp -3
-check("reward(20😐) clamps to -3.0", abs(rlo - (-3.0)) < 1e-6, str(rlo))
+rmeh = engagement._reward({"👎": 5}, 0, 10)  # -2*5/10 = -1.0
+check("reward(5👎) == -1.0 (meh weight via new emoji)", abs(rmeh - (-1.0)) < 1e-6, str(rmeh))
+rlo = engagement._reward({"👎": 20}, 0, 10)  # -2*20/10 = -4.0 → clamp -3
+check("reward(20👎) clamps to -3.0", abs(rlo - (-3.0)) < 1e-6, str(rlo))
 
 # reaction parsing: bot seed (me=True) subtracted; member reactions counted
 msg = {"reactions": [
     {"emoji": {"name": "👍"}, "count": 3, "me": True},    # 1 bot + 2 members
-    {"emoji": {"name": "🔥"}, "count": 1, "me": True},    # 1 bot + 0 members → 0
-    {"emoji": {"name": "😐"}, "count": 0, "me": True},    # bot only, count 0 → 0
+    {"emoji": {"name": "🔥"}, "count": 1, "me": True},    # bot only → 0
+    {"emoji": {"name": "👎"}, "count": 2, "me": True},    # 1 bot + 1 member
     {"emoji": {"name": "🎉", "id": None}, "count": 2, "me": False},  # 2 members, other
 ]}
 parsed = engagement._reactions(msg)
 check("reactions subtract bot seed (👍 3,me → 2)", parsed["👍"] == 2, str(parsed))
-check("reactions 👍 bot-only flame → 0 (🔥 1,me → 0)", parsed["🔥"] == 0, str(parsed))
+check("reactions 🔥 bot-only → 0", parsed["🔥"] == 0, str(parsed))
+check("reactions 👎 2,me → 1", parsed["👎"] == 1, str(parsed))
 check("reactions other bucket = 2", parsed["other"] == 2, str(parsed))
 
 # ── Test 3: _post ?wait=true URL building + 200/204 handling ──────────────────

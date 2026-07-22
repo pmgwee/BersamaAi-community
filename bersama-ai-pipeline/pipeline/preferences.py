@@ -35,7 +35,7 @@ MIN_EVENTS = 20                # below this the actuator stays dormant (no learn
 # source of truth for the reward; mirrored here only for the digest/docs.
 W_REACT_UP = 2.0     # 👍 useful
 W_REACT_FIRE = 3.0   # 🔥 amazing
-W_REACT_MEH = -2.0   # 😐 meh
+W_REACT_MEH = -2.0   # 👎 not-for-me
 W_REACT_OTHER = 1.0  # any other reaction
 W_REPLY = 4.0        # a reply (deeper engagement than a react)
 REWARD_MIN, REWARD_MAX = -3.0, 5.0

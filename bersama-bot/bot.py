@@ -69,7 +69,7 @@ NEWS_CHANNELS = [int(x) for x in CONFIG.get("news_channels", [])]
 # have something to click (raises reaction signal ~5–10×, the TLDR pattern).
 # MUST match pipeline/engagement.py SEED_EMOJIS so the sweep subtracts exactly
 # these (the bot's own reactions carry the `me` flag and are excluded upstream).
-SEED_EMOJIS = ("👍", "🔥", "😐")   # useful / amazing / meh
+SEED_EMOJIS = ("👍", "🔥", "👎")   # useful / amazing / not-for-me
 
 
 def _norm_emoji(emoji: str) -> str:
