@@ -779,6 +779,7 @@ async def seed_reactions():
     differences never cause a double-add."""
     if not NEWS_CHANNELS:
         return
+    seeded = 0
     for cid in NEWS_CHANNELS:
         ch = bot.get_channel(cid) or await bot.fetch_channel(cid)
         if ch is None:
@@ -792,10 +793,15 @@ async def seed_reactions():
                     if _norm_emoji(emo) not in have:
                         try:
                             await msg.add_reaction(emo)
+                            seeded += 1
                         except discord.HTTPException as exc:
                             log.warning("seed_reactions: add %r on msg %s failed: %s", emo, msg.id, exc)
         except discord.HTTPException as exc:
             log.warning("seed_reactions: channel %s history failed: %s", cid, exc)
+    # Log a count only when something was added — quiet on steady-state (every card
+    # already seeded), loud the first run after deploy so success is observable.
+    if seeded:
+        log.info("seed_reactions: added %d reaction(s) across %d news channel(s)", seeded, len(NEWS_CHANNELS))
 
 
 @seed_reactions.before_loop
