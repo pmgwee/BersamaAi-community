@@ -1,43 +1,43 @@
 {
   "lopopolo/harness-engineering": {
-    "stars": 2224,
-    "ts": "2026-07-23T11:21:39+00:00"
+    "stars": 2243,
+    "ts": "2026-07-23T14:35:08+00:00"
   },
   "nethical6/conversation-steganography": {
-    "stars": 1041,
-    "ts": "2026-07-23T11:21:39+00:00"
+    "stars": 1058,
+    "ts": "2026-07-23T14:35:08+00:00"
   },
   "Jakubantalik/thinking-orbs": {
-    "stars": 733,
-    "ts": "2026-07-23T11:21:39+00:00"
+    "stars": 768,
+    "ts": "2026-07-23T14:35:08+00:00"
   },
   "pireel/pireel": {
-    "stars": 598,
-    "ts": "2026-07-23T11:22:08+00:00"
+    "stars": 622,
+    "ts": "2026-07-23T14:35:38+00:00"
   },
   "pyang5166/gbro-collage-broll": {
     "stars": 549,
     "ts": "2026-07-21T22:13:34+00:00"
   },
+  "gnipbao/story-to-handdrawn-video": {
+    "stars": 509,
+    "ts": "2026-07-23T14:35:08+00:00"
+  },
   "EthanXiang777/circuit-framework": {
     "stars": 489,
     "ts": "2026-07-22T22:18:48+00:00"
   },
-  "gnipbao/story-to-handdrawn-video": {
-    "stars": 489,
-    "ts": "2026-07-23T11:21:39+00:00"
-  },
   "KinetiNode/claude-fable-5-system-prompt-clean": {
-    "stars": 386,
-    "ts": "2026-07-23T11:21:39+00:00"
+    "stars": 387,
+    "ts": "2026-07-23T14:35:08+00:00"
   },
   "yc-duan/fastctx": {
-    "stars": 375,
-    "ts": "2026-07-23T11:21:39+00:00"
+    "stars": 379,
+    "ts": "2026-07-23T14:35:08+00:00"
   },
   "Kritt-ai/open-kritt": {
-    "stars": 346,
-    "ts": "2026-07-23T11:21:39+00:00"
+    "stars": 350,
+    "ts": "2026-07-23T14:35:08+00:00"
   },
   "thesysdev/appless": {
     "stars": 322,
@@ -48,28 +48,28 @@
     "ts": "2026-07-22T22:17:34+00:00"
   },
   "SeanJ1ang/design-judge-skills": {
-    "stars": 272,
-    "ts": "2026-07-23T11:22:53+00:00"
+    "stars": 279,
+    "ts": "2026-07-23T14:36:26+00:00"
   },
   "KlaatAI/klaatcode": {
-    "stars": 251,
-    "ts": "2026-07-23T11:21:39+00:00"
+    "stars": 252,
+    "ts": "2026-07-23T14:35:08+00:00"
   },
   "0xsline/OpenChatCut": {
     "stars": 249,
     "ts": "2026-07-21T22:14:04+00:00"
   },
   "joeseesun/qiaomu-cut-skill": {
-    "stars": 245,
-    "ts": "2026-07-23T11:21:39+00:00"
+    "stars": 249,
+    "ts": "2026-07-23T14:35:08+00:00"
   },
   "h9-tec/Awesome_ai_learning": {
     "stars": 234,
     "ts": "2026-07-22T22:18:35+00:00"
   },
   "RinDig/icm-architect": {
-    "stars": 224,
-    "ts": "2026-07-23T11:21:39+00:00"
+    "stars": 225,
+    "ts": "2026-07-23T14:35:08+00:00"
   },
   "CodeDrobe/skills": {
     "stars": 221,
@@ -81,11 +81,11 @@
   },
   "paxlabs-inc/machine-genome": {
     "stars": 212,
-    "ts": "2026-07-23T11:21:39+00:00"
+    "ts": "2026-07-23T14:35:08+00:00"
   },
   "livetennisapi/livetennisapi-mcp": {
     "stars": 205,
-    "ts": "2026-07-23T11:21:39+00:00"
+    "ts": "2026-07-23T14:35:08+00:00"
   },
   "kunchenguid/whathappened": {
     "stars": 197,
@@ -93,14 +93,18 @@
   },
   "eli-labz/Agent-Execution-Partnership": {
     "stars": 186,
-    "ts": "2026-07-23T11:21:39+00:00"
+    "ts": "2026-07-23T14:35:08+00:00"
   },
   "0xwilliamortiz/andrej-karpathy-skills": {
-    "stars": 167,
-    "ts": "2026-07-23T11:21:39+00:00"
+    "stars": 169,
+    "ts": "2026-07-23T14:35:08+00:00"
   },
   "risa-labs-inc/BossConsole": {
-    "stars": 158,
-    "ts": "2026-07-23T11:22:53+00:00"
+    "stars": 161,
+    "ts": "2026-07-23T14:36:26+00:00"
+  },
+  "hahhforest/pi-textbook": {
+    "stars": 152,
+    "ts": "2026-07-23T14:35:08+00:00"
   }
 }
