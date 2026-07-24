@@ -17,6 +17,7 @@ qualifies. Health: a real (non-dry) run that posts 0 cards raises a warning in
 """
 from __future__ import annotations
 
+import base64
 import hashlib
 import html as html_mod
 import json
@@ -31,7 +32,7 @@ import requests
 from openai import OpenAI
 
 from .github_trending import fetch_trending
-from .stateutil import append_jsonl, POSTED_LOG
+from .stateutil import append_jsonl, POSTED_LOG, POSTED_LOG_SHARE
 from .preferences import load_preferences, MIN_EVENTS
 
 STATE_FILE = Path(__file__).resolve().parent.parent / "state" / "news_seen.json"
@@ -970,7 +971,7 @@ def _post(webhook_url: str, payload: dict) -> dict | None:
 
 
 def _log_posted(msg: dict, item: NewsItem, cand: dict | None, topic: Topic,
-                origin: str = "auto") -> None:
+                origin: str = "auto", log_path: Path = POSTED_LOG) -> None:
     """Append one row per posted card to state/posted_log.jsonl — the engagement
     sweep's list of messages to read reactions from. Telemetry collects
     unconditionally (even while the actuator is dormant) so the model has data
@@ -979,7 +980,7 @@ def _log_posted(msg: dict, item: NewsItem, cand: dict | None, topic: Topic,
     can be told apart / weighted later; preferences ignores unknown fields until
     you opt in, so adding it changes nothing today."""
     from datetime import datetime, timezone
-    append_jsonl(POSTED_LOG, {
+    append_jsonl(log_path, {
         "message_id": str(msg.get("id", "")),
         "channel_id": str(msg.get("channel_id", "")),
         "channel": topic.channel,
@@ -993,6 +994,47 @@ def _log_posted(msg: dict, item: NewsItem, cand: dict | None, topic: Topic,
         "origin": origin,
         "posted_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
     })
+
+
+def _push_share_shard() -> None:
+    """Best-effort: push the VM's /share telemetry shard (posted_log_share.jsonl) to the
+    repo so the GitHub Actions engagement sweep + preferences see /share cards. The VM is
+    the SOLE writer of this file → no merge conflicts with GH Actions' posted_log.jsonl.
+    Fire-and-forget on a daemon thread; the file is durable on disk, so a failed push is
+    retried on the next /share (the whole file is re-pushed, so no row is ever lost)."""
+    import threading
+    def _run() -> None:
+        token = os.environ.get("GITHUB_TOKEN", "")
+        repo = os.environ.get("GITHUB_REPOSITORY", "pmgwee/BersamaAi-community")
+        if not token:
+            print("[share-shard] no GITHUB_TOKEN — /share telemetry stays local; won't reach the sweep")
+            return
+        if not POSTED_LOG_SHARE.exists():
+            return
+        content = POSTED_LOG_SHARE.read_bytes()
+        url = f"https://api.github.com/repos/{repo}/contents/state/posted_log_share.jsonl"
+        h = {"Authorization": f"Bearer {token}", "Accept": "application/vnd.github+json"}
+        try:
+            for _ in range(3):   # retry transient failures + sha mismatches
+                sha = None
+                g = requests.get(url, headers=h, timeout=15)
+                if g.status_code == 200:
+                    sha = g.json().get("sha")
+                p = requests.put(url, headers=h, timeout=20, json={
+                    "message": "chore: /share telemetry shard",
+                    "content": base64.b64encode(content).decode(),
+                    "sha": sha,           # None on first create; current sha on update
+                    "branch": "main",
+                })
+                if p.status_code in (200, 201):
+                    print("[share-shard] synced to repo")
+                    return
+                if p.status_code != 409:   # 409 = sha mismatch → re-fetch sha + retry
+                    print(f"[share-shard] push failed: {p.status_code} {p.text[:160]}")
+                    return
+        except Exception as e:  # noqa: BLE001
+            print(f"[share-shard] push failed: {e}")
+    threading.Thread(target=_run, daemon=True).start()
 
 
 # ── share (Threads / link human-in-the-loop) ─────────────────────────────────
@@ -1165,7 +1207,8 @@ def post_url_as_news(url: str, *, api_key: str, model: str, base_url: str,
     # (the engine's strongest taste signal). cand=None: /share has no scrape row,
     # so source/score/star_velocity write as ""/0 — _log_posted null-guards it.
     if msg and msg.get("id"):
-        _log_posted(msg, item, cand=None, topic=t, origin="share")
+        _log_posted(msg, item, cand=None, topic=t, origin="share", log_path=POSTED_LOG_SHARE)
+        _push_share_shard()   # best-effort: sync the VM shard to the repo so the GH Actions sweep sees it
     return f"SHARED {topic} {item.headline[:40]}"
 
 

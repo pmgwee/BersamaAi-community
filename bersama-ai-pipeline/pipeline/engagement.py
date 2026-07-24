@@ -24,7 +24,7 @@ import requests
 
 from .stateutil import (
     POSTED_LOG, ENGAGEMENT_LOG, ACTIVITY_BASELINE,
-    read_jsonl, append_jsonl, atomic_write_json, rewrite_jsonl,
+    read_jsonl, append_jsonl, atomic_write_json, rewrite_jsonl, read_posted_log,
 )
 from .preferences import (
     W_REACT_UP, W_REACT_FIRE, W_REACT_MEH, W_REACT_OTHER, W_REPLY,
@@ -213,7 +213,7 @@ def sweep() -> int:
 
     # Target posts: 24h–8d old (in the sweep window).
     targets: dict[str, dict] = {}
-    for row in read_jsonl(POSTED_LOG):
+    for row in read_posted_log():   # auto-news (posted_log.jsonl) + owner /share (posted_log_share.jsonl)
         mid = str(row.get("message_id") or "")
         if not mid:
             continue

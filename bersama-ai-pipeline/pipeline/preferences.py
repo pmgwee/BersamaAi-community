@@ -24,7 +24,7 @@ from datetime import datetime, timezone
 
 from .stateutil import (
     POSTED_LOG, ENGAGEMENT_LOG, PREFERENCES,
-    read_jsonl, atomic_write_json, read_json,
+    read_jsonl, atomic_write_json, read_json, read_posted_log,
 )
 
 HALF_LIFE_DAYS = 14            # recent taste dominates; old taste fades
@@ -187,7 +187,7 @@ def compute() -> Preferences:
 
     # Index posts by message_id (the join key).
     posts: dict[str, dict] = {}
-    for row in read_jsonl(POSTED_LOG):
+    for row in read_posted_log():   # auto-news + owner /share
         mid = row.get("message_id")
         if mid:
             posts[str(mid)] = row
