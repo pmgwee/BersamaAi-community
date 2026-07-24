@@ -49,8 +49,32 @@ Each component has a complete, tagged `.env.example` (copy → `.env`; never com
 
 Bot channels / roles / levels live in `bersama-bot/config.json`, not env.
 
+## Task completion workflow (do this every time a task is done)
+Per the owner's standing instruction: **commit + push finished work to `main`
+automatically on task completion** (the repo is main-based; CI also commits state
+to main). Mid-task WIP commits still need asking.
+
+1. **Before staging** — confirm only intended files changed: `git diff --ignore-cr-at-eol --stat`.
+   Never `git add -A` blind: local pipeline runs rewrite `state/*.json` (CI owns those)
+   and Windows CRLF can create phantom whole-file diffs. Stage only the files you edited.
+2. **Commit + push** to `main`. End the commit message with the co-author trailer.
+3. **Hand back the VM sync commands**, ready to paste:
+   ```bash
+   cd ~/bersama/bersama-ai-pipeline && git pull --ff-only     # pipeline (portal + summarizer + /share)
+   # cd ~/BersamaAi-community && git pull --ff-only           # bot — only if bot code changed
+   ```
+   Add a restart **only if** a long-running process needs the new code:
+   - Portal (`on_demand.py`, :8080): `pkill -f on_demand.py; cd ~/bersama/bersama-ai-pipeline && source .venv/bin/activate && nohup python on_demand.py > on_demand.log 2>&1 &`
+   - Bot: `sudo systemctl restart bersama`
+   - **News digest / engagement loop: no restart** — they run on GitHub Actions and use the pushed code on the next scheduled run automatically.
+4. **Flag any new env/secrets**, and say *where* each must be set (these are NOT interchangeable):
+   - **GitHub repo secret** (Settings → Secrets and variables → Actions) → anything the news-digest / engagement workflows read.
+   - **VM `.env`** (`~/bersama/bersama-ai-pipeline/.env`) → summarizer + on-demand portal.
+   - **Local `.env`** (`bersama-ai-pipeline/.env`) → local dev/test only; never the source of truth.
+   Verify a webhook/token with a GET before declaring done (Discord webhooks return 200) — a working local value does NOT prove the GH secret is set.
+
 ## Conventions
 - Match existing doc style (tables, emoji status markers 🟢🟡⚪, terse prose).
 - Don't reintroduce Chinese channel names / content.
 - Historical point-in-time docs (`MARKET-RESEARCH-REPORT.md`, `SESSION-HANDOFF.md`, `NEWS-ENGINE-REVIEW.md`, `ENGAGEMENT-LOOP-PLAN.md`) are dated snapshots — don't "update" them; edit the live trackers instead.
-- Commit only when the user asks.
+- See **Task completion workflow** above for the commit/push + VM-handoff default.

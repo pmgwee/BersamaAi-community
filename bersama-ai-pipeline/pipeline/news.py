@@ -665,10 +665,12 @@ BRAND_COLOR = 0x5865F2
 
 def _fmt(n: int) -> str:
     if n >= 1_000_000:
-        return f"{n / 1_000_000:.1f}M"
-    if n >= 1_000:
-        return f"{n / 1_000:.1f}k"
-    return str(n)
+        s = f"{n / 1_000_000:.1f}M"
+    elif n >= 1_000:
+        s = f"{n / 1_000:.1f}k"
+    else:
+        return str(n)
+    return s.replace(".0k", "k").replace(".0M", "M")   # 12.0k -> 12k, keep 1.2k
 
 
 def _age_days(created_at) -> int | None:
@@ -683,42 +685,67 @@ def _age_days(created_at) -> int | None:
         return None
 
 
+def _official_company(url: str) -> str:
+    """Best-effort company name from an official-blog URL (for the heat label)."""
+    from urllib.parse import urlparse
+    host = (urlparse(url or "").netloc or "").lower()
+    for frag, name in (("openai.com", "OpenAI"), ("anthropic.com", "Anthropic"),
+                       ("blog.google", "Google"), ("huggingface.co", "HuggingFace")):
+        if frag in host:
+            return name
+    return ""
+
+
 def _metric(cand: dict | None) -> str:
-    """Reliable heat label from the candidate's real score (don't trust LLM flavor text)."""
+    """Plain-English heat label for a card footer — tells a NON-technical reader, in
+    human terms, why this item is trending/attractive right now. Built from the
+    candidate's real signals (overwrites the LLM's flavor text in run_news). Every
+    piece of jargon is glossed inline (stars=likes, forks=copies, HN=a tech forum)."""
     if not cand:
         return ""
     score = int(cand.get("score") or 0)
     src = cand.get("source") or ""
+
     if src == "github":
+        forks = int(cand.get("forks") or 0)
         vel = int(cand.get("star_velocity") or 0)
         delta = int(cand.get("star_delta") or 0)
         age = _age_days(cand.get("created_at"))
-        base = f"⭐ {_fmt(score)} stars"
-        bits = []
+        # "Exploding" only when we've measured real run-over-run growth, else "Trending"
+        hook = "Exploding on GitHub" if (vel > 0 or delta > 0) else "Trending on GitHub"
+        parts = [f"{_fmt(score)} stars (likes)"]
         if vel > 0:
-            bits.append(f"▲ {_fmt(vel)}/day")
+            parts.append(f"+{_fmt(vel)} new stars/day")
         elif delta > 0:
-            bits.append(f"▲ {_fmt(delta)} since last run")
+            parts.append(f"+{_fmt(delta)} new stars since our last check")
+        parts.append(f"{_fmt(forks)} forks (copies)")
         if age is not None:
-            bits.append(f"{age}d old")
-        if bits:
-            base += " · " + " · ".join(bits)
-        return base
+            parts.append(f"only {age} {'day' if age == 1 else 'days'} old")
+        return f"⭐ {hook}: " + ", ".join(parts)
+
     if src == "huggingface":
         dl = int(cand.get("downloads") or 0)
         base = f"🤗 {_fmt(score)} likes"
         if dl > 0:
-            base += f" · {_fmt(dl)} downloads"
-        return base
+            base += f" and {_fmt(dl)} downloads"
+        return base + " on HuggingFace (the AI model hub)"
+
     if src == "official":
-        return "📢 official blog"
+        company = _official_company(cand.get("url") or cand.get("discussion") or "")
+        who = f"{company}'s " if company else "the company's "
+        return f"📢 Straight from {who}official blog — the source itself, not secondhand news"
+
     if src == "HN":
-        return f"{_fmt(score)} HN points"
+        return f"📰 {_fmt(score)} upvotes on Hacker News — front page of a top tech-news forum"
+
     if src.startswith("r/"):
-        if score > 0:
-            return f"▲ {_fmt(score)} upvotes on {src}"
-        rank = int(cand.get("rank") or 0)   # RSS path: hot position, no score
-        return f"🔥 hot #{rank} on {src}" if rank else f"🔥 hot on {src}"
+        if score > 0:   # OAuth JSON path: real upvote count
+            return f"👍 {_fmt(score)} upvotes on {src} — one of the hottest posts there right now"
+        rank = int(cand.get("rank") or 0)   # RSS path: hot-list position, no score
+        if rank:
+            return f"📈 Trending #{rank} on {src} — one of the hottest posts in that forum right now"
+        return f"📈 Trending on {src} — one of the hottest posts in that forum right now"
+
     return ""
 
 

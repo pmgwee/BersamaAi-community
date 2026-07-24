@@ -87,6 +87,7 @@ def fetch_trending(
                     "discussion": item.get("html_url", ""),
                     "source": "github",
                     "score": int(item.get("stargazers_count") or 0),
+                    "forks": int(item.get("forks_count") or 0),
                     "snippet": (item.get("description") or "")[:300],
                     "language": item.get("language") or "",
                     "thumbnail": (item.get("owner") or {}).get("avatar_url", ""),
