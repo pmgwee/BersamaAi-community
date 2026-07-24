@@ -1,16 +1,19 @@
 """Topic-routed trending-AI news → Discord channels.
 
-Sources: Reddit (per-topic subs) + Hacker News + GitHub Trending (Search API).
+Sources: Reddit (per-topic subs — OAuth JSON when REDDIT_CLIENT_ID/SECRET are set,
+else public .rss; reddit.com 403s unauthenticated .json since ~2026-07) + Hacker
+News + GitHub Trending (Search API) + HuggingFace trending + official blog RSS.
 A GLM judge tags each candidate with a TOPIC + HEAT + card; each item routes to
-its topic's channel webhook. Per-topic dedup (state/news_seen.json).
+its topic's channel webhook. Dedup (state/news_seen.json) drops already-posted
+stories BEFORE quotas + the judge, so every judged slot is a fresh story.
 
-Topics are configured in TOPICS below; only `live=True` topics gather + post.
-**Coding (#ai-dev-tools) is live now.** Creative (image/video/voice) + research
-(study/productivity) are wired but OFF until their webhooks are added — set the
-env var (topic.webhook_env) + flip live=True to turn one on.
+Topics are configured in TOPICS below; only `live=True` topics gather + post
+(all 6 are live today — trust the TOPICS table).
 
-Heat bar = viral / popular (GitHub star velocity, Reddit upvotes, HN points),
-NOT brand recognition — a fresh startup or community repo blowing up qualifies.
+Heat bar = viral / popular (GitHub star velocity, Reddit upvotes/hot-rank, HN
+points), NOT brand recognition — a fresh startup or community repo blowing up
+qualifies. Health: a real (non-dry) run that posts 0 cards raises a warning in
+#staff-chat via DISCORD_STAFF_CHAT_WEBHOOK_URL — silent runs are visible.
 """
 from __future__ import annotations
 
@@ -71,7 +74,7 @@ TOPICS: list[Topic] = [
           github_keywords=["text to speech", "voice clone", "tts", "suno", "music generation"],
           github_min_stars=150, live=True),
     Topic("research_study", "#education", "DISCORD_EDUCATION_WEBHOOK_URL",
-          reddit_subs=["learnmachinelearning", "ArtificialIntelligence"],
+          reddit_subs=["learnmachinelearning", "artificial"],   # r/ArtificialIntelligence 404s
           github_keywords=["learn ai", "ai course", "ml tutorial", "ai from scratch", "ai book"],
           github_min_stars=100, live=True),
     Topic("research_productivity", "#education", "DISCORD_EDUCATION_WEBHOOK_URL",
@@ -119,33 +122,140 @@ def _looks_ai(text: str) -> bool:
     return any(k in t for k in AI_KEYWORDS)
 
 
+_REDDIT_TOKEN = ""   # process-lifetime cache for the app-only OAuth token
+
+
+def _reddit_oauth_token() -> str:
+    """App-only OAuth token (client_credentials) when REDDIT_CLIENT_ID/SECRET are
+    set — restores the full JSON API (real upvote counts). Empty string = no creds
+    or token fetch failed; caller falls back to RSS."""
+    global _REDDIT_TOKEN
+    cid = os.environ.get("REDDIT_CLIENT_ID", "")
+    sec = os.environ.get("REDDIT_CLIENT_SECRET", "")
+    if not cid or not sec:
+        return ""
+    if _REDDIT_TOKEN:
+        return _REDDIT_TOKEN
+    try:
+        r = requests.post("https://www.reddit.com/api/v1/access_token",
+                          auth=(cid, sec), data={"grant_type": "client_credentials"},
+                          headers=HEADERS, timeout=15)
+        if r.status_code != 200:
+            print(f"[reddit] oauth token failed: HTTP {r.status_code} — falling back to RSS")
+            return ""
+        _REDDIT_TOKEN = r.json().get("access_token") or ""
+    except Exception as e:  # noqa: BLE001
+        print(f"[reddit] oauth token failed: {e} — falling back to RSS")
+        return ""
+    return _REDDIT_TOKEN
+
+
+def _reddit_json_sub(sub: str, token: str) -> list[dict]:
+    """One sub via the OAuth JSON API (full fidelity: upvote scores + thumbnails)."""
+    url = f"https://oauth.reddit.com/r/{sub}/hot?limit=20"
+    out = []
+    try:
+        r = requests.get(url, headers={**HEADERS, "Authorization": f"bearer {token}"}, timeout=15)
+        if r.status_code != 200:
+            print(f"[reddit] r/{sub} JSON -> HTTP {r.status_code}")
+            return []
+        children = (r.json().get("data") or {}).get("children") or []
+    except Exception as e:  # noqa: BLE001
+        print(f"[reddit] r/{sub} JSON failed: {e}")
+        return []
+    for c in children:
+        d = c.get("data") or {}
+        title = (d.get("title") or "").strip()
+        if not title:
+            continue
+        ext = d.get("url") or ""
+        perma = f"https://www.reddit.com{(d.get('permalink') or '')}"
+        link = ext if ext and "reddit.com" not in ext else perma
+        thumb = d.get("thumbnail") or ""
+        out.append({
+            "title": title, "url": link, "discussion": perma,
+            "source": f"r/{sub}", "score": int(d.get("score") or 0),
+            "snippet": (d.get("selftext") or "")[:300],
+            "thumbnail": thumb if thumb.startswith("http") else "",
+        })
+    return out
+
+
+def _reddit_rss_multi(subs: list[str]) -> list[dict]:
+    """A group of subs via ONE public multireddit Atom feed (r/a+b+c/hot.rss) —
+    the no-auth path that still works (the .json endpoints 403 unauthenticated),
+    and one request per topic keeps us far under the ~10 req/min anonymous limit.
+    Each entry's <category term> names its sub; per-sub hot rank is recovered as
+    the occurrence index (a global hot sort preserves each sub's own order). The
+    feed hides upvote counts, so `score` stays 0 and `rank` carries the heat; a
+    link post's external target comes from the [link] anchor in the entry HTML."""
+    import xml.etree.ElementTree as ET
+    url = f"https://www.reddit.com/r/{'+'.join(subs)}/hot.rss?limit={min(20 * len(subs), 100)}"
+    try:
+        r = requests.get(url, headers=HEADERS, timeout=15)
+        if r.status_code == 429:   # burst-limited — honor Retry-After, retry once
+            wait = min(max(int(r.headers.get("Retry-After") or 15), 15), 60)
+            print(f"[reddit] r/{'+'.join(subs)} RSS -> 429, retrying in {wait}s")
+            time.sleep(wait)
+            r = requests.get(url, headers=HEADERS, timeout=15)
+        if r.status_code != 200:
+            print(f"[reddit] r/{'+'.join(subs)} RSS -> HTTP {r.status_code}")
+            return []
+        root = ET.fromstring(r.content)
+    except Exception as e:  # noqa: BLE001
+        print(f"[reddit] r/{'+'.join(subs)} RSS failed: {e}")
+        return []
+    out, per_sub_rank = [], {}
+    for el in root.iter():
+        if el.tag.split("}")[-1] != "entry":
+            continue
+        title = perma = content = thumb = sub = ""
+        for child in el:
+            tag = child.tag.split("}")[-1]
+            if tag == "title":
+                title = (child.text or "").strip()
+            elif tag == "link":
+                perma = child.get("href") or ""
+            elif tag == "content":
+                content = child.text or ""
+            elif tag == "thumbnail":
+                thumb = child.get("url") or ""
+            elif tag == "category":
+                sub = child.get("term") or ""
+        if not title:
+            continue
+        sub = sub or subs[0]
+        rank = per_sub_rank[sub] = per_sub_rank.get(sub, 0) + 1
+        lm = re.search(r'<a href="([^"]+)">\s*\[link\]', content)
+        ext = html_mod.unescape(lm.group(1)) if lm else ""
+        link = ext if ext and "reddit.com" not in ext else perma
+        snippet = re.sub(r"<[^>]+>", " ", content)
+        snippet = html_mod.unescape(re.sub(r"\s+", " ", snippet)).strip()
+        snippet = re.sub(r"submitted by\s+/u/\S+.*$", "", snippet).strip()[:300]
+        out.append({
+            "title": title, "url": link, "discussion": perma,
+            "source": f"r/{sub}", "score": 0, "rank": rank,
+            "snippet": snippet,
+            "thumbnail": thumb if thumb.startswith("http") else "",
+        })
+    return out
+
+
 def fetch_reddit(subs: list[str]) -> list[dict]:
+    token = _reddit_oauth_token()
+    if not token:
+        out = _reddit_rss_multi(subs)
+        if not out:
+            print(f"[reddit] r/{'+'.join(subs)} -> 0 items (RSS)")
+        time.sleep(2.0)   # space topic-group requests
+        return out
     out = []
     for sub in subs:
-        url = f"https://www.reddit.com/r/{sub}/hot.json?limit=20"
-        try:
-            r = requests.get(url, headers=HEADERS, timeout=15)
-            if r.status_code != 200:
-                continue
-            children = (r.json().get("data") or {}).get("children") or []
-            for c in children:
-                d = c.get("data") or {}
-                title = (d.get("title") or "").strip()
-                if not title:
-                    continue
-                ext = d.get("url") or ""
-                perma = f"https://www.reddit.com{(d.get('permalink') or '')}"
-                link = ext if ext and "reddit.com" not in ext else perma
-                thumb = d.get("thumbnail") or ""
-                out.append({
-                    "title": title, "url": link, "discussion": perma,
-                    "source": f"r/{sub}", "score": int(d.get("score") or 0),
-                    "snippet": (d.get("selftext") or "")[:300],
-                    "thumbnail": thumb if thumb.startswith("http") else "",
-                })
-        except Exception:  # noqa: BLE001
-            continue
-        time.sleep(0.5)
+        items = _reddit_json_sub(sub, token) or _reddit_rss_multi([sub])
+        if not items:
+            print(f"[reddit] r/{sub} -> 0 items from every path")
+        out += items
+        time.sleep(0.5)   # OAuth allows 100 req/min
     return out
 
 
@@ -294,14 +404,36 @@ def _cap_for_topic(pref: float) -> int:
     return _clamp(3 + round(pref), 1, 4)
 
 
-def gather_candidates(prefs=None) -> list[dict]:
+def _cand_key(c: dict) -> str:
+    """Stable posted-story key for a candidate — the same key space `_keys()` writes
+    to news_seen.json (sha1 of discussion-or-source URL), so gather can drop already
+    -posted stories before they burn a quota slot or a judge token."""
+    base = c.get("discussion") or c.get("url") or c.get("title") or ""
+    return hashlib.sha1(base.encode("utf-8")).hexdigest()[:16]
+
+
+def gather_candidates(prefs=None, seen: set | None = None, stats: dict | None = None) -> list[dict]:
     """Per-topic quotas: each live topic contributes its top Reddit+GitHub candidates
     (so every channel's domain reaches the judge — coding no longer crowds out creative),
-    plus shared HN/HuggingFace/RSS for the judge to classify by topic."""
+    plus shared HN/HuggingFace/RSS for the judge to classify by topic.
+
+    `seen` (posted-story keys from news_seen.json) is filtered out UP FRONT so every
+    quota slot and judge token goes to a story that can actually post — this is what
+    stops back-to-back runs re-judging the same pool into a wall of NEWS_DEDUPED.
+    `stats` (optional dict) is filled with per-source gather counts + `skipped_seen`
+    for run-health reporting."""
     token = os.environ.get("GITHUB_TOKEN", "")
+    seen = seen or set()
+    stats = stats if stats is not None else {}
 
     def _ai(c: dict) -> bool:
         return _looks_ai(c["title"]) or _looks_ai(c["snippet"])
+
+    def _fresh(items: list[dict], source: str) -> list[dict]:
+        kept = [c for c in items if _cand_key(c) not in seen]
+        stats[source] = stats.get(source, 0) + len(items)
+        stats["skipped_seen"] = stats.get("skipped_seen", 0) + len(items) - len(kept)
+        return kept
 
     def _top(items: list[dict], n: int) -> list[dict]:
         return sorted([c for c in items if _ai(c)], key=lambda c: c.get("score", 0), reverse=True)[:n]
@@ -310,13 +442,20 @@ def gather_candidates(prefs=None) -> list[dict]:
     on = bool(prefs and prefs.enabled)   # bandit actuator active only with enough signal
     quota_log: dict[str, int] = {}
     for t in LIVE_TOPICS:
-        raw = fetch_reddit(t.reddit_subs) + fetch_trending(t.github_keywords, min_stars=t.github_min_stars, token=token)
+        reddit_raw = _fresh(fetch_reddit(t.reddit_subs), "reddit")
+        gh_raw = _fresh(fetch_trending(t.github_keywords, min_stars=t.github_min_stars, token=token), "github")
         q = _quota_for_topic(prefs.score("topic", t.key)) if on else PER_TOPIC_QUOTA
         quota_log[f"topic:{t.key}"] = q
-        top = _top(raw, q)
+        # Reddit's hot list is itself a popularity ranking, and the RSS fallback has
+        # no upvote counts (score=0) — so reserve half the topic quota for Reddit in
+        # hot order; pure score-sorting would silently starve it behind GitHub stars.
+        reddit_ai = sorted([c for c in reddit_raw if _ai(c)],
+                           key=lambda c: (-(c.get("score") or 0), c.get("rank") or 999))
+        r_take = reddit_ai[: q // 2]
+        top = r_take + _top(gh_raw + reddit_ai[len(r_take):], q - len(r_take))
         # velocity bypass: a fast-rising repo in this topic still reaches the judge
         in_top = {c.get("url") for c in top}
-        top += [c for c in raw
+        top += [c for c in gh_raw
                 if int(c.get("star_velocity") or 0) >= VELOCITY_THRESHOLD and c.get("url") not in in_top]
         cand += top
     # shared cross-topic sources — the judge tags these by topic
@@ -324,7 +463,11 @@ def gather_candidates(prefs=None) -> list[dict]:
     hf_q = _quota_for_shared(HF_QUOTA, prefs.score("source", "huggingface")) if on else HF_QUOTA
     rss_q = _quota_for_shared(RSS_QUOTA, prefs.score("source", "official")) if on else RSS_QUOTA
     quota_log.update({"source:HN": hn_q, "source:huggingface": hf_q, "source:official": rss_q})
-    cand += _top(fetch_hn(), hn_q) + _top(fetch_hf_trending(), hf_q) + _top(fetch_rss(), rss_q)
+    cand += (_top(_fresh(fetch_hn(), "HN"), hn_q)
+             + _top(_fresh(fetch_hf_trending(), "huggingface"), hf_q)
+             + _top(_fresh(fetch_rss(), "official"), rss_q))
+    print("[sources] " + ", ".join(f"{k}={v}" for k, v in stats.items() if k != "skipped_seen")
+          + f"; {stats.get('skipped_seen', 0)} already-posted skipped pre-judge")
     # Drift visibility (plan §4.3): always log which quotas governed this run.
     if on:
         print(f"[prefs] actuator ON (n_events={prefs.n_events}); dynamic quotas: {quota_log}")
@@ -333,11 +476,11 @@ def gather_candidates(prefs=None) -> list[dict]:
         print(f"[prefs] actuator dormant (n_events={nevt} < {MIN_EVENTS} or PREFS_ENABLED=false); "
               f"static quotas — byte-identical to pre-loop.")
 
-    seen, dedup = set(), []
+    picked_urls, dedup = set(), []
     for c in cand:
         k = c.get("url") or c.get("title")
-        if k and k not in seen:
-            seen.add(k)
+        if k and k not in picked_urls:
+            picked_urls.add(k)
             dedup.append(c)
     return dedup[:LOCAL_LIMIT]
 
@@ -375,6 +518,10 @@ For each item return:
 OFFICIAL-SOURCE items (source: official = a company blog announcement; huggingface = a new
 model) are LAUNCH/RELEASE signals on their own — post them even with zero score; an official
 announcement IS the heat. Don't bury them just because they have no upvotes yet.
+
+Reddit items may carry hot_rank=#N (their position on the subreddit's hot list) instead of
+an upvote score — the feed hides scores. A top-10 hot_rank on an active sub is a genuine
+popularity signal; treat it like high upvotes, not like zero.
 
 This is a TRENDING tracker, NOT a balance exercise. Pick purely by what's hottest/viral right
 now. If the whole market is one topic this week (e.g. a run of coding-LLM launches), fill the
@@ -419,8 +566,10 @@ EMIT_NEWS_TOOL = {
 def _build_judge_user_message(candidates: list[dict]) -> str:
     lines = [f"CANDIDATES ({len(candidates)}):"]
     for i, c in enumerate(candidates, 1):
+        heat = (f"hot_rank=#{c['rank']}" if c.get("rank") and not c.get("score")
+                else f"score={c['score']}")
         lines.append(
-            f"\n[{i}] source={c['source']} score={c['score']}\n"
+            f"\n[{i}] source={c['source']} {heat}\n"
             f"title: {c['title']}\nurl: {c['url']}"
             + (f"\nexcerpt: {c['snippet']}" if c["snippet"] else "")
         )
@@ -473,18 +622,22 @@ def judge(candidates: list[dict], *, api_key: str, model: str, base_url: str,
 
 # ── dedup state ──────────────────────────────────────────────────────────────
 
-def _load_seen() -> set[str]:
+def _load_seen() -> list[str]:
+    """Posted-story keys in file order (insertion order going forward)."""
     if not STATE_FILE.exists():
-        return set()
+        return []
     try:
-        return set(json.loads(STATE_FILE.read_text(encoding="utf-8")))
+        return list(json.loads(STATE_FILE.read_text(encoding="utf-8")))
     except Exception:  # noqa: BLE001
-        return set()
+        return []
 
 
-def _save_seen(seen: set[str]) -> None:
+def _save_seen(seen_list: list[str]) -> None:
+    """Keep the newest 500 keys by INSERTION order. (The old `sorted(...)[-500:]`
+    evicted lexicographically — random hashes, including fresh ones — which could
+    resurface a just-posted story once the ledger passed 500 entries.)"""
     STATE_FILE.parent.mkdir(parents=True, exist_ok=True)
-    STATE_FILE.write_text(json.dumps(sorted(seen)[-500:], ensure_ascii=False, indent=2),
+    STATE_FILE.write_text(json.dumps(seen_list[-500:], ensure_ascii=False, indent=2),
                           encoding="utf-8")
 
 
@@ -562,7 +715,10 @@ def _metric(cand: dict | None) -> str:
     if src == "HN":
         return f"{_fmt(score)} HN points"
     if src.startswith("r/"):
-        return f"▲ {_fmt(score)} upvotes on {src}"
+        if score > 0:
+            return f"▲ {_fmt(score)} upvotes on {src}"
+        rank = int(cand.get("rank") or 0)   # RSS path: hot position, no score
+        return f"🔥 hot #{rank} on {src}" if rank else f"🔥 hot on {src}"
     return ""
 
 
@@ -717,6 +873,24 @@ def build_news_payload(item: NewsItem, image: str = "") -> dict:
         "image": {"url": image} if image else None,
     }]}
 
+
+
+def _staff_alert(text: str, dry_run: bool = False) -> None:
+    """Run-health warning → #staff-chat (DISCORD_STAFF_CHAT_WEBHOOK_URL). Best-effort:
+    never raises; prints to the log when the webhook is unset or in dry-run."""
+    wh = os.environ.get("DISCORD_STAFF_CHAT_WEBHOOK_URL", "")
+    if dry_run or not wh:
+        tag = "dry-run" if dry_run else "no DISCORD_STAFF_CHAT_WEBHOOK_URL"
+        print(f"[staff-alert {tag}] {text}")
+        return
+    try:
+        r = requests.post(wh, json={"username": "BersamaAi Health", "embeds": [{
+            "description": text[:4096], "color": 0xE67E22,
+        }]}, timeout=15)
+        if r.status_code not in (200, 204):
+            print(f"[staff-alert] failed: HTTP {r.status_code} {r.text[:200]}")
+    except Exception as e:  # noqa: BLE001
+        print(f"[staff-alert] failed: {e}")
 
 
 def _post(webhook_url: str, payload: dict) -> dict | None:
@@ -932,10 +1106,19 @@ def run_news(*, dry_run: bool, stub: bool,
         return ["NEWS_NO_LIVE_TOPICS"]
 
     prefs = load_preferences()
-    candidates = gather_candidates(prefs)
-    print(f"gathered {len(candidates)} candidates across live topic(s): "
-          + ", ".join(t.key for t in LIVE_TOPICS))
+    seen_list = _load_seen()
+    seen = set(seen_list)
+    stats: dict = {}
+    candidates = gather_candidates(prefs, seen=seen, stats=stats)
+    skipped = stats.get("skipped_seen", 0)
+    print(f"gathered {len(candidates)} fresh candidates ({skipped} already-posted skipped) "
+          "across live topic(s): " + ", ".join(t.key for t in LIVE_TOPICS))
     if not candidates:
+        _staff_alert(
+            "⚠️ **News digest: 0 fresh candidates this run.**\n"
+            f"Sources returned {sum(v for k, v in stats.items() if k != 'skipped_seen')} items, "
+            f"{skipped} already posted before. If a source shows 0 in the run log "
+            "(`[sources] …` / `[reddit] …` lines), it may be down or blocked.", dry_run)
         return ["NEWS_NO_CANDIDATES"]
 
     if stub:
@@ -953,9 +1136,12 @@ def run_news(*, dry_run: bool, stub: bool,
 
     if not items:
         print("judge returned no items worth posting")
+        _staff_alert(
+            "ℹ️ **News digest posted 0 cards** — the judge found nothing hot enough among "
+            f"{len(candidates)} fresh candidates ({skipped} already-posted were skipped). "
+            "A quiet market window is normal once in a while; several in a row is not.", dry_run)
         return ["NEWS_NOTHING_TO_POST"]
 
-    seen = _load_seen()
     by_url = {c["url"]: c for c in candidates}
     posted, results = 0, []
     per_topic: dict = {}
@@ -997,7 +1183,10 @@ def run_news(*, dry_run: bool, stub: bool,
             # read its reactions. Skip silently if ?wait=true returned no message id.
             if msg and msg.get("id"):
                 _log_posted(msg, item, cand, topic)
-        seen |= keys
+        for k in keys:
+            if k not in seen:
+                seen.add(k)
+                seen_list.append(k)
         posted += 1
         per_topic[topic.key] = per_topic.get(topic.key, 0) + 1
         results.append(f"NEWS_POSTED {item.topic} {item.headline[:40]}")
@@ -1005,6 +1194,18 @@ def run_news(*, dry_run: bool, stub: bool,
             break  # global safety cap
 
     if not dry_run:
-        _save_seen(seen)
+        _save_seen(seen_list)
     print(f"\nposted {posted} item(s)")
+    if posted == 0:
+        tally: dict[str, int] = {}
+        for r in results:
+            k = r.split(maxsplit=1)[0]
+            tally[k] = tally.get(k, 0) + 1
+        detail = ", ".join(f"{k} ×{v}" for k, v in sorted(tally.items())) or "no outcomes"
+        _staff_alert(
+            "⚠️ **News digest posted 0 cards this run.**\n"
+            f"Judge picked {len(items)} item(s) from {len(candidates)} fresh candidates "
+            f"({skipped} already-posted skipped pre-judge), but none went out: {detail}.\n"
+            "NEWS_POST_FAILED / NEWS_NO_WEBHOOK = broken webhook — fix now. "
+            "NEWS_DEDUPED = same story via a second source (occasional is fine).", dry_run)
     return results

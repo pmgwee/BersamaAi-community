@@ -3,6 +3,12 @@
 cd ~/bersama/bersama-ai-pipeline && source .venv/bin/activate
 python -m pipeline.main --mode url --url "<paste any YouTube URL>"
 
+## Share any URL as a news card (/share)
+cd ~/bersama/bersama-ai-pipeline && source .venv/bin/activate
+python -m pipeline.main --mode share --url "<any URL — IG Reels / XHS / TikTok / Threads / article / repo>"
+# Returns SHARED <topic> on success → posts to the topic's channel webhook.
+# Same as the phone portal's /share button.
+
 ## Current Engine
 
 Research pass: sources per domain + unified topic-routed engine design + creator-watch design (workflow running)

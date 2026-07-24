@@ -8,11 +8,12 @@ because the MCP only acts on demand and never "sees" events happen:
 | Feature | Where it lives |
 |---|---|
 | Welcome message + auto-role on join | **this bot** (`on_member_join`) |
-| Self-assign reaction roles | **this bot** (`on_raw_reaction_add/remove`) |
-| Leveling / XP / `/rank` / `/leaderboard` | **this bot** (`on_message` + SQLite) |
-| Prefix commands (`!rules`, `!resources`, `!ai`) | **this bot** |
-| @BersamaAi / `!ai` → GLM AI | **this bot** (Z.ai, OpenAI-compatible) |
-| Auto-moderation (spam/links/profanity) | **Discord's free native AutoMod** (see Step 6) |
+| Self-assign reaction roles (5 emoji: 🎓 / 🎨 / 💼 / 💻 / 📈) | **this bot** (`on_raw_reaction_add/remove`) |
+| Leveling / XP / `/rank` / `/leaderboard` (rewards Lv 5/10/20/35) | **this bot** (`on_message` + SQLite) |
+| Prefix commands (`!rules`, `!resources`, `!ai`) + slash `/help` | **this bot** |
+| @BersamaAi / `!ai` → GLM AI (context-aware: recent msgs + Jina link fetch) | **this bot** (Z.ai, OpenAI-compatible) |
+| Seed 👍🔥👎 on news cards every 15 min (engagement-loop bridge) | **this bot** (`seed_reactions` task) |
+| Auto-moderation (spam/links/profanity) | **Discord's native AutoMod** — not yet enabled (see Step 6) |
 | Timers / scheduled messages | SaseQ MCP (cron → `http://localhost:8085/mcp`) |
 | On-demand admin + Claude for the owner | SaseQ MCP via claude.ai connector |
 
@@ -85,7 +86,11 @@ Press **Ctrl+C** to stop.
 
 ## Step 5 — Run it 24/7
 
-The bot **must stay running** or those five features stop. Pick ONE option.
+> **Current deployment:** the bot is already live on a **GCP VM** under systemd service
+> `bersama` (`Restart=always`, survives crashes/reboots). The options below are alternatives
+> (Windows PC / Pi / other clouds) — `setup.sh` sets up the same systemd service on any Linux box.
+
+The bot **must stay running** or those features stop. Pick ONE option.
 
 ### Option A — Always-on Windows PC (simplest, free)
 Use **NSSM** to run it as a Windows service that restarts on crash/reboot:
@@ -142,6 +147,9 @@ bot survives crashes and reboots. Verify: `sudo systemctl status bersama` · log
    - *Other cheap clouds: any ~RM14–36/month VPS (Shinjiru, LightNode, DigitalOcean) works identically — just run `bash setup.sh`.*
 
 ## Step 6 — Turn on Discord's free native AutoMod (auto-moderation)
+
+> **Status: not yet enabled.** The bot has no auto-mod code by design — it's delegated to
+> Discord's native AutoMod. Turn it on when ready; until then, auto-mod is off.
 
 This replaces MEE6's auto-mod at **no cost**, with no bot needed:
 

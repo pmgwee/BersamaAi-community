@@ -71,6 +71,9 @@ jobs:
           DISCORD_VIDEO_CREATION_WEBHOOK_URL: ${{ secrets.DISCORD_VIDEO_CREATION_WEBHOOK_URL }}
           DISCORD_VOICE_STUDIO_WEBHOOK_URL: ${{ secrets.DISCORD_VOICE_STUDIO_WEBHOOK_URL }}
           DISCORD_EDUCATION_WEBHOOK_URL: ${{ secrets.DISCORD_EDUCATION_WEBHOOK_URL }}
+          DISCORD_STAFF_CHAT_WEBHOOK_URL: ${{ secrets.DISCORD_STAFF_CHAT_WEBHOOK_URL }}   # 0-posted health warnings
+          REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}         # optional: OAuth JSON (real upvote counts);
+          REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }} # unset -> public RSS fallback (works, no scores)
           PREFS_ENABLED: ${{ secrets.PREFS_ENABLED }}   # engagement actuator on/off (unset/false = dormant)
         run: python -m pipeline.main --mode news
 

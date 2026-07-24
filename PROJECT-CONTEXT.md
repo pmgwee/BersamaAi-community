@@ -1,5 +1,5 @@
 # BersamaAi — Project Context
-*The one document to hand to any agent, new session, or LLM to onboard them instantly. Last updated 2026-07-21.*
+*The one document to hand to any agent, new session, or LLM to onboard them instantly. Last updated 2026-07-23.*
 
 > **How to use this file:** paste this whole document as context when starting a new
 > session, briefing a subagent, or switching LLMs. For deeper detail on any section,
@@ -69,7 +69,7 @@ speculatively.
 ```
 ┌──────────────────────────────────────────────────────────────────────┐
 │                    Discord: BersamaAi server (live)                  │
-│      17 roles · 10 categories / 39 channels · seeded content         │
+│      18 roles · 11 categories · seeded content                       │
 └──────────────────────────────────────────────────────────────────────┘
        ▲                    ▲                          ▲
        │ webhook            │ Gateway (bot token)      │ Gateway (same token)
@@ -78,21 +78,21 @@ speculatively.
 │ bersama-ai-  │    │ bersama-bot    │         │ discord-mcp (SaseQ)  │
 │ pipeline     │    │ (discord.py)   │         │ jar — admin console  │
 │              │    │                │         │                       │
-│ • talk       │    │ • welcome      │         │ • on-demand admin     │
-│   summarizer │    │ • reaction     │         │   via Claude          │
-│ • news       │    │   roles        │         │ • cron timers         │
-│   digest     │    │ • leveling     │         └───────────────────────┘
-│              │    │ • !commands    │
-│ Runs on GCP  │    │ • @mention AI  │
-│ VM (moved    │    │   (GLM-5.2)    │
-│ off GH       │    │ Runs 24/7 on   │
-│ Actions)     │    │ GCP VM         │
+│ • summarizer │    │ • welcome      │         │ • on-demand admin     │
+│ • on-demand  │    │ • reaction     │         │   via Claude          │
+│   portal +   │    │   roles        │         │ • cron timers         │
+│   /share     │    │ • leveling     │         └───────────────────────┘
+│ • news       │    │ • !commands    │
+│   digest     │    │ • @mention AI  │
+│ Summarizer + │    │   (GLM-5.2)    │
+│ portal → VM  │    │ Runs 24/7 on   │
+│ News → GH    │    │ GCP VM         │
 └──────────────┘    └────────────────┘
 ```
 
 | Component | Location | Reaches Discord via | Runs where |
 |---|---|---|---|
-| **Content engine** | `bersama-ai-pipeline/` | Discord webhook (no token) | GCP VM cron (moved off GitHub Actions 2026-07-21 — see commit `25b4bb2`) |
+| **Content engine** | `bersama-ai-pipeline/` | Discord webhook (no token) + bot token (engagement sweep) | **Summarizer + on-demand portal + `/share`**: GCP VM · **News + engagement loop**: GitHub Actions |
 | **Community bot** | `bersama-bot/` | Bot token (Gateway, always-on) | GCP VM, systemd service `bersama` |
 | **Admin console** | `discord-mcp/` (SaseQ jar) | Same bot token, concurrent Gateway session | Local, on-demand (this machine) |
 
@@ -106,20 +106,28 @@ Coding Plan vs. Anthropic), not Claude. This is a deliberate, already-settled de
 don't re-litigate it without a specific reason.
 
 ### A. Content engine — `bersama-ai-pipeline/`
-English-only. **Summarizer** runs on the GCP VM; **news** still on GitHub Actions.
+English-only (card *content* may keep a source's original language since 2026-07-22). **Summarizer + on-demand portal + `/share`** run on the GCP VM; **news digest + engagement loop** run on GitHub Actions.
 1. **Creator-watch summarizer** — watches a short list of YouTube channels (`playlists.txt`;
    currently Kelly Tsai + 零度解说), summarizes only their **new uploads** (last ~3 days,
    recency-filtered — not the backlog) → transcript (yt-dlp captions → **Groq Whisper**
    fallback for caption-less videos) → 5-point English summary + thumbnail embed →
    `#curated-resources` (+ optional Telegram) + a Threads/Facebook caption bundle for
-   manual posting. Daily ~09:03 MYT. **On-demand** variant: phone-friendly HTTP trigger
-   (`on_demand.py`) — paste a URL from a phone bookmark → post.
-2. **Topic-routed news digest** — Reddit (r/LocalLLaMA, r/ClaudeAI, r/OpenAI,
-   r/ChatGPTCoding) + Hacker News + **GitHub Trending** → an LLM judge tags each item with
-   a topic + heat (viral/popular, **not brand** — startup/community/US+Chinese all count) →
-   routes to the topic's channel. **Coding → `#ai-dev-tools`** is live. Creative
-   (image/video/voice) + research (study/productivity) topics are wired in but **off** until
-   their channel webhooks are added (flip `live=True` in `news.py`). Every ~3h.
+   manual posting. Daily ~09:03 MYT. **On-demand portal** (`on_demand.py`, VM port 8080,
+   `?token=`-authed) — a phone-friendly dark/blurple web UI with **`/run`** (summarize any
+   YouTube URL → `#curated-resources`) and **`/share`** (share any URL — incl. IG Reels /
+   XHS / TikTok / Threads via yt-dlp + Groq Whisper — as a topic-routed news card). Bookmark
+   `http://<VM_IP>:8080/?token=<T>` on a phone.
+2. **Topic-routed news digest** — Reddit (per-topic subs; **OAuth JSON when
+   `REDDIT_CLIENT_ID/SECRET` are set, else public multireddit RSS** — reddit.com 403s
+   unauthenticated `.json` since ~2026-07, RSS cards show `hot #N` rank instead of
+   upvotes) + Hacker News + **GitHub Trending** + HuggingFace trending + official blog
+   RSS → an LLM judge tags each item with a topic + heat (viral/popular, **not brand** —
+   startup/community/US+Chinese all count) → routes to the topic's channel. Already-posted
+   stories are filtered out **before** the judge (fresh pool every run); a real run that
+   posts 0 cards warns `#staff-chat`. **All six topics are live** (`live=True`): coding →
+   `#ai-dev-tools`; creative (image/video/voice) → `#image-creation` /
+   `#video-creation-aigc-tvc` / `#voice-studio`; research (study/productivity) →
+   `#study-with-ai` / `#research-with-ai` (via `DISCORD_EDUCATION_WEBHOOK_URL`). Every ~3h.
 
 Summarizer moved GitHub Actions → **GCP VM** (2026-07-21) — YouTube bot-blocks Azure
 datacenter IPs but not GCP; the VM also hosts the always-on bot.
@@ -130,11 +138,13 @@ demand; the bot reacts to live events):
 - Welcome message + auto-role on join
 - Self-assign reaction roles (5 emoji → role)
 - Leveling / XP / `/rank` / `/leaderboard`, with automatic role rewards at levels 5/10/20/35
-- Prefix commands: `!rules`, `!resources`, `!ai`
-- `@BersamaAi` mention / `!ai` → GLM-5.2 chat, with cost guardrails (30s per-user
-  cooldown, 20 calls/min server-wide cap, 3 concurrent max, 1500-char input cap,
-  800-token reply cap)
-- Reads recent channel context to answer questions more usefully (added 2026-07-21)
+- Slash `/help` · prefix commands `!rules`, `!resources`, `!ai`
+- `@BersamaAi` mention / `!ai` → GLM-5.2 chat, **context-aware** (reads recent channel
+  messages + fetches up to 2 linked pages via Jina Reader, SSRF-guarded), with cost
+  guardrails (30s per-user cooldown, 20 calls/min server-wide cap, 3 concurrent max,
+  1500-char input cap, 800-token reply cap). AI is optional — off when `ZAI_API_KEY` is unset.
+- Seeds 👍🔥👎 on news cards every 15 min (the engagement-loop bridge); a 5-min heartbeat
+  self-restarts (`os._exit(1)`) on a stale Gateway.
 
 **Deployed 24/7 on a GCP VM** under systemd (service name `bersama`, auto-restart on
 crash/reboot). Repo: `github.com/pmgwee/BersamaAi-community` (pushed; 17 commits on
@@ -155,9 +165,9 @@ so it runs as a native Java 19 JAR (`run.cmd`) instead.
 
 ## 4. Live server structure
 
-**Guild ID:** `1528524602861420625` · **6+ members** (early/pre-public-launch stage)
+**Guild ID:** `1528524602861420625` · **8 members** (early/pre-public-launch stage)
 
-**10 categories / 39 channels** (grew from the original 6/13 lean launch structure as
+**11 categories** (incl. a 📊 SERVER STATS counter category) (grew from the original 6/13 lean launch structure as
 features were added — see `FEATURES.md` updates log for what changed and when):
 
 - **📌 START HERE** — welcome, announcements, introductions, rules, faq, get-roles
@@ -173,8 +183,9 @@ features were added — see `FEATURES.md` updates log for what changed and when)
 - **🔊 VOICE** — Hangout, Lounge, Study Room, AI Workshop
 - **🤖 AI ASSISTANT** — ai-chat (bot answers here), bot-commands, level-ups
 - **🛡️ STAFF** — mod-log, staff-chat
+- **📊 SERVER STATS** — member/role counter channels (auto-updating)
 
-**17 roles**, from bottom to top: `@everyone` → Newcomer → Deals Hunter, Developer,
+**18 roles**, from bottom to top: `@everyone` → Newcomer → Deals Hunter, Developer,
 One-Person Company, Student, Content Creator (self-assigned via reaction roles) →
 Muted → AI Guide → Moderator → Member → CEO (top, likely the owner's own role) →
 `mcp-connectors` (the bot's own role, Administrator permission).
@@ -197,6 +208,7 @@ asking again).
 | Bot + MCP jar share one Discord token | Discord allows concurrent Gateway sessions per token; simpler ops |
 | Content pipeline posts via webhook, not the MCP connector | MCP is a local stdio process, unreachable from cloud cron |
 | Pipeline moved from GitHub Actions → GCP VM | Consolidate with the bot's always-on host (2026-07-21) |
+| On-demand portal + `/share` on the VM (not GitHub Actions) | Always-reachable phone trigger; `/share` uses yt-dlp + Groq ASR that suit a persistent host — and it keeps the summarizer's GCP-IP advantage over Azure/Actions |
 | No music bot, no heavy economy/game plugins | Discontinued ecosystem-wide / out of scope |
 | "Learn *with* AI" framing (not "AI for exams") | Avoids reading as cheating-enablement — reputational risk flagged in research |
 | Free-first, no upsell ladder, no "guru" aesthetics | Direct differentiation against the OE杰青商学院 scam-backlash pattern |
