@@ -927,6 +927,15 @@ def _staff_alert(text: str, dry_run: bool = False) -> None:
         print(f"[staff-alert] failed: {e}")
 
 
+def _is_staff_webhook(wh: str) -> bool:
+    """True if `wh` is the #staff-chat webhook. A topic card must NEVER post to
+    staff-chat (that channel is for health warnings only) — so both posting paths
+    refuse when a topic's webhook secret was misconfigured to the staff-chat URL
+    (e.g. DISCORD_FINANCE_WEBHOOK_URL accidentally given the staff-chat URL)."""
+    staff = os.environ.get("DISCORD_STAFF_CHAT_WEBHOOK_URL", "")
+    return bool(staff and wh) and wh.rstrip("/").lower() == staff.rstrip("/").lower()
+
+
 def _post(webhook_url: str, payload: dict) -> dict | None:
     """POST a webhook payload with ?wait=true so Discord returns the created
     message object (HTTP 200 + {id, channel_id}) instead of 204 No Content.
@@ -1122,6 +1131,11 @@ def post_url_as_news(url: str, *, api_key: str, model: str, base_url: str,
     wh = os.environ.get(t.webhook_env, "")
     if not wh:
         return f"SHARE_NO_WEBHOOK {topic}"
+    if _is_staff_webhook(wh):
+        if alert_fn:
+            alert_fn(f"/share topic {topic} webhook is misconfigured -> #staff-chat "
+                     f"(secret {t.webhook_env}); card not posted", dry_run)
+        return f"SHARE_WEBHOOK_IS_STAFF {topic}"
     payload = build_news_payload(item, image=meta.get("image", ""))
     if dry_run:
         print(f"\n[share DRY-RUN] -> {t.channel}\n{payload}\n")
@@ -1190,6 +1204,7 @@ def run_news(*, dry_run: bool, stub: bool,
     by_url = {c["url"]: c for c in candidates}
     posted, results = 0, []
     per_topic: dict = {}
+    staff_misconfig: set = set()   # topics whose webhook wrongly == staff-chat (alert once)
     for item in items:
         keys = _keys(item, by_url)
         if seen & keys:   # any key already seen -> same story already posted this run
@@ -1207,6 +1222,18 @@ def run_news(*, dry_run: bool, stub: bool,
         wh = os.environ.get(topic.webhook_env, "") or (webhook_url if topic.live else "")
         if not wh:
             results.append(f"NEWS_NO_WEBHOOK {item.topic} {item.headline[:40]}")
+            continue
+        if _is_staff_webhook(wh):
+            # A topic webhook must never resolve to #staff-chat. Its webhook secret is
+            # misconfigured (points at the staff-chat URL) — skip + alert once per topic.
+            results.append(f"NEWS_WEBHOOK_IS_STAFF {topic.key} {topic.webhook_env}")
+            if topic.key not in staff_misconfig:
+                staff_misconfig.add(topic.key)
+                _staff_alert(
+                    f"🚫 **Topic `{topic.key}` webhook is misconfigured → points at #staff-chat** "
+                    f"(secret `{topic.webhook_env}` == `DISCORD_STAFF_CHAT_WEBHOOK_URL`). Cards "
+                    f"skipped to avoid polluting staff-chat. Fix the `{topic.webhook_env}` "
+                    f"GitHub secret to the **{topic.channel}** webhook URL.", dry_run)
             continue
         cand = by_url.get(item.source_url)
         metric = _metric(cand)
