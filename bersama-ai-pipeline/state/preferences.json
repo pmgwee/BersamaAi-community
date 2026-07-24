@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-07-24T11:13:34Z",
+  "updated_at": "2026-07-24T14:14:55Z",
   "half_life_days": 14,
-  "n_events": 47,
+  "n_events": 56,
   "topic": {
-    "coding": 0.079,
-    "creative_video": 0.21,
+    "coding": 0.082,
+    "creative_video": 0.216,
     "research_study": 0.0
   },
   "source": {
-    "HN": 0.087,
-    "github": 0.21,
+    "HN": 0.092,
+    "github": 0.201,
     "official": 0.0
   },
   "category": {
     "DEAL": 0.0,
-    "UPDATE": 0.152,
-    "OPEN_SOURCE": 0.157,
+    "UPDATE": 0.16,
+    "OPEN_SOURCE": 0.15,
     "LAUNCH": 0.0
   },
   "exemplars": {
@@ -37,21 +37,21 @@
         "reward": 0.6
       },
       {
-        "headline": "story-to-handdrawn-video: agent skill for diary-comic animation",
-        "reward": 0.5
+        "headline": "Claim surfaces that Moonshot distilled Fable for K3 development",
+        "reward": 0.6
       }
     ],
     "bottom": [
-      {
-        "headline": "OpenAI introduces Presence — enterprise AI agent platform for voice and chat",
-        "reward": 0.0
-      },
       {
         "headline": "Terrence Tao shares ChatGPT conversation on Jacobian Conjecture",
         "reward": 0.0
       },
       {
         "headline": "GigaToken claims ~1000x faster LLM tokenization",
+        "reward": 0.0
+      },
+      {
+        "headline": "Thinking-orbs: animated loading indicators built for AI agent UIs",
         "reward": 0.0
       }
     ]
