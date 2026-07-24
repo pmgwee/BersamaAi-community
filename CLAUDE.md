@@ -18,6 +18,8 @@ Three independent components that all reach the same Discord server (guild `1528
 | News digest + engagement loop | GitHub Actions (`.github/workflows/news-digest.yml` every 3h; `engagement-digest.yml` weekly) |
 | discord-mcp admin jar | Local only, on-demand (`localhost:8085`) |
 
+> **One GCP VM, two checkouts** — the same machine hosts `~/bersama/bersama-ai-pipeline/` (summarizer + portal + `/share`) AND `~/BersamaAi-community/` (the bot). There is no separate "news VM": the **news digest + engagement loop are NOT on the VM — they run on GitHub Actions**, so changes to news/engagement code take effect on the next scheduled run with **no VM action** (just push).
+
 The bot and the MCP jar deliberately **share one Discord bot token** (Discord allows concurrent Gateway sessions). If the token is reset, update both `.env` files together.
 
 ## Key facts
@@ -58,15 +60,19 @@ to main). Mid-task WIP commits still need asking.
    Never `git add -A` blind: local pipeline runs rewrite `state/*.json` (CI owns those)
    and Windows CRLF can create phantom whole-file diffs. Stage only the files you edited.
 2. **Commit + push** to `main`. End the commit message with the co-author trailer.
-3. **Hand back the VM sync commands**, ready to paste:
-   ```bash
-   cd ~/bersama/bersama-ai-pipeline && git pull --ff-only     # pipeline (portal + summarizer + /share)
-   # cd ~/BersamaAi-community && git pull --ff-only           # bot — only if bot code changed
-   ```
-   Add a restart **only if** a long-running process needs the new code:
-   - Portal (`on_demand.py`, :8080): `pkill -f on_demand.py; cd ~/bersama/bersama-ai-pipeline && source .venv/bin/activate && nohup python on_demand.py > on_demand.log 2>&1 &`
-   - Bot: `sudo systemctl restart bersama`
-   - **News digest / engagement loop: no restart** — they run on GitHub Actions and use the pushed code on the next scheduled run automatically.
+3. **Hand back the sync command — decide by WHAT CHANGED.** It's one GCP VM with two checkouts; the news digest is not on the VM:
+
+   | What you changed | VM pull? | Restart? |
+   |---|---|---|
+   | **News / engagement pipeline** (`pipeline/news.py`, `engagement*.py`, `preferences.py`, `.github/workflows/news-digest.yml`) | **No** — runs on GitHub Actions; picks up pushed code on the next scheduled run | no |
+   | **Summarizer / portal / `/share`** (other `bersama-ai-pipeline/` code, `on_demand.py`, `playlists.txt`) | `cd ~/bersama/bersama-ai-pipeline && git pull --ff-only` | restart portal only if a runtime change (see below) |
+   | **Bot** (`bersama-bot/`, `config.json`) | `cd ~/BersamaAi-community && git pull --ff-only` | `sudo systemctl restart bersama` |
+   | **discord-mcp** | n/a — local only (this machine) | — |
+   | **Docs only** (`*.md`) | no | no |
+
+   Portal restart (only if `on_demand.py`/`/share`/summarizer runtime changed): `pkill -f on_demand.py; cd ~/bersama/bersama-ai-pipeline && source .venv/bin/activate && nohup python on_demand.py > on_demand.log 2>&1 &`
+
+   > Note: `news.py` *lives* under `bersama-ai-pipeline/`, but the news digest is executed by GitHub Actions — so a `news.py` change needs **no VM pull** to reach production (pulling the pipeline VM is optional, just to keep its copy in sync for local testing).
 4. **Flag any new env/secrets**, and say *where* each must be set (these are NOT interchangeable):
    - **GitHub repo secret** (Settings → Secrets and variables → Actions) → anything the news-digest / engagement workflows read.
    - **VM `.env`** (`~/bersama/bersama-ai-pipeline/.env`) → summarizer + on-demand portal.
