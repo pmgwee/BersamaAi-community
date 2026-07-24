@@ -73,6 +73,11 @@ to main). Mid-task WIP commits still need asking.
    Portal restart (only if `on_demand.py`/`/share`/summarizer runtime changed): `pkill -f on_demand.py; cd ~/bersama/bersama-ai-pipeline && source .venv/bin/activate && nohup python on_demand.py > on_demand.log 2>&1 &`
 
    > Note: `news.py` *lives* under `bersama-ai-pipeline/`, but the news digest is executed by GitHub Actions — so a `news.py` change needs **no VM pull** to reach production (pulling the pipeline VM is optional, just to keep its copy in sync for local testing).
+
+   **Rule: every task handoff must NAME THE EXACT TARGET for the change just made** — exactly one of these three, copy-pasteable, never left for the owner to infer:
+   - **No VM action — GitHub Actions** (news/engagement/docs)
+   - **Pull the pipeline checkout**: `cd ~/bersama/bersama-ai-pipeline && git pull --ff-only` (+ portal restart line if runtime changed)
+   - **Pull the bot checkout**: `cd ~/BersamaAi-community && git pull --ff-only && sudo systemctl restart bersama`
 4. **Flag any new env/secrets**, and say *where* each must be set (these are NOT interchangeable):
    - **GitHub repo secret** (Settings → Secrets and variables → Actions) → anything the news-digest / engagement workflows read.
    - **VM `.env`** (`~/bersama/bersama-ai-pipeline/.env`) → summarizer + on-demand portal.
