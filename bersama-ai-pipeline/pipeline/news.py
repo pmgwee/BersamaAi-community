@@ -938,11 +938,15 @@ def _post(webhook_url: str, payload: dict) -> dict | None:
     raise RuntimeError(f"{r.status_code} {r.text[:200]}")
 
 
-def _log_posted(msg: dict, item: NewsItem, cand: dict | None, topic: Topic) -> None:
+def _log_posted(msg: dict, item: NewsItem, cand: dict | None, topic: Topic,
+                origin: str = "auto") -> None:
     """Append one row per posted card to state/posted_log.jsonl — the engagement
     sweep's list of messages to read reactions from. Telemetry collects
     unconditionally (even while the actuator is dormant) so the model has data
-    the day the owner flips PREFS_ENABLED on."""
+    the day the owner flips PREFS_ENABLED on. `origin` = "auto" (news digest) or
+    "share" (owner hand-picked via /share) so the engine's strongest taste signal
+    can be told apart / weighted later; preferences ignores unknown fields until
+    you opt in, so adding it changes nothing today."""
     from datetime import datetime, timezone
     append_jsonl(POSTED_LOG, {
         "message_id": str(msg.get("id", "")),
@@ -955,6 +959,7 @@ def _log_posted(msg: dict, item: NewsItem, cand: dict | None, topic: Topic) -> N
         "headline": item.headline,
         "score": int((cand or {}).get("score") or 0),
         "star_velocity": int((cand or {}).get("star_velocity") or 0),
+        "origin": origin,
         "posted_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
     })
 
@@ -1114,11 +1119,16 @@ def post_url_as_news(url: str, *, api_key: str, model: str, base_url: str,
         print(f"\n[share DRY-RUN] -> {t.channel}\n{payload}\n")
         return f"SHARED_DRY {topic} {item.headline[:40]}"
     try:
-        _post(wh, payload)
+        msg = _post(wh, payload)
     except Exception as e:  # noqa: BLE001
         if alert_fn:
             alert_fn(f"share post failed: {item.headline[:60]}: {e}", dry_run)
         return f"SHARE_POST_FAILED {e}"
+    # Log owner-curated cards so their reactions/replies feed the engagement loop
+    # (the engine's strongest taste signal). cand=None: /share has no scrape row,
+    # so source/score/star_velocity write as ""/0 — _log_posted null-guards it.
+    if msg and msg.get("id"):
+        _log_posted(msg, item, cand=None, topic=t, origin="share")
     return f"SHARED {topic} {item.headline[:40]}"
 
 
