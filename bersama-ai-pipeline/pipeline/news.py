@@ -70,8 +70,8 @@ TOPICS: list[Topic] = [
           github_keywords=["video generation", "text to video", "ai video editor", "sora", "veo"],
           github_min_stars=200, live=True),
     Topic("creative_voice", "#voice-studio", "DISCORD_VOICE_STUDIO_WEBHOOK_URL",
-          reddit_subs=["SunoAI"],
-          github_keywords=["text to speech", "voice clone", "tts", "suno", "music generation"],
+          reddit_subs=["SunoAI", "elevenlabs"],   # ElevenLabs = top AI voice company
+          github_keywords=["text to speech", "voice clone", "tts", "suno", "elevenlabs", "music generation"],
           github_min_stars=150, live=True),
     Topic("research_study", "#education", "DISCORD_EDUCATION_WEBHOOK_URL",
           reddit_subs=["learnmachinelearning", "artificial"],   # r/ArtificialIntelligence 404s
