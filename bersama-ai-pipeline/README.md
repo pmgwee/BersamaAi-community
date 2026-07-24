@@ -59,7 +59,9 @@ In GitHub Actions, set each `[GH]`/`[both]` value as a repository secret (Settin
 Edit [`playlists.txt`](playlists.txt) — one YouTube playlist URL per line. Aim for "talks by the people who built the tools".
 
 ### 4. Topics (news digest)
-Topics live in `pipeline/news.py` `TOPICS` — each is `{ reddit_subs, github_keywords, github_min_stars, channel, webhook_env, live }`. **All 6 are `live=True`.** A topic only actually posts when its `webhook_env` is set.
+Topics live in `pipeline/news.py` `TOPICS` — each is `{ reddit_subs, github_keywords, github_min_stars, channel, webhook_env, live }`. **All 7 are `live=True`.** A topic only actually posts when its `webhook_env` is set.
+
+Two lists, two cost models — the comment above `TOPICS` has the rules. Short version: `reddit_subs` is one multireddit request per topic (extra subs are free, but keep the list tight so a big sub can't crowd out small ones); `github_keywords` costs one Search call + 3s each and only matches repos **created in the last 7 days**, so use category terms there and put product names (Kling, Seedance, Nano Banana…) in `AI_KEYWORDS` + the judge prompt instead.
 
 ## Usage
 

@@ -67,7 +67,8 @@ LLM = **GLM `glm-5.2`** (Z.ai). ASR = **Groq Whisper** (`whisper-large-v3`).
 
 - **`/share` run status** (`--mode share --url`): returns `SHARED <topic>` on success (or `SHARED_DRY` in `--dry-run`); both are in the pipeline's OK-status set so a share run never false-fails the GH Actions / VM run.
 - **Creator-watch list:** `playlists.txt` (channel URLs, recency-filtered). Add creators anytime → push → `git pull` on VM.
-- **News topics:** `pipeline/news.py` `TOPICS`. **All 6 are `live=True`** (coding, creative_image/video/voice, research_study/productivity). To (re)configure one: set its `webhook_env` env var + keep `live=True`.
+- **News topics:** `pipeline/news.py` `TOPICS`. **All 7 are `live=True`** (coding, creative_image/video/voice, research_study/productivity, finance). To (re)configure one: set its `webhook_env` env var + keep `live=True`.
+- **News source tuning** (2026-07-25): per-topic `reddit_subs` widened to 34 verified-live subs; `AI_KEYWORDS` grew to 144 terms so current product names (Seedance, Kling, Nano Banana, Seedream, Wan, Eleven Music…) survive the pre-filter; `OFFICIAL_RSS` grew 4 → 19 feeds in three tiers (labs / AI newsrooms / creative-tool blogs). Labs with **no** working RSS (Anthropic, xAI, Moonshot, DeepSeek, ByteDance, Kuaishou, ElevenLabs, Runway, BFL) are covered by the newsroom tier.
 - **Caption-less path:** no captions → yt-dlp downloads audio → ffmpeg → 16 kHz mono mp3 → Groq Whisper transcribes → GLM summarizes → post. (Same ASR path powers `/share` on social videos.)
 
 **Cross-cutting hardening:** forced tool-call schemas · per-topic dedup (`state/news_seen.json`, `state/processed.json`) · quality gate · corrupt-state halt · webhook/token masking · GLM retry on malformed output · real heat metrics (⭐ stars / ▲ upvotes / HN points) · robust thumbnail extractor with a microland.io fallback for JS-only shells (Threads/X).

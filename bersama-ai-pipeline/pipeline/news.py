@@ -25,6 +25,9 @@ import os
 import re
 import time
 from dataclasses import dataclass, asdict
+from datetime import datetime, timedelta, timezone
+from email.utils import parsedate_to_datetime
+from itertools import zip_longest
 from pathlib import Path
 from urllib.parse import urljoin, unquote
 
@@ -39,7 +42,12 @@ STATE_FILE = Path(__file__).resolve().parent.parent / "state" / "news_seen.json"
 HEADERS = {"User-Agent": "BersamaAi-news/1.0 (community bot)"}
 
 HN_TOPN = 30
-LOCAL_LIMIT = 50          # max candidates sent to the judge per run
+# Keep >= (live topics x PER_TOPIC_QUOTA) + HN_QUOTA + HF_QUOTA + RSS_QUOTA, or the
+# tail of the candidate list is sliced off before the judge. Static today: 7x8 + 8 +
+# 3 + 12 = 79. With the bandit actuator ON the quotas can total more; gather puts the
+# shared sources FIRST so any overflow trims the lowest-preference topic tail, which
+# is the intended degradation — it never starves HN/HF/RSS again.
+LOCAL_LIMIT = 80          # max candidates sent to the judge per run
 MAX_POST_PER_RUN = 15     # global safety cap (rarely hit; per-topic cap below governs)
 MAX_PER_TOPIC = 3         # max posts per channel per run — every channel gets a turn
 
@@ -57,34 +65,62 @@ class Topic:
     live: bool = False
 
 
+# Two DIFFERENT cost models, so the two lists follow different rules:
+#
+# `reddit_subs` — the whole group is ONE multireddit request (r/a+b+c/hot.rss), so
+#   extra subs are free HTTP-wise. But reddit's multireddit hot-sort is GLOBAL: a
+#   huge sub crowds small ones out, and only ~half a topic's quota is reserved for
+#   Reddit anyway. So keep each list TIGHT (4-8) and prefer active subs over niche
+#   brand subs. A sub that is misspelled/private/banned contributes 0 entries and
+#   does NOT break the group (verified) — it just silently does nothing.
+#
+# `github_keywords` — one Search API call + 3s sleep EACH, and the query is
+#   `created:<7d + stars:>min`, i.e. brand-new repos only. So these must be CATEGORY
+#   terms that reliably return new repos. A product name that rarely spawns a viral
+#   NEW repo (Kling, Seedance, Nano Banana…) belongs in AI_KEYWORDS + the judge
+#   prompt instead — putting it here just burns 3s a run for an empty result.
 TOPICS: list[Topic] = [
     Topic("coding", "#ai-dev-tools", "DISCORD_DEVTOOLS_WEBHOOK_URL",
-          reddit_subs=["LocalLLaMA", "ClaudeAI", "OpenAI", "ChatGPTCoding"],
-          github_keywords=["ai agent", "coding agent", "agentic", "llm", "mcp", "code review"],
+          reddit_subs=["LocalLLaMA", "ClaudeAI", "OpenAI", "ChatGPTCoding",
+                       "ClaudeCode", "AI_Agents", "cursor", "singularity"],
+          github_keywords=["ai agent", "coding agent", "agentic", "llm", "mcp",
+                           "code review", "claude code", "agent skills"],
           github_min_stars=150, live=True),
     Topic("creative_image", "#image-creation", "DISCORD_IMAGE_CREATION_WEBHOOK_URL",
-          reddit_subs=["StableDiffusion"],
-          github_keywords=["stable diffusion", "image generation", "flux", "comfyui"],
+          reddit_subs=["StableDiffusion", "comfyui", "midjourney", "FluxAI", "aiArt"],
+          github_keywords=["stable diffusion", "image generation", "flux", "comfyui",
+                           "image editing", "diffusion model", "lora training"],
           github_min_stars=200, live=True),
     Topic("creative_video", "#video-creation-aigc-tvc", "DISCORD_VIDEO_CREATION_WEBHOOK_URL",
-          reddit_subs=["aivideo"],
-          github_keywords=["video generation", "text to video", "ai video editor", "sora", "veo"],
+          reddit_subs=["aivideo", "KlingAI", "runwayml", "VeoAI", "AIVideoGeneration"],
+          # "sora" dropped: OpenAI discontinued the Sora app in Apr 2026 (API ends
+          # Sep 2026) — it was spending a Search call a run on a dead product.
+          github_keywords=["video generation", "text to video", "ai video editor",
+                           "video model", "lip sync", "image to video"],
           github_min_stars=200, live=True),
     Topic("creative_voice", "#voice-studio", "DISCORD_VOICE_STUDIO_WEBHOOK_URL",
-          reddit_subs=["SunoAI", "elevenlabs"],   # ElevenLabs = top AI voice company
-          github_keywords=["text to speech", "voice clone", "tts", "suno", "elevenlabs", "music generation"],
+          reddit_subs=["SunoAI", "elevenlabs", "udiomusic", "AIMusic"],
+          github_keywords=["text to speech", "voice clone", "tts", "music generation",
+                           "speech to text", "voice agent", "audio generation"],
           github_min_stars=150, live=True),
     Topic("research_study", "#education", "DISCORD_EDUCATION_WEBHOOK_URL",
-          reddit_subs=["learnmachinelearning", "artificial"],   # r/ArtificialIntelligence 404s
-          github_keywords=["learn ai", "ai course", "ml tutorial", "ai from scratch", "ai book"],
+          # r/ArtificialIntelligence 404s; r/artificial is the one that resolves.
+          reddit_subs=["learnmachinelearning", "artificial", "MachineLearning", "deeplearning"],
+          github_keywords=["learn ai", "ai course", "ml tutorial", "ai from scratch",
+                           "ai book", "llm course"],
           github_min_stars=100, live=True),
     Topic("research_productivity", "#education", "DISCORD_EDUCATION_WEBHOOK_URL",
-          reddit_subs=["Productivity", "ChatGPT"],
-          github_keywords=["deep research", "research agent", "ai notes", "knowledge graph"],
+          reddit_subs=["ChatGPT", "PromptEngineering", "notebooklm", "perplexity_ai", "Productivity"],
+          github_keywords=["deep research", "research agent", "ai notes", "knowledge graph",
+                           "second brain", "document ai"],
           github_min_stars=150, live=True),
     Topic("finance", "#earn-money-with-ai", "DISCORD_FINANCE_WEBHOOK_URL",
-          reddit_subs=["algotrading", "QuantFinance", "quant"],
-          github_keywords=["fintech", "trading bot", "algorithmic trading", "quant", "ai finance"],
+          # The channel is "earn money WITH AI", not just quant — the builder subs
+          # carry the AI-side-income stories; _looks_ai() strips their non-AI noise.
+          reddit_subs=["algotrading", "quant", "QuantFinance", "SideProject",
+                       "Entrepreneur", "indiehackers"],
+          github_keywords=["fintech", "trading bot", "algorithmic trading", "quant",
+                           "ai finance", "backtesting"],
           github_min_stars=150, live=True),
 ]
 TOPIC_BY_KEY = {t.key: t for t in TOPICS}
@@ -106,15 +142,54 @@ def _topic_webhook(topic: Topic) -> str:
     return wh
 
 # Broad local pre-filter (cheap, before the LLM) — keep anything AI-relevant.
+#
+# This gates EVERY candidate before it can take a quota slot, so a hot story whose
+# title contains none of these is dropped before the judge ever sees it. Matching is
+# plain lowercase SUBSTRING (no word boundaries), which cuts both ways: "ai" alone
+# already matches "inpainting"/"hailuo"/"trained", so the filter is permissive by
+# default — but a product name that shares no substring with the list is invisible.
+# That was the gap: "Seedance 2.5 ships native 30s clips", "Kling 3.0 lip-sync",
+# "Nano Banana Pro tops the image arena" and "Wan 2.6 open weights" all matched
+# NOTHING here and were being discarded silently.
+#
+# Because it is substring-matched, do NOT add short generic tokens — "sol" hits
+# "console", "tpu" hits "output", "rag" hits "storage", "aime" hits "claimed",
+# "cline" hits "decline", "nova" hits "innovation". Prefer >=5 chars or a phrase.
+# Product names go stale fast — re-check this list when the model landscape moves.
 AI_KEYWORDS = (
-    "ai", "llm", "gpt", "chatgpt", "claude", "anthropic", "openai", "gemini",
-    "deepmind", "grok", "xai", "kimi", "moonshot", "deepseek", "qwen", "glm",
-    "z.ai", "zhipu", "mistral", "llama", "muse", "sora", "veo", "runway",
-    "model", "agent", "agentic", "mcp", "coding", "copilot", "cursor", "devin",
-    "replit", "hermes", "openclaw", "open source", "open-source", "api",
-    "pricing", "benchmark", "swe-bench", "stable diffusion", "flux", "comfyui",
-    "midjourney", "suno", "elevenlabs", "tts", "video gen", "image gen",
-    "research", "study", "tutorial",
+    # generic / evergreen
+    "ai", "llm", "model", "agent", "agentic", "mcp", "coding", "api", "pricing",
+    "benchmark", "open source", "open-source", "open weights", "open-weight",
+    "research", "study", "tutorial", "leaderboard", "arena", "inference",
+    "context window", "mixture of experts", "distill", "nvidia", "blackwell",
+    "swe-bench", "gpqa", "multimodal",
+    # frontier labs & LLM families
+    "gpt", "chatgpt", "codex", "openai", "claude", "opus", "sonnet", "haiku",
+    "anthropic", "gemini", "deepmind", "grok", "xai", "kimi", "moonshot",
+    "deepseek", "qwen", "glm", "z.ai", "zhipu", "mistral", "llama", "muse",
+    "minimax", "doubao", "ernie", "hunyuan", "nemotron", "olmo",
+    # coding agents & local inference
+    "copilot", "cursor", "devin", "replit", "hermes", "openclaw", "claude code",
+    "windsurf", "aider", "openhands", "antigravity", "jules", "subagent",
+    "vibe coding", "context engineering", "vllm", "sglang", "ollama", "gguf",
+    "quantiz", "lm studio", "llama.cpp",
+    # image
+    "stable diffusion", "flux", "comfyui", "midjourney", "image gen",
+    "nano banana", "nanobanana", "seedream", "imagen", "ideogram", "recraft",
+    "krea", "controlnet", "sdxl", "lora", "inpaint", "upscal",
+    # video
+    "sora", "veo", "runway", "video gen", "text to video", "image to video",
+    "kling", "seedance", "hailuo", "pika", "luma", "dream machine", "wan 2",
+    "framepack", "ltx-video", "higgsfield", "lip sync", "lipsync", "aigc",
+    # voice & music
+    "suno", "udio", "elevenlabs", "eleven music", "tts", "voice clone",
+    "whisper", "kokoro", "cartesia", "sesame", "vibevoice", "chatterbox",
+    "speech", "podcast",
+    # research / productivity
+    "notebooklm", "deep research", "perplexity", "obsidian", "granola", "notion",
+    # money
+    "trading bot", "algo trading", "backtest", "polymarket", "kalshi",
+    "prediction market", "side income", "monetiz", "freelance",
 )
 
 
@@ -341,14 +416,45 @@ def fetch_hf_trending() -> list[dict]:
     return out
 
 
-# Official company blog RSS/Atom feeds — earliest signal for "Kimi K3 / Grok Build
-# dropped", hours before Reddit. Add verified feed URLs here; 404/parse errors skip.
+# Official blog + AI-newsroom RSS/Atom feeds — the earliest signal for "Kimi K3 /
+# Grok Build dropped", hours before Reddit. Every URL below was fetched and parsed
+# before being added; 404/parse errors skip the feed at runtime (and now log it).
+#
+# The labs whose OWN feeds don't exist are covered by the newsroom tier: Anthropic,
+# xAI, Moonshot, DeepSeek, ByteDance/Seed, Kuaishou (Kling), ElevenLabs, Runway and
+# Black Forest Labs publish no working RSS (checked 2026-07-24, every plausible URL
+# 404s), so their launches arrive via the-decoder / TechCrunch / smol.ai / HN.
+#
+# Ordering matters: the quota is filled ROUND-ROBIN across feeds, so put the
+# highest-signal feeds first — a feed past the quota still contributes on runs where
+# earlier feeds return nothing fresh.
 OFFICIAL_RSS = [
+    # tier 1 — first-party lab announcements
     "https://openai.com/news/rss.xml",
-    "https://www.anthropic.com/news/rss.xml",
     "https://blog.google/technology/ai/rss/",
+    "https://deepmind.google/blog/rss.xml",
+    "https://blog.google/products/gemini/rss/",
+    "https://qwenlm.github.io/blog/index.xml",
+    "https://mistral.ai/rss.xml",
     "https://huggingface.co/blog/feed.xml",
+    # tier 2 — AI newsrooms; where Kling / Seedance / Nano Banana news actually breaks
+    "https://the-decoder.com/feed/",
+    "https://news.smol.ai/rss.xml",
+    "https://techcrunch.com/category/artificial-intelligence/feed/",
+    "https://venturebeat.com/category/ai/feed/",
+    "https://www.artificialintelligence-news.com/feed/",
+    "https://www.marktechpost.com/feed/",
+    "https://www.testingcatalog.com/rss/",       # unreleased-feature sightings
+    # tier 3 — creative-tool + practitioner feeds (feed the non-coding channels)
+    "https://blog.fal.ai/rss/",                  # image/video model hosting
+    "https://blog.comfy.org/feed.xml",           # ComfyUI -> #image-creation
+    "https://www.latent.space/feed",
+    "https://simonwillison.net/atom/everything/",
+    "https://github.blog/changelog/feed/",
 ]
+
+RSS_PER_FEED = 4          # newest items taken per feed before the round-robin merge
+RSS_MAX_AGE_DAYS = 14     # older than this is archive, not "trending"
 
 
 def _rss_field(el, names: set[str]) -> str:
@@ -361,31 +467,73 @@ def _rss_field(el, names: set[str]) -> str:
     return ""
 
 
+def _rss_date(el):
+    """Best-effort item timestamp — RFC-822 <pubDate> or ISO-8601 <updated>/<published>.
+    Returns an aware datetime, or None when the feed dates nothing parseable."""
+    raw = _rss_field(el, {"pubDate", "published", "updated", "date"})
+    if not raw:
+        return None
+    dt = None
+    try:
+        dt = parsedate_to_datetime(raw)
+    except (TypeError, ValueError):
+        try:
+            dt = datetime.fromisoformat(raw.replace("Z", "+00:00"))
+        except ValueError:
+            return None
+    if dt is not None and dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    return dt
+
+
 def fetch_rss(feeds: list[str] = OFFICIAL_RSS) -> list[dict]:
-    """Poll official blog RSS/Atom feeds (RSS 2.0 + Atom). Defensive: 404/parse → skip."""
+    """Poll the blog/newsroom RSS+Atom feeds (RSS 2.0 + Atom). 404/parse → skip that feed.
+
+    Each feed contributes at most RSS_PER_FEED recent items and the feeds are then
+    INTERLEAVED round-robin, because the RSS quota is filled from the front of this
+    list. Flat concatenation gave the whole quota to the first feed: every RSS item
+    scores 0, `_top()`'s sort is stable, and openai.com/news/rss.xml alone returns
+    ~1000 items — so every other lab's feed was cut off before reaching the judge.
+    Items older than RSS_MAX_AGE_DAYS are dropped so a long archive feed can't spend
+    a trending slot on a 2023 post.
+    """
     import xml.etree.ElementTree as ET
-    out = []
+    cutoff = datetime.now(timezone.utc) - timedelta(days=RSS_MAX_AGE_DAYS)
+    per_feed: list[list[dict]] = []
     for feed in feeds:
         try:
             r = requests.get(feed, headers=URL_FETCH_HEADERS, timeout=15)
             if r.status_code != 200:
+                print(f"[rss] {feed} -> HTTP {r.status_code}")
                 continue
             root = ET.fromstring(r.content)
-        except Exception:  # noqa: BLE001
+        except Exception as e:  # noqa: BLE001 — one dead feed shouldn't kill the run
+            print(f"[rss] {feed} failed: {e}")
             continue
+        dated: list[tuple] = []
         for el in root.iter():
             if el.tag.split("}")[-1] not in ("item", "entry"):
                 continue
             title = _rss_field(el, {"title"})
-            link = _rss_field(el, {"link"})
             if not title:
                 continue
-            out.append({
+            when = _rss_date(el)
+            if when and when < cutoff:
+                continue
+            link = _rss_field(el, {"link"})
+            snippet = re.sub(r"<[^>]+>", " ",
+                             _rss_field(el, {"description", "summary", "content"}))
+            snippet = html_mod.unescape(re.sub(r"\s+", " ", snippet)).strip()[:300]
+            dated.append((when, {
                 "title": title, "url": link, "discussion": link,
-                "source": "official", "score": 0,
-                "snippet": _rss_field(el, {"description", "summary", "content"})[:300],
-            })
-    return out
+                "source": "official", "score": 0, "snippet": snippet,
+            }))
+        # sort newest-first when the feed dates every item; else trust feed order
+        if dated and all(w for w, _ in dated):
+            dated.sort(key=lambda t: t[0], reverse=True)
+        if dated:
+            per_feed.append([c for _, c in dated[:RSS_PER_FEED]])
+    return [c for row in zip_longest(*per_feed) for c in row if c]
 
 
 # Per-TOPIC quotas: each live topic contributes its own top Reddit+GitHub candidates
@@ -394,7 +542,7 @@ def fetch_rss(feeds: list[str] = OFFICIAL_RSS) -> list[dict]:
 PER_TOPIC_QUOTA = 8
 HN_QUOTA = 8
 HF_QUOTA = 3
-RSS_QUOTA = 8
+RSS_QUOTA = 12   # raised with the feed list: round-robin means N slots = N labs/newsrooms
 VELOCITY_THRESHOLD = 150   # GitHub repos gaining > this many stars/day bypass the score cut
 
 
@@ -483,9 +631,16 @@ def gather_candidates(prefs=None, seen: set | None = None, stats: dict | None = 
     hf_q = _quota_for_shared(HF_QUOTA, prefs.score("source", "huggingface")) if on else HF_QUOTA
     rss_q = _quota_for_shared(RSS_QUOTA, prefs.score("source", "official")) if on else RSS_QUOTA
     quota_log.update({"source:HN": hn_q, "source:huggingface": hf_q, "source:official": rss_q})
-    cand += (_top(_fresh(fetch_hn(), "HN"), hn_q)
-             + _top(_fresh(fetch_hf_trending(), "huggingface"), hf_q)
-             + _top(_fresh(fetch_rss(), "official"), rss_q))
+    # Shared sources go in FRONT of the topic candidates. They used to be appended
+    # last and then sliced off by `dedup[:LOCAL_LIMIT]`: 7 live topics x 8 = 56 topic
+    # slots already exceeded the old cap of 50, so on a healthy run HN + HuggingFace +
+    # official RSS reached the judge ZERO times — the feeds documented as the
+    # "earliest signal" were structurally unreachable. Their combined ceiling is
+    # small (hn_q + hf_q + rss_q), so fronting them costs the topics almost nothing.
+    cand = (_top(_fresh(fetch_hn(), "HN"), hn_q)
+            + _top(_fresh(fetch_hf_trending(), "huggingface"), hf_q)
+            + _top(_fresh(fetch_rss(), "official"), rss_q)
+            + cand)
     print("[sources] " + ", ".join(f"{k}={v}" for k, v in stats.items() if k != "skipped_seen")
           + f"; {stats.get('skipped_seen', 0)} already-posted skipped pre-judge")
     # Drift visibility (plan §4.3): always log which quotas governed this run.
@@ -514,19 +669,30 @@ from Reddit, Hacker News, and GitHub Trending. Pick only the HOTTEST items
 recognition — a fresh startup or community repo blowing up absolutely counts).
 For each, assign a TOPIC and write a sober, no-hype card.
 
-TOPICS (assign exactly one):
+TOPICS (assign exactly one). The examples are the CURRENT landscape, not a whitelist —
+a model or tool you don't recognise still belongs to whichever topic it fits, and a
+brand-new name nobody has heard of is a POSITIVE signal, not a reason to skip it:
 - coding — AI coding agents / agentic / dev tools / LLM releases / chat & assistants.
   ANY maker: bigco + startup + community/open-source; US + Chinese. e.g. Claude Code,
-  Cursor, Cline, Aider, Windsurf, Copilot, Replit, pi coding, command code, Hermes,
-  OpenClaw, Devin; ChatGPT/Claude/Gemini/Perplexity; Kimi, DeepSeek, Qwen, GLM,
-  Meta Muse Spark, Grok Build / Grok 4.5.
-- creative_image — image generation (Flux, SD, Midjourney, Ideogram).
-- creative_video — video generation + AI editing (Sora, Veo, Runway, Kling, opencut, palmier-pro).
-- creative_voice — voice / audio / TTS / music (ElevenLabs, Suno, voicebox).
-- research_study — study / learning AI tools.
-- research_productivity — research / productivity AI tools (deep-research, notes, knowledge work).
+  Codex, Cursor, Cline, Aider, Windsurf, Copilot, Antigravity, Jules, Replit, Devin,
+  Hermes, OpenClaw; frontier models — GPT-5.6, Claude Opus 4.8 / Claude 5, Gemini 3.x,
+  Grok 4.5 / Grok Build, Kimi K3, DeepSeek, Qwen 3.x, GLM-5.2, Meta Muse Spark, MiniMax;
+  local inference (llama.cpp, Ollama, vLLM, LM Studio) and MCP / agent-skill tooling.
+- creative_image — image generation + editing: Nano Banana Pro / Nano Banana 2 (Gemini
+  Image), GPT Image 2, Seedream 5.0, FLUX.2 / FLUX 3, Midjourney, Ideogram, Recraft,
+  Krea, Qwen-Image, Stable Diffusion, ComfyUI workflows, LoRA / ControlNet.
+- creative_video — video generation + AI editing: Seedance 2.5 (ByteDance), Kling 3.0
+  (Kuaishou), Veo 3.1 (Google), Hailuo / MiniMax, Runway, Pika, Luma Dream Machine,
+  Wan, LTX-Video, Grok Imagine, Higgsfield, FramePack, lip-sync + image-to-video tools.
+  (OpenAI's Sora app was discontinued in 2026 — Sora news is now shutdown/migration news.)
+- creative_voice — voice / audio / TTS / music: ElevenLabs + Eleven Music, Suno v5,
+  Udio, Whisper, Kokoro, Cartesia, Sesame, VibeVoice, Chatterbox, voice agents, cloning.
+- research_study — study / learning AI tools, courses, from-scratch implementations.
+- research_productivity — research / productivity AI tools (deep research, NotebookLM,
+  Perplexity, notes / knowledge work, document + OCR agents).
 - finance — fintech / AI trading / quant / algorithmic trading / making money with AI
-  (algotrading, trading bots, robo-advisors, AI side-income tools). The AI × money overlap.
+  (algotrading, trading bots, robo-advisors, prediction markets, AI side-income and
+  indie-builder revenue stories). The AI × money overlap.
 
 For each item return:
 - topic (one of the above)
