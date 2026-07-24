@@ -1,12 +1,59 @@
 {
-  "updated_at": "2026-07-22T08:46:16Z",
+  "updated_at": "2026-07-23T22:16:14Z",
   "half_life_days": 14,
-  "n_events": 0,
-  "topic": {},
-  "source": {},
-  "category": {},
+  "n_events": 23,
+  "topic": {
+    "coding": 0.038,
+    "creative_video": 0.168,
+    "research_study": 0.0
+  },
+  "source": {
+    "HN": 0.047,
+    "github": 0.168,
+    "official": 0.0
+  },
+  "category": {
+    "DEAL": 0.0,
+    "UPDATE": 0.087,
+    "OPEN_SOURCE": 0.144,
+    "LAUNCH": 0.0
+  },
   "exemplars": {
-    "top": [],
-    "bottom": []
+    "top": [
+      {
+        "headline": "Claim surfaces that Moonshot distilled Fable for K3 development",
+        "reward": 0.6
+      },
+      {
+        "headline": "story-to-handdrawn-video: agent skill for diary-comic animation",
+        "reward": 0.5
+      },
+      {
+        "headline": "story-to-handdrawn-video: agent skill for diary-comic animation",
+        "reward": 0.5
+      },
+      {
+        "headline": "Judge approves $1.5B Anthropic settlement over pirated training books",
+        "reward": 0.0
+      },
+      {
+        "headline": "Google deprecates temperature, top_p, and top_k for latest Gemini models",
+        "reward": 0.0
+      }
+    ],
+    "bottom": [
+      {
+        "headline": "OpenAI introduces Presence — enterprise AI agent platform for voice and chat",
+        "reward": 0.0
+      },
+      {
+        "headline": "Terrence Tao shares ChatGPT conversation on Jacobian Conjecture",
+        "reward": 0.0
+      },
+      {
+        "headline": "GigaToken claims ~1000x faster LLM tokenization",
+        "reward": 0.0
+      }
+    ]
   }
 }

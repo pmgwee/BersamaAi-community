@@ -1,5 +1,6 @@
 {
   "lopopolo/harness-engineering": {
+<<<<<<< HEAD
     "stars": 2218,
     "ts": "2026-07-23T09:10:11+00:00"
   },
@@ -14,20 +15,41 @@
   "pireel/pireel": {
     "stars": 572,
     "ts": "2026-07-23T09:11:08+00:00"
+=======
+    "stars": 2267,
+    "ts": "2026-07-23T22:16:36+00:00"
+  },
+  "nethical6/conversation-steganography": {
+    "stars": 1070,
+    "ts": "2026-07-23T22:16:36+00:00"
+  },
+  "Jakubantalik/thinking-orbs": {
+    "stars": 816,
+    "ts": "2026-07-23T22:16:36+00:00"
+  },
+  "pireel/pireel": {
+    "stars": 651,
+    "ts": "2026-07-23T22:17:05+00:00"
+>>>>>>> 06459bcd2e8ad4285994c7219d7635d8afd2f715
   },
   "pyang5166/gbro-collage-broll": {
     "stars": 549,
     "ts": "2026-07-21T22:13:34+00:00"
   },
+  "gnipbao/story-to-handdrawn-video": {
+    "stars": 540,
+    "ts": "2026-07-23T22:16:36+00:00"
+  },
   "EthanXiang777/circuit-framework": {
-    "stars": 487,
-    "ts": "2026-07-22T08:47:53+00:00"
+    "stars": 489,
+    "ts": "2026-07-22T22:18:48+00:00"
   },
   "gnipbao/story-to-handdrawn-video": {
     "stars": 466,
     "ts": "2026-07-23T09:10:11+00:00"
   },
   "KinetiNode/claude-fable-5-system-prompt-clean": {
+<<<<<<< HEAD
     "stars": 386,
     "ts": "2026-07-23T09:10:11+00:00"
   },
@@ -38,22 +60,47 @@
   "Kritt-ai/open-kritt": {
     "stars": 341,
     "ts": "2026-07-23T09:10:11+00:00"
+=======
+    "stars": 393,
+    "ts": "2026-07-23T22:16:36+00:00"
+  },
+  "yc-duan/fastctx": {
+    "stars": 379,
+    "ts": "2026-07-23T22:16:36+00:00"
+  },
+  "Kritt-ai/open-kritt": {
+    "stars": 357,
+    "ts": "2026-07-23T22:16:36+00:00"
+>>>>>>> 06459bcd2e8ad4285994c7219d7635d8afd2f715
   },
   "thesysdev/appless": {
-    "stars": 319,
-    "ts": "2026-07-22T08:46:38+00:00"
+    "stars": 322,
+    "ts": "2026-07-22T22:17:34+00:00"
   },
   "PromptPartner/agentsmith": {
     "stars": 314,
-    "ts": "2026-07-22T08:46:38+00:00"
+    "ts": "2026-07-22T22:17:34+00:00"
   },
   "SeanJ1ang/design-judge-skills": {
+<<<<<<< HEAD
     "stars": 267,
     "ts": "2026-07-23T09:13:14+00:00"
   },
   "KlaatAI/klaatcode": {
     "stars": 251,
     "ts": "2026-07-23T09:10:11+00:00"
+=======
+    "stars": 292,
+    "ts": "2026-07-23T22:17:51+00:00"
+  },
+  "KlaatAI/klaatcode": {
+    "stars": 268,
+    "ts": "2026-07-23T22:16:36+00:00"
+  },
+  "joeseesun/qiaomu-cut-skill": {
+    "stars": 252,
+    "ts": "2026-07-23T22:16:36+00:00"
+>>>>>>> 06459bcd2e8ad4285994c7219d7635d8afd2f715
   },
   "0xsline/OpenChatCut": {
     "stars": 249,
@@ -64,12 +111,17 @@
     "ts": "2026-07-23T09:10:11+00:00"
   },
   "h9-tec/Awesome_ai_learning": {
-    "stars": 229,
-    "ts": "2026-07-22T08:47:40+00:00"
+    "stars": 234,
+    "ts": "2026-07-22T22:18:35+00:00"
   },
   "RinDig/icm-architect": {
+<<<<<<< HEAD
     "stars": 222,
     "ts": "2026-07-23T09:10:11+00:00"
+=======
+    "stars": 228,
+    "ts": "2026-07-23T22:16:36+00:00"
+>>>>>>> 06459bcd2e8ad4285994c7219d7635d8afd2f715
   },
   "CodeDrobe/skills": {
     "stars": 221,
@@ -81,11 +133,19 @@
   },
   "paxlabs-inc/machine-genome": {
     "stars": 212,
+<<<<<<< HEAD
     "ts": "2026-07-23T09:10:11+00:00"
   },
   "livetennisapi/livetennisapi-mcp": {
     "stars": 205,
     "ts": "2026-07-23T09:10:11+00:00"
+=======
+    "ts": "2026-07-23T22:16:36+00:00"
+  },
+  "livetennisapi/livetennisapi-mcp": {
+    "stars": 205,
+    "ts": "2026-07-23T22:16:36+00:00"
+>>>>>>> 06459bcd2e8ad4285994c7219d7635d8afd2f715
   },
   "kunchenguid/whathappened": {
     "stars": 197,
@@ -93,6 +153,7 @@
   },
   "eli-labz/Agent-Execution-Partnership": {
     "stars": 186,
+<<<<<<< HEAD
     "ts": "2026-07-23T09:10:11+00:00"
   },
   "0xwilliamortiz/andrej-karpathy-skills": {
@@ -102,5 +163,28 @@
   "risa-labs-inc/BossConsole": {
     "stars": 158,
     "ts": "2026-07-23T09:13:14+00:00"
+=======
+    "ts": "2026-07-23T22:16:36+00:00"
+  },
+  "TryCaspian/caspian-sdk": {
+    "stars": 173,
+    "ts": "2026-07-23T22:16:36+00:00"
+  },
+  "0xwilliamortiz/andrej-karpathy-skills": {
+    "stars": 169,
+    "ts": "2026-07-23T22:16:36+00:00"
+  },
+  "risa-labs-inc/BossConsole": {
+    "stars": 166,
+    "ts": "2026-07-23T22:17:51+00:00"
+  },
+  "hahhforest/pi-textbook": {
+    "stars": 156,
+    "ts": "2026-07-23T22:16:36+00:00"
+  },
+  "finna/Finn-loop": {
+    "stars": 156,
+    "ts": "2026-07-23T22:16:36+00:00"
+>>>>>>> 06459bcd2e8ad4285994c7219d7635d8afd2f715
   }
 }
