@@ -1,25 +1,29 @@
 {
-  "updated_at": "2026-07-23T22:16:14Z",
+  "updated_at": "2026-07-24T03:46:23Z",
   "half_life_days": 14,
-  "n_events": 23,
+  "n_events": 31,
   "topic": {
-    "coding": 0.038,
-    "creative_video": 0.168,
+    "coding": 0.058,
+    "creative_video": 0.189,
     "research_study": 0.0
   },
   "source": {
-    "HN": 0.047,
-    "github": 0.168,
+    "HN": 0.068,
+    "github": 0.189,
     "official": 0.0
   },
   "category": {
     "DEAL": 0.0,
-    "UPDATE": 0.087,
-    "OPEN_SOURCE": 0.144,
+    "UPDATE": 0.122,
+    "OPEN_SOURCE": 0.151,
     "LAUNCH": 0.0
   },
   "exemplars": {
     "top": [
+      {
+        "headline": "Claim surfaces that Moonshot distilled Fable for K3 development",
+        "reward": 0.6
+      },
       {
         "headline": "Claim surfaces that Moonshot distilled Fable for K3 development",
         "reward": 0.6
@@ -33,12 +37,8 @@
         "reward": 0.5
       },
       {
-        "headline": "Judge approves $1.5B Anthropic settlement over pirated training books",
-        "reward": 0.0
-      },
-      {
-        "headline": "Google deprecates temperature, top_p, and top_k for latest Gemini models",
-        "reward": 0.0
+        "headline": "story-to-handdrawn-video: agent skill for diary-comic animation",
+        "reward": 0.5
       }
     ],
     "bottom": [
