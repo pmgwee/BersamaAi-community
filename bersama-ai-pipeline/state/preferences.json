@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-07-24T08:44:25Z",
+  "updated_at": "2026-07-24T11:13:34Z",
   "half_life_days": 14,
-  "n_events": 39,
+  "n_events": 47,
   "topic": {
-    "coding": 0.07,
-    "creative_video": 0.201,
+    "coding": 0.079,
+    "creative_video": 0.21,
     "research_study": 0.0
   },
   "source": {
-    "HN": 0.079,
-    "github": 0.201,
+    "HN": 0.087,
+    "github": 0.21,
     "official": 0.0
   },
   "category": {
     "DEAL": 0.0,
-    "UPDATE": 0.14,
-    "OPEN_SOURCE": 0.154,
+    "UPDATE": 0.152,
+    "OPEN_SOURCE": 0.157,
     "LAUNCH": 0.0
   },
   "exemplars": {
@@ -33,8 +33,8 @@
         "reward": 0.6
       },
       {
-        "headline": "story-to-handdrawn-video: agent skill for diary-comic animation",
-        "reward": 0.5
+        "headline": "Claim surfaces that Moonshot distilled Fable for K3 development",
+        "reward": 0.6
       },
       {
         "headline": "story-to-handdrawn-video: agent skill for diary-comic animation",
