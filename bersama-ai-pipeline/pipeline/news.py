@@ -84,7 +84,11 @@ TOPICS: list[Topic] = [
           reddit_subs=["LocalLLaMA", "ClaudeAI", "OpenAI", "ChatGPTCoding",
                        "ClaudeCode", "AI_Agents", "cursor", "singularity"],
           github_keywords=["ai agent", "coding agent", "agentic", "llm", "mcp",
-                           "code review", "claude code", "agent skills"],
+                           "code review", "claude code", "agent skills",
+                           # the agentic-era layers (see SYSTEM_PROMPT): context,
+                           # tools, control loop, multi-agent topologies
+                           "multi agent", "rag", "agent memory", "workflow automation",
+                           "prompt engineering"],
           github_min_stars=150, live=True),
     Topic("creative_image", "#image-creation", "DISCORD_IMAGE_CREATION_WEBHOOK_URL",
           reddit_subs=["StableDiffusion", "comfyui", "midjourney", "FluxAI", "aiArt"],
@@ -161,18 +165,48 @@ AI_KEYWORDS = (
     "ai", "llm", "model", "agent", "agentic", "mcp", "coding", "api", "pricing",
     "benchmark", "open source", "open-source", "open weights", "open-weight",
     "research", "study", "tutorial", "leaderboard", "arena", "inference",
-    "context window", "mixture of experts", "distill", "nvidia", "blackwell",
+    "mixture of experts", "distill", "nvidia", "blackwell",
     "swe-bench", "gpqa", "multimodal",
-    # frontier labs & LLM families
+    # frontier labs & LLM families — FAMILY names only, never version numbers.
+    # The model beat is a ladder (see MODEL RECENCY in SYSTEM_PROMPT): pinning
+    # "gpt-5.6" here would go stale the week the next one ships, and "gpt" already
+    # catches every future GPT. Add a name here only when a NEW family appears.
     "gpt", "chatgpt", "codex", "openai", "claude", "opus", "sonnet", "haiku",
-    "anthropic", "gemini", "deepmind", "grok", "xai", "kimi", "moonshot",
+    "fable", "anthropic", "gemini", "deepmind", "grok", "xai", "kimi", "moonshot",
     "deepseek", "qwen", "glm", "z.ai", "zhipu", "mistral", "llama", "muse",
     "minimax", "doubao", "ernie", "hunyuan", "nemotron", "olmo",
-    # coding agents & local inference
+    # the model ladder itself — "X supersedes Y" / "Y retired" IS the story
+    "frontier model", "state of the art", "outperform", "deprecat", "sunset",
+    "open-sourced", "price cut", "supersede",
+    # coding agents, harnesses & local inference
     "copilot", "cursor", "devin", "replit", "hermes", "openclaw", "claude code",
-    "windsurf", "aider", "openhands", "antigravity", "jules", "subagent",
-    "vibe coding", "context engineering", "vllm", "sglang", "ollama", "gguf",
+    "windsurf", "aider", "openhands", "antigravity", "jules", "lovable",
+    "bolt.new", "vibe coding", "vllm", "sglang", "ollama", "gguf",
     "quantiz", "lm studio", "llama.cpp",
+    # ── the agentic era: the four layers of an agent ─────────────────────────
+    # 1. INSTRUCTION — the prompt itself
+    "prompt engineering", "prompt optimi", "system prompt", "output format",
+    # 2. CONTEXT — what gets injected this turn
+    "context engineering", "context window", "retrieval", "retrieval-augmented",
+    "vector db", "vector database", "embedding", "reranker", "long-term memory",
+    "agent memory", "compaction", "knowledge base",
+    # 3. TOOL — what actions the model can take
+    "function calling", "tool calling", "tool use", "connector", "mcp server",
+    "computer use", "browser use",
+    # 4. CONTROL — when to act, stop, retry, ask
+    "agent loop", "loop engineering", "graph engineering", "orchestration",
+    "orchestrator", "task planning", "automation workflow", "state machine",
+    # harness engineering — the scaffold PRODUCT wrapped around a model
+    "harness", "scaffold", "sandbox", "eval", "guardrail", "checkpoint",
+    "persistence", "long-running",
+    # multi-agent topologies
+    "multi-agent", "multi agent", "subagent", "sub-agent", "agent delegation",
+    "swarm", "handoff", "blackboard", "shared context", "worker agent",
+    "langgraph", "langchain", "llamaindex", "crewai", "autogen", "dspy",
+    "smolagents", "agent framework",
+    # unified / native multimodal — one model across text+image+audio+video
+    "omni", "any-to-any", "unified model", "vision language", "vlm",
+    "speech-to-speech", "realtime api", "native multimodal",
     # image
     "stable diffusion", "flux", "comfyui", "midjourney", "image gen",
     "nano banana", "nanobanana", "seedream", "imagen", "ideogram", "recraft",
@@ -669,6 +703,22 @@ from Reddit, Hacker News, and GitHub Trending. Pick only the HOTTEST items
 recognition — a fresh startup or community repo blowing up absolutely counts).
 For each, assign a TOPIC and write a sober, no-hype card.
 
+MODEL RECENCY — read this before judging any model story. The model beat is a LADDER,
+not an archive. Readers chase whatever just landed, and the moment a newer generation
+ships, the one below it stops being news:
+- The NEWEST generation of any family — or a brand-new family — is hot. A model nobody
+  has heard of yet is a POSITIVE signal, not a reason to skip.
+- A model that a newer sibling has already superseded is NOT news, however good it is.
+  Skip it, UNLESS the story is itself a change of state: a price cut, weights being
+  opened, a deprecation/shutdown, or a benchmark where the older model still wins —
+  those ARE the news.
+- Between "Model X ships" and "10 things you can do with Model X (out for months)",
+  post the first and drop the second. Recency of the SUBJECT, not just of the post.
+- Version numbers in the examples below go stale fast and are illustrative only. Judge
+  by whether this candidate is the newest thing in its lane RIGHT NOW — never by
+  whether its name appears here. If two candidates cover the same family, keep the
+  newer one and drop the older.
+
 TOPICS (assign exactly one). The examples are the CURRENT landscape, not a whitelist —
 a model or tool you don't recognise still belongs to whichever topic it fits, and a
 brand-new name nobody has heard of is a POSITIVE signal, not a reason to skip it:
@@ -693,6 +743,34 @@ brand-new name nobody has heard of is a POSITIVE signal, not a reason to skip it
 - finance — fintech / AI trading / quant / algorithmic trading / making money with AI
   (algotrading, trading bots, robo-advisors, prediction markets, AI side-income and
   indie-builder revenue stories). The AI × money overlap.
+
+AGENTIC-AI SUBJECT MATTER — this era's beats. A genuine move in any of these is as
+newsworthy as a model release, and they are all `coding` unless the story is clearly
+image / video / voice / money. An agent is four layers, and each is its own beat:
+1. INSTRUCTION — the prompt: prompt engineering, prompt optimisation, system-prompt
+   design, role/rules/output-format control.
+2. CONTEXT — what gets injected this turn: RAG and retrieval, short- and long-term
+   memory, and context engineering — history compaction, truncating/compressing tool
+   results, context-window strategy.
+3. TOOL — what actions are available: MCP and connectors, function/tool calling,
+   computer use, browser use.
+4. CONTROL — when to act, stop, retry, ask: the agent loop, task planning and
+   execution, orchestration, "loop engineering" and its successor "graph engineering",
+   AI automation workflows.
+Plus two things built ON those layers:
+- HARNESS ENGINEERING — the scaffold PRODUCT wrapped around a model: persistence,
+  scheduling, warmup, evals, permissions, sandboxing (Claude Code, Codex, OpenClaw,
+  Hermes, Replit, Lovable). A harness release counts as much as a model release.
+- MULTI-AGENT TOPOLOGIES — orchestrator-worker (a task split into related sub-tasks
+  run in parallel, then synthesised into one result); executor-advisor (an advisor
+  injected when a round needs stronger judgement); handoff (async relay across
+  sessions, to outlive a single context window); blackboard / shared-context (agents
+  self-organise off shared state, no fixed leader); swarm (N independent identical
+  tasks, no synthesis step).
+And one cross-cutting frontier: UNIFIED MULTIMODAL models — one model natively
+reasoning over text + image + audio + video and generating in more than one of them
+(the Gemini Omni / Omni Flash class). Route those by what the story is mainly ABOUT:
+a general unified-model release is `coding`; "it now does video" is `creative_video`.
 
 For each item return:
 - topic (one of the above)
