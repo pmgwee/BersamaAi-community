@@ -51,6 +51,20 @@ Each component has a complete, tagged `.env.example` (copy → `.env`; never com
 
 Bot channels / roles / levels live in `bersama-bot/config.json`, not env.
 
+### Discord webhooks (env var → channel) — the canonical map
+| Env var | Channel |
+|---|---|
+| `DISCORD_YOUTUBE_WEBHOOK_URL` (legacy `DISCORD_WEBHOOK_URL`) | `#youtube-resources` — creator-watch summarizer (was `#curated-resources`) |
+| `DISCORD_DEVTOOLS_WEBHOOK_URL` (legacy `DISCORD_NEWS_WEBHOOK_URL`) | `#ai-dev-tools` — coding news |
+| `DISCORD_IMAGE_CREATION_WEBHOOK_URL` | `#image-creation` |
+| `DISCORD_VIDEO_CREATION_WEBHOOK_URL` | `#video-creation-aigc-tvc` |
+| `DISCORD_VOICE_STUDIO_WEBHOOK_URL` | `#voice-studio` |
+| `DISCORD_EDUCATION_WEBHOOK_URL` | `#study-with-ai` / `#research-with-ai` |
+| `DISCORD_FINANCE_WEBHOOK_URL` | `#earn-money-with-ai` |
+| `DISCORD_STAFF_CHAT_WEBHOOK_URL` | `🔒-staff-chat` — health warnings + weekly digest; **topic cards must never post here** (enforced by `_is_staff_webhook`) |
+
+The two renamed vars are read new-name-first with the legacy name as fallback, so a half-migrated `.env` keeps working.
+
 ## Task completion workflow (do this every time a task is done)
 Per the owner's standing instruction: **commit + push finished work to `main`
 automatically on task completion** (the repo is main-based; CI also commits state

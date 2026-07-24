@@ -111,10 +111,10 @@ English-only (card *content* may keep a source's original language since 2026-07
    currently Kelly Tsai + 零度解说), summarizes only their **new uploads** (last ~3 days,
    recency-filtered — not the backlog) → transcript (yt-dlp captions → **Groq Whisper**
    fallback for caption-less videos) → 5-point English summary + thumbnail embed →
-   `#curated-resources` (+ optional Telegram) + a Threads/Facebook caption bundle for
+   `#youtube-resources` (+ optional Telegram) + a Threads/Facebook caption bundle for
    manual posting. Daily ~09:03 MYT. **On-demand portal** (`on_demand.py`, VM port 8080,
    `?token=`-authed) — a phone-friendly dark/blurple web UI with **`/run`** (summarize any
-   YouTube URL → `#curated-resources`) and **`/share`** (share any URL — incl. IG Reels /
+   YouTube URL → `#youtube-resources`) and **`/share`** (share any URL — incl. IG Reels /
    XHS / TikTok / Threads via yt-dlp + Groq Whisper — as a topic-routed news card). Bookmark
    `http://<VM_IP>:8080/?token=<T>` on a phone.
 2. **Topic-routed news digest** — Reddit (per-topic subs; **OAuth JSON when
@@ -173,7 +173,7 @@ features were added — see `FEATURES.md` updates log for what changed and when)
 
 - **📌 START HERE** — welcome, announcements, introductions, rules, faq, get-roles
 - **💬 AI DAILY** — ai-general, ask-anything
-- **📚 RESOURCES** — curated-resources (read-only, seeded with 6 summarized talks:
+- **📚 RESOURCES** — youtube-resources (read-only, seeded with 6 summarized talks:
   Claude Code Live, Prompting 101, Google Flow/Veo 3, Sam Altman TED2025, ChatGPT Study
   Mode), free-credits-deals, tools-directory (read-only, ~35 tools), help
 - **💻 CODING** — ai-dev-tools

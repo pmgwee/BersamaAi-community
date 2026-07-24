@@ -59,8 +59,8 @@ LLM = **GLM `glm-5.2`** (Z.ai). ASR = **Groq Whisper** (`whisper-large-v3`).
 
 | # | Feature | What it does | Posts to | Schedule | Status |
 |---|---|---|---|---|---|
-| A1 | **Creator-watch summarizer** | Watched channels (Kelly Tsai, 零度解说) → only NEW uploads (last ~3 days) → transcript (captions, or Groq Whisper for caption-less) → 5-point English summary + **thumbnail** | `#curated-resources` | daily ~09:03 MYT (GCP cron) | 🟢 live |
-| A2 | **On-demand portal** (`on_demand.py`) | Phone-friendly web UI (dark/Discord-blurple, VM port 8080, `?token=`-authed via `ON_DEMAND_TOKEN`). **`/run`** = summarize any YouTube URL; **`/share`** = share any URL (social video via yt-dlp + Groq Whisper so the card describes what the video actually says) as a topic-routed news card. Bookmark `http://<VM_IP>:8080/?token=<T>` on a phone, paste a link. | `#curated-resources` (`/run`) / topic channel (`/share`) | manual | 🟢 live |
+| A1 | **Creator-watch summarizer** | Watched channels (Kelly Tsai, 零度解说) → only NEW uploads (last ~3 days) → transcript (captions, or Groq Whisper for caption-less) → 5-point English summary + **thumbnail** | `#youtube-resources` | daily ~09:03 MYT (GCP cron) | 🟢 live |
+| A2 | **On-demand portal** (`on_demand.py`) | Phone-friendly web UI (dark/Discord-blurple, VM port 8080, `?token=`-authed via `ON_DEMAND_TOKEN`). **`/run`** = summarize any YouTube URL; **`/share`** = share any URL (social video via yt-dlp + Groq Whisper so the card describes what the video actually says) as a topic-routed news card. Bookmark `http://<VM_IP>:8080/?token=<T>` on a phone, paste a link. | `#youtube-resources` (`/run`) / topic channel (`/share`) | manual | 🟢 live |
 | A3 | **Topic-routed news (coding)** | Reddit (r/LocalLLaMA, r/ClaudeAI, r/OpenAI, r/ChatGPTCoding) + Hacker News + **GitHub Trending** (≥150★) → GLM judge tags topic + heat → **thumbnail** cards | `#ai-dev-tools` | every ~3h (GH Actions) | 🟢 live |
 | A4 | **Topic-routed news (creative + research)** | Same engine, other topics — **all `live=True`** (image/video/voice + study/productivity) | `#image-creation` / `#video-creation-aigc-tvc` / `#voice-studio` / `#study-with-ai` / `#research-with-ai` (research posts via `DISCORD_EDUCATION_WEBHOOK_URL`) | every ~3h | 🟢 live |
 | A5 | **Engagement feedback loop** | Member reactions (👍🔥👎) + replies on news cards → reward → EMA preference scores per topic/source/category → biases candidate quotas + a judge "taste memo" (ε-greedy bandit; heat still wins). Seed reactions added by the bot; swept by the pipeline; weekly digest to `#staff-chat` (with a 🟢/🟡/🔴 "flip PREFS_ENABLED?" verdict). Gated by `PREFS_ENABLED` + `n_events≥20` — dormant (byte-identical) until flipped on. | `#staff-chat` (digest) | sweep+prefs ride the 3h news run; digest weekly | 🟢 telemetry live · 🟡 actuator dormant |
@@ -98,7 +98,7 @@ discord.py event bot on the GCP VM (systemd `bersama`). Privileged intents requi
 | C1 | discord-mcp jar (SaseQ) — admin via Claude, `localhost:8085` | 🟡 on-demand |
 | C2 | Auto-moderation — delegated to Discord's **native AutoMod** (no auto-mod in bot code); **not yet enabled** in the server | 🟡 pending |
 | C3 | Live server (18 roles, 11 categories, onboarding, reaction-role menu) | 🟢 live |
-| C4 | Seeded content (`#curated-resources` 6 talks, `#tools-directory` ~35 tools) | 🟢 live |
+| C4 | Seeded content (`#youtube-resources` 6 talks, `#tools-directory` ~35 tools) | 🟢 live |
 
 ### Out of scope
 ❌ Music · ❌ heavy economy plugins · ❌ admin/config web dashboard (use `config.json`) · ❌ XHS/TikTok auto-post (manual bundle). *(The on-demand **portal** in A2 is a phone trigger for summarize/share, not an admin dashboard.)*
@@ -128,8 +128,8 @@ Authoritative list: [`bersama-ai-pipeline/.env.example`](bersama-ai-pipeline/.en
 | `ZAI_API_KEY` / `ZAI_BASE_URL` / `GLM_MODEL` | ✅ | ✅ | ✅ (`ZAI_*` secret + vars) |
 | `GROQ_API_KEY` (ASR — summarizer caption-less + `/share` social video) | ✅ | — | — |
 | `GITHUB_TOKEN` (news GitHub Trending search) | optional | — | ✅ (built-in) |
-| `DISCORD_WEBHOOK_URL` (`#curated-resources`) | ✅ | — | ✅ |
-| `DISCORD_NEWS_WEBHOOK_URL` (`#ai-dev-tools`) | ✅ | — | ✅ |
+| `DISCORD_YOUTUBE_WEBHOOK_URL` (legacy `DISCORD_WEBHOOK_URL`) → `#youtube-resources` (summarizer) | ✅ | — | ✅ |
+| `DISCORD_DEVTOOLS_WEBHOOK_URL` (legacy `DISCORD_NEWS_WEBHOOK_URL`) → `#ai-dev-tools` (coding) | ✅ | — | ✅ |
 | `DISCORD_IMAGE/VIDEO_CREATION/VOICE_STUDIO/EDUCATION_WEBHOOK_URL` (creative + research channels) | ✅ | — | ✅ |
 | `DISCORD_FINANCE_WEBHOOK_URL` (`#earn-money-with-ai` finance topic) | ✅ | — | ✅ |
 | `DISCORD_STAFF_CHAT_WEBHOOK_URL` (`#staff-chat` weekly digest + news 0-posted health alerts) | — | — | ✅ |

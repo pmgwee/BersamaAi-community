@@ -2,7 +2,7 @@
 
 The recurring content engine for the BersamaAi Malaysia AI community. **Three modes:**
 
-1. **Talk summarizer** — turns a YouTube talk into a 5-point summary, auto-publishes to **Discord** (`#curated-resources`) and (optionally) **Telegram**, and stages a ready-to-paste bundle for Threads / Facebook.
+1. **Talk summarizer** — turns a YouTube talk into a 5-point summary, auto-publishes to **Discord** (`#youtube-resources`) and (optionally) **Telegram**, and stages a ready-to-paste bundle for Threads / Facebook.
 2. **Trending news digest** — polls per-topic Reddit subs + Hacker News + GitHub Trending every ~3h, an LLM judge tags each item with a topic + heat and routes it to that topic's channel (`#ai-dev-tools`, `#image-creation`, `#video-creation-aigc-tvc`, `#voice-studio`, `#study-with-ai` / `#research-with-ai`, `#earn-money-with-ai`).
 3. **On-demand portal + `/share`** — a phone-friendly web UI (`on_demand.py`, port 8080) to summarize one URL (`/run`) or share any URL as a news card (`/share`).
 
@@ -32,7 +32,7 @@ PIPELINE 2 — trending news digest (GitHub Actions, every ~3h)
 
 PIPELINE 3 — on-demand portal + /share (GCP VM, manual)
   phone bookmark http://<VM_IP>:8080/?token=…
-     │  /run     summarize a YouTube URL → #curated-resources   (mode = url)
+     │  /run     summarize a YouTube URL → #youtube-resources   (mode = url)
      ▼  /share   any URL (IG Reels / XHS / TikTok / Threads → yt-dlp + Groq Whisper)
                   → GLM builds a topic card → that topic's channel webhook  (mode = share)
 ```
@@ -49,7 +49,7 @@ python -m pip install -U yt-dlp
 
 ### 2. Provision secrets
 Copy [`.env.example`](.env.example) → `.env` and fill it in. Every key is tagged with where it's needed:
-- `[VM]` — the GCP pipeline VM (summarizer + on-demand portal + `/share`): `ZAI_API_KEY`, `GROQ_API_KEY`, `DISCORD_WEBHOOK_URL`, the creative/research webhook URLs, `ON_DEMAND_TOKEN`, Telegram trio.
+- `[VM]` — the GCP pipeline VM (summarizer + on-demand portal + `/share`): `ZAI_API_KEY`, `GROQ_API_KEY`, `DISCORD_YOUTUBE_WEBHOOK_URL` (legacy `DISCORD_WEBHOOK_URL`), the creative/research webhook URLs, `ON_DEMAND_TOKEN`, Telegram trio.
 - `[GH]` — a GitHub Actions secret (news digest + engagement loop): `ZAI_API_KEY`, `GITHUB_TOKEN`, all the webhook URLs, `DISCORD_TOKEN` (⚠️ private repo only), `PREFS_ENABLED`.
 - `[both]` — needed in both.
 

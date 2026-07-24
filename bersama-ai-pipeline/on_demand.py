@@ -99,10 +99,10 @@ card and posts to the right Discord channel automatically.</p>
 
 <form class="card" method="post" action="/run?token={tok}">
   <h2>🎬 <span>Summarize a video</span></h2>
-  <p class="desc">YouTube → a 5-point summary + thumbnail in <span class="dest">#curated-resources</span>.
+  <p class="desc">YouTube → a 5-point summary + thumbnail in <span class="dest">#youtube-resources</span>.
   No captions? The audio is transcribed automatically.</p>
   <input name="url" type="url" placeholder="Paste a YouTube URL" required>
-  <button type="submit">Summarize &nbsp;→&nbsp; #curated-resources</button>
+  <button type="submit">Summarize &nbsp;→&nbsp; #youtube-resources</button>
 </form>
 
 <form class="card" method="post" action="/share?token={tok}">
@@ -130,7 +130,7 @@ _DONE = """
 <div class="badge green">✅</div>
 <h2 class="result">Summarizing…</h2>
 <p class="result">Running in the background. The summary will appear in
-<span class="dest">#curated-resources</span> in about 1–3 minutes — longer if the video has no
+<span class="dest">#youtube-resources</span> in about 1–3 minutes — longer if the video has no
 captions (it's being transcribed).</p>
 <a class="back" href="/?token={tok}">← Share another</a>
 """

@@ -44,6 +44,18 @@ def cfg(key: str, default: str = "") -> str:
     return os.environ.get(key, default)
 
 
+def devtools_webhook() -> str:
+    """#ai-dev-tools webhook. New name (DISCORD_DEVTOOLS_WEBHOOK_URL) with fallback
+    to the legacy DISCORD_NEWS_WEBHOOK_URL so a half-migrated .env keeps working."""
+    return cfg("DISCORD_DEVTOOLS_WEBHOOK_URL") or cfg("DISCORD_NEWS_WEBHOOK_URL")
+
+
+def youtube_webhook() -> str:
+    """#youtube-resources (was #curated-resources) webhook — the summarizer target.
+    New name (DISCORD_YOUTUBE_WEBHOOK_URL) with fallback to legacy DISCORD_WEBHOOK_URL."""
+    return cfg("DISCORD_YOUTUBE_WEBHOOK_URL") or cfg("DISCORD_WEBHOOK_URL")
+
+
 def llm_creds() -> dict:
     """Resolve LLM credentials, preferring the ZAI_* / GLM_MODEL names and
     falling back to GLM_API_KEY / GLM_BASE_URL / SUMMARY_MODEL. Defaults match
@@ -135,9 +147,9 @@ def process_video(url: str, *, dry_run: bool, stub: bool) -> str:
 
     # 8. publish
     try:
-        if cfg("DISCORD_WEBHOOK_URL"):
+        if youtube_webhook():
             publish.send_discord(
-                cfg("DISCORD_WEBHOOK_URL"),
+                youtube_webhook(),
                 publish.build_discord_payload(summary, meta),
                 dry_run=dry_run,
             )
@@ -239,7 +251,7 @@ def main(argv=None) -> int:
             results = run_news(
                 dry_run=args.dry_run, stub=args.stub_news,
                 api_key=creds["api_key"], model=creds["model"], base_url=creds["base_url"],
-                webhook_url=cfg("DISCORD_NEWS_WEBHOOK_URL") or cfg("DISCORD_WEBHOOK_URL"),
+                webhook_url=devtools_webhook() or youtube_webhook(),
                 alert_fn=alert,
             )
         elif args.mode == "share":

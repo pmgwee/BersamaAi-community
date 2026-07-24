@@ -61,8 +61,10 @@ jobs:
         env:
           ZAI_API_KEY: ${{ secrets.ZAI_API_KEY }}
           ZAI_BASE_URL: ${{ vars.ZAI_BASE_URL || 'https://api.z.ai/api/coding/paas/v4/' }}
-          DISCORD_NEWS_WEBHOOK_URL: ${{ secrets.DISCORD_NEWS_WEBHOOK_URL }}
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          DISCORD_DEVTOOLS_WEBHOOK_URL: ${{ secrets.DISCORD_DEVTOOLS_WEBHOOK_URL }}   # #ai-dev-tools (coding)
+          DISCORD_NEWS_WEBHOOK_URL: ${{ secrets.DISCORD_NEWS_WEBHOOK_URL }}           # legacy fallback (rename)
+          DISCORD_YOUTUBE_WEBHOOK_URL: ${{ secrets.DISCORD_YOUTUBE_WEBHOOK_URL }}     # #youtube-resources (summarizer)
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}                     # legacy fallback (rename)
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_DM_CHAT_ID: ${{ secrets.TELEGRAM_DM_CHAT_ID }}
           GLM_MODEL: ${{ vars.GLM_MODEL || 'glm-5.2' }}

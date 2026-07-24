@@ -57,7 +57,7 @@ class Topic:
 
 
 TOPICS: list[Topic] = [
-    Topic("coding", "#ai-dev-tools", "DISCORD_NEWS_WEBHOOK_URL",
+    Topic("coding", "#ai-dev-tools", "DISCORD_DEVTOOLS_WEBHOOK_URL",
           reddit_subs=["LocalLLaMA", "ClaudeAI", "OpenAI", "ChatGPTCoding"],
           github_keywords=["ai agent", "coding agent", "agentic", "llm", "mcp", "code review"],
           github_min_stars=150, live=True),
@@ -88,6 +88,21 @@ TOPICS: list[Topic] = [
 ]
 TOPIC_BY_KEY = {t.key: t for t in TOPICS}
 LIVE_TOPICS = [t for t in TOPICS if t.live]
+
+# Renamed webhook env-vars: new name -> legacy name (still read as a fallback so a
+# half-migrated .env keeps posting). Add future renames here.
+_LEGACY_WEBHOOK = {"DISCORD_DEVTOOLS_WEBHOOK_URL": "DISCORD_NEWS_WEBHOOK_URL"}
+
+
+def _topic_webhook(topic: Topic) -> str:
+    """Resolve a topic's posting webhook from its `webhook_env`, falling back to the
+    legacy var name if this topic's webhook was renamed and only the old one is set."""
+    wh = os.environ.get(topic.webhook_env, "")
+    if not wh:
+        legacy = _LEGACY_WEBHOOK.get(topic.webhook_env)
+        if legacy:
+            wh = os.environ.get(legacy, "")
+    return wh
 
 # Broad local pre-filter (cheap, before the LLM) — keep anything AI-relevant.
 AI_KEYWORDS = (
@@ -1128,7 +1143,7 @@ def post_url_as_news(url: str, *, api_key: str, model: str, base_url: str,
         heat_reason="📣 shared by the owner",
     )
     t = TOPIC_BY_KEY[topic]
-    wh = os.environ.get(t.webhook_env, "")
+    wh = _topic_webhook(t)
     if not wh:
         return f"SHARE_NO_WEBHOOK {topic}"
     if _is_staff_webhook(wh):
@@ -1219,7 +1234,7 @@ def run_news(*, dry_run: bool, stub: bool,
             results.append(f"NEWS_TOPIC_CAPPED {topic.key}")
             continue
         # webhook: the topic's env var, else the passed fallback for live topics
-        wh = os.environ.get(topic.webhook_env, "") or (webhook_url if topic.live else "")
+        wh = _topic_webhook(topic) or (webhook_url if topic.live else "")
         if not wh:
             results.append(f"NEWS_NO_WEBHOOK {item.topic} {item.headline[:40]}")
             continue
