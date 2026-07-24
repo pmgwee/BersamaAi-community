@@ -1,70 +1,82 @@
 {
   "lopopolo/harness-engineering": {
-    "stars": 2307,
-    "ts": "2026-07-24T14:15:20+00:00"
+    "stars": 2311,
+    "ts": "2026-07-24T16:59:49+00:00"
+  },
+  "Vincentwei1021/video-shotcraft": {
+    "stars": 1349,
+    "ts": "2026-07-24T16:59:49+00:00"
   },
   "Jakubantalik/thinking-orbs": {
-    "stars": 905,
-    "ts": "2026-07-24T14:15:20+00:00"
+    "stars": 916,
+    "ts": "2026-07-24T16:59:49+00:00"
   },
   "pireel/pireel": {
-    "stars": 697,
-    "ts": "2026-07-24T14:16:10+00:00"
+    "stars": 705,
+    "ts": "2026-07-24T17:01:08+00:00"
   },
   "gnipbao/story-to-handdrawn-video": {
-    "stars": 599,
-    "ts": "2026-07-24T14:15:20+00:00"
+    "stars": 604,
+    "ts": "2026-07-24T17:01:08+00:00"
   },
   "KinetiNode/claude-fable-5-system-prompt-clean": {
-    "stars": 402,
-    "ts": "2026-07-24T14:15:20+00:00"
+    "stars": 404,
+    "ts": "2026-07-24T16:59:49+00:00"
   },
   "Kritt-ai/open-kritt": {
     "stars": 371,
-    "ts": "2026-07-24T14:15:20+00:00"
+    "ts": "2026-07-24T16:59:49+00:00"
   },
   "SeanJ1ang/design-judge-skills": {
-    "stars": 323,
-    "ts": "2026-07-24T14:17:19+00:00"
+    "stars": 325,
+    "ts": "2026-07-24T17:02:36+00:00"
   },
   "joeseesun/qiaomu-cut-skill": {
-    "stars": 264,
-    "ts": "2026-07-24T14:15:20+00:00"
+    "stars": 265,
+    "ts": "2026-07-24T16:59:49+00:00"
   },
   "RinDig/icm-architect": {
-    "stars": 249,
-    "ts": "2026-07-24T14:15:20+00:00"
+    "stars": 251,
+    "ts": "2026-07-24T16:59:49+00:00"
   },
   "paxlabs-inc/machine-genome": {
     "stars": 212,
-    "ts": "2026-07-24T14:15:20+00:00"
+    "ts": "2026-07-24T16:59:49+00:00"
+  },
+  "TryCaspian/caspian-sdk": {
+    "stars": 208,
+    "ts": "2026-07-24T16:59:49+00:00"
   },
   "livetennisapi/livetennisapi-mcp": {
     "stars": 205,
-    "ts": "2026-07-24T14:15:20+00:00"
-  },
-  "TryCaspian/caspian-sdk": {
-    "stars": 203,
-    "ts": "2026-07-24T14:15:20+00:00"
+    "ts": "2026-07-24T16:59:49+00:00"
   },
   "eli-labz/Agent-Execution-Partnership": {
     "stars": 187,
-    "ts": "2026-07-24T14:15:20+00:00"
+    "ts": "2026-07-24T16:59:49+00:00"
   },
   "finna/Finn-loop": {
-    "stars": 179,
-    "ts": "2026-07-24T14:15:20+00:00"
+    "stars": 180,
+    "ts": "2026-07-24T16:59:49+00:00"
   },
   "risa-labs-inc/BossConsole": {
-    "stars": 173,
-    "ts": "2026-07-24T14:17:19+00:00"
+    "stars": 174,
+    "ts": "2026-07-24T17:02:36+00:00"
   },
   "0xwilliamortiz/andrej-karpathy-skills": {
     "stars": 169,
-    "ts": "2026-07-24T14:15:20+00:00"
+    "ts": "2026-07-24T16:59:49+00:00"
+  },
+  "worldwonderer/novel-to-game": {
+    "stars": 169,
+    "ts": "2026-07-24T16:59:49+00:00"
   },
   "hahhforest/pi-textbook": {
-    "stars": 165,
-    "ts": "2026-07-24T14:15:20+00:00"
+    "stars": 167,
+    "ts": "2026-07-24T16:59:49+00:00"
+  },
+  "NextWeb4/official-document-ai-assistant": {
+    "stars": 161,
+    "ts": "2026-07-24T17:02:36+00:00"
   }
 }
