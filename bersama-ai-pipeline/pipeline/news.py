@@ -8,7 +8,7 @@ its topic's channel webhook. Dedup (state/news_seen.json) drops already-posted
 stories BEFORE quotas + the judge, so every judged slot is a fresh story.
 
 Topics are configured in TOPICS below; only `live=True` topics gather + post
-(all 6 are live today — trust the TOPICS table).
+(all 7 are live today — trust the TOPICS table).
 
 Heat bar = viral / popular (GitHub star velocity, Reddit upvotes/hot-rank, HN
 points), NOT brand recognition — a fresh startup or community repo blowing up
@@ -80,6 +80,10 @@ TOPICS: list[Topic] = [
     Topic("research_productivity", "#education", "DISCORD_EDUCATION_WEBHOOK_URL",
           reddit_subs=["Productivity", "ChatGPT"],
           github_keywords=["deep research", "research agent", "ai notes", "knowledge graph"],
+          github_min_stars=150, live=True),
+    Topic("finance", "#earn-money-with-ai", "DISCORD_FINANCE_WEBHOOK_URL",
+          reddit_subs=["algotrading", "QuantFinance", "quant"],
+          github_keywords=["fintech", "trading bot", "algorithmic trading", "quant", "ai finance"],
           github_min_stars=150, live=True),
 ]
 TOPIC_BY_KEY = {t.key: t for t in TOPICS}
@@ -505,6 +509,8 @@ TOPICS (assign exactly one):
 - creative_voice — voice / audio / TTS / music (ElevenLabs, Suno, voicebox).
 - research_study — study / learning AI tools.
 - research_productivity — research / productivity AI tools (deep-research, notes, knowledge work).
+- finance — fintech / AI trading / quant / algorithmic trading / making money with AI
+  (algotrading, trading bots, robo-advisors, AI side-income tools). The AI × money overlap.
 
 For each item return:
 - topic (one of the above)
@@ -756,6 +762,7 @@ TOPIC_LABEL = {
     "creative_voice": "Creative · Voice",
     "research_study": "Research · Study",
     "research_productivity": "Research · Productivity",
+    "finance": "Finance · Earn with AI",
 }
 
 
@@ -1027,6 +1034,7 @@ Assign exactly one TOPIC:
 - creative_voice — voice / audio / TTS / music
 - research_study — study / learning AI tools
 - research_productivity — research / productivity AI tools
+- finance — fintech / AI trading / quant / making money with AI
 
 Return: topic, category (LAUNCH|RELEASE|PRICING|BENCHMARK|OPEN_SOURCE|DEAL|UPDATE),
 headline (<=110 chars, the news itself), body (1-2 sentences: what + why it matters),

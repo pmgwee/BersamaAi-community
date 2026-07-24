@@ -124,10 +124,11 @@ English-only (card *content* may keep a source's original language since 2026-07
    RSS → an LLM judge tags each item with a topic + heat (viral/popular, **not brand** —
    startup/community/US+Chinese all count) → routes to the topic's channel. Already-posted
    stories are filtered out **before** the judge (fresh pool every run); a real run that
-   posts 0 cards warns `#staff-chat`. **All six topics are live** (`live=True`): coding →
+   posts 0 cards warns `#staff-chat`. **All seven topics are live** (`live=True`): coding →
    `#ai-dev-tools`; creative (image/video/voice) → `#image-creation` /
    `#video-creation-aigc-tvc` / `#voice-studio`; research (study/productivity) →
-   `#study-with-ai` / `#research-with-ai` (via `DISCORD_EDUCATION_WEBHOOK_URL`). Every ~3h.
+   `#study-with-ai` / `#research-with-ai` (via `DISCORD_EDUCATION_WEBHOOK_URL`); finance →
+   `#earn-money-with-ai` (via `DISCORD_FINANCE_WEBHOOK_URL`). Every ~3h.
 
 Summarizer moved GitHub Actions → **GCP VM** (2026-07-21) — YouTube bot-blocks Azure
 datacenter IPs but not GCP; the VM also hosts the always-on bot.

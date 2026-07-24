@@ -3,7 +3,7 @@
 The recurring content engine for the BersamaAi Malaysia AI community. **Three modes:**
 
 1. **Talk summarizer** — turns a YouTube talk into a 5-point summary, auto-publishes to **Discord** (`#curated-resources`) and (optionally) **Telegram**, and stages a ready-to-paste bundle for Threads / Facebook.
-2. **Trending news digest** — polls per-topic Reddit subs + Hacker News + GitHub Trending every ~3h, an LLM judge tags each item with a topic + heat and routes it to that topic's channel (`#ai-dev-tools`, `#image-creation`, `#video-creation-aigc-tvc`, `#voice-studio`, `#study-with-ai` / `#research-with-ai`).
+2. **Trending news digest** — polls per-topic Reddit subs + Hacker News + GitHub Trending every ~3h, an LLM judge tags each item with a topic + heat and routes it to that topic's channel (`#ai-dev-tools`, `#image-creation`, `#video-creation-aigc-tvc`, `#voice-studio`, `#study-with-ai` / `#research-with-ai`, `#earn-money-with-ai`).
 3. **On-demand portal + `/share`** — a phone-friendly web UI (`on_demand.py`, port 8080) to summarize one URL (`/run`) or share any URL as a news card (`/share`).
 
 **Runs split across two clouds** (see [`PROJECT-CONTEXT.md`](../PROJECT-CONTEXT.md) for the full picture):

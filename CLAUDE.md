@@ -26,7 +26,7 @@ The bot and the MCP jar deliberately **share one Discord bot token** (Discord al
 - **LLM = GLM `glm-5.2`** via Z.ai's OpenAI-compatible endpoint (`https://api.z.ai/api/coding/paas/v4`) — chosen for cost (~US$3/mo), **NOT Anthropic**. Don't re-litigate without a specific reason.
 - **English-only** server (bilingual was tried and retired 2026-07-20). Card *content* may keep a source's original language (relaxed 2026-07-22); channel names / UI / the small category badge stay English.
 - **Docker Desktop is broken on this machine** → `discord-mcp` runs as a native Java 19 JAR via `run.cmd`, not via Docker.
-- **All 6 news topics are `live=True`** in `pipeline/news.py` `TOPICS` (docstring updated 2026-07-23; trust the `TOPICS` table).
+- **All 7 news topics are `live=True`** in `pipeline/news.py` `TOPICS` (coding / creative_image / creative_video / creative_voice / research_study / research_productivity / finance). Trust the `TOPICS` table.
 - **Reddit `.json` is 403-blocked for anonymous clients** (since ~2026-07). `fetch_reddit` tries OAuth JSON (`REDDIT_CLIENT_ID/SECRET` — real upvote counts) and falls back to public multireddit RSS (works unauthenticated; cards show `hot #N` rank instead of upvotes). News dedup filters already-posted stories **before** the judge; a real run that posts 0 cards warns `#staff-chat`.
 - The `research_*` topics' `Topic.channel` is labeled `"#education"`, but no `#education` channel exists — `DISCORD_EDUCATION_WEBHOOK_URL` actually posts to `#study-with-ai` / `#research-with-ai`.
 
