@@ -18,7 +18,13 @@ Three independent components that all reach the same Discord server (guild `1528
 | News digest + engagement loop | GitHub Actions (`.github/workflows/news-digest.yml` every 3h; `engagement-digest.yml` weekly) |
 | discord-mcp admin jar | Local only, on-demand (`localhost:8085`) |
 
-> **One GCP VM, two checkouts** — the same machine hosts `~/bersama/bersama-ai-pipeline/` (summarizer + portal + `/share`) AND `~/BersamaAi-community/` (the bot). There is no separate "news VM": the **news digest + engagement loop are NOT on the VM — they run on GitHub Actions**, so changes to news/engagement code take effect on the next scheduled run with **no VM action** (just push).
+> **ONE GCP VM, TWO directories** (not two VMs) — the same machine hosts:
+> - `~/bersama/bersama-ai-pipeline/` — the **pipeline** (summarizer + on-demand portal + `/share`; `pipeline/news.py` *lives* here, though the news digest *runs* on GitHub Actions)
+> - `~/BersamaAi-community/` — the **bot** (`bersama-bot/`, systemd service `bersama`)
+>
+> There is **no "news VM"** — the news digest + engagement loop run on **GitHub Actions**, not on the VM.
+>
+> **Rule: every code change must explicitly name WHICH directory it's in (pipeline vs bot) and whether that dir needs a VM pull.** News/engagement code lives in the pipeline dir but runs on GH Actions → **no VM pull**. Never leave "which checkout/VM" for the owner to guess — say it every time.
 
 The bot and the MCP jar deliberately **share one Discord bot token** (Discord allows concurrent Gateway sessions). If the token is reset, update both `.env` files together.
 
