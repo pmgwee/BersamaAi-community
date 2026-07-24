@@ -84,7 +84,8 @@ to main). Mid-task WIP commits still need asking.
 
    | What you changed | VM pull? | Restart? |
    |---|---|---|
-   | **News / engagement pipeline** (`pipeline/news.py`, `engagement*.py`, `preferences.py`, `.github/workflows/news-digest.yml`) | **No** — runs on GitHub Actions; picks up pushed code on the next scheduled run | no |
+   | **News / engagement pipeline, gather-side** (`pipeline/news.py` sources+quotas, `engagement*.py`, `preferences.py`, `.github/workflows/news-digest.yml`) | **No** — runs on GitHub Actions; picks up pushed code on the next scheduled run | no |
+   | **`news.py` code that `/share` also executes** (see the ⚠️ below) | `cd ~/bersama/bersama-ai-pipeline && git pull --ff-only` | portal restart |
    | **Summarizer / portal / `/share`** (other `bersama-ai-pipeline/` code, `on_demand.py`, `playlists.txt`) | `cd ~/bersama/bersama-ai-pipeline && git pull --ff-only` | restart portal only if a runtime change (see below) |
    | **Bot** (`bersama-bot/`, `config.json`) | `cd ~/BersamaAi-community && git pull --ff-only` | `sudo systemctl restart bersama` |
    | **discord-mcp** | n/a — local only (this machine) | — |
@@ -92,12 +93,32 @@ to main). Mid-task WIP commits still need asking.
 
    Portal restart (only if `on_demand.py`/`/share`/summarizer runtime changed): `pkill -f on_demand.py; cd ~/bersama/bersama-ai-pipeline && source .venv/bin/activate && nohup python on_demand.py > on_demand.log 2>&1 &`
 
-   > Note: `news.py` *lives* under `bersama-ai-pipeline/`, but the news digest is executed by GitHub Actions — so a `news.py` change needs **no VM pull** to reach production (pulling the pipeline VM is optional, just to keep its copy in sync for local testing).
+   > Note: `news.py` *lives* under `bersama-ai-pipeline/`, but the news **digest** is executed by GitHub Actions — so a digest-only `news.py` change needs **no VM pull** to reach production (pulling the pipeline VM is optional, just to keep its copy in sync for local testing).
+   >
+   > ⚠️ **`news.py` is NOT purely a GH-Actions file.** The VM's `/share` shells out to
+   > `python -m pipeline.main --mode share`, which imports `pipeline/news.py`. So decide by
+   > WHICH SYMBOLS you touched, not by the filename:
+   > - **Gather-side → no VM pull.** `TOPICS`' `reddit_subs`/`github_keywords`, `AI_KEYWORDS`,
+   >   `OFFICIAL_RSS`, `fetch_*`, `gather_candidates`, quotas/`LOCAL_LIMIT`, `SYSTEM_PROMPT`
+   >   (the *digest* judge). `/share` never calls any of these.
+   > - **Shared with `/share` → VM pull + portal restart.** `SINGLE_CARD_PROMPT`, `EMIT_ONE_TOOL`,
+   >   `NewsItem`, `TOPIC_BY_KEY`, a `Topic`'s `key`/`channel`/`webhook_env`, `_topic_webhook`,
+   >   `fetch_url_meta`, the card builder / posting / thumbnail code, `post_url_as_news`.
+   >
+   > When unsure, check it instead of guessing:
+   > `sed -n '/^def post_url_as_news/,/^def run_news/p' bersama-ai-pipeline/pipeline/news.py`
 
-   **Rule: every task handoff must NAME THE EXACT TARGET for the change just made** — exactly one of these three, copy-pasteable, never left for the owner to infer:
-   - **No VM action — GitHub Actions** (news/engagement/docs)
+   **Rule: EVERY task handoff must END with a sync block naming the EXACT TARGET** — always
+   present, even when the answer is "nothing to do", and never left for the owner to infer.
+   State it as exactly one of these three, copy-pasteable:
+   - **No VM action — GitHub Actions** (gather-side news/engagement, docs)
    - **Pull the pipeline checkout**: `cd ~/bersama/bersama-ai-pipeline && git pull --ff-only` (+ portal restart line if runtime changed)
    - **Pull the bot checkout**: `cd ~/BersamaAi-community && git pull --ff-only && sudo systemctl restart bersama`
+
+   Say **why** in half a sentence ("gather-side only, `/share` unaffected"), so the owner can
+   sanity-check the call rather than trust it blindly. If a change spans both checkouts, give
+   BOTH commands — never just the one that seems more important. And if the work is committed
+   but **not pushed**, say that first: unpushed work reaches neither the VM nor GitHub Actions.
 4. **Flag any new env/secrets**, and say *where* each must be set (these are NOT interchangeable):
    - **GitHub repo secret** (Settings → Secrets and variables → Actions) → anything the news-digest / engagement workflows read.
    - **VM `.env`** (`~/bersama/bersama-ai-pipeline/.env`) → summarizer + on-demand portal.
