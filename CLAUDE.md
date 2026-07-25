@@ -16,6 +16,7 @@ Three independent components that all reach the same Discord server (guild `1528
 | Summarizer + on-demand portal (`on_demand.py`, port 8080) + `/share` | GCP VM (`~/bersama/bersama-ai-pipeline/`) |
 | Community bot | GCP VM (`~/BersamaAi-community/bersama-bot/`), systemd service `bersama`, 24/7 |
 | News digest + engagement loop | GitHub Actions (`.github/workflows/news-digest.yml` every 3h; `engagement-digest.yml` weekly) |
+| Stock digest (`@EconomyApp` → `#stock-invest`) | GitHub Actions (`.github/workflows/stock-digest.yml` daily; Nitter RSS, no LLM) |
 | discord-mcp admin jar | Local only, on-demand (`localhost:8085`) |
 
 > **ONE GCP VM, TWO directories** (not two VMs) — the same machine hosts:
@@ -42,6 +43,7 @@ The bot and the MCP jar deliberately **share one Discord bot token** (Discord al
 python -m pipeline.main --mode scheduled              # daily creator-watch scan
 python -m pipeline.main --mode url --url "<YT>"       # summarize one video
 python -m pipeline.main --mode news                   # trending news digest
+python -m pipeline.main --mode x-digest               # @EconomyApp → #stock-invest daily X digest (Nitter RSS)
 python -m pipeline.main --mode share --url "<URL>"    # share any URL as a news card
 python on_demand.py                                   # the phone portal (port 8080)
 
@@ -67,6 +69,7 @@ Bot channels / roles / levels live in `bersama-bot/config.json`, not env.
 | `DISCORD_VOICE_STUDIO_WEBHOOK_URL` | `#voice-studio` |
 | `DISCORD_EDUCATION_WEBHOOK_URL` | `#study-with-ai` / `#research-with-ai` |
 | `DISCORD_FINANCE_WEBHOOK_URL` | `#earn-money-with-ai` |
+| `DISCORD_STOCK_INVEST_WEBHOOK_URL` | `#stock-invest` — `@EconomyApp` daily X digest (GitHub Actions only) |
 | `DISCORD_STAFF_CHAT_WEBHOOK_URL` | `🔒-staff-chat` — health warnings + weekly digest; **topic cards must never post here** (enforced by `_is_staff_webhook`) |
 
 The two renamed vars are read new-name-first with the legacy name as fallback, so a half-migrated `.env` keeps working.

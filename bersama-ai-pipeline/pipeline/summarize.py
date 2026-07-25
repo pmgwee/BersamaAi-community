@@ -48,8 +48,12 @@ def summarize(
     api_key: str,
     model: str = GLM_DEFAULT_MODEL,
     base_url: str = GLM_DEFAULT_BASE_URL,
+    lang_hint: str = "other",
 ) -> Summary:
-    """Call GLM with a forced emit_summary function call; return a validated Summary."""
+    """Call GLM with a forced emit_summary function call; return a validated Summary.
+
+    `lang_hint` ("en"/"zh"/"other", from fetch.get_transcript) is forwarded to the
+    prompt so the summary is written in the source video's language, not translated."""
     if not api_key:
         raise SummarizeError("ZAI_API_KEY is missing — cannot summarize.")
 
@@ -64,7 +68,7 @@ def summarize(
     }
     messages = [
         {"role": "system", "content": SYSTEM_PROMPT},
-        {"role": "user", "content": build_user_message(meta, transcript)},
+        {"role": "user", "content": build_user_message(meta, transcript, lang_hint)},
     ]
 
     # GLM does not strictly enforce the emit_summary schema, so a call can
