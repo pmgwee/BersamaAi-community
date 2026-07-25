@@ -50,15 +50,17 @@ above won. Testing produced one kill and one discovery:
 website (no A record — a Bluesky handle only needs a `_atproto` TXT record). If
 that domain ever lapses, the handle breaks but **the DID is permanent**.
 
-### One caveat, stated honestly
-Every test above ran from the owner's **residential** IP. Bluesky's public
-appview is a keyless CDN-fronted API with no anonymous-access gating — the
-datacenter-IP problem that killed Nitter should not apply — but that is
-**reasoned, not verified**. One command on the VM settles it:
+### The datacenter-IP caveat — since **confirmed clear**
+The discovery tests all ran from the owner's **residential** IP, leaving one
+unverified claim: that Bluesky's appview isn't datacenter-gated the way Nitter
+was. **Verified on the GCP VM, 2026-07-25** — this returned the live feed:
 
 ```bash
 curl -s "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=did:plc:kio5ffqovakoioxtxbuat6mr&limit=1" | head -c 300
 ```
+
+→ `{"feed":[{"post":{"uri":"at://did:plc:kio5ffqovakoioxtxbuat6mr/app.bsky.feed.post/3mrfl2dwdq32e"…`
+No auth, no cookie, datacenter IP. **The last objection to Option 9 is closed.**
 
 ### The real residual risk (and its cheap mitigation)
 The dependency is now a **third-party mirror operator**
@@ -160,6 +162,24 @@ to prove the source end-to-end before writing the adapter.
 
 Whichever is chosen, **add the staleness alarm** described above — it is the one
 piece of new engineering this solution genuinely requires.
+
+## ✅ Shipped, 2026-07-25 — option B, in `pipeline/x_digest.py`
+
+| What | How |
+|---|---|
+| Source | Bluesky JSON API, addressed by **DID**; RSSHub code path deleted |
+| Subscriptions | now an `XSource` NamedTuple carrying `did=` (preferred) or `rss=` (fallback) |
+| Card body | keeps real newlines, so `• Revenue +25% Y/Y…` bullet lists render |
+| Card link | the linked Substack article when the post has a link card, else the Bluesky permalink |
+| Images | `images.fullsize` → `external.thumb`, unwrapping `recordWithMedia` |
+| Reposts | skipped (a repost isn't the account's own post) |
+| **Staleness alarm** | `STALE_AFTER_DAYS=6` (env `X_STALE_DAYS`) → `X_STALE` + `🔒-staff-chat` alert; separate `X_EMPTY` alarm for a reachable-but-empty feed |
+| Source-switch safety | ids are namespaced `bsky:<rkey>`, so the old snowflake state reads as a first run and the changeover posts ≤ `FIRST_RUN_MAX` (3), not a week's backlog |
+| Substack fallback | verified working — needed a non-snowflake id (`_fallback_id`), else every article was silently dropped |
+
+Runtime unchanged (VM cron), but the VM is no longer *required*: nothing reads
+`localhost` any more, so this can move to GitHub Actions whenever convenient.
+**Do not install RSSHub.**
 
 ---
 
