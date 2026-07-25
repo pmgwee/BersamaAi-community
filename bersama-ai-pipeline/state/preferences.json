@@ -1,23 +1,28 @@
 {
-  "updated_at": "2026-07-25T03:40:50Z",
+  "updated_at": "2026-07-25T08:25:25Z",
   "half_life_days": 14,
-  "n_events": 96,
+  "n_events": 114,
   "topic": {
-    "coding": 0.518,
-    "creative_video": 1.052,
-    "research_study": 0.0
+    "coding": 0.576,
+    "creative_video": 1.339,
+    "research_study": 0.0,
+    "creative_image": 0.0,
+    "creative_voice": 0.0
   },
   "source": {
-    "HN": 0.422,
-    "github": 0.85,
-    "official": 0.752
+    "HN": 0.454,
+    "github": 0.931,
+    "official": 0.985,
+    "r/StableDiffusion": 1.667,
+    "huggingface": 0.0
   },
   "category": {
     "DEAL": 0.0,
-    "UPDATE": 0.749,
-    "OPEN_SOURCE": 0.637,
-    "LAUNCH": 0.752,
-    "BENCHMARK": 0.0
+    "UPDATE": 0.806,
+    "OPEN_SOURCE": 0.697,
+    "LAUNCH": 0.923,
+    "BENCHMARK": 0.0,
+    "RELEASE": 1.0
   },
   "exemplars": {
     "top": [
@@ -44,15 +49,15 @@
     ],
     "bottom": [
       {
-        "headline": "GigaToken claims ~1000x faster LLM tokenization",
+        "headline": "Moonshot releases Kimi-K2.7-Code on Hugging Face",
         "reward": 0.0
       },
       {
-        "headline": "Thinking-orbs: animated loading indicators built for AI agent UIs",
+        "headline": "Qwythos-9B-Claude-Mythos-5-1M hits Hugging Face — community model built on leaked Claude system prompt",
         "reward": 0.0
       },
       {
-        "headline": "Echo claims Fable-level results at 1/3 the cost using open-weight models",
+        "headline": "OpenAI's accidental cyberattack on Hugging Face reveals advanced model offensive capabilities",
         "reward": 0.0
       }
     ]
