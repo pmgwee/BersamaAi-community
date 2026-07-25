@@ -1,22 +1,22 @@
 {
-  "updated_at": "2026-07-24T22:20:26Z",
+  "updated_at": "2026-07-25T03:40:50Z",
   "half_life_days": 14,
-  "n_events": 85,
+  "n_events": 96,
   "topic": {
-    "coding": 0.411,
-    "creative_video": 0.906,
+    "coding": 0.518,
+    "creative_video": 1.052,
     "research_study": 0.0
   },
   "source": {
-    "HN": 0.371,
-    "github": 0.749,
-    "official": 0.44
+    "HN": 0.422,
+    "github": 0.85,
+    "official": 0.752
   },
   "category": {
     "DEAL": 0.0,
-    "UPDATE": 0.649,
-    "OPEN_SOURCE": 0.561,
-    "LAUNCH": 0.44,
+    "UPDATE": 0.749,
+    "OPEN_SOURCE": 0.637,
+    "LAUNCH": 0.752,
     "BENCHMARK": 0.0
   },
   "exemplars": {
