@@ -310,14 +310,37 @@ def list_playlist_entries(playlist_url: str, *, recent_days: Optional[int] = Non
     creator-watch recency filter inert and let a channel's full backlog flood
     the run. The RSS feed returns only the last ``recent_days`` of uploads with
     real publish dates, so adding more creators can't let one channel
-    monopolize the daily quota. Falls back to the undated flat listing if the
-    feed is unreachable.
+    monopolize the daily quota.
+
+    Shorts: the uploads RSS includes Shorts alongside long-form videos. We keep
+    only entries that also appear in the ``/videos`` listing (long-form only —
+    Shorts live in a separate ``/shorts`` tab), so 45-second clips are never
+    summarized. Falls back to the undated flat listing if the feed is unreachable.
     """
     playlist_url = _normalize_channel_url(playlist_url)
     try:
         res = _rotate_extract(playlist_url, playlist=True)
     except FetchError as e:
         raise FetchError(f"could not list playlist {playlist_url}: {e}") from e
+
+    # Build the flat /videos listing up front — it's both the fallback and the
+    # long-form ID set used to strip Shorts from the dated RSS candidates.
+    flat_entries = []
+    flat_ids: set[str] = set()
+    for e in (res or {}).get("entries", []) or []:
+        if not e:
+            continue
+        vid = e.get("id")
+        if not vid:
+            continue
+        flat_entries.append({
+            "id": vid,
+            "url": e.get("url") or f"https://www.youtube.com/watch?v={vid}",
+            "title": e.get("title") or "",
+            "duration": e.get("duration") or 0,
+            "upload_date": e.get("upload_date") or "",
+        })
+        flat_ids.add(vid)
 
     # Channel + recency requested: prefer the dated uploads RSS feed. ``res``
     # from the /videos extract carries the channel_id we need (verified
@@ -326,23 +349,12 @@ def list_playlist_entries(playlist_url: str, *, recent_days: Optional[int] = Non
     if recent_days and _looks_like_channel(playlist_url):
         dated = _rss_recent_uploads(res.get("channel_id") or "", recent_days)
         if dated is not None:
+            if flat_ids:
+                # Strip Shorts: keep only RSS uploads that are also in /videos.
+                dated = [d for d in dated if d["id"] in flat_ids]
             return dated
 
-    entries = []
-    for e in (res or {}).get("entries", []) or []:
-        if not e:
-            continue
-        vid = e.get("id")
-        if not vid:
-            continue
-        entries.append({
-            "id": vid,
-            "url": e.get("url") or f"https://www.youtube.com/watch?v={vid}",
-            "title": e.get("title") or "",
-            "duration": e.get("duration") or 0,
-            "upload_date": e.get("upload_date") or "",
-        })
-    return entries
+    return flat_entries
 
 
 # ── transcript ───────────────────────────────────────────────────────────────
