@@ -1,29 +1,29 @@
 {
-  "updated_at": "2026-07-25T14:03:44Z",
+  "updated_at": "2026-07-25T16:13:06Z",
   "half_life_days": 14,
-  "n_events": 161,
+  "n_events": 188,
   "topic": {
-    "coding": 0.652,
-    "creative_video": 1.893,
+    "coding": 0.679,
+    "creative_video": 2.042,
     "research_study": 0.0,
     "creative_image": 0.0,
     "creative_voice": 0.0
   },
   "source": {
-    "HN": 0.601,
-    "github": 1.051,
-    "official": 1.308,
-    "r/StableDiffusion": 1.149,
+    "HN": 0.647,
+    "github": 1.098,
+    "official": 1.425,
+    "r/StableDiffusion": 0.994,
     "huggingface": 0.0,
     "r/SunoAI": 0.0
   },
   "category": {
     "DEAL": 0.0,
-    "UPDATE": 0.788,
-    "OPEN_SOURCE": 0.97,
-    "LAUNCH": 0.99,
+    "UPDATE": 0.774,
+    "OPEN_SOURCE": 1.068,
+    "LAUNCH": 0.991,
     "BENCHMARK": 0.0,
-    "RELEASE": 0.937
+    "RELEASE": 0.831
   },
   "exemplars": {
     "top": [
@@ -50,15 +50,15 @@
     ],
     "bottom": [
       {
-        "headline": "Black Forest Labs announces Flux 3 X Mimic video-action models",
-        "reward": 0.0
-      },
-      {
-        "headline": "Flux 3 early examples dominate r/StableDiffusion, dev weights coming",
-        "reward": 0.0
-      },
-      {
         "headline": "Krea2 image quality impresses r/StableDiffusion veterans, LoRA wave follows",
+        "reward": 0.0
+      },
+      {
+        "headline": "NVIDIA releases Qwen-Image-Flash: 4-step distilled text-to-image generation",
+        "reward": 0.0
+      },
+      {
+        "headline": "Black Forest Labs announces Flux 3 capabilities roadmap",
         "reward": 0.0
       }
     ]
