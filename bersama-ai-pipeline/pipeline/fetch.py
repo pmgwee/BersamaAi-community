@@ -111,6 +111,59 @@ def _video_id_from_url(url: str) -> str:
     return m.group(1) if m else ""
 
 
+# YouTube channel sub-pages that already name an explicit tab. If a channel URL
+# ends with one of these, yt-dlp already lists the right thing — leave it alone.
+_CHANNEL_TABS = (
+    "/videos", "/shorts", "/streams", "/live", "/playlists", "/featured",
+    "/community", "/about", "/channels", "/posts", "/store",
+)
+
+
+def _normalize_channel_url(url: str) -> str:
+    """Append ``/videos`` to a bare YouTube channel URL so yt-dlp lists real uploads.
+
+    Why this exists: a bare channel URL — ``/@handle``, ``/channel/UC...``,
+    ``/c/name`` or ``/user/name`` WITHOUT a tab — makes yt-dlp's flat extractor
+    return the channel's *tabs* (Videos / Live / Shorts) as sub-playlists, each
+    keyed by the channel's own ``UC...`` id with ``url=None`` and no per-video
+    metadata. ``list_playlist_entries`` then turns those into bogus
+    ``watch?v=UC...`` entries that always FETCH_FAILED — so the creator-watch
+    scan never saw a single real upload. Pointing yt-dlp at the ``/videos`` tab
+    lists actual videos, newest-first (1059 for 零度解说, verified 2026-07-25).
+
+    No-op for: URLs that already name a tab, single videos (``/watch``,
+    ``youtu.be/``, ``/embed/``, ``/shorts/<id>``, ``/live/<id>``, ``/clip/``),
+    playlists (``/playlist``), and non-YouTube hosts.
+    """
+    from urllib.parse import urlsplit, urlunsplit
+
+    p = urlsplit(url.strip())
+    if (p.hostname or "").lower() not in (
+        "www.youtube.com", "youtube.com", "m.youtube.com", "music.youtube.com",
+    ):
+        return url
+    path = p.path.rstrip("/") or "/"
+
+    # Single video / clip URLs and playlist URLs are not channels — leave alone.
+    if (path == "/watch"
+            or path.startswith(("/embed/", "/clip/", "/live/", "/shorts/"))
+            or "/playlist" in path):
+        return url
+
+    # Already names a tab explicitly — leave alone.
+    if any(path.endswith(t) for t in _CHANNEL_TABS):
+        return url
+
+    # Only rewrite shapes we recognize as bare channel URLs.
+    looks_channel = (path.startswith("/@")
+                     or path.startswith("/channel/")
+                     or path.startswith("/c/")
+                     or path.startswith("/user/"))
+    if not looks_channel:
+        return url
+    return urlunsplit((p.scheme, p.netloc, path + "/videos", p.query, p.fragment))
+
+
 def _oembed_lookup(url: str) -> dict:
     """YouTube oEmbed (no API key; reliably reachable from datacenter IPs).
 
@@ -176,7 +229,11 @@ def list_playlist_entries(playlist_url: str) -> list[dict]:
     """Flat-list a playlist: returns [{id, url, title, duration}, ...] per video.
 
     Uses --flat-playlist so we don't fetch each video's full metadata here.
+    Bare channel URLs are first normalized to their /videos tab (see
+    _normalize_channel_url) — otherwise yt-dlp returns the channel's tabs, not
+    its uploads.
     """
+    playlist_url = _normalize_channel_url(playlist_url)
     try:
         res = _rotate_extract(playlist_url, playlist=True)
     except FetchError as e:
