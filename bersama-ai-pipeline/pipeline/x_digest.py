@@ -419,16 +419,33 @@ def _first_run(seen: list[str], sub: XSource) -> bool:
 
 # ── card + orchestration ─────────────────────────────────────────────────────
 
+def _md_escape(text: str) -> str:
+    """Escape the characters that would break a markdown link label."""
+    return re.sub(r"([\[\]\\])", r"\\\1", text or "")
+
+
 def build_x_card(post: dict, screen_name: str) -> dict:
-    """One embed = one card. The @handle leads as the author badge, the post's
-    lead line is the clickable title, the full post is the body, its media is
-    the bottom image. embed.title forces full-width rendering."""
+    """One embed = one card. The @handle leads as the author badge and the post's
+    own lead line becomes a **bold hyperlink** opening the body; media is the
+    bottom image.
+
+    There is deliberately NO `embed.title`: the post text already opens with that
+    lead line, so a title rendered it twice — once as the heading and again as
+    the first line of the description. Dropping the title and linking the lead
+    line in place keeps one copy and keeps it clickable. (The retired title also
+    forced full-width rendering; in practice ~96% of these posts carry an image,
+    which sets the width anyway.)"""
     badge = f"📈 @{screen_name} · X"
+    lead, _, rest = post["text"].partition("\n")
+    lead, rest, url = lead.strip(), rest.strip("\n"), post["url"]
+    if lead:
+        head = f"**[{_md_escape(lead)}]({url})**" if url else f"**{lead}**"
+    else:
+        head = ""
+    desc = "\n\n".join(part for part in (head, rest) if part)
     return {"username": "BersamaAi", "embeds": [{
         "author": {"name": badge[:256]},
-        "title": post["headline"][:256],
-        "url": post["url"] or None,
-        "description": post["text"][:4096],
+        "description": desc[:4096],
         "color": BRAND_COLOR,
         "image": {"url": post["image"]} if post["image"] else None,
     }]}
