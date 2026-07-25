@@ -52,6 +52,18 @@ sudo systemctl status bersama
 sudo systemctl restart bersama && tail -n 4 ~/BersamaAi-community/bersama-bot/bersama.log
 ```
 
+### Stock-digest daily cron (the VM's crontab — `crontab -e`)
+```cron
+# @EconomyApp → #stock-invest, once a day. 01:00 UTC = 09:00 MYT, ~4h after the
+# US close, so the previous session's earnings posts are already mirrored.
+0 1 * * * cd /home/ngxiaohao123/bersama/bersama-ai-pipeline && ./.venv/bin/python -m pipeline.main --mode x-digest >> /home/ngxiaohao123/bersama/x-digest.log 2>&1
+```
+> ⚠️ The `cd` is **load-bearing**: `pipeline/main.py` calls bare `load_dotenv()`,
+> which resolves `.env` from the **current working directory**. Without the `cd`
+> the webhook env var is unset and the run silently posts nothing (`X_NO_WEBHOOK`
+> in the log) instead of failing. Missing a day is harmless — `MAX_AGE_DAYS=7`
+> means the next run picks up anything from the last week.
+
 ## Env & secrets
 Each component has a complete, tagged `.env.example` (copy → `.env`; never commit the real one):
 - `bersama-ai-pipeline/.env.example` — every key tagged `[VM]` / `[GH]` / `[both]`.
