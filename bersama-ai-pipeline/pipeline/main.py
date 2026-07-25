@@ -207,7 +207,7 @@ def run_scheduled(*, dry_run: bool, stub: bool) -> list[str]:
     for pl in playlists:
         print(f"\n--- playlist: {pl}")
         try:
-            entries = fetch.list_playlist_entries(pl)
+            entries = fetch.list_playlist_entries(pl, recent_days=RECENCY_DAYS)
         except fetch.FetchError as e:
             alert(f"could not list playlist {pl}: {e}", dry_run)
             results.append(f"PLAYLIST_FAIL {pl}")

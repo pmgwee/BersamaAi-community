@@ -119,6 +119,18 @@ _CHANNEL_TABS = (
 )
 
 
+def _looks_like_channel(url: str) -> bool:
+    """True if ``url`` points at a YouTube channel — a ``/@handle``,
+    ``/channel/UC...``, ``/c/name`` or ``/user/name`` path — regardless of any
+    trailing ``/videos`` (or other) tab. Used to decide whether to apply the
+    channel listing path (RSS uploads) vs. a real playlist's flat listing.
+    """
+    from urllib.parse import urlsplit
+    path = urlsplit(url.strip()).path
+    return (path.startswith("/@") or path.startswith("/channel/")
+            or path.startswith("/c/") or path.startswith("/user/"))
+
+
 def _normalize_channel_url(url: str) -> str:
     """Append ``/videos`` to a bare YouTube channel URL so yt-dlp lists real uploads.
 
@@ -155,13 +167,72 @@ def _normalize_channel_url(url: str) -> str:
         return url
 
     # Only rewrite shapes we recognize as bare channel URLs.
-    looks_channel = (path.startswith("/@")
-                     or path.startswith("/channel/")
-                     or path.startswith("/c/")
-                     or path.startswith("/user/"))
-    if not looks_channel:
+    if not _looks_like_channel(url):
         return url
     return urlunsplit((p.scheme, p.netloc, path + "/videos", p.query, p.fragment))
+
+
+def _rss_recent_uploads(channel_id: str, days: int):
+    """A channel's recent uploads via the YouTube RSS feed, newest-first.
+
+    The uploads feed (``/feeds/videos.xml?channel_id=UC...``) carries real
+    ``<published>`` dates — unlike yt-dlp's flat ``/videos`` listing, which has
+    *no* date field at all — and it's not bot-blocked like the player, so it's
+    the scalable source for creator-watch: each channel contributes only its
+    last ``days`` of uploads (typically 0–1), keeping per-run volume bounded by
+    "new uploads this window" rather than by catalog size. That means adding
+    more creators to playlists.txt can never let one channel monopolize the run
+    or push stale content through as if it were new.
+
+    Returns a list of ``{id, url, title, duration:0, upload_date:'YYYYMMDD'}``
+    (possibly empty) on success, or ``None`` if the feed couldn't be
+    fetched/parsed — the caller then falls back to the undated flat listing.
+    ``duration`` is 0 here because RSS omits it; ``process_video`` refetches
+    full metadata per video anyway.
+    """
+    import xml.etree.ElementTree as ET
+    from datetime import datetime, timezone, timedelta
+
+    if not channel_id:
+        return None
+    try:
+        r = requests.get(
+            f"https://www.youtube.com/feeds/videos.xml?channel_id={channel_id}",
+            timeout=15,
+        )
+        if r.status_code != 200:
+            print(f"[fetch] uploads RSS for {channel_id} returned {r.status_code}; "
+                  f"falling back to flat listing")
+            return None
+        root = ET.fromstring(r.text)
+    except (requests.RequestException, ET.ParseError) as e:  # noqa: BLE001
+        print(f"[fetch] uploads RSS for {channel_id} failed: {e}; "
+              f"falling back to flat listing")
+        return None
+
+    ns = {"atom": "http://www.w3.org/2005/Atom",
+          "yt": "http://www.youtube.com/xml/schemas/2015"}
+    cutoff = datetime.now(timezone.utc) - timedelta(days=days)
+    out = []
+    for e in root.findall("atom:entry", ns):
+        pub = (e.find("atom:published", ns).text or "").strip()
+        try:
+            dt = datetime.fromisoformat(pub.replace("Z", "+00:00"))
+        except ValueError:
+            continue
+        if dt < cutoff:
+            continue
+        vid = (e.find("yt:videoId", ns).text or "").strip()
+        if not vid:
+            continue
+        out.append({
+            "id": vid,
+            "url": f"https://www.youtube.com/watch?v={vid}",
+            "title": (e.find("atom:title", ns).text or "").strip(),
+            "duration": 0,
+            "upload_date": dt.strftime("%Y%m%d"),
+        })
+    return out
 
 
 def _oembed_lookup(url: str) -> dict:
@@ -225,19 +296,37 @@ def get_video_info(url: str) -> dict:
         raise
 
 
-def list_playlist_entries(playlist_url: str) -> list[dict]:
-    """Flat-list a playlist: returns [{id, url, title, duration}, ...] per video.
+def list_playlist_entries(playlist_url: str, *, recent_days: Optional[int] = None) -> list[dict]:
+    """Flat-list a playlist/channel: returns [{id, url, title, duration, upload_date}, ...].
 
     Uses --flat-playlist so we don't fetch each video's full metadata here.
     Bare channel URLs are first normalized to their /videos tab (see
     _normalize_channel_url) — otherwise yt-dlp returns the channel's tabs, not
     its uploads.
+
+    Scalability: when ``recent_days`` is set and the URL is a channel, the dated
+    uploads RSS feed is preferred over the flat listing. yt-dlp's flat
+    ``/videos`` extract carries no upload date, which would leave the
+    creator-watch recency filter inert and let a channel's full backlog flood
+    the run. The RSS feed returns only the last ``recent_days`` of uploads with
+    real publish dates, so adding more creators can't let one channel
+    monopolize the daily quota. Falls back to the undated flat listing if the
+    feed is unreachable.
     """
     playlist_url = _normalize_channel_url(playlist_url)
     try:
         res = _rotate_extract(playlist_url, playlist=True)
     except FetchError as e:
         raise FetchError(f"could not list playlist {playlist_url}: {e}") from e
+
+    # Channel + recency requested: prefer the dated uploads RSS feed. ``res``
+    # from the /videos extract carries the channel_id we need (verified
+    # 2026-07-25); None from _rss_recent_uploads means "feed unavailable" →
+    # fall through to the undated flat listing (best-effort, never a hard fail).
+    if recent_days and _looks_like_channel(playlist_url):
+        dated = _rss_recent_uploads(res.get("channel_id") or "", recent_days)
+        if dated is not None:
+            return dated
 
     entries = []
     for e in (res or {}).get("entries", []) or []:
