@@ -1,31 +1,35 @@
 {
-  "updated_at": "2026-07-25T19:36:19Z",
+  "updated_at": "2026-07-25T22:12:11Z",
   "half_life_days": 14,
-  "n_events": 223,
+  "n_events": 266,
   "topic": {
-    "coding": 0.717,
-    "creative_video": 2.224,
+    "coding": 0.846,
+    "creative_video": 2.313,
     "research_study": 0.0,
     "creative_image": 0.0,
     "creative_voice": 0.0,
-    "research_productivity": 0.0
+    "research_productivity": 0.0,
+    "finance": 0.0
   },
   "source": {
-    "HN": 0.719,
-    "github": 1.236,
-    "official": 1.456,
-    "r/StableDiffusion": 0.92,
+    "HN": 0.776,
+    "github": 1.35,
+    "official": 1.673,
+    "r/StableDiffusion": 0.85,
     "huggingface": 0.0,
     "r/SunoAI": 0.0,
-    "r/comfyui": 0.0
+    "r/comfyui": 0.0,
+    "r/ClaudeAI": 5.0,
+    "r/MachineLearning": 0.0,
+    "r/algotrading": 0.0
   },
   "category": {
     "DEAL": 0.0,
-    "UPDATE": 0.751,
-    "OPEN_SOURCE": 1.11,
-    "LAUNCH": 1.107,
+    "UPDATE": 0.774,
+    "OPEN_SOURCE": 1.124,
+    "LAUNCH": 1.19,
     "BENCHMARK": 0.0,
-    "RELEASE": 0.803
+    "RELEASE": 0.924
   },
   "exemplars": {
     "top": [
@@ -52,15 +56,15 @@
     ],
     "bottom": [
       {
-        "headline": "ComfyUI OpenPose Studio adds hand keypoint editing",
+        "headline": "Compiler turns computation graphs into transformer weights — no training required",
         "reward": 0.0
       },
       {
-        "headline": "Nodus: free open-source desktop alternative to NotebookLM",
+        "headline": "Complete LTX 2.3 motion transfer tutorial published for ComfyUI",
         "reward": 0.0
       },
       {
-        "headline": "4-bit diffusion inference lands in HuggingFace Diffusers via Nunchaku",
+        "headline": "Developer shares hard-won lessons from building a Hyperliquid copy-trading bot",
         "reward": 0.0
       }
     ]
