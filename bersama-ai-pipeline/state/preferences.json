@@ -1,29 +1,29 @@
 {
-  "updated_at": "2026-07-25T10:45:36Z",
+  "updated_at": "2026-07-25T14:03:44Z",
   "half_life_days": 14,
-  "n_events": 136,
+  "n_events": 161,
   "topic": {
-    "coding": 0.619,
-    "creative_video": 1.691,
+    "coding": 0.652,
+    "creative_video": 1.893,
     "research_study": 0.0,
     "creative_image": 0.0,
     "creative_voice": 0.0
   },
   "source": {
-    "HN": 0.542,
-    "github": 0.996,
-    "official": 1.164,
-    "r/StableDiffusion": 1.426,
+    "HN": 0.601,
+    "github": 1.051,
+    "official": 1.308,
+    "r/StableDiffusion": 1.149,
     "huggingface": 0.0,
     "r/SunoAI": 0.0
   },
   "category": {
     "DEAL": 0.0,
-    "UPDATE": 0.806,
-    "OPEN_SOURCE": 0.849,
-    "LAUNCH": 0.988,
+    "UPDATE": 0.788,
+    "OPEN_SOURCE": 0.97,
+    "LAUNCH": 0.99,
     "BENCHMARK": 0.0,
-    "RELEASE": 1.0
+    "RELEASE": 0.937
   },
   "exemplars": {
     "top": [
@@ -50,15 +50,15 @@
     ],
     "bottom": [
       {
-        "headline": "Black Forest Labs launches Flux 3, next-gen multimodal flow-matching image model",
+        "headline": "Black Forest Labs announces Flux 3 X Mimic video-action models",
         "reward": 0.0
       },
       {
-        "headline": "Krea 2 style wildcards revealed: flexible style pointers, not fixed presets",
+        "headline": "Flux 3 early examples dominate r/StableDiffusion, dev weights coming",
         "reward": 0.0
       },
       {
-        "headline": "Suno's false-positive copyright check blocks users from uploading their own music",
+        "headline": "Krea2 image quality impresses r/StableDiffusion veterans, LoRA wave follows",
         "reward": 0.0
       }
     ]
