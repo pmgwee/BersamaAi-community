@@ -1,10 +1,10 @@
 {
-  "updated_at": "2026-07-26T08:40:14Z",
+  "updated_at": "2026-07-26T10:54:51Z",
   "half_life_days": 14,
-  "n_events": 375,
+  "n_events": 438,
   "topic": {
-    "coding": 1.03,
-    "creative_video": 2.282,
+    "coding": 1.064,
+    "creative_video": 2.24,
     "research_study": 0.0,
     "creative_image": 0.0,
     "creative_voice": 0.0,
@@ -12,10 +12,10 @@
     "finance": 0.0
   },
   "source": {
-    "HN": 0.893,
-    "github": 1.528,
-    "official": 1.547,
-    "r/StableDiffusion": 0.746,
+    "HN": 0.925,
+    "github": 1.598,
+    "official": 1.449,
+    "r/StableDiffusion": 0.705,
     "huggingface": 0.0,
     "r/SunoAI": 0.0,
     "r/comfyui": 0.0,
@@ -25,15 +25,18 @@
     "r/ClaudeCode": 5.0,
     "r/cursor": 0.0,
     "r/VeoAI": 0.0,
-    "r/artificial": 0.0
+    "r/artificial": 0.0,
+    "r/midjourney": 0.0,
+    "r/LocalLLaMA": 0.0,
+    "r/runwayml": 0.0
   },
   "category": {
     "DEAL": 0.0,
-    "UPDATE": 0.782,
-    "OPEN_SOURCE": 1.131,
-    "LAUNCH": 1.339,
+    "UPDATE": 0.778,
+    "OPEN_SOURCE": 1.114,
+    "LAUNCH": 1.363,
     "BENCHMARK": 0.0,
-    "RELEASE": 1.002,
+    "RELEASE": 1.012,
     "PRICING": 0.0
   },
   "exemplars": {
@@ -61,8 +64,8 @@
     ],
     "bottom": [
       {
-        "headline": "Krea 2 prompt weighting enables precise control over intensity, camera, and lighting",
-        "reward": 0.0
+        "headline": "Meta, Microsoft, Nvidia, IBM sign open-weight AI letter — OpenAI declines",
+        "reward": -2.0
       },
       {
         "headline": "Meta, Microsoft, Nvidia, IBM sign open-weight AI letter — OpenAI declines",
