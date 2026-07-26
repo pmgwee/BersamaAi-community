@@ -1,10 +1,10 @@
 {
-  "updated_at": "2026-07-26T03:57:48Z",
+  "updated_at": "2026-07-26T08:40:14Z",
   "half_life_days": 14,
-  "n_events": 318,
+  "n_events": 375,
   "topic": {
-    "coding": 0.962,
-    "creative_video": 2.295,
+    "coding": 1.03,
+    "creative_video": 2.282,
     "research_study": 0.0,
     "creative_image": 0.0,
     "creative_voice": 0.0,
@@ -12,10 +12,10 @@
     "finance": 0.0
   },
   "source": {
-    "HN": 0.845,
-    "github": 1.446,
-    "official": 1.616,
-    "r/StableDiffusion": 0.807,
+    "HN": 0.893,
+    "github": 1.528,
+    "official": 1.547,
+    "r/StableDiffusion": 0.746,
     "huggingface": 0.0,
     "r/SunoAI": 0.0,
     "r/comfyui": 0.0,
@@ -24,15 +24,16 @@
     "r/algotrading": 0.0,
     "r/ClaudeCode": 5.0,
     "r/cursor": 0.0,
-    "r/VeoAI": 0.0
+    "r/VeoAI": 0.0,
+    "r/artificial": 0.0
   },
   "category": {
     "DEAL": 0.0,
-    "UPDATE": 0.788,
-    "OPEN_SOURCE": 1.136,
-    "LAUNCH": 1.278,
+    "UPDATE": 0.782,
+    "OPEN_SOURCE": 1.131,
+    "LAUNCH": 1.339,
     "BENCHMARK": 0.0,
-    "RELEASE": 0.973,
+    "RELEASE": 1.002,
     "PRICING": 0.0
   },
   "exemplars": {
@@ -60,12 +61,12 @@
     ],
     "bottom": [
       {
-        "headline": "fal.ai shows full 3D-to-AI video pipeline with total scene and camera control",
+        "headline": "Krea 2 prompt weighting enables precise control over intensity, camera, and lighting",
         "reward": 0.0
       },
       {
-        "headline": "\"The Last Vampire Lord\" — dark fantasy short film teaser with VEO 3.1 visuals",
-        "reward": 0.0
+        "headline": "Meta, Microsoft, Nvidia, IBM sign open-weight AI letter — OpenAI declines",
+        "reward": -2.0
       },
       {
         "headline": "Meta, Microsoft, Nvidia, IBM sign open-weight AI letter — OpenAI declines",
