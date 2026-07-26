@@ -35,3 +35,4 @@ sleep 2 && ps -ef | grep on_demand | grep -v grep && echo "--- log ---" && tail 
 pkill -f on_demand.py; sleep 1
 cd ~/bersama/bersama-ai-pipeline && source .venv/bin/activate && nohup python on_demand.py > on_demand.log 2>&1 &
 
+nano ~/bersama/bersama-ai-pipeline/.env
