@@ -121,8 +121,12 @@ TOPICS: list[Topic] = [
     Topic("finance", "#earn-money-with-ai", "DISCORD_FINANCE_WEBHOOK_URL",
           # The channel is "earn money WITH AI", not just quant — the builder subs
           # carry the AI-side-income stories; _looks_ai() strips their non-AI noise.
+          # Builder wing expanded (2026-07-26) with the indie/SaaS/vibe-coding subs
+          # (micro_saas, StartupSoloFounder, SaaS, solopreneur) so the "I built a
+          # project / SaaS and earned" beat surfaces alongside the quant half.
           reddit_subs=["algotrading", "quant", "QuantFinance", "SideProject",
-                       "Entrepreneur", "indiehackers"],
+                       "Entrepreneur", "indiehackers", "micro_saas",
+                       "StartupSoloFounder", "SaaS", "solopreneur"],
           github_keywords=["fintech", "trading bot", "algorithmic trading", "quant",
                            "ai finance", "backtesting"],
           github_min_stars=150, live=True),
