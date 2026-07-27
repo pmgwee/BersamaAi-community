@@ -1,10 +1,10 @@
 {
-  "updated_at": "2026-07-26T22:14:41Z",
+  "updated_at": "2026-07-27T04:04:24Z",
   "half_life_days": 14,
-  "n_events": 725,
+  "n_events": 819,
   "topic": {
-    "coding": 1.108,
-    "creative_video": 2.107,
+    "coding": 1.102,
+    "creative_video": 2.037,
     "research_study": 0.0,
     "creative_image": 0.0,
     "creative_voice": 0.0,
@@ -12,10 +12,10 @@
     "finance": 0.0
   },
   "source": {
-    "HN": 0.995,
-    "github": 1.776,
-    "official": 1.144,
-    "r/StableDiffusion": 0.568,
+    "HN": 0.985,
+    "github": 1.716,
+    "official": 1.093,
+    "r/StableDiffusion": 0.547,
     "huggingface": 0.0,
     "r/SunoAI": 0.0,
     "r/comfyui": 0.0,
@@ -27,19 +27,20 @@
     "r/VeoAI": 0.0,
     "r/artificial": 0.0,
     "r/midjourney": 0.0,
-    "r/LocalLLaMA": 1.44,
+    "r/LocalLLaMA": 2.021,
     "r/runwayml": 0.0,
     "r/FluxAI": 0.0,
     "r/singularity": 0.0,
-    "r/notebooklm": 0.0
+    "r/notebooklm": 0.0,
+    "r/deeplearning": 0.0
   },
   "category": {
     "DEAL": 0.0,
-    "UPDATE": 0.78,
-    "OPEN_SOURCE": 1.03,
-    "LAUNCH": 1.313,
+    "UPDATE": 0.792,
+    "OPEN_SOURCE": 0.976,
+    "LAUNCH": 1.296,
     "BENCHMARK": 0.0,
-    "RELEASE": 1.006,
+    "RELEASE": 0.973,
     "PRICING": 0.0
   },
   "exemplars": {
