@@ -8,12 +8,12 @@
     "ts": "2026-07-25T22:12:59+00:00"
   },
   "Jakubantalik/thinking-orbs": {
-    "stars": 1159,
-    "ts": "2026-07-27T19:57:54+00:00"
+    "stars": 1164,
+    "ts": "2026-07-27T22:20:34+00:00"
   },
   "makecindy/cindy": {
-    "stars": 825,
-    "ts": "2026-07-27T19:57:54+00:00"
+    "stars": 829,
+    "ts": "2026-07-27T22:20:34+00:00"
   },
   "pireel/pireel": {
     "stars": 770,
@@ -21,23 +21,23 @@
   },
   "gnipbao/story-to-handdrawn-video": {
     "stars": 667,
-    "ts": "2026-07-27T19:59:12+00:00"
+    "ts": "2026-07-27T22:21:23+00:00"
   },
   "VictorTaelin/OptMem": {
-    "stars": 616,
-    "ts": "2026-07-27T19:57:54+00:00"
+    "stars": 634,
+    "ts": "2026-07-27T22:20:34+00:00"
   },
   "hahhforest/pi-textbook": {
-    "stars": 587,
-    "ts": "2026-07-27T19:57:54+00:00"
+    "stars": 588,
+    "ts": "2026-07-27T22:20:34+00:00"
+  },
+  "kvcache-ai/AgentENV": {
+    "stars": 532,
+    "ts": "2026-07-27T22:20:34+00:00"
   },
   "mikehasa/agentacct": {
     "stars": 467,
-    "ts": "2026-07-27T19:57:54+00:00"
-  },
-  "kvcache-ai/AgentENV": {
-    "stars": 452,
-    "ts": "2026-07-27T19:57:54+00:00"
+    "ts": "2026-07-27T22:20:34+00:00"
   },
   "KinetiNode/claude-fable-5-system-prompt-clean": {
     "stars": 418,
@@ -48,8 +48,12 @@
     "ts": "2026-07-26T22:15:29+00:00"
   },
   "danilo-znamerovszkij/draw-your-font": {
-    "stars": 392,
-    "ts": "2026-07-27T19:57:54+00:00"
+    "stars": 397,
+    "ts": "2026-07-27T22:20:34+00:00"
+  },
+  "0xwilliamortiz/openclaude-improved": {
+    "stars": 337,
+    "ts": "2026-07-27T22:20:34+00:00"
   },
   "SeanJ1ang/design-judge-skills": {
     "stars": 335,
@@ -57,31 +61,31 @@
   },
   "XYZ-AI-Lab/axrl": {
     "stars": 310,
-    "ts": "2026-07-27T19:57:54+00:00"
+    "ts": "2026-07-27T22:20:34+00:00"
   },
   "0xwilliamortiz/andrej-karpathy-skills": {
     "stars": 305,
-    "ts": "2026-07-27T19:57:54+00:00"
+    "ts": "2026-07-27T22:20:34+00:00"
   },
   "Eversmile12/leaked-llm-prompts": {
     "stars": 284,
-    "ts": "2026-07-27T19:57:54+00:00"
+    "ts": "2026-07-27T22:20:34+00:00"
   },
   "XYZ-AI-Lab/AxisAgentic": {
-    "stars": 267,
-    "ts": "2026-07-27T19:57:54+00:00"
+    "stars": 273,
+    "ts": "2026-07-27T22:20:34+00:00"
   },
   "joeseesun/qiaomu-cut-skill": {
     "stars": 265,
     "ts": "2026-07-24T22:21:15+00:00"
   },
+  "MarcosSete/awesome-free-ai-books": {
+    "stars": 264,
+    "ts": "2026-07-27T22:22:25+00:00"
+  },
   "NVIDIA-NeMo/labs-OO-Agents": {
     "stars": 263,
     "ts": "2026-07-26T22:15:29+00:00"
-  },
-  "MarcosSete/awesome-free-ai-books": {
-    "stars": 258,
-    "ts": "2026-07-27T20:00:14+00:00"
   },
   "RinDig/icm-architect": {
     "stars": 254,
@@ -91,17 +95,13 @@
     "stars": 247,
     "ts": "2026-07-26T22:15:29+00:00"
   },
-  "0xwilliamortiz/openclaude-improved": {
-    "stars": 233,
-    "ts": "2026-07-27T19:57:54+00:00"
+  "deerwork-ai/deer-workflow": {
+    "stars": 228,
+    "ts": "2026-07-27T22:20:34+00:00"
   },
   "finna/Finn-loop": {
     "stars": 227,
-    "ts": "2026-07-27T19:57:54+00:00"
-  },
-  "deerwork-ai/deer-workflow": {
-    "stars": 225,
-    "ts": "2026-07-27T19:57:54+00:00"
+    "ts": "2026-07-27T22:20:34+00:00"
   },
   "paxlabs-inc/machine-genome": {
     "stars": 213,
@@ -112,8 +112,8 @@
     "ts": "2026-07-24T22:21:15+00:00"
   },
   "risa-labs-inc/BossConsole": {
-    "stars": 200,
-    "ts": "2026-07-27T20:00:37+00:00"
+    "stars": 199,
+    "ts": "2026-07-27T22:23:01+00:00"
   },
   "eli-labz/Agent-Execution-Partnership": {
     "stars": 199,
@@ -125,7 +125,7 @@
   },
   "ddcat-ai/open-ai-canvas": {
     "stars": 191,
-    "ts": "2026-07-27T19:57:54+00:00"
+    "ts": "2026-07-27T22:20:34+00:00"
   },
   "worldwonderer/novel-to-game": {
     "stars": 169,
@@ -137,14 +137,14 @@
   },
   "NextWeb4/official-document-ai-assistant": {
     "stars": 162,
-    "ts": "2026-07-27T20:00:37+00:00"
+    "ts": "2026-07-27T22:23:01+00:00"
   },
   "lingbol088-spec/5.6-JAILBREAK-NERV-codex-instruct-5.6": {
-    "stars": 153,
-    "ts": "2026-07-27T19:57:54+00:00"
+    "stars": 154,
+    "ts": "2026-07-27T22:20:34+00:00"
   },
   "codejunkie99/graph-engineering": {
-    "stars": 147,
-    "ts": "2026-07-27T20:00:14+00:00"
+    "stars": 148,
+    "ts": "2026-07-27T22:22:25+00:00"
   }
 }
