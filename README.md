@@ -14,7 +14,7 @@ and admin tooling, all in one repo.
 | Path | What it is | Runs where |
 |---|---|---|
 | [`PROJECT-CONTEXT.md`](PROJECT-CONTEXT.md) | **Start here** — full project onboarding doc | — |
-| [`bersama-ai-pipeline/`](bersama-ai-pipeline/) | Content engine — creator-watch summarizer + on-demand portal (`/run`, `/share`) + topic-routed news digest | Summarizer + portal + `/share` on GCP VM; news + engagement loop on GitHub Actions |
+| [`bersama-ai-pipeline/`](bersama-ai-pipeline/) | Content engine — creator-watch summarizer + topic-routed news digest + `@EconomyApp` stock digest + on-demand portal (`/run`, `/share`) | Summarizer + portal + `/share` + stock digest on GCP VM; news + engagement loop on GitHub Actions |
 | [`bersama-bot/`](bersama-bot/) | discord.py event bot — welcome, reaction roles, leveling, commands, `@mention` AI | GCP VM, systemd (24/7) |
 | [`discord-mcp/`](discord-mcp/) | SaseQ discord-mcp jar — interactive admin via the claude.ai connector | On demand (localhost:8085) |
 | [`FEATURES.md`](FEATURES.md) | Feature registry & community tracker | — |
@@ -25,8 +25,9 @@ and admin tooling, all in one repo.
 
 Setup is per-component (each has its own `README.md`). The GitHub Actions workflows
 at the repo root (`.github/workflows/`) drive the **news digest + engagement loop** on
-a schedule; the **creator-watch summarizer, the on-demand portal, and `/share`** run on
-the GCP VM. (`SESSION-HANDOFF.md` is a dated snapshot, not current — use `PROJECT-CONTEXT.md`.)
+a schedule; the **creator-watch summarizer, the on-demand portal, `/share`, and the
+`@EconomyApp` stock digest** run on the GCP VM. (`SESSION-HANDOFF.md` is a dated
+snapshot, not current — use `PROJECT-CONTEXT.md`.)
 
 > ⚠️ **GitHub Actions note:** the pipeline code lives in `bersama-ai-pipeline/`,
 > so the workflows set `working-directory: bersama-ai-pipeline`. Don't move the

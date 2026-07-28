@@ -181,6 +181,10 @@ baked in (see `bot.py`):
   leaderboard. (Still: set the bot to **Private** in the Developer Portal for defense-in-depth.)
 - **No pings from AI replies.** `allowed_mentions=AllowedMentions.none()` + a mention-stripping
   regex mean prompt-injected GLM output can never mass-ping roles or `@everyone`.
+- **SSRF guard on link fetch.** When the AI enriches its context by pulling a page a member
+  shared (Jina Reader, up to 2 most-recent links), `_is_safe_fetch_url` blocks non-http(s),
+  localhost, private/loopback/link-local IPs, and cloud-metadata hosts — a malicious link
+  can't prod the VM's internals through the bot.
 - **Z.ai call timeout (30 s).** A hung provider request can no longer pin one of the 3 AI
   slots for up to 30 minutes; it times out, refunds its global-quota slot, and replies gracefully.
 - **Fair cooldowns.** The per-user 30 s lockout and the global 20/min slot are only consumed
