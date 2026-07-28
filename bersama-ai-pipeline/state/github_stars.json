@@ -11,9 +11,13 @@
     "stars": 1164,
     "ts": "2026-07-27T22:20:34+00:00"
   },
+  "kvcache-ai/AgentENV": {
+    "stars": 884,
+    "ts": "2026-07-28T03:39:38+00:00"
+  },
   "makecindy/cindy": {
-    "stars": 829,
-    "ts": "2026-07-27T22:20:34+00:00"
+    "stars": 883,
+    "ts": "2026-07-28T03:39:38+00:00"
   },
   "pireel/pireel": {
     "stars": 770,
@@ -24,20 +28,20 @@
     "ts": "2026-07-27T22:21:23+00:00"
   },
   "VictorTaelin/OptMem": {
-    "stars": 634,
-    "ts": "2026-07-27T22:20:34+00:00"
+    "stars": 659,
+    "ts": "2026-07-28T03:39:38+00:00"
   },
   "hahhforest/pi-textbook": {
     "stars": 588,
     "ts": "2026-07-27T22:20:34+00:00"
   },
-  "kvcache-ai/AgentENV": {
-    "stars": 532,
-    "ts": "2026-07-27T22:20:34+00:00"
+  "0xwilliamortiz/openclaude-improved": {
+    "stars": 577,
+    "ts": "2026-07-28T03:39:38+00:00"
   },
   "mikehasa/agentacct": {
-    "stars": 467,
-    "ts": "2026-07-27T22:20:34+00:00"
+    "stars": 488,
+    "ts": "2026-07-28T03:39:38+00:00"
   },
   "KinetiNode/claude-fable-5-system-prompt-clean": {
     "stars": 418,
@@ -48,44 +52,44 @@
     "ts": "2026-07-26T22:15:29+00:00"
   },
   "danilo-znamerovszkij/draw-your-font": {
-    "stars": 397,
-    "ts": "2026-07-27T22:20:34+00:00"
-  },
-  "0xwilliamortiz/openclaude-improved": {
-    "stars": 337,
-    "ts": "2026-07-27T22:20:34+00:00"
+    "stars": 410,
+    "ts": "2026-07-28T03:39:38+00:00"
   },
   "SeanJ1ang/design-judge-skills": {
     "stars": 335,
     "ts": "2026-07-24T22:24:05+00:00"
   },
   "XYZ-AI-Lab/axrl": {
-    "stars": 310,
-    "ts": "2026-07-27T22:20:34+00:00"
+    "stars": 312,
+    "ts": "2026-07-28T03:39:38+00:00"
   },
   "0xwilliamortiz/andrej-karpathy-skills": {
     "stars": 305,
     "ts": "2026-07-27T22:20:34+00:00"
   },
   "Eversmile12/leaked-llm-prompts": {
-    "stars": 284,
-    "ts": "2026-07-27T22:20:34+00:00"
+    "stars": 293,
+    "ts": "2026-07-28T03:39:38+00:00"
   },
   "XYZ-AI-Lab/AxisAgentic": {
-    "stars": 273,
-    "ts": "2026-07-27T22:20:34+00:00"
+    "stars": 286,
+    "ts": "2026-07-28T03:39:38+00:00"
+  },
+  "MarcosSete/awesome-free-ai-books": {
+    "stars": 280,
+    "ts": "2026-07-28T03:41:28+00:00"
   },
   "joeseesun/qiaomu-cut-skill": {
     "stars": 265,
     "ts": "2026-07-24T22:21:15+00:00"
   },
-  "MarcosSete/awesome-free-ai-books": {
-    "stars": 264,
-    "ts": "2026-07-27T22:22:25+00:00"
-  },
   "NVIDIA-NeMo/labs-OO-Agents": {
     "stars": 263,
     "ts": "2026-07-26T22:15:29+00:00"
+  },
+  "deerwork-ai/deer-workflow": {
+    "stars": 263,
+    "ts": "2026-07-28T03:39:38+00:00"
   },
   "RinDig/icm-architect": {
     "stars": 254,
@@ -95,13 +99,13 @@
     "stars": 247,
     "ts": "2026-07-26T22:15:29+00:00"
   },
-  "deerwork-ai/deer-workflow": {
-    "stars": 228,
-    "ts": "2026-07-27T22:20:34+00:00"
+  "ddcat-ai/open-ai-canvas": {
+    "stars": 239,
+    "ts": "2026-07-28T03:39:38+00:00"
   },
   "finna/Finn-loop": {
-    "stars": 227,
-    "ts": "2026-07-27T22:20:34+00:00"
+    "stars": 228,
+    "ts": "2026-07-28T03:39:38+00:00"
   },
   "paxlabs-inc/machine-genome": {
     "stars": 213,
@@ -123,9 +127,9 @@
     "stars": 193,
     "ts": "2026-07-26T22:15:29+00:00"
   },
-  "ddcat-ai/open-ai-canvas": {
-    "stars": 191,
-    "ts": "2026-07-27T22:20:34+00:00"
+  "lingbol088-spec/5.6-JAILBREAK-NERV-codex-instruct-5.6": {
+    "stars": 173,
+    "ts": "2026-07-28T03:39:38+00:00"
   },
   "worldwonderer/novel-to-game": {
     "stars": 169,
@@ -137,14 +141,10 @@
   },
   "NextWeb4/official-document-ai-assistant": {
     "stars": 162,
-    "ts": "2026-07-27T22:23:01+00:00"
-  },
-  "lingbol088-spec/5.6-JAILBREAK-NERV-codex-instruct-5.6": {
-    "stars": 154,
-    "ts": "2026-07-27T22:20:34+00:00"
+    "ts": "2026-07-28T03:42:04+00:00"
   },
   "codejunkie99/graph-engineering": {
-    "stars": 148,
-    "ts": "2026-07-27T22:22:25+00:00"
+    "stars": 153,
+    "ts": "2026-07-28T03:42:04+00:00"
   }
 }
