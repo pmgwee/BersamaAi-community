@@ -8,24 +8,24 @@
     "ts": "2026-07-25T22:12:59+00:00"
   },
   "kvcache-ai/AgentENV": {
-    "stars": 1338,
-    "ts": "2026-07-28T14:41:06+00:00"
+    "stars": 1369,
+    "ts": "2026-07-28T16:53:27+00:00"
   },
   "Jakubantalik/thinking-orbs": {
     "stars": 1164,
     "ts": "2026-07-27T22:20:34+00:00"
   },
   "makecindy/cindy": {
-    "stars": 968,
-    "ts": "2026-07-28T14:41:06+00:00"
+    "stars": 983,
+    "ts": "2026-07-28T16:53:27+00:00"
   },
   "pireel/pireel": {
     "stars": 770,
     "ts": "2026-07-26T22:16:33+00:00"
   },
   "VictorTaelin/OptMem": {
-    "stars": 726,
-    "ts": "2026-07-28T14:41:06+00:00"
+    "stars": 754,
+    "ts": "2026-07-28T16:53:27+00:00"
   },
   "gnipbao/story-to-handdrawn-video": {
     "stars": 667,
@@ -36,20 +36,20 @@
     "ts": "2026-07-27T22:20:34+00:00"
   },
   "0xwilliamortiz/openclaude-improved": {
-    "stars": 577,
-    "ts": "2026-07-28T14:41:06+00:00"
+    "stars": 578,
+    "ts": "2026-07-28T16:53:27+00:00"
   },
   "mikehasa/agentacct": {
     "stars": 517,
-    "ts": "2026-07-28T14:41:06+00:00"
+    "ts": "2026-07-28T16:53:27+00:00"
   },
   "XYZ-AI-Lab/axrl": {
     "stars": 445,
-    "ts": "2026-07-28T14:41:06+00:00"
+    "ts": "2026-07-28T16:53:27+00:00"
   },
   "danilo-znamerovszkij/draw-your-font": {
-    "stars": 429,
-    "ts": "2026-07-28T14:41:06+00:00"
+    "stars": 434,
+    "ts": "2026-07-28T16:53:27+00:00"
   },
   "KinetiNode/claude-fable-5-system-prompt-clean": {
     "stars": 418,
@@ -64,28 +64,28 @@
     "ts": "2026-07-24T22:24:05+00:00"
   },
   "XYZ-AI-Lab/AxisAgentic": {
-    "stars": 320,
-    "ts": "2026-07-28T14:41:06+00:00"
+    "stars": 324,
+    "ts": "2026-07-28T16:53:27+00:00"
   },
   "MarcosSete/awesome-free-ai-books": {
-    "stars": 317,
-    "ts": "2026-07-28T14:43:16+00:00"
+    "stars": 324,
+    "ts": "2026-07-28T16:55:35+00:00"
   },
   "deerwork-ai/deer-workflow": {
-    "stars": 314,
-    "ts": "2026-07-28T14:41:06+00:00"
+    "stars": 317,
+    "ts": "2026-07-28T16:53:27+00:00"
+  },
+  "Eversmile12/leaked-llm-prompts": {
+    "stars": 307,
+    "ts": "2026-07-28T16:53:27+00:00"
   },
   "0xwilliamortiz/andrej-karpathy-skills": {
     "stars": 305,
     "ts": "2026-07-27T22:20:34+00:00"
   },
-  "Eversmile12/leaked-llm-prompts": {
-    "stars": 303,
-    "ts": "2026-07-28T14:41:06+00:00"
-  },
   "ddcat-ai/open-ai-canvas": {
-    "stars": 290,
-    "ts": "2026-07-28T14:41:06+00:00"
+    "stars": 294,
+    "ts": "2026-07-28T16:53:27+00:00"
   },
   "joeseesun/qiaomu-cut-skill": {
     "stars": 265,
@@ -104,16 +104,16 @@
     "ts": "2026-07-26T22:15:29+00:00"
   },
   "finna/Finn-loop": {
-    "stars": 229,
-    "ts": "2026-07-28T14:41:06+00:00"
+    "stars": 230,
+    "ts": "2026-07-28T16:53:27+00:00"
+  },
+  "lingbol088-spec/5.6-JAILBREAK-NERV-codex-instruct-5.6": {
+    "stars": 220,
+    "ts": "2026-07-28T16:53:27+00:00"
   },
   "paxlabs-inc/machine-genome": {
     "stars": 213,
     "ts": "2026-07-26T22:15:29+00:00"
-  },
-  "lingbol088-spec/5.6-JAILBREAK-NERV-codex-instruct-5.6": {
-    "stars": 212,
-    "ts": "2026-07-28T14:41:06+00:00"
   },
   "livetennisapi/livetennisapi-mcp": {
     "stars": 205,
@@ -141,14 +141,14 @@
   },
   "NextWeb4/official-document-ai-assistant": {
     "stars": 164,
-    "ts": "2026-07-28T14:43:40+00:00"
+    "ts": "2026-07-28T16:56:13+00:00"
+  },
+  "codejunkie99/graph-engineering": {
+    "stars": 163,
+    "ts": "2026-07-28T16:56:13+00:00"
   },
   "0xtresser/Transcript-of-Liang-Wenfengs-DeepSeek-Founder-4-Hour-Investor-Meeting": {
     "stars": 162,
-    "ts": "2026-07-28T14:41:06+00:00"
-  },
-  "codejunkie99/graph-engineering": {
-    "stars": 160,
-    "ts": "2026-07-28T14:43:40+00:00"
+    "ts": "2026-07-28T16:53:27+00:00"
   }
 }
