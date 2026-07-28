@@ -62,6 +62,11 @@ Open `.env` and set:
 - `ZAI_API_KEY` = your **Z.ai** API key. Enables member-facing AI (GLM-5.2). Leave blank to disable; everything else still works.
 - `ZAI_BASE_URL` = `https://api.z.ai/api/coding/paas/v4` (default — Z.ai's OpenAI-compatible endpoint).
 - `GLM_MODEL` = `glm-5.2` (default).
+- `JINA_API_KEY` = *(optional)* a [Jina Reader](https://jina.ai/reader) key. When a member shares a link and @mentions the bot, it fetches the page content (JS-rendered pages too) so it can answer questions about it. Works without a key (rate-limited); leave blank to skip link fetch.
+
+> Channels, roles, reaction-role menus, level rewards, and the AI system prompt live in
+> [`config.json`](config.json) — **not** `.env`. `setup.sh` writes the four core env vars
+> above for you (hardcoding `glm-5.2` + the Z.ai URL); `JINA_API_KEY` you add by hand.
 
 ## Step 4 — Test it locally
 
@@ -204,6 +209,24 @@ baked in (see `bot.py`):
 > Not applied (deliberate): a 10-minute membership-age gate before the AI can be used
 > (anti-alt). It's a one-line add in `handle_ai` if abuse appears; skipped for now so first-time
 > members can try the AI immediately, and because the global cap already bounds the cost.
+
+## Database backups (ops)
+
+Leveling XP lives in `bersama.db` (SQLite, WAL mode). [`backup_db.py`](backup_db.py) takes a
+**live, WAL-safe** snapshot via SQLite's online-backup API — it can run while the bot is
+writing without corruption or locking.
+
+- **What it does:** copies `bersama.db` → `./backups/bersama-YYYYMMDD-HHMMSS.db`, keeping
+  the newest `KEEP = 14` snapshots (older ones pruned).
+- **Schedule it yourself** — `setup.sh` does **not** install this cron (it only sets up the
+  systemd service), so it's easy to forget. Add to the VM crontab (`crontab -e`):
+  ```cron
+  0 4 * * * cd $HOME/BersamaAi-community/bersama-bot && .venv/bin/python backup_db.py >> backups.log 2>&1
+  ```
+- **Restore:** stop the bot, copy a snapshot back, restart:
+  ```bash
+  sudo systemctl stop bersama && cp backups/bersama-20260721-040000.db bersama.db && sudo systemctl start bersama
+  ```
 
 ## Troubleshooting
 
