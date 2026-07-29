@@ -291,9 +291,13 @@ def main(argv=None) -> int:
             )
         elif args.mode == "share":
             creds = llm_creds()
+            share_url, force_share = args.url, False
+            if share_url.startswith("!"):   # owner override of the same-link guard
+                share_url, force_share = share_url[1:], True
             results = [post_url_as_news(
-                args.url, api_key=creds["api_key"], model=creds["model"],
+                share_url, api_key=creds["api_key"], model=creds["model"],
                 base_url=creds["base_url"], dry_run=args.dry_run, alert_fn=alert,
+                force=force_share,
             )]
         elif args.mode == "x-digest":
             results = run_x_digest(dry_run=args.dry_run, alert_fn=alert)

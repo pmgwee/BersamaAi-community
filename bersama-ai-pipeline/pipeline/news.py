@@ -29,13 +29,13 @@ from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 from itertools import zip_longest
 from pathlib import Path
-from urllib.parse import urljoin, unquote
+from urllib.parse import urljoin, unquote, urlsplit, urlunsplit
 
 import requests
 from openai import OpenAI
 
 from .github_trending import fetch_trending
-from .stateutil import append_jsonl, read_posted_log, POSTED_LOG, POSTED_LOG_SHARE
+from .stateutil import append_jsonl, read_jsonl, read_posted_log, POSTED_LOG, POSTED_LOG_SHARE
 from .preferences import load_preferences, MIN_EVENTS
 
 STATE_FILE = Path(__file__).resolve().parent.parent / "state" / "news_seen.json"
@@ -610,12 +610,142 @@ def _cap_for_topic(pref: float) -> int:
     return _clamp(3 + round(pref), 1, 4)
 
 
-def _cand_key(c: dict) -> str:
-    """Stable posted-story key for a candidate — the same key space `_keys()` writes
-    to news_seen.json (sha1 of discussion-or-source URL), so gather can drop already
-    -posted stories before they burn a quota slot or a judge token."""
-    base = c.get("discussion") or c.get("url") or c.get("title") or ""
-    return hashlib.sha1(base.encode("utf-8")).hexdigest()[:16]
+# ── dedup key primitives ─────────────────────────────────────────────────────
+# The dedup keys hash a CANONICAL form of the URL/headline so the same story can't
+# post twice just because the URL gained ?utm_* params, dropped a trailing slash,
+# or the LLM reworded "launches" → "releases". All normalization happens ONLY here,
+# inside key computation — item.source_url and c['url'] are NEVER mutated, because
+# the candidate join (by_url[c['url']]) and the card's clickable embed link depend
+# on the raw string the judge emitted.
+
+# Tracking params stripped by _norm_url. This is an EXPLICIT list, never "anything
+# that looks like tracking" — `id` (HN item), `v` (YouTube video), `context` (Reddit
+# comment) are load-bearing identity and must survive, or every HN thread / YouTube
+# video would collapse to one key.
+_TRACK_PARAMS = frozenset({
+    "utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content", "utm_id",
+    "utm_name", "utm_referrer", "fbclid", "gclid", "gclsrc", "dclid", "msclkid",
+    "mc_cid", "mc_eid", "_hsenc", "_hsmi", "icid", "ito", "_ga", "_gl",
+    "guce_referrer", "guccounter", "ref_url", "share",
+})
+# Hosts where `ref` / `s` are sharing trackers (not identity) and get stripped. On
+# other hosts those names may be identity, so they are stripped ONLY on these hosts.
+_REF_STRIP_HOSTS = frozenset({"x.com", "twitter.com", "t.co", "facebook.com",
+                              "instagram.com", "threads.net", "linkedin.com", "bsky.app"})
+
+
+def _norm_url(url: str) -> str:
+    """Canonical URL form for dedup: lowercase scheme+host, strip tracking query params,
+    drop the fragment, sort the surviving query, strip the trailing slash. So
+    `blog.google/x/?utm_source=y` and `blog.google/x` both become `https://blog.google/x`.
+    Identity params (YouTube ?v=, HN ?id=, Reddit ?context=) are NEVER stripped — only
+    the explicit _TRACK_PARAMS set + ref/s on social hosts — so two different videos /
+    threads never collapse to one key."""
+    if not url:
+        return ""
+    s = url.strip()
+    try:
+        p = urlsplit(s)
+    except ValueError:
+        return s.lower()
+    if not p.scheme or not p.netloc:           # not an absolute URL (e.g. a title) → as-is
+        return s
+    scheme = (p.scheme or "https").lower()
+    netloc = p.netloc.lower()
+    path = (p.path or "/").rstrip("/") or "/"
+    host = netloc.split("@")[-1].split(":")[0]  # strip user:pass@ and :port
+    if p.query:
+        kept = []
+        for kv in p.query.split("&"):
+            if not kv:
+                continue
+            k = kv.split("=", 1)[0].lower()
+            if k in _TRACK_PARAMS:
+                continue
+            if k in ("ref", "s") and host in _REF_STRIP_HOSTS:
+                continue
+            kept.append(kv)
+        query = "&".join(sorted(kept))
+    else:
+        query = ""
+    return urlunsplit((scheme, netloc, path, query, ""))
+
+
+# Headline-signature drop set: LAUNCH-SYNONYMS ONLY. Never add deprecation/decline
+# words (deprecates/delays/cuts/drops/ends) — those would merge a launch with its
+# opposite ("launches o3" vs "deprecates o3"). Never add new/model/ai/update. The
+# signature lets "Google launches/releases/ships X" — verb-flips, even across hosts
+# (blog.google vs deepmind.google) — collapse to one key.
+_LAUNCH_VERBS = frozenset({
+    "launch", "launches", "launched", "launching",
+    "release", "releases", "released", "releasing",
+    "ship", "ships", "shipped", "shipping",
+    "unveil", "unveils", "unveiled", "unveiling",
+    "announce", "announces", "announced", "announcing",
+    "introduce", "introduces", "introduced", "introducing",
+    "debut", "debuts", "debuted", "debuting",
+})
+
+
+def _headline_signature(headline: str) -> str:
+    """Token-set headline signature, launch-verbs removed + word order ignored, so the
+    same story worded with a different verb (launches/releases/ships) or surfaced on a
+    different host dedupes. Conservative: returns '' (no signature key) when the residual
+    is too thin — then dedup falls back to the URL key + legacy headline key rather than
+    risk merging two different short stories."""
+    toks = re.findall(r"[a-z0-9]+", headline.lower())
+    sig = sorted({t for t in toks if t not in _LAUNCH_VERBS and t not in {"the", "a", "an"}})
+    if not any(len(t) >= 4 for t in sig):         # need ≥1 substantive token (model/proper noun)
+        return ""
+    if sum(len(t) for t in sig) < 12:             # mirror the legacy ≥12-char floor on the residual
+        return ""
+    return " ".join(sig)
+
+
+def _url_dedup_keys(url: str) -> set:
+    """All URL dedup keys for a story: the CANONICAL normalized key (always) plus, when
+    the raw URL had tracking params / trailing slash / mixed case, the LEGACY raw key —
+    so the dual-key transition still matches pre-fix news_seen.json entries (raw sha1)
+    while new writes converge on the normalized key. Raw URLs aren't stored in the ledger,
+    so this is what avoids orphaning pre-fix history (which would cause a repost storm)."""
+    keys: set = set()
+    if not url:
+        return keys
+    raw = url.strip()
+    norm = _norm_url(raw)
+    if norm:
+        keys.add(hashlib.sha1(norm.encode("utf-8")).hexdigest()[:16])
+    if raw.lower() != norm:                        # had tracking/slash/case → keep legacy raw key too
+        keys.add(hashlib.sha1(raw.encode("utf-8")).hexdigest()[:16])
+    return keys
+
+
+def _headline_dedup_keys(headline: str) -> set:
+    """Legacy whole-headline key (h-prefix, kept for transition) + new signature key
+    (s-prefix) so verb-flip / cross-host dupes collapse without orphaning old h-keys."""
+    keys: set = set()
+    if not headline:
+        return keys
+    low = headline.lower()
+    legacy = re.sub(r"[^a-z0-9]", "", low)
+    if len(legacy) >= 12:
+        keys.add("h" + hashlib.sha1(legacy.encode("utf-8")).hexdigest()[:16])
+    sig = _headline_signature(low)
+    if sig:
+        keys.add("s" + hashlib.sha1(sig.encode("utf-8")).hexdigest()[:16])
+    return keys
+
+
+def _cand_keys(c: dict) -> set:
+    """URL dedup keys for a candidate — the same canonical key space `_keys()` writes to
+    news_seen.json, so gather can drop already-posted stories before they burn a quota
+    slot or a judge token. Returns the full key SET (legacy + normalized) so the dual-key
+    transition matches either form already in the ledger."""
+    base = c.get("discussion") or c.get("url") or ""
+    if base:
+        return _url_dedup_keys(base)
+    t = (c.get("title") or "").strip()             # defensive: no URL → dedup on title so we don't crash
+    return {hashlib.sha1(t.encode("utf-8")).hexdigest()[:16]} if t else set()
 
 
 def gather_candidates(prefs=None, seen: set | None = None, stats: dict | None = None) -> list[dict]:
@@ -636,7 +766,7 @@ def gather_candidates(prefs=None, seen: set | None = None, stats: dict | None = 
         return _looks_ai(c["title"]) or _looks_ai(c["snippet"])
 
     def _fresh(items: list[dict], source: str) -> list[dict]:
-        kept = [c for c in items if _cand_key(c) not in seen]
+        kept = [c for c in items if not (seen & _cand_keys(c))]
         stats[source] = stats.get(source, 0) + len(items)
         stats["skipped_seen"] = stats.get("skipped_seen", 0) + len(items) - len(kept)
         return kept
@@ -691,7 +821,7 @@ def gather_candidates(prefs=None, seen: set | None = None, stats: dict | None = 
 
     picked_urls, dedup = set(), []
     for c in cand:
-        k = c.get("url") or c.get("title")
+        k = _norm_url(c.get("url") or "") or c.get("title")
         if k and k not in picked_urls:
             picked_urls.add(k)
             dedup.append(c)
@@ -986,19 +1116,32 @@ def _save_seen(seen_list: list[str]) -> None:
                           encoding="utf-8")
 
 
-def _keys(item: NewsItem, candidate_by_url: dict) -> set:
-    """Dedup keys for an item: the source/discussion URL key PLUS a normalized-headline
-    key — so the same story surfacing on two sources (e.g. Reddit + HN, different URLs)
-    still dedupes instead of posting twice."""
-    c = candidate_by_url.get(item.source_url)
+def _share_seen_keys() -> set:
+    """Dedup keys for cards the owner posted via /share (the VM's posted_log_share.jsonl
+    shard), unioned into `seen` at the start of each digest run so the auto-digest skips a
+    story the owner already shared. This is the split-brain-safe direction: the digest
+    SOLE-owns news_seen.json (git-committed by GH Actions); /share never writes it.
+    Instead the digest reads the /share shard each run. Returns {} when the shard is
+    absent on this machine (e.g. the GH Actions runner before the VM's shard syncs)."""
     keys: set = set()
-    url_base = (c["discussion"] if c else "") or item.source_url
-    if url_base:
-        keys.add(hashlib.sha1(url_base.encode("utf-8")).hexdigest()[:16])
-    norm = re.sub(r"[^a-z0-9]", "", (item.headline or "").lower())
-    if len(norm) >= 12:   # only dedup on a headline long enough to be meaningful
-        keys.add("h" + hashlib.sha1(norm.encode("utf-8")).hexdigest()[:16])
+    if not POSTED_LOG_SHARE.exists():
+        return keys
+    for row in read_jsonl(POSTED_LOG_SHARE):
+        keys |= _url_dedup_keys(row.get("source_url") or "")
+        keys |= _headline_dedup_keys(row.get("headline") or "")
     return keys
+
+
+def _keys(item: NewsItem, candidate_by_url: dict) -> set:
+    """Dedup keys for an item — URL keys PLUS headline keys, each in BOTH legacy and
+    normalized/signature form (dual-key transition). The same story surfacing on two
+    sources (Reddit + HN, different URLs), with two wordings (launches vs ships), or on
+    two hosts (blog.google vs deepmind.google) collapses instead of posting twice.
+    Normalization is applied ONLY here — never to item.source_url / c['url'] — the
+    candidate join and the card's clickable embed link depend on the raw string."""
+    c = candidate_by_url.get(item.source_url)
+    url_base = (c["discussion"] if c else "") or item.source_url
+    return _url_dedup_keys(url_base) | _headline_dedup_keys(item.headline or "")
 
 
 # ── posting ──────────────────────────────────────────────────────────────────
@@ -1451,8 +1594,9 @@ EMIT_ONE_TOOL = {
 
 
 def post_url_as_news(url: str, *, api_key: str, model: str, base_url: str,
-                     dry_run: bool = False, alert_fn=None) -> str:
-    """Threads/link HITL: fetch a public URL -> GLM writes a topic-tagged card -> post."""
+                     dry_run: bool = False, alert_fn=None, force: bool = False) -> str:
+    """Threads/link HITL: fetch a public URL -> GLM writes a topic-tagged card -> post.
+    `force` overrides the same-link guard (owner prefixing the URL with '!')."""
     if not api_key:
         return "SHARE_NO_API_KEY"
     from . import social  # lazy: yt-dlp is a heavier import
@@ -1507,6 +1651,17 @@ def post_url_as_news(url: str, *, api_key: str, model: str, base_url: str,
         source_url=str(data.get("source_url", url)).strip() or url,
         heat_reason="📣 shared by the owner",
     )
+    # Same-link guard: refuse an exact (normalized) re-share of a URL already posted via
+    # /share, so a double-submit can't post the same card twice. /share is an explicit
+    # editor action, so the owner overrides by prefixing the URL with '!'.
+    if not force:
+        norm = _norm_url(item.source_url)
+        if norm and any(_norm_url(r.get("source_url") or "") == norm
+                        for r in read_jsonl(POSTED_LOG_SHARE)):
+            msg = (f"SHARE_ALREADY_POSTED — already shared (norm {norm}). "
+                   f"Prefix the URL with '!' to force a re-post.")
+            print(f"[share] {msg}")
+            return msg
     t = TOPIC_BY_KEY[topic]
     wh = _topic_webhook(t)
     if not wh:
@@ -1548,6 +1703,7 @@ def run_news(*, dry_run: bool, stub: bool,
     prefs = load_preferences()
     seen_list = _load_seen()
     seen = set(seen_list)
+    seen |= _share_seen_keys()   # owner's /share cards (VM shard) also count as seen
     stats: dict = {}
     candidates = gather_candidates(prefs, seen=seen, stats=stats)
     skipped = stats.get("skipped_seen", 0)
