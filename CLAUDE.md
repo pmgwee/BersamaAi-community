@@ -52,6 +52,18 @@ sudo systemctl status bersama
 sudo systemctl restart bersama && tail -n 4 ~/BersamaAi-community/bersama-bot/bersama.log
 ```
 
+### Creator-watch summarizer daily cron (the VM's crontab — `crontab -e`)
+```cron
+# creator-watch summarizer → #youtube-resources, once a day. 01:03 UTC = 09:03 MYT.
+# run-daily.sh (VM-only, NOT in the repo) cds into the pipeline dir (load-bearing
+# for .env), activates .venv, runs `python -m pipeline.main --mode scheduled`, and
+# logs to logs/daily.log. It does NOT git pull (avoids state/ conflicts), so code
+# fixes need a manual `cd ~/bersama/bersama-ai-pipeline && git pull --ff-only`
+# before the next 09:03 MYT run picks them up.
+3 1 * * * /home/ngxiaohao123/bersama/bersama-ai-pipeline/run-daily.sh
+```
+> The script ends with `|| true`, so cron always reports success — failures surface only via the `alert()` → 🔒-staff-chat path (set `DISCORD_STAFF_CHAT_WEBHOOK_URL`) and in `logs/daily.log`. Safe manual test: `cd ~/bersama/bersama-ai-pipeline && source .venv/bin/activate && python -m pipeline.main --mode scheduled --dry-run` (posts/marks nothing).
+
 ### Stock-digest daily cron (the VM's crontab — `crontab -e`)
 ```cron
 # @EconomyApp → #stock-invest, once a day. 01:00 UTC = 09:00 MYT, ~4h after the
