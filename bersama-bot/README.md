@@ -5,6 +5,36 @@ SaseQ discord-mcp jar on the **same bot token** (Discord allows concurrent
 Gateway sessions per token) and powers the five features the MCP cannot do,
 because the MCP only acts on demand and never "sees" events happen:
 
+## Architecture
+
+```
+┌──────────────────────────────────────────────────────────────────────┐
+│              Discord: BersamaAi server (live)                         │
+│       18 roles · 11 categories · seeded content                       │
+└──────────────────────────────────────────────────────────────────────┘
+       ▲ webhook                 ▲ Gateway (bot token)        ▲ Gateway (same token)
+       │                         │                            │  + claude.ai / Claude Code
+┌──────┴───────┐          ┌──────┴────────┐           ┌──────┴──────────────┐
+│ bersama-ai-  │          │ bersama-bot   │           │ discord-mcp (SaseQ) │
+│ pipeline     │          │ (discord.py)  │           │ admin jar            │
+│              │          │               │           │                      │
+│ • creator-   │          │ • welcome     │           │ • on-demand admin    │
+│   watch      │          │ • reaction    │           │   via Claude         │
+│   summarizer │          │   roles       │           │ • cron timers        │
+│ • on-demand  │          │ • leveling    │           └──────────────────────┘
+│   portal     │          │ • !/  / cmds  │
+│   + /share   │          │ • @mention AI │
+│ • topic-     │          │ Runs 24/7     │
+│   routed news│          │ (GCP VM,      │
+│              │          │  systemd)     │
+│ Summarizer + │          │               │
+│ portal: GCP  │          │               │
+│ VM. News +   │          │               │
+│ engagement:  │          │               │
+│ GH Actions   │          │               │
+└──────────────┘          └───────────────┘
+```
+
 | Feature | Where it lives |
 |---|---|
 | Welcome message + auto-role on join | **this bot** (`on_member_join`) |
