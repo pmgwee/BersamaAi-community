@@ -1,5 +1,6 @@
 # BersamaAi creator-watch — YouTube channels to watch for NEW uploads.
-# One channel URL per line. Lines starting with # are ignored. Blank lines ignored.
+# One channel URL per line. Lines starting with # are ignored. Any text after #
+# on a line is also treated as a comment (so "URL  # note" is fine). Blank lines ignored.
 #
 # The daily scan summarizes only uploads from the last ~3 days (NEW videos), not the
 # channel backlog. Already-summarized videos are deduped (state/processed.json).

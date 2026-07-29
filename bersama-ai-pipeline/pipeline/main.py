@@ -190,8 +190,16 @@ def read_playlists() -> list[str]:
         return []
     out = []
     for line in p.read_text(encoding="utf-8").splitlines():
-        line = line.strip()
-        if line and not line.startswith("#"):
+        # Strip inline `# ...` comments (the file annotates each URL with one).
+        # CRITICAL: without this the comment rides along inside the URL. Since
+        # `#` is the URL-fragment delimiter, urlsplit turns the trailing comment
+        # into the fragment and leaves the spaces before it inside the path, so
+        # the handle becomes e.g. "@kellytsaii<spaces>" → yt-dlp 404s every
+        # player_client → PLAYLIST_FAIL → the run posts nothing. (No YouTube
+        # channel/playlist URL in this file uses a real `#` fragment, so
+        # splitting on the first `#` is safe — and also covers full-line # docs.)
+        line = line.split("#", 1)[0].strip()
+        if line:
             out.append(line)
     return out
 
