@@ -150,3 +150,33 @@ def alert(token: str, chat_id: str, message: str, dry_run: bool = False) -> None
         requests.post(base, data={"chat_id": chat_id, "text": message}, timeout=15)
     except Exception as e:  # noqa: BLE001 — alerts must never crash the run
         print(f"[alert] failed to send: {e}")
+
+
+def alert_discord(webhook_url: str, message: str, dry_run: bool = False) -> None:
+    """Post a pipeline health alert to the 🔒-staff-chat Discord webhook.
+
+    This is the PRIMARY alert channel — the Telegram DM in alert() is secondary
+    and often unconfigured. Routing failures/skips here keeps them visible
+    instead of silently disappearing (the reason the creator-watch scan failed
+    quietly for weeks: TELEGRAM_DM_CHAT_ID was unset so every PLAYLIST_FAIL was
+    swallowed). Staff-chat is the *intended* home for health warnings, so this
+    deliberately bypasses the _is_staff_webhook guard that blocks news TOPIC
+    cards from landing here — an alert is a warning, not a topic card. No-op if
+    the webhook isn't set. Discord content cap is 2000; truncate with headroom.
+    """
+    if not webhook_url:
+        return
+    content = message[:1900] + ("…" if len(message) > 1900 else "")
+    if dry_run:
+        print(f"\n[alert-discord DRY-RUN] POST {_mask_url(webhook_url)}\n{content}\n")
+        return
+    try:
+        r = requests.post(
+            webhook_url,
+            json={"username": DISCORD_USERNAME, "content": content},
+            timeout=15,
+        )
+        if r.status_code not in (200, 204):
+            print(f"[alert-discord] staff-chat webhook failed: {r.status_code} {r.text[:300]}")
+    except Exception as e:  # noqa: BLE001 — alerts must never crash the run
+        print(f"[alert-discord] failed: {e}")

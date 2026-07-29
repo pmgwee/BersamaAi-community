@@ -70,6 +70,16 @@ def llm_creds() -> dict:
 
 
 def alert(msg: str, dry_run: bool) -> None:
+    # PRIMARY: 🔒-staff-chat Discord. Telegram (below) is secondary and often
+    # unconfigured — without this, every PLAYLIST_FAIL / skip / failure warning
+    # was silently swallowed (the reason the creator-watch scan died quietly).
+    # This is a health warning, not a news topic card.
+    publish.alert_discord(
+        cfg("DISCORD_STAFF_CHAT_WEBHOOK_URL"),
+        f"⚠️ BersamaAi pipeline: {msg}",
+        dry_run=dry_run,
+    )
+    # SECONDARY: Telegram DM to the maintainer (if configured).
     publish.alert(
         cfg("TELEGRAM_BOT_TOKEN"), cfg("TELEGRAM_DM_CHAT_ID"),
         f"⚠️ BersamaAi pipeline: {msg}", dry_run=dry_run,
