@@ -258,6 +258,18 @@ def run_scheduled(*, dry_run: bool, stub: bool) -> list[str]:
             processed_total += 1
         if processed_total >= max_total:
             break
+    # Zero-card guard (mirrors the news engine): if the scan found NEW uploads but
+    # posted none, surface it to 🔒-staff-chat instead of failing silently. The
+    # classic cause is all-skipped (captions blocked + no GROQ_API_KEY) — exactly
+    # the failure mode that hid the broken scan for 18 days.
+    posted = sum(1 for r in results if r.startswith("PUBLISHED"))
+    if processed_total > 0 and posted == 0:
+        outcomes = ", ".join(sorted({r.split(maxsplit=1)[0] for r in results})) or "none"
+        alert(
+            f"creator-watch scan: found {processed_total} new video(s) but posted 0 to "
+            f"#youtube-resources (outcomes: {outcomes}). If all skipped, check captions + GROQ_API_KEY.",
+            dry_run,
+        )
     return results
 
 

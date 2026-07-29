@@ -47,8 +47,23 @@ def _now_slug() -> str:
     return datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
 
 
+# A video is only "done" (deduped forever) at a PERMANENT end state:
+#   published     — successfully posted (the happy path)
+#   skipped_long  — deliberately over the duration cap (a video won't get shorter)
+# Transient run-time failures — skipped_nocaption (captions unavailable because
+# YouTube throttled the IP / no GROQ_API_KEY), review_summarize, review_short —
+# must stay RETRYABLE; a later run can succeed past them. Deduping those forever
+# is how new uploads silently vanished from the creator-watch feed (one bad day
+# banned the video for life). Legacy entries with no status field are treated as
+# published so the old backlog isn't suddenly re-published.
+TERMINAL_STATUSES = {"published", "skipped_long"}
+
+
 def is_processed(video_id: str) -> bool:
-    return video_id in _load()
+    entry = _load().get(video_id)
+    if not entry:
+        return False
+    return entry.get("status", "published") in TERMINAL_STATUSES
 
 
 def mark_processed(video_id: str, title: str, bundle_path: str, status: str = "published") -> None:
@@ -63,4 +78,8 @@ def mark_processed(video_id: str, title: str, bundle_path: str, status: str = "p
 
 
 def processed_ids() -> set[str]:
-    return set(_load().keys())
+    """Only TERMINAL ids. Non-terminal (transient-failure) ids are intentionally
+    excluded so run_scheduled gives them another shot instead of skipping them."""
+    data = _load()
+    return {vid for vid, entry in data.items()
+            if entry.get("status", "published") in TERMINAL_STATUSES}
