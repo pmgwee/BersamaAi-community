@@ -35,7 +35,11 @@ from .news import run_news, post_url_as_news
 from .x_digest import run_x_digest
 
 # Guards
-MAX_PER_RUN = 5                 # cap scheduled backlog so we never blow the 30-min job
+MAX_PER_RUN = 5                 # global backstop: total NEW videos across ALL channels/run
+PER_CHANNEL_CAP = 2             # fairness: max NEW videos per channel per run — stops one
+                                # channel monopolizing the quota (the bug that buried
+                                # 零度解说 behind Kelly Tsai's backlog when the dated RSS
+                                # recency feed was VM-throttled to 500). Override: MAX_PER_CHANNEL.
 TRANSCRIPT_FLOOR_CHARS = 1500   # below this a >10min video looks like a bad auto-caption
 SHORT_VIDEO_SEC = 600           # 10 min
 RECENCY_DAYS = 3                # creator-watch: only summarize uploads from the last N days
@@ -221,27 +225,38 @@ def run_scheduled(*, dry_run: bool, stub: bool) -> list[str]:
         return []
     results = []
     done = state.processed_ids()
-    processed_this_run = 0
+    # Per-channel cap is the PRIMARY bound (fairness): each channel gets up to
+    # MAX_PER_CHANNEL new videos before yielding, so one channel's backlog can
+    # never starve the others. MAX_PER_RUN is a global backstop on total volume.
+    per_channel_cap = int(cfg("MAX_PER_CHANNEL", str(PER_CHANNEL_CAP)) or PER_CHANNEL_CAP)
+    max_total = int(cfg("MAX_PER_RUN", str(MAX_PER_RUN)) or MAX_PER_RUN)
+    processed_total = 0
     for pl in playlists:
-        print(f"\n--- playlist: {pl}")
+        print(f"\n--- channel: {pl}")
         try:
             entries = fetch.list_playlist_entries(pl, recent_days=RECENCY_DAYS)
         except fetch.FetchError as e:
-            alert(f"could not list playlist {pl}: {e}", dry_run)
+            alert(f"could not list channel {pl}: {e}", dry_run)
             results.append(f"PLAYLIST_FAIL {pl}")
             continue
         print(f"{len(entries)} entries; {len(done)} already processed globally")
+        processed_channel = 0
         for e in entries:
+            if processed_total >= max_total:
+                print(f"hit global cap MAX_PER_RUN={max_total}; remaining channels wait")
+                break
+            if processed_channel >= per_channel_cap:
+                print(f"hit per-channel cap MAX_PER_CHANNEL={per_channel_cap} for {pl}; "
+                      f"rest of this channel waits for next run")
+                break
             if e["id"] in done:
                 continue
             if not _is_recent(e.get("upload_date")):
                 continue   # creator-watch: skip the backlog; only NEW uploads
-            if processed_this_run >= MAX_PER_RUN:
-                print(f"hit MAX_PER_RUN={MAX_PER_RUN}; remaining entries wait for next run")
-                break
             results.append(process_video(e["url"], dry_run=dry_run, stub=stub))
-            processed_this_run += 1
-        if processed_this_run >= MAX_PER_RUN:
+            processed_channel += 1
+            processed_total += 1
+        if processed_total >= max_total:
             break
     return results
 

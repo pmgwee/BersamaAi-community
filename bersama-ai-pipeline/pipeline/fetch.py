@@ -37,6 +37,15 @@ LANG_ORDER = ["en", "en-US", "en-Origin", "en-GB", "zh-Hans", "zh-CN", "zh", "zh
 # Format preference within a language: json3 carries timing + clean text; vtt is the fallback.
 FMT_ORDER = ["json3", "vtt", "srv1"]
 
+# Realistic browser UA for the uploads-RSS fetch. YouTube throttles the default
+# python-requests UA on datacenter IPs (the GCP VM got HTTP 500 here while a
+# residential IP got 200 for the same URL + channel_id); a browser UA gives the
+# dated recency feed a real chance to work. See _rss_recent_uploads.
+_RSS_UA = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+)
+
 # Mid-2026 best-hope YouTube player_client orderings. YouTube rotates which
 # clients are LOGIN_REQUIRED roughly weekly (yt-dlp #15751, #15865), so we try
 # several and take the first that returns real metadata. None is guaranteed.
@@ -195,19 +204,29 @@ def _rss_recent_uploads(channel_id: str, days: int):
 
     if not channel_id:
         return None
-    try:
-        r = requests.get(
-            f"https://www.youtube.com/feeds/videos.xml?channel_id={channel_id}",
-            timeout=15,
-        )
-        if r.status_code != 200:
-            print(f"[fetch] uploads RSS for {channel_id} returned {r.status_code}; "
-                  f"falling back to flat listing")
-            return None
-        root = ET.fromstring(r.text)
-    except (requests.RequestException, ET.ParseError) as e:  # noqa: BLE001
-        print(f"[fetch] uploads RSS for {channel_id} failed: {e}; "
-              f"falling back to flat listing")
+    url = f"https://www.youtube.com/feeds/videos.xml?channel_id={channel_id}"
+    # Browser UA + retries: YouTube sometimes serves a transient 500 to datacenter
+    # IPs (GCP VM observed; same URL/ID returns 200 from residential). A realistic
+    # UA + a couple of retries recovers the dated recency feed instead of silently
+    # falling back to the undated flat listing — which would leave the 3-day "only
+    # new uploads" filter inert and let one channel's backlog monopolize the run.
+    # (run_scheduled's per-channel cap is the backstop if this still fails.)
+    root = None
+    last_status: Optional[int] = None
+    for attempt in range(3):
+        try:
+            r = requests.get(url, timeout=15, headers={"User-Agent": _RSS_UA})
+            last_status = r.status_code
+            if r.status_code == 200:
+                root = ET.fromstring(r.text)
+                break
+        except (requests.RequestException, ET.ParseError) as e:  # noqa: BLE001
+            print(f"[fetch] uploads RSS for {channel_id} attempt {attempt + 1} error: {e}")
+        if attempt < 2:
+            time.sleep(2 * (attempt + 1))   # 2s, then 4s backoff
+    if root is None:
+        print(f"[fetch] uploads RSS for {channel_id} returned {last_status} after retries; "
+              f"falling back to flat listing (recency inert this run)")
         return None
 
     ns = {"atom": "http://www.w3.org/2005/Atom",
