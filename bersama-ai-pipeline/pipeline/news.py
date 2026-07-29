@@ -35,7 +35,7 @@ import requests
 from openai import OpenAI
 
 from .github_trending import fetch_trending
-from .stateutil import append_jsonl, POSTED_LOG, POSTED_LOG_SHARE
+from .stateutil import append_jsonl, read_posted_log, POSTED_LOG, POSTED_LOG_SHARE
 from .preferences import load_preferences, MIN_EVENTS
 
 STATE_FILE = Path(__file__).resolve().parent.parent / "state" / "news_seen.json"
@@ -776,6 +776,34 @@ reasoning over text + image + audio + video and generating in more than one of t
 (the Gemini Omni / Omni Flash class). Route those by what the story is mainly ABOUT:
 a general unified-model release is `coding`; "it now does video" is `creative_video`.
 
+ONE STORY, ONE CARD — the most important selection rule. Many candidates each run
+are different sources reporting the SAME underlying event (a company blog, a Hacker
+News discussion, a Reddit thread, and a newsletter all recapping one release). Emit
+AT MOST ONE card per real-world event. Collapse them to the single best source, in
+this priority: official company blog / HuggingFace / GitHub primary  >  Hacker News
+discussion  >  Reddit thread  >  third-party rehash (news blogs, newsletters, weekly
+roundups). Drop the losers — do not emit them.
+
+The test is whether the NEWS EVENT is the same, NOT whether the product/entity name
+is the same. A re-report of an already-covered event is a duplicate even if its URL
+and headline are completely different. But a DIFFERENT event involving the same
+entity IS still news — keep it. Examples (Moonshot's Kimi K3, late July 2026):
+- SAME event → keep at most one (the primary source): "Moonshot open-sources Kimi
+  K3" / "Kimi K3 weights released" / "Kimi K3 open-weights, 2.8T MoE, 1M context" /
+  "Moonshot releases Kimi K3… on Hugging Face". One release, re-reported across
+  sources — post only the primary/official one, drop the rehashes.
+- DIFFERENT event → keep each: "Kimi K3 now available via Telnyx Inference API"
+  (new distribution/availability), "Kimi K3 team open-sources AgentENV" (a separate
+  product), "Sebastian Raschka's architecture analysis of Kimi K3" (independent
+  analysis), "UK AISI publishes cyber-capability assessment of Kimi K3" (a safety
+  eval). These share the Kimi K3 name but are genuinely new storylines — do NOT
+  collapse them into the release card.
+Any story listed under "RECENTLY POSTED" (below the candidates) is already covered.
+Do NOT re-emit a re-report of that same event this run, even from a new source. A
+real CHANGE-OF-STATE since the original post (price cut, shutdown/deprecation, new
+benchmark win, independent analysis, new platform availability) is still news; a
+rehash of the same fact is not.
+
 For each item return:
 - topic (one of the above)
 - category: LAUNCH | RELEASE | PRICING | BENCHMARK | OPEN_SOURCE | DEAL | UPDATE
@@ -833,8 +861,55 @@ EMIT_NEWS_TOOL = {
 }
 
 
-def _build_judge_user_message(candidates: list[dict]) -> str:
-    lines = [f"CANDIDATES ({len(candidates)}):"]
+RECENT_STORY_WINDOW_H = 48   # a story posted within this window is "already covered"
+RECENT_STORY_MAX = 30        # cap headlines injected into the judge prompt (token budget)
+
+
+def _recent_posted_headlines(window_h: int = RECENT_STORY_WINDOW_H,
+                             limit: int = RECENT_STORY_MAX) -> list[dict]:
+    """Recent posted cards (newest first) that the judge should treat as ALREADY COVERED.
+
+    Why this exists: the dedup ledger (news_seen.json) only matches an exact URL or a
+    character-identical headline (``_keys``). It cannot tell that a brand-new source
+    re-reporting yesterday's release is the SAME story. Feeding the judge the last ~48h
+    of posted headlines lets the ONE STORY, ONE CARD rule work ACROSS runs, not just
+    within one run's candidate pool — so the 4th Reddit rehash of a release 12h later
+    is suppressed, while a genuinely different storyline (e.g. the same model landing
+    on a new API provider) still posts. Reads auto-news + owner /share cards alike."""
+    from datetime import datetime, timezone, timedelta
+    now = datetime.now(timezone.utc)
+    cutoff = now - timedelta(hours=window_h)
+    out: list[dict] = []
+    for row in read_posted_log():
+        ts = str(row.get("posted_at") or "")
+        try:
+            when = datetime.fromisoformat(ts.replace("Z", "+00:00"))
+        except ValueError:
+            continue
+        if when.tzinfo is None:
+            when = when.replace(tzinfo=timezone.utc)
+        if when < cutoff:
+            continue
+        out.append({"headline": row.get("headline", ""),
+                    "topic": row.get("topic", ""),
+                    "channel": row.get("channel", ""),
+                    "age_h": max(0, int((now - when).total_seconds() // 3600))})
+    out.sort(key=lambda r: r["age_h"])   # newest (smallest age) first
+    return out[:limit]
+
+
+def _build_judge_user_message(candidates: list[dict], recent: list[dict] | None = None) -> str:
+    lines: list[str] = []
+    if recent:
+        lines.append(
+            f"RECENTLY POSTED (last {RECENT_STORY_WINDOW_H}h — these stories are ALREADY covered. "
+            "Apply ONE STORY, ONE CARD: do NOT re-emit a re-report of the same event, even via a "
+            "different source/URL/headline):")
+        for r in recent:
+            lines.append(f"  - [topic={r.get('topic', '?')}] {r.get('headline', '')}  "
+                         f"({r.get('age_h', 0)}h ago, {r.get('channel', '')})")
+        lines.append("")
+    lines.append(f"CANDIDATES ({len(candidates)}):")
     for i, c in enumerate(candidates, 1):
         heat = (f"hot_rank=#{c['rank']}" if c.get("rank") and not c.get("score")
                 else f"score={c['score']}")
@@ -848,7 +923,7 @@ def _build_judge_user_message(candidates: list[dict]) -> str:
 
 
 def judge(candidates: list[dict], *, api_key: str, model: str, base_url: str,
-          prefs_section: str = "") -> list[NewsItem]:
+          prefs_section: str = "", recent: list[dict] | None = None) -> list[NewsItem]:
     if not api_key:
         raise NewsError("ZAI_API_KEY is missing — cannot judge news.")
     client = OpenAI(api_key=api_key, base_url=base_url)
@@ -860,7 +935,7 @@ def judge(candidates: list[dict], *, api_key: str, model: str, base_url: str,
         resp = client.chat.completions.create(
             model=model, max_completion_tokens=2048,  # Z.ai GLM ignores max_tokens
             messages=[{"role": "system", "content": SYSTEM_PROMPT + prefs_section},
-                      {"role": "user", "content": _build_judge_user_message(candidates)}],
+                      {"role": "user", "content": _build_judge_user_message(candidates, recent=recent)}],
             tools=[tool], tool_choice="required",
         )
     except Exception as e:  # noqa: BLE001
@@ -1486,6 +1561,15 @@ def run_news(*, dry_run: bool, stub: bool,
             "(`[sources] …` / `[reddit] …` lines), it may be down or blocked.", dry_run)
         return ["NEWS_NO_CANDIDATES"]
 
+    # Same-story memory for the ONE STORY, ONE CARD rule: the last ~48h of posted
+    # headlines, so the judge can suppress a re-report of an already-covered event
+    # (different source/URL/headline, same news) while still posting a genuinely
+    # different storyline about the same entity.
+    recent = _recent_posted_headlines()
+    if recent:
+        print(f"[same-story] {len(recent)} recently-posted headline(s) fed to the judge "
+              f"(window {RECENT_STORY_WINDOW_H}h) for cross-run ONE-STORY-ONE-CARD dedup")
+
     if stub:
         items = [NewsItem(LIVE_TOPICS[0].key, "LAUNCH", "[STUB] a hot item",
                           "Canned item for local testing (no API key).",
@@ -1493,7 +1577,7 @@ def run_news(*, dry_run: bool, stub: bool,
     else:
         try:
             items = judge(candidates, api_key=api_key, model=model, base_url=base_url,
-                          prefs_section=prefs.profile_section)
+                          prefs_section=prefs.profile_section, recent=recent)
         except NewsError as e:
             if alert_fn:
                 alert_fn(f"news judge failed: {e}", dry_run)
