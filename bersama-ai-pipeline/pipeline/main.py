@@ -44,6 +44,20 @@ TRANSCRIPT_FLOOR_CHARS = 1500   # below this a >10min video looks like a bad aut
 SHORT_VIDEO_SEC = 600           # 10 min
 RECENCY_DAYS = 3                # creator-watch: only summarize uploads from the last N days
 
+# Human-readable levers for each caption-less skip reason (set by fetch.get_transcript
+# as fetch.last_transcript_status). Turns the old opaque "check captions + GROQ_API_KEY"
+# into an actionable alert that names the actual fix.
+_NOCAPTION_REASONS = {
+    "nocaption_nokey": "no GROQ_API_KEY set → ASR disabled; set it (free key, console.groq.com) to transcribe caption-less videos",
+    "nocaption_oembed": "yt-dlp fully IP-blocked this run (oEmbed-only metadata) → can't fetch captions OR audio from this IP",
+    "nocaption_asr_blocked": "ASR audio download blocked (YouTube bot-blocking this datacenter IP)",
+    "nocaption_transcode_failed": "ASR ran but the ffmpeg transcode failed — is ffmpeg installed on the VM?",
+    "nocaption_asr_error": "ASR got audio but Groq transcription errored — check GROQ_API_KEY quota / run log",
+    "nocaption_asr_empty": "ASR returned an empty transcript (silent / non-speech audio?)",
+    "nocaption_no_groq_pkg": "'groq' package not installed in the venv — run: pip install groq",
+    "nocaption_misc": "no caption track and ASR produced nothing (see run log for the failing tier)",
+}
+
 
 def cfg(key: str, default: str = "") -> str:
     return os.environ.get(key, default)
@@ -130,8 +144,10 @@ def process_video(url: str, *, dry_run: bool, stub: bool) -> str:
     # 4. transcript
     transcript, lang_hint = fetch.get_transcript(meta)
     if not transcript:
-        f = bundle.write_skipped(meta, "no captions available (Whisper fallback is v1.1)")
-        alert(f"skipped (no captions): {title}", dry_run)
+        reason = fetch.last_transcript_status or "nocaption_misc"
+        why = _NOCAPTION_REASONS.get(reason, "see run log for the failing tier")
+        f = bundle.write_skipped(meta, f"no captions ({reason})")
+        alert(f"skipped (no captions): {title} — {why}", dry_run)
         _mark(vid, title, str(f), "skipped_nocaption", dry_run)
         return f"SKIPPED_NOCAPTION {vid}"
 

@@ -63,6 +63,13 @@ class FetchError(Exception):
     pass
 
 
+# Outcome reason for the most recent get_transcript() call, so a caption-less skip
+# can carry a SPECIFIC cause (no GROQ key / ASR IP-blocked / Groq error / ...) to the
+# alert instead of the generic "check captions + GROQ_API_KEY". "" on success or when
+# not yet run; see get_transcript's terminal block for the code set.
+last_transcript_status: str = ""
+
+
 # ── metadata + playlist ──────────────────────────────────────────────────────
 
 def _ydl_opts(*, player_client=None, playlist: bool = False) -> dict:
@@ -472,7 +479,13 @@ def get_transcript(info: dict) -> tuple[Optional[str], str]:
     caption immediately after extract_info (sub-second gap), so staleness is a
     non-issue today — but if you ever insert a slow step between the two, fetch
     will 403. Keep them adjacent.
+
+    On failure, sets module-global ``last_transcript_status`` to a specific reason
+    so the caller's skip alert can name the actual lever (no GROQ key vs. ASR
+    IP-blocked vs. Groq error) instead of a generic "check captions + key".
     """
+    global last_transcript_status
+    last_transcript_status = ""   # reset; only set to a specific reason on failure
     # --- primary: yt-dlp caption URL ---
     try:
         picked = _pick_track(info)
@@ -516,6 +529,7 @@ def get_transcript(info: dict) -> tuple[Optional[str], str]:
     # and the summarizer then writes an English card. Skipped for the oEmbed-only
     # stub (no audio path there, and yt-dlp would be blocked anyway).
     groq_key = os.environ.get("GROQ_API_KEY") or os.environ.get("GROQ_KEY") or ""
+    asr_ran = False
     if groq_key and not info.get("_oembed_only"):
         url = info.get("webpage_url") or info.get("url")
         if url:
@@ -523,10 +537,30 @@ def get_transcript(info: dict) -> tuple[Optional[str], str]:
             from . import asr  # lazy import; the groq package is optional
             model = os.environ.get("GROQ_WHISPER_MODEL") or asr.GROQ_DEFAULT_MODEL
             text = asr.transcribe(url, groq_key, model=model)
+            asr_ran = True
             if text:
                 text = _clean(text)
                 if text:
                     lang_hint = "zh" if re.search(r"[一-鿿]", text) else "en"
                     return text, lang_hint
 
+    # No transcript from any tier — record a SPECIFIC reason so the skip alert can
+    # tell the owner the real lever (set GROQ_API_KEY? IP-blocked? Groq quota?)
+    # instead of the opaque "check captions + GROQ_API_KEY".
+    if not groq_key:
+        last_transcript_status = "nocaption_nokey"
+    elif info.get("_oembed_only"):
+        last_transcript_status = "nocaption_oembed"
+    elif asr_ran:
+        last_transcript_status = {
+            "download_failed": "nocaption_asr_blocked",
+            "transcode_failed": "nocaption_transcode_failed",
+            "groq_error": "nocaption_asr_error",
+            "empty": "nocaption_asr_empty",
+            # ASR returned text but _clean() emptied it (whitespace-only garbage):
+            "ok": "nocaption_asr_empty",
+            "no_groq_pkg": "nocaption_no_groq_pkg",
+        }.get(asr.last_status, "nocaption_misc")
+    else:
+        last_transcript_status = "nocaption_misc"
     return None, "other"
