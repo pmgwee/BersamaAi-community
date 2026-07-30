@@ -20,8 +20,8 @@
     "ts": "2026-07-28T22:18:53+00:00"
   },
   "VictorTaelin/OptMem": {
-    "stars": 867,
-    "ts": "2026-07-29T22:15:45+00:00"
+    "stars": 884,
+    "ts": "2026-07-30T03:32:45+00:00"
   },
   "pireel/pireel": {
     "stars": 770,
@@ -40,16 +40,16 @@
     "ts": "2026-07-29T22:15:45+00:00"
   },
   "0xwilliamortiz/openclaude-improved": {
-    "stars": 554,
-    "ts": "2026-07-29T22:15:45+00:00"
+    "stars": 556,
+    "ts": "2026-07-30T03:32:45+00:00"
   },
   "0xwilliamortiz/ponytail-improved": {
-    "stars": 545,
-    "ts": "2026-07-29T22:15:45+00:00"
+    "stars": 547,
+    "ts": "2026-07-30T03:32:45+00:00"
   },
   "mikehasa/agentacct": {
-    "stars": 526,
-    "ts": "2026-07-29T22:15:45+00:00"
+    "stars": 532,
+    "ts": "2026-07-30T03:32:45+00:00"
   },
   "XYZ-AI-Lab/AxisAgentic": {
     "stars": 469,
@@ -68,8 +68,12 @@
     "ts": "2026-07-26T22:15:29+00:00"
   },
   "deerwork-ai/deer-workflow": {
-    "stars": 345,
-    "ts": "2026-07-29T22:15:45+00:00"
+    "stars": 348,
+    "ts": "2026-07-30T03:32:45+00:00"
+  },
+  "gavamedia/deltafin": {
+    "stars": 342,
+    "ts": "2026-07-30T03:32:45+00:00"
   },
   "SeanJ1ang/design-judge-skills": {
     "stars": 335,
@@ -80,12 +84,8 @@
     "ts": "2026-07-28T22:21:15+00:00"
   },
   "Eversmile12/leaked-llm-prompts": {
-    "stars": 324,
-    "ts": "2026-07-29T22:15:45+00:00"
-  },
-  "gavamedia/deltafin": {
-    "stars": 309,
-    "ts": "2026-07-29T22:15:45+00:00"
+    "stars": 327,
+    "ts": "2026-07-30T03:32:45+00:00"
   },
   "0xwilliamortiz/andrej-karpathy-skills": {
     "stars": 305,
@@ -96,8 +96,8 @@
     "ts": "2026-07-28T22:18:53+00:00"
   },
   "lingbol088-spec/5.6-JAILBREAK-NERV-codex-instruct-5.6": {
-    "stars": 268,
-    "ts": "2026-07-29T22:15:45+00:00"
+    "stars": 274,
+    "ts": "2026-07-30T03:32:45+00:00"
   },
   "joeseesun/qiaomu-cut-skill": {
     "stars": 265,
@@ -119,6 +119,10 @@
     "stars": 231,
     "ts": "2026-07-28T22:18:53+00:00"
   },
+  "QwenAudio/qwen-audio-agent": {
+    "stars": 223,
+    "ts": "2026-07-30T03:34:14+00:00"
+  },
   "paxlabs-inc/machine-genome": {
     "stars": 213,
     "ts": "2026-07-26T22:15:29+00:00"
@@ -135,10 +139,6 @@
     "stars": 199,
     "ts": "2026-07-26T22:15:29+00:00"
   },
-  "QwenAudio/qwen-audio-agent": {
-    "stars": 197,
-    "ts": "2026-07-29T22:17:15+00:00"
-  },
   "0xwilliamortiz/agents-council": {
     "stars": 193,
     "ts": "2026-07-26T22:15:29+00:00"
@@ -146,6 +146,10 @@
   "codejunkie99/graph-engineering": {
     "stars": 173,
     "ts": "2026-07-29T22:18:15+00:00"
+  },
+  "icebird1998/scientific-illustrator": {
+    "stars": 173,
+    "ts": "2026-07-30T03:32:45+00:00"
   },
   "0xtresser/Transcript-of-Liang-Wenfengs-DeepSeek-Founder-4-Hour-Investor-Meeting": {
     "stars": 170,
@@ -155,10 +159,6 @@
     "stars": 169,
     "ts": "2026-07-24T22:21:15+00:00"
   },
-  "icebird1998/scientific-illustrator": {
-    "stars": 169,
-    "ts": "2026-07-29T22:15:45+00:00"
-  },
   "Prism-Shadow/penguin-harness": {
     "stars": 166,
     "ts": "2026-07-25T22:12:59+00:00"
@@ -167,8 +167,12 @@
     "stars": 164,
     "ts": "2026-07-28T22:21:38+00:00"
   },
+  "robbin/wechat-exporter": {
+    "stars": 161,
+    "ts": "2026-07-30T03:32:45+00:00"
+  },
   "AmazingAng/old-coder": {
-    "stars": 155,
-    "ts": "2026-07-29T22:15:45+00:00"
+    "stars": 159,
+    "ts": "2026-07-30T03:32:45+00:00"
   }
 }
