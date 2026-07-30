@@ -49,7 +49,7 @@ from urllib.parse import unquote
 import requests
 
 # Generic posting / safety / health guards shared with the news engine.
-from .news import _post, _is_staff_webhook, _staff_alert, BRAND_COLOR
+from .news import _post_resilient, _is_staff_webhook, _staff_alert, BRAND_COLOR
 
 STATE_DIR = Path(__file__).resolve().parent.parent / "state"
 HEADERS = {"User-Agent": "Mozilla/5.0 (BersamaAi-x-digest/2.0; +bsky)"}
@@ -527,7 +527,7 @@ def run_x_digest(*, dry_run: bool = False, alert_fn=None) -> list[str]:
                 results.append(f"X_DRY {sub.screen} {p['headline'][:40]}")
                 continue
             try:
-                _post(wh, payload)
+                _post_resilient(wh, payload)
             except Exception as e:  # noqa: BLE001 — one failed post shouldn't abort the run
                 if alert_fn:
                     alert_fn(f"x-digest post failed @{sub.screen}: "

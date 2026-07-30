@@ -29,7 +29,7 @@ from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 from itertools import zip_longest
 from pathlib import Path
-from urllib.parse import urljoin, unquote, urlsplit, urlunsplit
+from urllib.parse import urljoin, unquote, quote, urlsplit, urlunsplit
 
 import requests
 from openai import OpenAI
@@ -1306,6 +1306,47 @@ def _is_content_image(src: str, tag: str) -> bool:
     return not (_BAD_IMG.search(low) or _BAD_IMG.search(tag.lower()))
 
 
+def _clean_url_for_discord(url: str) -> str:
+    """Return a URL Discord will accept in an embed url/image field, or '' to drop it.
+
+    Discord rejects the WHOLE embed (HTTP 400 `{"embeds":["0"]}`) for any malformed
+    URL field, and that terse error names NO field — so a single bad scraped
+    og:image or a model-mangled source_url silently kills the entire card. We:
+      • encode ALL internal whitespace (spaces, \\n, \\r, \\t — GLM sometimes
+        line-wraps a URL) as %20; raw control chars make Discord reject the URL;
+      • require an http(s) scheme + a host;
+      • percent-encode non-ASCII path/query (and punycode the host) instead of
+        dropping the URL — this community shares Chinese sources whose og:image /
+        canonical URLs contain non-ASCII path chars, and Discord accepts the
+        percent-encoded form (dropping it would silently strip the link/thumbnail).
+    Anything still structurally invalid → '' so the caller drops just that field
+    instead of losing the whole post.
+    """
+    if not url or not isinstance(url, str):
+        return ""
+    u = re.sub(r"\s+", "%20", url.strip())   # encode whitespace runs (incl. \n/\t/\r)
+    if not u:
+        return ""
+    ps = urlsplit(u)
+    if ps.scheme not in ("http", "https") or not ps.netloc:
+        return ""
+    netloc = ps.netloc
+    try:
+        netloc.encode("ascii")
+    except UnicodeEncodeError:
+        try:                                  # IDN host, e.g. 中文.com → xn--...
+            netloc = netloc.encode("idna").decode("ascii")
+        except (UnicodeError, ValueError):
+            return ""
+    try:
+        path = quote(ps.path, safe="/%:+@,~")
+        query = quote(ps.query, safe="=&%:+@,~/?")
+        fragment = quote(ps.fragment, safe="%:+@,~/?")
+    except Exception:  # noqa: BLE001
+        return ""
+    return urlunsplit((ps.scheme, netloc, path, query, fragment))
+
+
 def _extract_first_image(html_text: str, base_url: str) -> str:
     """Find the best thumbnail in server-rendered HTML, in priority order:
     1) og:image / twitter:image   2) <link rel=image_src>   3) JSON-LD "image"
@@ -1380,13 +1421,20 @@ def build_news_payload(item: NewsItem, image: str = "") -> dict:
     topic_lbl = TOPIC_LABEL.get(item.topic, item.topic)
     badge = f"{emoji} {cat} · {topic_lbl}"
     heat = f"\n\n*🔥 {item.heat_reason}*" if item.heat_reason else ""
+    # Clean every untrusted URL field before it can poison the embed: a malformed
+    # url or image (spaces, no scheme, non-ASCII) makes Discord reject embed #0
+    # with the field-agnostic {"embeds":["0"]}. Drop the field rather than the card.
+    src = _clean_url_for_discord(item.source_url)
+    img = _clean_url_for_discord(image)
+    # author.name ≤256, title ≤256, description ≤4096; their sum (≤4608) is always
+    # under Discord's 6000-char embed total, so clamping description is sufficient.
     return {"username": "BersamaAi", "embeds": [{
         "author": {"name": badge[:256]},
         "title": item.headline[:256],
-        "url": item.source_url or None,
+        "url": src or None,
         "description": (f"**Why it matters**\n{item.body}{heat}")[:4096],
         "color": BRAND_COLOR,
-        "image": {"url": image} if image else None,
+        "image": {"url": img} if img else None,
     }]}
 
 
@@ -1418,12 +1466,67 @@ def _is_staff_webhook(wh: str) -> bool:
     return bool(staff and wh) and wh.rstrip("/").lower() == staff.rstrip("/").lower()
 
 
+def _flatten_discord_errors(node, prefix: str = "") -> list[str]:
+    """Walk Discord's nested `errors` tree to readable 'path: message' strings.
+
+    Discord's richer 400s look like {"errors": {"embeds": {"0": {"url": {"_errors":
+    [{"code":..., "message":...}]}}}}}; recurse until each "_errors" leaf, joining
+    path segments with '.' so the alert names the actual field (embeds.0.url)."""
+    out: list[str] = []
+    if isinstance(node, dict):
+        if isinstance(node.get("_errors"), list):
+            msgs = ", ".join(
+                str(e.get("message") or e.get("code") or "")
+                for e in node["_errors"] if isinstance(e, dict)
+            )
+            out.append(f"{prefix}: {msgs}" if prefix else msgs)
+        for k, v in node.items():
+            if k == "_errors":
+                continue
+            out.extend(_flatten_discord_errors(v, f"{prefix}.{k}" if prefix else str(k)))
+    return out
+
+
+def _discord_error_detail(r) -> str:
+    """Turn a Discord error response into a field-level reason when possible.
+
+    The webhook execute endpoint often replies with the terse `{"embeds":["0"]}`
+    (embed #0 invalid — names NO field); when a richer `errors` tree is present we
+    walk it so the alert can say 'embeds.0.url' instead of a useless '0'."""
+    try:
+        body = r.json()
+    except ValueError:
+        return (r.text or "")[:400]
+    errs = body.get("errors") if isinstance(body, dict) else None
+    if errs:
+        flat = _flatten_discord_errors(errs)
+        if flat:
+            return "; ".join(flat)
+    return str(body)[:400]
+
+
+class DiscordHTTPError(RuntimeError):
+    """Non-2xx webhook response. Carries the HTTP status so callers can treat 4xx
+    (validation — safe to retry/degrade) differently from 5xx (may have created the
+    message despite the error — must NOT retry, webhooks aren't idempotent)."""
+    def __init__(self, status: int, detail: str):
+        self.status = status
+        super().__init__(f"HTTP {status}: {detail}")
+
+
+# Bumped whenever _post_resilient recovers a post by dropping an embed image, so a
+# systematic scraper/og:image regression is visible instead of silently posting
+# thumbnail-less cards. Per-process (each run/share is its own process), so no reset.
+image_drop_recoveries: int = 0
+
+
 def _post(webhook_url: str, payload: dict) -> dict | None:
     """POST a webhook payload with ?wait=true so Discord returns the created
     message object (HTTP 200 + {id, channel_id}) instead of 204 No Content.
     Returns that message dict (used to log telemetry), or None if Discord 204'd
     despite wait=true — the post still succeeded, but there's no id to sweep so
-    the caller skips logging. Raises on any other status (caller handles)."""
+    the caller skips logging. Raises DiscordHTTPError with Discord's parsed error
+    detail on any other status (caller handles)."""
     sep = "&" if "?" in webhook_url else "?"
     r = requests.post(webhook_url + sep + "wait=true", json=payload, timeout=15)
     if r.status_code == 200:
@@ -1433,7 +1536,53 @@ def _post(webhook_url: str, payload: dict) -> dict | None:
             return None
     if r.status_code == 204:
         return None
-    raise RuntimeError(f"{r.status_code} {r.text[:200]}")
+    raise DiscordHTTPError(r.status_code, _discord_error_detail(r))
+
+
+def _post_resilient(webhook_url: str, payload: dict) -> dict | None:
+    """Post a card; if Discord rejects it with a 4xx validation error, retry with
+    the least-essential untrusted embed fields progressively dropped so one bad
+    scraped og:image or model-mangled url never loses the whole card.
+
+    Order: full payload → drop image → drop image AND url. The image is decorative
+    (drop first); the title-url is useful but non-essential (drop next). 5xx errors
+    are NOT retried — Discord may already have created the message on a 504-style
+    failure, and webhook execute isn't idempotent, so retrying would double-post.
+    Bumps ``image_drop_recoveries`` on an image-drop recovery so callers can alert
+    on scraper regressions; logs the rejected embed on total failure so the next
+    400 is diagnosable (Discord's terse {"embeds":["0"]} names no field)."""
+    global image_drop_recoveries
+    try:
+        return _post(webhook_url, payload)
+    except DiscordHTTPError as first:
+        if first.status < 400 or first.status >= 500:
+            raise   # 5xx (or weird 3xx): might have created the message — don't double-post
+        for drop in (("image",), ("image", "url")):   # progressive degradation
+            embeds = payload.get("embeds") or []
+            if not any((e or {}).get(f) for e in embeds for f in drop):
+                continue   # nothing in this field to drop; try the next stage
+            attempt = json.loads(json.dumps(payload))   # deep copy; fields are nested per embed
+            for e in attempt.get("embeds", []):
+                if isinstance(e, dict):
+                    for f in drop:
+                        if e.get(f):
+                            e[f] = None
+            try:
+                msg = _post(webhook_url, attempt)
+            except DiscordHTTPError:
+                continue   # this field wasn't the (only) culprit — try the next stage
+            if "image" in drop:
+                image_drop_recoveries += 1
+            print(f"[post] recovered after dropping embed {drop} — original error: {first}")
+            return msg
+        # Every recovery failed — log the embed we sent so the next 400 is diagnosable,
+        # then surface the original (most informative) error.
+        try:
+            print(f"[post] embed rejected on every attempt; embed0="
+                  f"{json.dumps(payload.get('embeds', [{}])[0])[:500]}")
+        except Exception:  # noqa: BLE001
+            pass
+        raise
 
 
 def _log_posted(msg: dict, item: NewsItem, cand: dict | None, topic: Topic,
@@ -1643,12 +1792,18 @@ def post_url_as_news(url: str, *, api_key: str, model: str, base_url: str,
     topic = str(data.get("topic", "")).strip()
     if topic not in TOPIC_BY_KEY:
         return f"SHARE_BAD_TOPIC {topic}"
+    # source_url: the owner vouches for the URL they pasted, so trust it over the
+    # model's value. The prompt tells the model to "pass through unchanged" but GLM
+    # sometimes alters it — and a *valid-but-wrong* model URL would silently link the
+    # card to a different story. Clean it; fall back to the raw url only if cleaning
+    # ever empties it.
+    source_url = _clean_url_for_discord(url) or url
     item = NewsItem(
         topic=topic,
         category=str(data.get("category", "UPDATE")).strip(),
         headline=str(data.get("headline", "")).strip(),
         body=str(data.get("body", "")).strip(),
-        source_url=str(data.get("source_url", url)).strip() or url,
+        source_url=source_url,
         heat_reason="📣 shared by the owner",
     )
     # Same-link guard: refuse an exact (normalized) re-share of a URL already posted via
@@ -1675,12 +1830,19 @@ def post_url_as_news(url: str, *, api_key: str, model: str, base_url: str,
     if dry_run:
         print(f"\n[share DRY-RUN] -> {t.channel}\n{payload}\n")
         return f"SHARED_DRY {topic} {item.headline[:40]}"
+    _img_before = image_drop_recoveries
     try:
-        msg = _post(wh, payload)
+        msg = _post_resilient(wh, payload)
     except Exception as e:  # noqa: BLE001
         if alert_fn:
             alert_fn(f"share post failed: {item.headline[:60]}: {e}", dry_run)
         return f"SHARE_POST_FAILED {e}"
+    # If the card only went out after Discord rejected its image URL, tell the owner
+    # (low volume, owner-initiated) — otherwise a thumbnail-less card looks fine and
+    # the broken-image-URL cause stays invisible.
+    if image_drop_recoveries > _img_before and alert_fn:
+        alert_fn(f"/share card posted without its thumbnail — Discord rejected the image URL "
+                 f"so it was dropped (card still posted). Card: {item.headline[:60]}", dry_run)
     # Log owner-curated cards so their reactions/replies feed the engagement loop
     # (the engine's strongest taste signal). cand=None: /share has no scrape row,
     # so source/score/star_velocity write as ""/0 — _log_posted null-guards it.
@@ -1791,7 +1953,7 @@ def run_news(*, dry_run: bool, stub: bool,
             print(f"\n[discord DRY-RUN] -> {topic.channel}\n{payload}\n")
         else:
             try:
-                msg = _post(wh, payload)
+                msg = _post_resilient(wh, payload)
             except Exception as e:  # noqa: BLE001
                 if alert_fn:
                     alert_fn(f"news post failed: {item.headline[:60]}: {e}", dry_run)
@@ -1814,6 +1976,16 @@ def run_news(*, dry_run: bool, stub: bool,
     if not dry_run:
         _save_seen(seen_list)
     print(f"\nposted {posted} item(s)")
+    # Scraper-regression signal: if several cards only went out after Discord rejected
+    # their image URL (so they posted thumbnail-less via _post_resilient), the image
+    # fetcher / og:image pipeline is likely broken — surface it before the feed goes
+    # silently bare. One-off recoveries are noise; >=2 is a pattern.
+    if image_drop_recoveries >= 2:
+        _staff_alert(
+            f"⚠️ **{image_drop_recoveries} news cards posted without a thumbnail** — Discord kept "
+            "rejecting image URLs, so _post_resilient dropped them (cards still posted). A bare "
+            "feed usually means _fetch_image / microlink is returning bad URLs — investigate.",
+            dry_run)
     if posted == 0:
         tally: dict[str, int] = {}
         for r in results:
