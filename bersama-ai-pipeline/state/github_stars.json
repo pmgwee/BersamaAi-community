@@ -20,8 +20,8 @@
     "ts": "2026-07-28T22:18:53+00:00"
   },
   "VictorTaelin/OptMem": {
-    "stars": 928,
-    "ts": "2026-07-30T22:29:27+00:00"
+    "stars": 934,
+    "ts": "2026-07-31T03:53:31+00:00"
   },
   "pireel/pireel": {
     "stars": 770,
@@ -39,25 +39,29 @@
     "stars": 567,
     "ts": "2026-07-29T22:15:45+00:00"
   },
+  "0xwilliamortiz/ponytail-improved": {
+    "stars": 564,
+    "ts": "2026-07-31T03:53:31+00:00"
+  },
   "0xwilliamortiz/openclaude-improved": {
     "stars": 562,
-    "ts": "2026-07-30T22:29:27+00:00"
-  },
-  "0xwilliamortiz/ponytail-improved": {
-    "stars": 562,
-    "ts": "2026-07-30T22:29:27+00:00"
+    "ts": "2026-07-31T03:53:31+00:00"
   },
   "mikehasa/agentacct": {
     "stars": 538,
     "ts": "2026-07-30T22:29:27+00:00"
   },
+  "gavamedia/deltafin": {
+    "stars": 487,
+    "ts": "2026-07-31T03:53:31+00:00"
+  },
   "XYZ-AI-Lab/AxisAgentic": {
     "stars": 469,
     "ts": "2026-07-29T22:15:45+00:00"
   },
-  "gavamedia/deltafin": {
-    "stars": 469,
-    "ts": "2026-07-30T22:29:27+00:00"
+  "QwenAudio/qwen-audio-agent": {
+    "stars": 459,
+    "ts": "2026-07-31T03:55:17+00:00"
   },
   "danilo-znamerovszkij/draw-your-font": {
     "stars": 435,
@@ -76,12 +80,8 @@
     "ts": "2026-07-30T22:29:27+00:00"
   },
   "deerwork-ai/deer-workflow": {
-    "stars": 357,
-    "ts": "2026-07-30T22:29:27+00:00"
-  },
-  "QwenAudio/qwen-audio-agent": {
-    "stars": 338,
-    "ts": "2026-07-30T22:31:14+00:00"
+    "stars": 359,
+    "ts": "2026-07-31T03:53:31+00:00"
   },
   "SeanJ1ang/design-judge-skills": {
     "stars": 335,
@@ -99,13 +99,13 @@
     "stars": 305,
     "ts": "2026-07-27T22:20:34+00:00"
   },
+  "lingbol088-spec/5.6-JAILBREAK-NERV-codex-instruct-5.6": {
+    "stars": 299,
+    "ts": "2026-07-31T03:53:31+00:00"
+  },
   "ddcat-ai/open-ai-canvas": {
     "stars": 296,
     "ts": "2026-07-28T22:18:53+00:00"
-  },
-  "lingbol088-spec/5.6-JAILBREAK-NERV-codex-instruct-5.6": {
-    "stars": 294,
-    "ts": "2026-07-30T22:29:27+00:00"
   },
   "joeseesun/qiaomu-cut-skill": {
     "stars": 265,
@@ -153,19 +153,19 @@
   },
   "robbin/wechat-exporter": {
     "stars": 176,
-    "ts": "2026-07-30T22:29:27+00:00"
+    "ts": "2026-07-31T03:53:31+00:00"
   },
   "codejunkie99/graph-engineering": {
     "stars": 173,
     "ts": "2026-07-29T22:18:15+00:00"
   },
+  "AmazingAng/old-coder": {
+    "stars": 171,
+    "ts": "2026-07-31T03:53:31+00:00"
+  },
   "0xtresser/Transcript-of-Liang-Wenfengs-DeepSeek-Founder-4-Hour-Investor-Meeting": {
     "stars": 170,
     "ts": "2026-07-29T22:15:45+00:00"
-  },
-  "AmazingAng/old-coder": {
-    "stars": 170,
-    "ts": "2026-07-30T22:29:27+00:00"
   },
   "worldwonderer/novel-to-game": {
     "stars": 169,
@@ -178,5 +178,9 @@
   "NextWeb4/official-document-ai-assistant": {
     "stars": 164,
     "ts": "2026-07-28T22:21:38+00:00"
+  },
+  "Audio8-AI/Audio8_TTS": {
+    "stars": 152,
+    "ts": "2026-07-31T03:55:17+00:00"
   }
 }
