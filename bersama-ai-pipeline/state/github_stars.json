@@ -16,8 +16,8 @@
     "ts": "2026-07-27T22:20:34+00:00"
   },
   "VictorTaelin/OptMem": {
-    "stars": 999,
-    "ts": "2026-07-31T16:59:40+00:00"
+    "stars": 1012,
+    "ts": "2026-07-31T19:55:14+00:00"
   },
   "makecindy/cindy": {
     "stars": 989,
@@ -27,13 +27,17 @@
     "stars": 770,
     "ts": "2026-07-26T22:16:33+00:00"
   },
+  "yc-software/qm": {
+    "stars": 762,
+    "ts": "2026-07-31T19:55:14+00:00"
+  },
   "gnipbao/story-to-handdrawn-video": {
     "stars": 667,
     "ts": "2026-07-27T22:21:23+00:00"
   },
   "QwenAudio/qwen-audio-agent": {
-    "stars": 589,
-    "ts": "2026-07-31T17:01:10+00:00"
+    "stars": 598,
+    "ts": "2026-07-31T19:56:42+00:00"
   },
   "hahhforest/pi-textbook": {
     "stars": 588,
@@ -41,7 +45,7 @@
   },
   "0xwilliamortiz/ponytail-improved": {
     "stars": 569,
-    "ts": "2026-07-31T16:59:40+00:00"
+    "ts": "2026-07-31T19:55:14+00:00"
   },
   "XYZ-AI-Lab/axrl": {
     "stars": 567,
@@ -49,15 +53,15 @@
   },
   "0xwilliamortiz/openclaude-improved": {
     "stars": 563,
-    "ts": "2026-07-31T16:59:40+00:00"
+    "ts": "2026-07-31T19:55:14+00:00"
   },
   "mikehasa/agentacct": {
     "stars": 538,
     "ts": "2026-07-30T22:29:27+00:00"
   },
   "gavamedia/deltafin": {
-    "stars": 532,
-    "ts": "2026-07-31T16:59:40+00:00"
+    "stars": 538,
+    "ts": "2026-07-31T19:55:14+00:00"
   },
   "XYZ-AI-Lab/AxisAgentic": {
     "stars": 469,
@@ -81,7 +85,7 @@
   },
   "deerwork-ai/deer-workflow": {
     "stars": 366,
-    "ts": "2026-07-31T16:59:40+00:00"
+    "ts": "2026-07-31T19:55:14+00:00"
   },
   "SeanJ1ang/design-judge-skills": {
     "stars": 335,
@@ -96,8 +100,8 @@
     "ts": "2026-07-30T22:29:27+00:00"
   },
   "lingbol088-spec/5.6-JAILBREAK-NERV-codex-instruct-5.6": {
-    "stars": 313,
-    "ts": "2026-07-31T16:59:40+00:00"
+    "stars": 314,
+    "ts": "2026-07-31T19:55:14+00:00"
   },
   "0xwilliamortiz/andrej-karpathy-skills": {
     "stars": 305,
@@ -151,17 +155,17 @@
     "stars": 193,
     "ts": "2026-07-26T22:15:29+00:00"
   },
-  "AmazingAng/old-coder": {
-    "stars": 189,
-    "ts": "2026-07-31T16:59:40+00:00"
-  },
   "Audio8-AI/Audio8_TTS": {
-    "stars": 188,
-    "ts": "2026-07-31T17:01:10+00:00"
+    "stars": 193,
+    "ts": "2026-07-31T19:56:42+00:00"
+  },
+  "AmazingAng/old-coder": {
+    "stars": 190,
+    "ts": "2026-07-31T19:55:14+00:00"
   },
   "robbin/wechat-exporter": {
     "stars": 181,
-    "ts": "2026-07-31T16:59:40+00:00"
+    "ts": "2026-07-31T19:55:14+00:00"
   },
   "codejunkie99/graph-engineering": {
     "stars": 173,
