@@ -1,7 +1,7 @@
 {
   "yc-software/qm": {
-    "stars": 4262,
-    "ts": "2026-08-01T16:15:15+00:00"
+    "stars": 4589,
+    "ts": "2026-08-01T19:36:49+00:00"
   },
   "lopopolo/harness-engineering": {
     "stars": 2320,
@@ -19,6 +19,10 @@
     "stars": 1164,
     "ts": "2026-07-27T22:20:34+00:00"
   },
+  "QwenAudio/qwen-audio-agent": {
+    "stars": 1096,
+    "ts": "2026-08-01T19:38:34+00:00"
+  },
   "VictorTaelin/OptMem": {
     "stars": 1026,
     "ts": "2026-07-31T22:18:00+00:00"
@@ -26,10 +30,6 @@
   "makecindy/cindy": {
     "stars": 989,
     "ts": "2026-07-28T22:18:53+00:00"
-  },
-  "QwenAudio/qwen-audio-agent": {
-    "stars": 925,
-    "ts": "2026-08-01T16:16:43+00:00"
   },
   "pireel/pireel": {
     "stars": 770,
@@ -44,12 +44,12 @@
     "ts": "2026-07-27T22:20:34+00:00"
   },
   "gavamedia/deltafin": {
-    "stars": 583,
-    "ts": "2026-08-01T16:15:15+00:00"
+    "stars": 588,
+    "ts": "2026-08-01T19:36:49+00:00"
   },
   "0xwilliamortiz/ponytail-improved": {
-    "stars": 574,
-    "ts": "2026-08-01T16:15:15+00:00"
+    "stars": 575,
+    "ts": "2026-08-01T19:36:49+00:00"
   },
   "XYZ-AI-Lab/axrl": {
     "stars": 567,
@@ -57,7 +57,7 @@
   },
   "0xwilliamortiz/openclaude-improved": {
     "stars": 565,
-    "ts": "2026-08-01T16:15:15+00:00"
+    "ts": "2026-08-01T19:36:49+00:00"
   },
   "mikehasa/agentacct": {
     "stars": 538,
@@ -81,7 +81,7 @@
   },
   "0xwilliamortiz/ratchet": {
     "stars": 406,
-    "ts": "2026-08-01T16:15:15+00:00"
+    "ts": "2026-08-01T19:36:49+00:00"
   },
   "perplexityai/numbat": {
     "stars": 374,
@@ -89,7 +89,7 @@
   },
   "deerwork-ai/deer-workflow": {
     "stars": 373,
-    "ts": "2026-08-01T16:15:15+00:00"
+    "ts": "2026-08-01T19:36:49+00:00"
   },
   "SeanJ1ang/design-judge-skills": {
     "stars": 335,
@@ -131,21 +131,21 @@
     "stars": 247,
     "ts": "2026-07-26T22:15:29+00:00"
   },
+  "Audio8-AI/Audio8_TTS": {
+    "stars": 240,
+    "ts": "2026-08-01T19:38:34+00:00"
+  },
   "finna/Finn-loop": {
     "stars": 231,
     "ts": "2026-07-28T22:18:53+00:00"
   },
-  "Audio8-AI/Audio8_TTS": {
-    "stars": 231,
-    "ts": "2026-08-01T16:16:43+00:00"
+  "AmazingAng/old-coder": {
+    "stars": 215,
+    "ts": "2026-08-01T19:36:49+00:00"
   },
   "paxlabs-inc/machine-genome": {
     "stars": 213,
     "ts": "2026-07-26T22:15:29+00:00"
-  },
-  "AmazingAng/old-coder": {
-    "stars": 212,
-    "ts": "2026-08-01T16:15:15+00:00"
   },
   "livetennisapi/livetennisapi-mcp": {
     "stars": 205,
@@ -169,7 +169,7 @@
   },
   "robbin/wechat-exporter": {
     "stars": 184,
-    "ts": "2026-08-01T16:15:15+00:00"
+    "ts": "2026-08-01T19:36:49+00:00"
   },
   "codejunkie99/graph-engineering": {
     "stars": 173,
@@ -183,24 +183,24 @@
     "stars": 169,
     "ts": "2026-07-24T22:21:15+00:00"
   },
+  "nuyoah-ai-works/nuyoah-xiezhen-prompt": {
+    "stars": 167,
+    "ts": "2026-08-01T19:36:49+00:00"
+  },
   "Prism-Shadow/penguin-harness": {
     "stars": 166,
     "ts": "2026-07-25T22:12:59+00:00"
   },
   "0rangec3t/Black-cat": {
-    "stars": 165,
-    "ts": "2026-08-01T16:15:15+00:00"
+    "stars": 166,
+    "ts": "2026-08-01T19:36:49+00:00"
   },
   "NextWeb4/official-document-ai-assistant": {
     "stars": 164,
     "ts": "2026-07-28T22:21:38+00:00"
   },
-  "nuyoah-ai-works/nuyoah-xiezhen-prompt": {
-    "stars": 162,
-    "ts": "2026-08-01T16:15:15+00:00"
-  },
   "aigclink/geolook": {
-    "stars": 158,
-    "ts": "2026-08-01T16:15:15+00:00"
+    "stars": 162,
+    "ts": "2026-08-01T19:36:49+00:00"
   }
 }
