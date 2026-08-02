@@ -1,7 +1,7 @@
 {
   "yc-software/qm": {
-    "stars": 5741,
-    "ts": "2026-08-02T10:52:25+00:00"
+    "stars": 6145,
+    "ts": "2026-08-02T13:59:00+00:00"
   },
   "lopopolo/harness-engineering": {
     "stars": 2320,
@@ -16,8 +16,8 @@
     "ts": "2026-07-25T22:12:59+00:00"
   },
   "QwenAudio/qwen-audio-agent": {
-    "stars": 1684,
-    "ts": "2026-08-02T10:54:11+00:00"
+    "stars": 1705,
+    "ts": "2026-08-02T14:00:28+00:00"
   },
   "Jakubantalik/thinking-orbs": {
     "stars": 1164,
@@ -40,16 +40,16 @@
     "ts": "2026-07-27T22:21:23+00:00"
   },
   "gavamedia/deltafin": {
-    "stars": 602,
-    "ts": "2026-08-02T10:52:25+00:00"
+    "stars": 603,
+    "ts": "2026-08-02T13:59:00+00:00"
   },
   "hahhforest/pi-textbook": {
     "stars": 588,
     "ts": "2026-07-27T22:20:34+00:00"
   },
   "0xwilliamortiz/ponytail-improved": {
-    "stars": 578,
-    "ts": "2026-08-02T10:52:25+00:00"
+    "stars": 579,
+    "ts": "2026-08-02T13:59:00+00:00"
   },
   "XYZ-AI-Lab/axrl": {
     "stars": 567,
@@ -80,8 +80,8 @@
     "ts": "2026-07-26T22:15:29+00:00"
   },
   "0xwilliamortiz/ratchet": {
-    "stars": 408,
-    "ts": "2026-08-02T10:52:25+00:00"
+    "stars": 409,
+    "ts": "2026-08-02T13:59:00+00:00"
   },
   "perplexityai/numbat": {
     "stars": 374,
@@ -92,8 +92,8 @@
     "ts": "2026-08-01T22:13:32+00:00"
   },
   "s1dashu/animated-voiceover": {
-    "stars": 338,
-    "ts": "2026-08-02T10:53:31+00:00"
+    "stars": 353,
+    "ts": "2026-08-02T14:00:03+00:00"
   },
   "SeanJ1ang/design-judge-skills": {
     "stars": 335,
@@ -128,8 +128,8 @@
     "ts": "2026-07-26T22:15:29+00:00"
   },
   "Audio8-AI/Audio8_TTS": {
-    "stars": 256,
-    "ts": "2026-08-02T10:54:11+00:00"
+    "stars": 263,
+    "ts": "2026-08-02T14:00:28+00:00"
   },
   "RinDig/icm-architect": {
     "stars": 254,
@@ -144,8 +144,8 @@
     "ts": "2026-07-28T22:18:53+00:00"
   },
   "AmazingAng/old-coder": {
-    "stars": 223,
-    "ts": "2026-08-02T10:52:25+00:00"
+    "stars": 231,
+    "ts": "2026-08-02T13:59:00+00:00"
   },
   "paxlabs-inc/machine-genome": {
     "stars": 213,
@@ -172,20 +172,24 @@
     "ts": "2026-07-26T22:15:29+00:00"
   },
   "robbin/wechat-exporter": {
-    "stars": 185,
-    "ts": "2026-08-02T10:52:25+00:00"
-  },
-  "aigclink/geolook": {
-    "stars": 179,
-    "ts": "2026-08-02T10:52:25+00:00"
+    "stars": 186,
+    "ts": "2026-08-02T13:59:00+00:00"
   },
   "Anionex/codex-vision-proxy": {
-    "stars": 176,
-    "ts": "2026-08-02T10:52:25+00:00"
+    "stars": 186,
+    "ts": "2026-08-02T13:59:00+00:00"
+  },
+  "aigclink/geolook": {
+    "stars": 182,
+    "ts": "2026-08-02T13:59:00+00:00"
   },
   "nuyoah-ai-works/nuyoah-xiezhen-prompt": {
+    "stars": 176,
+    "ts": "2026-08-02T13:59:00+00:00"
+  },
+  "0rangec3t/Black-cat": {
     "stars": 174,
-    "ts": "2026-08-02T10:52:25+00:00"
+    "ts": "2026-08-02T13:59:00+00:00"
   },
   "codejunkie99/graph-engineering": {
     "stars": 173,
@@ -193,15 +197,11 @@
   },
   "uczltw6/trace-file-lineage": {
     "stars": 172,
-    "ts": "2026-08-02T10:52:25+00:00"
+    "ts": "2026-08-02T13:59:00+00:00"
   },
   "0xtresser/Transcript-of-Liang-Wenfengs-DeepSeek-Founder-4-Hour-Investor-Meeting": {
     "stars": 170,
     "ts": "2026-07-29T22:15:45+00:00"
-  },
-  "0rangec3t/Black-cat": {
-    "stars": 170,
-    "ts": "2026-08-02T10:52:25+00:00"
   },
   "worldwonderer/novel-to-game": {
     "stars": 169,
