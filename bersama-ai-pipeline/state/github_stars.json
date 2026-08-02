@@ -1,7 +1,7 @@
 {
   "yc-software/qm": {
-    "stars": 5568,
-    "ts": "2026-08-02T08:38:50+00:00"
+    "stars": 5741,
+    "ts": "2026-08-02T10:52:25+00:00"
   },
   "lopopolo/harness-engineering": {
     "stars": 2320,
@@ -16,8 +16,8 @@
     "ts": "2026-07-25T22:12:59+00:00"
   },
   "QwenAudio/qwen-audio-agent": {
-    "stars": 1577,
-    "ts": "2026-08-02T08:40:34+00:00"
+    "stars": 1684,
+    "ts": "2026-08-02T10:54:11+00:00"
   },
   "Jakubantalik/thinking-orbs": {
     "stars": 1164,
@@ -40,8 +40,8 @@
     "ts": "2026-07-27T22:21:23+00:00"
   },
   "gavamedia/deltafin": {
-    "stars": 600,
-    "ts": "2026-08-02T08:38:50+00:00"
+    "stars": 602,
+    "ts": "2026-08-02T10:52:25+00:00"
   },
   "hahhforest/pi-textbook": {
     "stars": 588,
@@ -49,7 +49,7 @@
   },
   "0xwilliamortiz/ponytail-improved": {
     "stars": 578,
-    "ts": "2026-08-02T08:38:50+00:00"
+    "ts": "2026-08-02T10:52:25+00:00"
   },
   "XYZ-AI-Lab/axrl": {
     "stars": 567,
@@ -81,7 +81,7 @@
   },
   "0xwilliamortiz/ratchet": {
     "stars": 408,
-    "ts": "2026-08-02T08:38:50+00:00"
+    "ts": "2026-08-02T10:52:25+00:00"
   },
   "perplexityai/numbat": {
     "stars": 374,
@@ -91,6 +91,10 @@
     "stars": 374,
     "ts": "2026-08-01T22:13:32+00:00"
   },
+  "s1dashu/animated-voiceover": {
+    "stars": 338,
+    "ts": "2026-08-02T10:53:31+00:00"
+  },
   "SeanJ1ang/design-judge-skills": {
     "stars": 335,
     "ts": "2026-07-24T22:24:05+00:00"
@@ -98,10 +102,6 @@
   "MarcosSete/awesome-free-ai-books": {
     "stars": 334,
     "ts": "2026-07-28T22:21:15+00:00"
-  },
-  "s1dashu/animated-voiceover": {
-    "stars": 334,
-    "ts": "2026-08-02T08:40:08+00:00"
   },
   "Eversmile12/leaked-llm-prompts": {
     "stars": 329,
@@ -127,13 +127,13 @@
     "stars": 263,
     "ts": "2026-07-26T22:15:29+00:00"
   },
+  "Audio8-AI/Audio8_TTS": {
+    "stars": 256,
+    "ts": "2026-08-02T10:54:11+00:00"
+  },
   "RinDig/icm-architect": {
     "stars": 254,
     "ts": "2026-07-24T22:21:15+00:00"
-  },
-  "Audio8-AI/Audio8_TTS": {
-    "stars": 253,
-    "ts": "2026-08-02T08:40:34+00:00"
   },
   "TryCaspian/caspian-sdk": {
     "stars": 247,
@@ -144,8 +144,8 @@
     "ts": "2026-07-28T22:18:53+00:00"
   },
   "AmazingAng/old-coder": {
-    "stars": 220,
-    "ts": "2026-08-02T08:38:50+00:00"
+    "stars": 223,
+    "ts": "2026-08-02T10:52:25+00:00"
   },
   "paxlabs-inc/machine-genome": {
     "stars": 213,
@@ -172,36 +172,40 @@
     "ts": "2026-07-26T22:15:29+00:00"
   },
   "robbin/wechat-exporter": {
-    "stars": 184,
-    "ts": "2026-08-02T08:38:50+00:00"
+    "stars": 185,
+    "ts": "2026-08-02T10:52:25+00:00"
+  },
+  "aigclink/geolook": {
+    "stars": 179,
+    "ts": "2026-08-02T10:52:25+00:00"
+  },
+  "Anionex/codex-vision-proxy": {
+    "stars": 176,
+    "ts": "2026-08-02T10:52:25+00:00"
+  },
+  "nuyoah-ai-works/nuyoah-xiezhen-prompt": {
+    "stars": 174,
+    "ts": "2026-08-02T10:52:25+00:00"
   },
   "codejunkie99/graph-engineering": {
     "stars": 173,
     "ts": "2026-07-29T22:18:15+00:00"
   },
-  "nuyoah-ai-works/nuyoah-xiezhen-prompt": {
-    "stars": 173,
-    "ts": "2026-08-02T08:38:50+00:00"
-  },
-  "aigclink/geolook": {
-    "stars": 173,
-    "ts": "2026-08-02T08:38:50+00:00"
-  },
   "uczltw6/trace-file-lineage": {
     "stars": 172,
-    "ts": "2026-08-02T08:38:50+00:00"
+    "ts": "2026-08-02T10:52:25+00:00"
   },
   "0xtresser/Transcript-of-Liang-Wenfengs-DeepSeek-Founder-4-Hour-Investor-Meeting": {
     "stars": 170,
     "ts": "2026-07-29T22:15:45+00:00"
   },
+  "0rangec3t/Black-cat": {
+    "stars": 170,
+    "ts": "2026-08-02T10:52:25+00:00"
+  },
   "worldwonderer/novel-to-game": {
     "stars": 169,
     "ts": "2026-07-24T22:21:15+00:00"
-  },
-  "0rangec3t/Black-cat": {
-    "stars": 167,
-    "ts": "2026-08-02T08:38:50+00:00"
   },
   "Prism-Shadow/penguin-harness": {
     "stars": 166,
