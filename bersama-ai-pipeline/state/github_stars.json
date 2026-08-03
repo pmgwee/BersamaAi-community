@@ -1,15 +1,15 @@
 {
   "yc-software/qm": {
-    "stars": 8230,
-    "ts": "2026-08-03T10:08:27+00:00"
+    "stars": 8777,
+    "ts": "2026-08-03T15:19:37+00:00"
+  },
+  "trycompai/crm": {
+    "stars": 2583,
+    "ts": "2026-08-03T15:19:37+00:00"
   },
   "lopopolo/harness-engineering": {
     "stars": 2320,
     "ts": "2026-07-24T22:21:15+00:00"
-  },
-  "trycompai/crm": {
-    "stars": 2110,
-    "ts": "2026-08-03T10:08:27+00:00"
   },
   "kvcache-ai/AgentENV": {
     "stars": 2050,
@@ -35,6 +35,10 @@
     "stars": 989,
     "ts": "2026-07-28T22:18:53+00:00"
   },
+  "FareedKhan-dev/kimi-k3-in-c": {
+    "stars": 859,
+    "ts": "2026-08-03T15:19:37+00:00"
+  },
   "pireel/pireel": {
     "stars": 770,
     "ts": "2026-07-26T22:16:33+00:00"
@@ -44,20 +48,16 @@
     "ts": "2026-07-27T22:21:23+00:00"
   },
   "gavamedia/deltafin": {
-    "stars": 636,
-    "ts": "2026-08-03T10:08:27+00:00"
-  },
-  "FareedKhan-dev/kimi-k3-in-c": {
-    "stars": 597,
-    "ts": "2026-08-03T10:08:27+00:00"
+    "stars": 649,
+    "ts": "2026-08-03T15:19:37+00:00"
   },
   "hahhforest/pi-textbook": {
     "stars": 588,
     "ts": "2026-07-27T22:20:34+00:00"
   },
   "0xwilliamortiz/ponytail-improved": {
-    "stars": 581,
-    "ts": "2026-08-03T10:08:27+00:00"
+    "stars": 584,
+    "ts": "2026-08-03T15:19:37+00:00"
   },
   "XYZ-AI-Lab/axrl": {
     "stars": 567,
@@ -76,8 +76,8 @@
     "ts": "2026-07-29T22:15:45+00:00"
   },
   "s1dashu/animated-voiceover": {
-    "stars": 445,
-    "ts": "2026-08-03T10:09:33+00:00"
+    "stars": 460,
+    "ts": "2026-08-03T15:20:26+00:00"
   },
   "danilo-znamerovszkij/draw-your-font": {
     "stars": 435,
@@ -88,8 +88,8 @@
     "ts": "2026-07-25T22:12:59+00:00"
   },
   "0xwilliamortiz/ratchet": {
-    "stars": 415,
-    "ts": "2026-08-03T10:08:27+00:00"
+    "stars": 416,
+    "ts": "2026-08-03T15:19:37+00:00"
   },
   "Kritt-ai/open-kritt": {
     "stars": 411,
@@ -123,13 +123,13 @@
     "stars": 305,
     "ts": "2026-07-27T22:20:34+00:00"
   },
+  "Audio8-AI/Audio8_TTS": {
+    "stars": 297,
+    "ts": "2026-08-03T15:21:06+00:00"
+  },
   "ddcat-ai/open-ai-canvas": {
     "stars": 296,
     "ts": "2026-07-28T22:18:53+00:00"
-  },
-  "Audio8-AI/Audio8_TTS": {
-    "stars": 287,
-    "ts": "2026-08-03T10:10:13+00:00"
   },
   "joeseesun/qiaomu-cut-skill": {
     "stars": 265,
@@ -151,13 +151,21 @@
     "stars": 241,
     "ts": "2026-08-02T22:12:56+00:00"
   },
+  "Anionex/codex-vision-proxy": {
+    "stars": 241,
+    "ts": "2026-08-03T15:19:37+00:00"
+  },
+  "aws/context-ontology-accelerator": {
+    "stars": 233,
+    "ts": "2026-08-03T15:19:37+00:00"
+  },
   "finna/Finn-loop": {
     "stars": 231,
     "ts": "2026-07-28T22:18:53+00:00"
   },
-  "Anionex/codex-vision-proxy": {
-    "stars": 229,
-    "ts": "2026-08-03T10:08:27+00:00"
+  "aigclink/geolook": {
+    "stars": 225,
+    "ts": "2026-08-03T15:19:37+00:00"
   },
   "paxlabs-inc/machine-genome": {
     "stars": 213,
@@ -167,17 +175,17 @@
     "stars": 205,
     "ts": "2026-07-24T22:21:15+00:00"
   },
+  "0rangec3t/Black-cat": {
+    "stars": 205,
+    "ts": "2026-08-03T15:19:37+00:00"
+  },
+  "uczltw6/trace-file-lineage": {
+    "stars": 204,
+    "ts": "2026-08-03T15:19:37+00:00"
+  },
   "icebird1998/scientific-illustrator": {
     "stars": 203,
     "ts": "2026-07-30T22:29:27+00:00"
-  },
-  "uczltw6/trace-file-lineage": {
-    "stars": 203,
-    "ts": "2026-08-03T10:08:27+00:00"
-  },
-  "0rangec3t/Black-cat": {
-    "stars": 203,
-    "ts": "2026-08-03T10:08:27+00:00"
   },
   "risa-labs-inc/BossConsole": {
     "stars": 199,
@@ -187,25 +195,17 @@
     "stars": 199,
     "ts": "2026-07-26T22:15:29+00:00"
   },
-  "aigclink/geolook": {
-    "stars": 198,
-    "ts": "2026-08-03T10:08:27+00:00"
-  },
-  "aws/context-ontology-accelerator": {
-    "stars": 197,
-    "ts": "2026-08-03T10:08:27+00:00"
-  },
   "0xwilliamortiz/agents-council": {
     "stars": 193,
     "ts": "2026-07-26T22:15:29+00:00"
   },
   "nuyoah-ai-works/nuyoah-xiezhen-prompt": {
-    "stars": 188,
-    "ts": "2026-08-03T10:08:27+00:00"
+    "stars": 192,
+    "ts": "2026-08-03T15:19:37+00:00"
   },
   "robbin/wechat-exporter": {
-    "stars": 187,
-    "ts": "2026-08-03T10:08:27+00:00"
+    "stars": 188,
+    "ts": "2026-08-03T15:19:37+00:00"
   },
   "codejunkie99/graph-engineering": {
     "stars": 173,
@@ -230,5 +230,17 @@
   "Anionex/codex-deepseek-vision": {
     "stars": 164,
     "ts": "2026-08-02T08:38:50+00:00"
+  },
+  "patchy631/time-to-first-token": {
+    "stars": 153,
+    "ts": "2026-08-03T15:19:37+00:00"
+  },
+  "arcships/aimux": {
+    "stars": 151,
+    "ts": "2026-08-03T15:19:37+00:00"
+  },
+  "opentokenz/mcpx": {
+    "stars": 151,
+    "ts": "2026-08-03T15:19:37+00:00"
   }
 }
