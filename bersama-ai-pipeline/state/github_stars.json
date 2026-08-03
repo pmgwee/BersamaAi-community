@@ -1,19 +1,19 @@
 {
   "yc-software/qm": {
-    "stars": 7552,
-    "ts": "2026-08-03T03:57:47+00:00"
+    "stars": 8230,
+    "ts": "2026-08-03T10:08:27+00:00"
   },
   "lopopolo/harness-engineering": {
     "stars": 2320,
     "ts": "2026-07-24T22:21:15+00:00"
   },
+  "trycompai/crm": {
+    "stars": 2110,
+    "ts": "2026-08-03T10:08:27+00:00"
+  },
   "kvcache-ai/AgentENV": {
     "stars": 2050,
     "ts": "2026-07-29T22:15:45+00:00"
-  },
-  "trycompai/crm": {
-    "stars": 1914,
-    "ts": "2026-08-03T03:57:47+00:00"
   },
   "Vincentwei1021/video-shotcraft": {
     "stars": 1731,
@@ -44,16 +44,20 @@
     "ts": "2026-07-27T22:21:23+00:00"
   },
   "gavamedia/deltafin": {
-    "stars": 627,
-    "ts": "2026-08-03T03:57:47+00:00"
+    "stars": 636,
+    "ts": "2026-08-03T10:08:27+00:00"
+  },
+  "FareedKhan-dev/kimi-k3-in-c": {
+    "stars": 597,
+    "ts": "2026-08-03T10:08:27+00:00"
   },
   "hahhforest/pi-textbook": {
     "stars": 588,
     "ts": "2026-07-27T22:20:34+00:00"
   },
   "0xwilliamortiz/ponytail-improved": {
-    "stars": 580,
-    "ts": "2026-08-03T03:57:47+00:00"
+    "stars": 581,
+    "ts": "2026-08-03T10:08:27+00:00"
   },
   "XYZ-AI-Lab/axrl": {
     "stars": 567,
@@ -71,6 +75,10 @@
     "stars": 469,
     "ts": "2026-07-29T22:15:45+00:00"
   },
+  "s1dashu/animated-voiceover": {
+    "stars": 445,
+    "ts": "2026-08-03T10:09:33+00:00"
+  },
   "danilo-znamerovszkij/draw-your-font": {
     "stars": 435,
     "ts": "2026-07-28T22:18:53+00:00"
@@ -79,17 +87,13 @@
     "stars": 418,
     "ts": "2026-07-25T22:12:59+00:00"
   },
-  "s1dashu/animated-voiceover": {
-    "stars": 412,
-    "ts": "2026-08-03T03:59:07+00:00"
+  "0xwilliamortiz/ratchet": {
+    "stars": 415,
+    "ts": "2026-08-03T10:08:27+00:00"
   },
   "Kritt-ai/open-kritt": {
     "stars": 411,
     "ts": "2026-07-26T22:15:29+00:00"
-  },
-  "0xwilliamortiz/ratchet": {
-    "stars": 411,
-    "ts": "2026-08-03T03:57:47+00:00"
   },
   "perplexityai/numbat": {
     "stars": 374,
@@ -115,10 +119,6 @@
     "stars": 315,
     "ts": "2026-07-31T22:18:00+00:00"
   },
-  "FareedKhan-dev/kimi-k3-in-c": {
-    "stars": 312,
-    "ts": "2026-08-03T03:57:47+00:00"
-  },
   "0xwilliamortiz/andrej-karpathy-skills": {
     "stars": 305,
     "ts": "2026-07-27T22:20:34+00:00"
@@ -128,8 +128,8 @@
     "ts": "2026-07-28T22:18:53+00:00"
   },
   "Audio8-AI/Audio8_TTS": {
-    "stars": 277,
-    "ts": "2026-08-03T03:59:34+00:00"
+    "stars": 287,
+    "ts": "2026-08-03T10:10:13+00:00"
   },
   "joeseesun/qiaomu-cut-skill": {
     "stars": 265,
@@ -155,13 +155,13 @@
     "stars": 231,
     "ts": "2026-07-28T22:18:53+00:00"
   },
+  "Anionex/codex-vision-proxy": {
+    "stars": 229,
+    "ts": "2026-08-03T10:08:27+00:00"
+  },
   "paxlabs-inc/machine-genome": {
     "stars": 213,
     "ts": "2026-07-26T22:15:29+00:00"
-  },
-  "Anionex/codex-vision-proxy": {
-    "stars": 212,
-    "ts": "2026-08-03T03:57:47+00:00"
   },
   "livetennisapi/livetennisapi-mcp": {
     "stars": 205,
@@ -173,7 +173,11 @@
   },
   "uczltw6/trace-file-lineage": {
     "stars": 203,
-    "ts": "2026-08-03T03:57:47+00:00"
+    "ts": "2026-08-03T10:08:27+00:00"
+  },
+  "0rangec3t/Black-cat": {
+    "stars": 203,
+    "ts": "2026-08-03T10:08:27+00:00"
   },
   "risa-labs-inc/BossConsole": {
     "stars": 199,
@@ -183,33 +187,29 @@
     "stars": 199,
     "ts": "2026-07-26T22:15:29+00:00"
   },
+  "aigclink/geolook": {
+    "stars": 198,
+    "ts": "2026-08-03T10:08:27+00:00"
+  },
+  "aws/context-ontology-accelerator": {
+    "stars": 197,
+    "ts": "2026-08-03T10:08:27+00:00"
+  },
   "0xwilliamortiz/agents-council": {
     "stars": 193,
     "ts": "2026-07-26T22:15:29+00:00"
   },
-  "0rangec3t/Black-cat": {
-    "stars": 192,
-    "ts": "2026-08-03T03:57:47+00:00"
+  "nuyoah-ai-works/nuyoah-xiezhen-prompt": {
+    "stars": 188,
+    "ts": "2026-08-03T10:08:27+00:00"
   },
   "robbin/wechat-exporter": {
-    "stars": 186,
-    "ts": "2026-08-03T03:57:47+00:00"
-  },
-  "aigclink/geolook": {
-    "stars": 186,
-    "ts": "2026-08-03T03:57:47+00:00"
-  },
-  "nuyoah-ai-works/nuyoah-xiezhen-prompt": {
-    "stars": 182,
-    "ts": "2026-08-03T03:57:47+00:00"
+    "stars": 187,
+    "ts": "2026-08-03T10:08:27+00:00"
   },
   "codejunkie99/graph-engineering": {
     "stars": 173,
     "ts": "2026-07-29T22:18:15+00:00"
-  },
-  "aws/context-ontology-accelerator": {
-    "stars": 173,
-    "ts": "2026-08-03T03:57:47+00:00"
   },
   "0xtresser/Transcript-of-Liang-Wenfengs-DeepSeek-Founder-4-Hour-Investor-Meeting": {
     "stars": 170,
