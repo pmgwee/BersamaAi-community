@@ -1,41 +1,41 @@
 {
-  "updated_at": "2026-08-05T14:34:52Z",
+  "updated_at": "2026-08-05T16:54:29Z",
   "half_life_days": 14,
-  "n_events": 13688,
+  "n_events": 13834,
   "topic": {
-    "creative_video": 0.524,
     "research_study": 0.0,
-    "coding": 0.29,
-    "creative_image": 0.08,
+    "coding": 0.285,
+    "creative_image": 0.079,
     "creative_voice": 0.042,
-    "research_productivity": 0.442,
-    "finance": 0.422
+    "creative_video": 0.426,
+    "research_productivity": 0.436,
+    "finance": 0.418
   },
   "source": {
-    "github": 0.3,
-    "HN": 0.33,
-    "official": 0.272,
-    "r/StableDiffusion": 0.116,
-    "huggingface": 0.117,
+    "HN": 0.324,
+    "github": 0.19,
+    "official": 0.269,
+    "r/StableDiffusion": 0.115,
+    "huggingface": 0.115,
     "r/SunoAI": 0.0,
-    "r/comfyui": 0.099,
-    "r/ClaudeAI": 2.655,
+    "r/comfyui": 0.098,
+    "r/ClaudeAI": 2.588,
     "r/MachineLearning": 0.0,
     "r/algotrading": 0.0,
-    "r/ClaudeCode": 1.207,
-    "r/cursor": 0.87,
+    "r/ClaudeCode": 1.195,
+    "r/cursor": 0.854,
     "r/VeoAI": 0.0,
-    "r/artificial": 0.067,
+    "r/artificial": 0.069,
     "r/midjourney": 0.0,
-    "r/LocalLLaMA": 0.736,
+    "r/LocalLLaMA": 0.723,
     "r/runwayml": 0.0,
     "r/FluxAI": 0.0,
     "r/singularity": 0.0,
     "r/notebooklm": 0.0,
     "r/deeplearning": 0.0,
     "r/ChatGPT": 0.0,
-    "r/perplexity_ai": 1.748,
-    "r/PromptEngineering": 2.26,
+    "r/perplexity_ai": 1.709,
+    "r/PromptEngineering": 2.163,
     "r/learnmachinelearning": 0.0,
     "r/micro_saas": 0.0,
     "r/quant": 0.0,
@@ -44,22 +44,22 @@
     "r/StartupSoloFounder": 2.065,
     "r/KLINGai": 0.0,
     "r/udiomusic": 0.0,
-    "r/OpenAI": 0.033,
-    "r/SideProject": 0.618
+    "r/OpenAI": 0.043,
+    "r/SideProject": 0.605
   },
   "category": {
-    "OPEN_SOURCE": 0.185,
-    "UPDATE": 0.407,
-    "LAUNCH": 0.461,
-    "BENCHMARK": 0.094,
-    "RELEASE": 0.221,
+    "UPDATE": 0.402,
+    "OPEN_SOURCE": 0.134,
+    "LAUNCH": 0.454,
+    "BENCHMARK": 0.093,
+    "RELEASE": 0.218,
     "PRICING": 0.0,
-    "DEAL": 0.0
+    "DEAL": 0.003
   },
   "exemplars": {
     "top": [
       {
-        "headline": "story-to-handdrawn-video: agent skill for diary-comic animation",
+        "headline": "Claim surfaces that Moonshot distilled Fable for K3 development",
         "reward": 5.0
       },
       {
@@ -67,15 +67,15 @@
         "reward": 5.0
       },
       {
-        "headline": "story-to-handdrawn-video: agent skill for diary-comic animation",
-        "reward": 5.0
-      },
-      {
         "headline": "Claim surfaces that Moonshot distilled Fable for K3 development",
         "reward": 5.0
       },
       {
-        "headline": "story-to-handdrawn-video: agent skill for diary-comic animation",
+        "headline": "OpenAI launches Health in ChatGPT with connected medical records",
+        "reward": 5.0
+      },
+      {
+        "headline": "Claim surfaces that Moonshot distilled Fable for K3 development",
         "reward": 5.0
       }
     ],
