@@ -1,41 +1,41 @@
 {
-  "updated_at": "2026-08-07T03:20:56Z",
+  "updated_at": "2026-08-07T07:43:31Z",
   "half_life_days": 14,
-  "n_events": 15080,
+  "n_events": 14943,
   "topic": {
-    "creative_image": 0.077,
-    "creative_voice": 0.044,
+    "creative_image": 0.079,
+    "creative_video": 0.287,
+    "creative_voice": 0.047,
     "coding": 0.215,
-    "creative_video": 0.385,
-    "research_productivity": 0.395,
+    "research_productivity": 0.389,
     "research_study": 0.0,
-    "finance": 0.397
+    "finance": 0.396
   },
   "source": {
-    "r/StableDiffusion": 0.111,
-    "huggingface": 0.103,
-    "HN": 0.244,
+    "HN": 0.243,
+    "r/StableDiffusion": 0.02,
     "r/SunoAI": 0.0,
-    "github": 0.167,
-    "r/comfyui": 0.09,
-    "official": 0.171,
-    "r/ClaudeAI": 2.167,
+    "huggingface": 0.114,
+    "github": 0.163,
+    "r/comfyui": 0.089,
+    "official": 0.169,
+    "r/ClaudeAI": 2.125,
     "r/MachineLearning": 0.0,
     "r/algotrading": 0.0,
-    "r/ClaudeCode": 1.025,
-    "r/cursor": 0.757,
+    "r/ClaudeCode": 0.997,
+    "r/cursor": 0.747,
     "r/VeoAI": 0.0,
-    "r/artificial": 0.078,
+    "r/artificial": 0.079,
     "r/midjourney": 0.0,
-    "r/LocalLLaMA": 0.615,
+    "r/LocalLLaMA": 0.605,
     "r/runwayml": 0.0,
     "r/FluxAI": 0.0,
-    "r/singularity": 0.0,
+    "r/singularity": 0.002,
     "r/notebooklm": 0.0,
     "r/deeplearning": 0.0,
     "r/ChatGPT": 0.0,
-    "r/perplexity_ai": 1.51,
-    "r/PromptEngineering": 1.608,
+    "r/perplexity_ai": 1.49,
+    "r/PromptEngineering": 1.558,
     "r/learnmachinelearning": 0.0,
     "r/micro_saas": 0.0,
     "r/quant": 0.0,
@@ -44,27 +44,23 @@
     "r/StartupSoloFounder": 2.065,
     "r/KLINGai": 0.0,
     "r/udiomusic": 0.0,
-    "r/OpenAI": 0.098,
-    "r/SideProject": 0.534,
+    "r/OpenAI": 0.104,
+    "r/SideProject": 0.528,
     "r/aiMusic": 0.0
   },
   "category": {
-    "LAUNCH": 0.31,
-    "RELEASE": 0.2,
-    "UPDATE": 0.33,
-    "OPEN_SOURCE": 0.122,
+    "LAUNCH": 0.312,
+    "OPEN_SOURCE": 0.12,
+    "UPDATE": 0.329,
+    "RELEASE": 0.156,
     "PRICING": 0.0,
-    "BENCHMARK": 0.09,
-    "DEAL": 0.031
+    "BENCHMARK": 0.089,
+    "DEAL": 0.034
   },
   "exemplars": {
     "top": [
       {
-        "headline": "LTX Director 2.0 — free open-source all-in-one AI video tool for ComfyUI with full editing suite",
-        "reward": 5.0
-      },
-      {
-        "headline": "LTX Director 2.0 — free open-source all-in-one AI video tool for ComfyUI with full editing suite",
+        "headline": "Palmier Pro: open-source macOS video editor built for AI workflows",
         "reward": 5.0
       },
       {
@@ -72,11 +68,15 @@
         "reward": 5.0
       },
       {
-        "headline": "LTX Director 2.0 — free open-source all-in-one AI video tool for ComfyUI with full editing suite",
+        "headline": "Palmier Pro: open-source macOS video editor built for AI workflows",
         "reward": 5.0
       },
       {
         "headline": "Palmier Pro: open-source macOS video editor built for AI workflows",
+        "reward": 5.0
+      },
+      {
+        "headline": "video-shotcraft: cinematic product video agent skill for Claude Code & Codex (1.3k stars)",
         "reward": 5.0
       }
     ],
