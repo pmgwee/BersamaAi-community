@@ -64,9 +64,12 @@ def cfg(key: str, default: str = "") -> str:
 
 
 def devtools_webhook() -> str:
-    """#ai-dev-tools webhook. New name (DISCORD_DEVTOOLS_WEBHOOK_URL) with fallback
-    to the legacy DISCORD_NEWS_WEBHOOK_URL so a half-migrated .env keeps working."""
-    return cfg("DISCORD_DEVTOOLS_WEBHOOK_URL") or cfg("DISCORD_NEWS_WEBHOOK_URL")
+    """#ai-llm-tools (coding) webhook. Reads the channel-aligned name
+    (DISCORD_LLM_TOOLS_WEBHOOK_URL) with fallback to the legacy DEVTOOLS / NEWS names
+    so a half-migrated .env keeps working. (Fn name kept for callers.)"""
+    return (cfg("DISCORD_LLM_TOOLS_WEBHOOK_URL")
+            or cfg("DISCORD_DEVTOOLS_WEBHOOK_URL")
+            or cfg("DISCORD_NEWS_WEBHOOK_URL"))
 
 
 def youtube_webhook() -> str:

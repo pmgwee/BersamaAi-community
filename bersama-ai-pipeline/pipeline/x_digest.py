@@ -80,8 +80,8 @@ class XSource(NamedTuple):
 X_SUBSCRIPTIONS = [
     XSource(
         screen="EconomyApp",
-        webhook_env="DISCORD_STOCK_INVEST_WEBHOOK_URL",
-        label="#stock-invest",
+        webhook_env="DISCORD_STOCK_FINANCIAL_REPORT_WEBHOOK_URL",
+        label="#stock-financial-report",
         # Mirror of https://x.com/EconomyApp (handle: economyapp.extwitter.link).
         # Verified 2026-07-25: 1032 posts since 2024-02-06, ~1.27/day, largest
         # gap 4 days, 96/100 posts carry an image or link-preview embed.

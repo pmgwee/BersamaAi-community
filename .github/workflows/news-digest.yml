@@ -61,10 +61,9 @@ jobs:
         env:
           ZAI_API_KEY: ${{ secrets.ZAI_API_KEY }}
           ZAI_BASE_URL: ${{ vars.ZAI_BASE_URL || 'https://api.z.ai/api/coding/paas/v4/' }}
-          DISCORD_DEVTOOLS_WEBHOOK_URL: ${{ secrets.DISCORD_DEVTOOLS_WEBHOOK_URL }}   # #ai-dev-tools (coding)
-          DISCORD_NEWS_WEBHOOK_URL: ${{ secrets.DISCORD_NEWS_WEBHOOK_URL }}           # legacy fallback (rename)
-          DISCORD_YOUTUBE_WEBHOOK_URL: ${{ secrets.DISCORD_YOUTUBE_WEBHOOK_URL }}     # #youtube-resources (summarizer)
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}                     # legacy fallback (rename)
+          DISCORD_LLM_TOOLS_WEBHOOK_URL: ${{ secrets.DISCORD_LLM_TOOLS_WEBHOOK_URL }}       # #ai-llm-tools (coding)
+          DISCORD_YOUTUBE_WEBHOOK_URL: ${{ secrets.DISCORD_YOUTUBE_WEBHOOK_URL }}           # #youtube-ai-video (summarizer)
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}                           # legacy youtube fallback (rename)
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_DM_CHAT_ID: ${{ secrets.TELEGRAM_DM_CHAT_ID }}
           GLM_MODEL: ${{ vars.GLM_MODEL || 'glm-5.2' }}
@@ -72,9 +71,11 @@ jobs:
           DISCORD_IMAGE_CREATION_WEBHOOK_URL: ${{ secrets.DISCORD_IMAGE_CREATION_WEBHOOK_URL }}
           DISCORD_VIDEO_CREATION_WEBHOOK_URL: ${{ secrets.DISCORD_VIDEO_CREATION_WEBHOOK_URL }}
           DISCORD_VOICE_STUDIO_WEBHOOK_URL: ${{ secrets.DISCORD_VOICE_STUDIO_WEBHOOK_URL }}
-          DISCORD_EDUCATION_WEBHOOK_URL: ${{ secrets.DISCORD_EDUCATION_WEBHOOK_URL }}
-          DISCORD_FINANCE_WEBHOOK_URL: ${{ secrets.DISCORD_FINANCE_WEBHOOK_URL }}   # #earn-money-with-ai (finance topic)
-          DISCORD_STAFF_CHAT_WEBHOOK_URL: ${{ secrets.DISCORD_STAFF_CHAT_WEBHOOK_URL }}   # 0-posted health warnings
+          DISCORD_RESEARCH_WEBHOOK_URL: ${{ secrets.DISCORD_RESEARCH_WEBHOOK_URL }}         # #research-with-ai
+          DISCORD_EARN_MONEY_WEBHOOK_URL: ${{ secrets.DISCORD_EARN_MONEY_WEBHOOK_URL }}     # #earn-money-with-ai (finance)
+          DISCORD_COMPANY_INVESTMENT_WEBHOOK_URL: ${{ secrets.DISCORD_COMPANY_INVESTMENT_WEBHOOK_URL }}     # #ai-company-investment
+          DISCORD_CYBERSECURITY_BYPASS_WEBHOOK_URL: ${{ secrets.DISCORD_CYBERSECURITY_BYPASS_WEBHOOK_URL }} # #ai-cybersecurity-bypass
+          DISCORD_STAFF_CHAT_WEBHOOK_URL: ${{ secrets.DISCORD_STAFF_CHAT_WEBHOOK_URL }}     # 0-posted health warnings
           REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}         # optional: OAuth JSON (real upvote counts);
           REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }} # unset -> public RSS fallback (works, no scores)
           PREFS_ENABLED: ${{ secrets.PREFS_ENABLED }}   # engagement actuator on/off (unset/false = dormant)

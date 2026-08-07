@@ -81,9 +81,9 @@ class Topic:
 #   NEW repo (Kling, Seedance, Nano Banana…) belongs in AI_KEYWORDS + the judge
 #   prompt instead — putting it here just burns 3s a run for an empty result.
 TOPICS: list[Topic] = [
-    Topic("coding", "#ai-llm-tools", "DISCORD_DEVTOOLS_WEBHOOK_URL",
-          # channel renamed 2026-08-07 (was #ai-dev-tools); same ID + webhook. The env-var
-          # name is left as DISCORD_DEVTOOLS_WEBHOOK_URL to avoid a half-migrated .env.
+    Topic("coding", "#ai-llm-tools", "DISCORD_LLM_TOOLS_WEBHOOK_URL",
+          # channel + secret renamed 2026-08-07 (was #ai-dev-tools / DISCORD_DEVTOOLS_*).
+          # _topic_webhook falls back to DEVTOOLS then NEWS, so a half-migrated .env still posts.
           reddit_subs=["LocalLLaMA", "ClaudeAI", "OpenAI", "ChatGPTCoding",
                        "ClaudeCode", "AI_Agents", "cursor", "singularity"],
           github_keywords=["ai agent", "coding agent", "agentic", "llm", "mcp",
@@ -110,18 +110,18 @@ TOPICS: list[Topic] = [
           github_keywords=["text to speech", "voice clone", "tts", "music generation",
                            "speech to text", "voice agent", "audio generation"],
           github_min_stars=150, live=True),
-    Topic("research_study", "#research-with-ai", "DISCORD_EDUCATION_WEBHOOK_URL",
+    Topic("research_study", "#research-with-ai", "DISCORD_RESEARCH_WEBHOOK_URL",
           # r/ArtificialIntelligence 404s; r/artificial is the one that resolves.
           reddit_subs=["learnmachinelearning", "artificial", "MachineLearning", "deeplearning"],
           github_keywords=["learn ai", "ai course", "ml tutorial", "ai from scratch",
                            "ai book", "llm course"],
           github_min_stars=100, live=True),
-    Topic("research_productivity", "#research-with-ai", "DISCORD_EDUCATION_WEBHOOK_URL",
+    Topic("research_productivity", "#research-with-ai", "DISCORD_RESEARCH_WEBHOOK_URL",
           reddit_subs=["ChatGPT", "PromptEngineering", "notebooklm", "perplexity_ai", "Productivity"],
           github_keywords=["deep research", "research agent", "ai notes", "knowledge graph",
                            "second brain", "document ai"],
           github_min_stars=150, live=True),
-    Topic("finance", "#earn-money-with-ai", "DISCORD_FINANCE_WEBHOOK_URL",
+    Topic("finance", "#earn-money-with-ai", "DISCORD_EARN_MONEY_WEBHOOK_URL",
           # The channel is "earn money WITH AI", not just quant — the builder subs
           # carry the AI-side-income stories; _looks_ai() strips their non-AI noise.
           # Builder wing expanded (2026-07-26) with the indie/SaaS/vibe-coding subs
@@ -148,7 +148,7 @@ TOPICS: list[Topic] = [
                        "business", "Economics"],
           github_keywords=["ai investment", "funding tracker", "ai stock"],
           github_min_stars=50, live=True),
-    Topic("cybersecurity", "#ai-cybersecurity-bypass", "DISCORD_CYBERSECURITY_WEBHOOK_URL",
+    Topic("cybersecurity", "#ai-cybersecurity-bypass", "DISCORD_CYBERSECURITY_BYPASS_WEBHOOK_URL",
           # AI SECURITY as the subject: hacking incidents, jailbreaks/safety-bypass,
           # eval escapes, red-teaming, AI-found vulns, AI cryptanalysis, supply-chain
           # intrusions, AND cyber-purpose model/tool launches (subject wins over category).
@@ -161,19 +161,30 @@ TOPICS: list[Topic] = [
 TOPIC_BY_KEY = {t.key: t for t in TOPICS}
 LIVE_TOPICS = [t for t in TOPICS if t.live]
 
-# Renamed webhook env-vars: new name -> legacy name (still read as a fallback so a
-# half-migrated .env keeps posting). Add future renames here.
-_LEGACY_WEBHOOK = {"DISCORD_DEVTOOLS_WEBHOOK_URL": "DISCORD_NEWS_WEBHOOK_URL"}
+# Webhook env-var aliases: primary name -> older names still accepted. The channels were
+# renamed 2026-08-07 (#ai-dev-tools -> #ai-llm-tools, #study-with-ai -> #research-with-ai)
+# and the secret names were aligned to the channels; _topic_webhook tries the primary
+# first, then each alias, so a half-migrated .env (old name) AND the new name both work.
+_WEBHOOK_ALIASES = {
+    "DISCORD_LLM_TOOLS_WEBHOOK_URL": ("DISCORD_DEVTOOLS_WEBHOOK_URL",    # was #ai-dev-tools
+                                      "DISCORD_NEWS_WEBHOOK_URL"),       # original name
+    "DISCORD_CYBERSECURITY_BYPASS_WEBHOOK_URL": ("DISCORD_CYBERSECURITY_WEBHOOK_URL",),
+    "DISCORD_RESEARCH_WEBHOOK_URL": ("DISCORD_RESEARCH_WITH_AI_WEBHOOK_URL",  # interim name
+                                     "DISCORD_EDUCATION_WEBHOOK_URL"),        # was #study-with-ai
+    "DISCORD_EARN_MONEY_WEBHOOK_URL": ("DISCORD_FINANCE_WEBHOOK_URL",),
+}
 
 
 def _topic_webhook(topic: Topic) -> str:
-    """Resolve a topic's posting webhook from its `webhook_env`, falling back to the
-    legacy var name if this topic's webhook was renamed and only the old one is set."""
+    """Resolve a topic's posting webhook from its `webhook_env`, trying the primary name
+    first then any legacy aliases — so a renamed channel's webhook still resolves whether
+    the .env uses the new channel-aligned name or the old one."""
     wh = os.environ.get(topic.webhook_env, "")
     if not wh:
-        legacy = _LEGACY_WEBHOOK.get(topic.webhook_env)
-        if legacy:
-            wh = os.environ.get(legacy, "")
+        for alias in _WEBHOOK_ALIASES.get(topic.webhook_env, ()):
+            wh = os.environ.get(alias, "")
+            if wh:
+                break
     return wh
 
 # Broad local pre-filter (cheap, before the LLM) — keep anything AI-relevant.

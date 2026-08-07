@@ -35,7 +35,7 @@ The bot and the MCP jar deliberately **share one Discord bot token** (Discord al
 - **Docker Desktop is broken on this machine** → `discord-mcp` runs as a native Java 19 JAR via `run.cmd`, not via Docker.
 - **All 9 news topics are `live=True`** in `pipeline/news.py` `TOPICS` (coding / creative_image / creative_video / creative_voice / research_study / research_productivity / finance / company_investment / cybersecurity). `company_investment` + `cybersecurity` were added 2026-08-07 to peel deals/strategy and security beats out of the old `coding` catch-all. Trust the `TOPICS` table.
 - **Reddit `.json` is 403-blocked for anonymous clients** (since ~2026-07). `fetch_reddit` tries OAuth JSON (`REDDIT_CLIENT_ID/SECRET` — real upvote counts) and falls back to public multireddit RSS (works unauthenticated; cards show `hot #N` rank instead of upvotes). News dedup filters already-posted stories **before** the judge; a real run that posts 0 cards warns `#staff-chat`.
-- The `research_*` topics' `Topic.channel` is labeled `"#research-with-ai"` (the channel was renamed from `#study-with-ai` on 2026-08-07; the env var stays `DISCORD_EDUCATION_WEBHOOK_URL`). Both `research_study` and `research_productivity` post there.
+- The `research_*` topics' `Topic.channel` is `"#research-with-ai"` (channel renamed from `#study-with-ai` on 2026-08-07; webhook env `DISCORD_RESEARCH_WEBHOOK_URL`, legacy alias `DISCORD_EDUCATION_WEBHOOK_URL`). Both `research_study` and `research_productivity` post there.
 
 ## Common commands
 ```bash
@@ -87,15 +87,15 @@ Bot channels / roles / levels live in `bersama-bot/config.json`, not env.
 | Env var | Channel |
 |---|---|
 | `DISCORD_YOUTUBE_WEBHOOK_URL` (legacy `DISCORD_WEBHOOK_URL`) | `#youtube-ai-video` — creator-watch summarizer (was `#youtube-resources` / `#curated-resources`) |
-| `DISCORD_DEVTOOLS_WEBHOOK_URL` (legacy `DISCORD_NEWS_WEBHOOK_URL`) | `#ai-llm-tools` — coding / LLM / agent news (channel was `#ai-dev-tools`) |
+| `DISCORD_LLM_TOOLS_WEBHOOK_URL` (legacy `DEVTOOLS` / `NEWS`) | `#ai-llm-tools` — coding / LLM / agent news (channel was `#ai-dev-tools`) |
 | `DISCORD_IMAGE_CREATION_WEBHOOK_URL` | `#image-creation` |
 | `DISCORD_VIDEO_CREATION_WEBHOOK_URL` | `#video-creation-aigc-tvc` |
 | `DISCORD_VOICE_STUDIO_WEBHOOK_URL` | `#voice-studio` |
-| `DISCORD_EDUCATION_WEBHOOK_URL` | `#research-with-ai` (channel was `#study-with-ai`; env name intentionally left EDUCATION to avoid a half-migrated `.env`) |
-| `DISCORD_FINANCE_WEBHOOK_URL` | `#earn-money-with-ai` — individual / builder making money WITH AI |
+| `DISCORD_RESEARCH_WEBHOOK_URL` (legacy `EDUCATION`) | `#research-with-ai` (channel was `#study-with-ai`) |
+| `DISCORD_EARN_MONEY_WEBHOOK_URL` (legacy `FINANCE`) | `#earn-money-with-ai` — individual / builder making money WITH AI |
 | `DISCORD_COMPANY_INVESTMENT_WEBHOOK_URL` | `#ai-company-investment` — AI INDUSTRY money / strategy / policy: M&A, funding, chips/compute, pricing, leadership, open-weight POLICY (broad scope) |
-| `DISCORD_CYBERSECURITY_WEBHOOK_URL` | `#ai-cybersecurity-bypass` — AI security as the subject: incidents, jailbreaks, eval escapes, AI-found vulns, cyber-purpose model/tool launches |
-| `DISCORD_STOCK_INVEST_WEBHOOK_URL` | `#stock-financial-report` (was `#stock-invest`) — `@EconomyApp` daily digest (VM cron, via the account's Bluesky mirror; no auth) |
+| `DISCORD_CYBERSECURITY_BYPASS_WEBHOOK_URL` | `#ai-cybersecurity-bypass` — AI security as the subject: incidents, jailbreaks, eval escapes, AI-found vulns, cyber-purpose model/tool launches |
+| `DISCORD_STOCK_FINANCIAL_REPORT_WEBHOOK_URL` (was `STOCK_INVEST`) | `#stock-financial-report` (was `#stock-invest`) — `@EconomyApp` daily digest (VM cron, via the account's Bluesky mirror; no auth) |
 | `DISCORD_STAFF_CHAT_WEBHOOK_URL` | `🔒-staff-chat` — health warnings + weekly digest; **topic cards must never post here** (enforced by `_is_staff_webhook`) |
 
 The two renamed vars are read new-name-first with the legacy name as fallback, so a half-migrated `.env` keeps working.

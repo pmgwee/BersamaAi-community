@@ -31,7 +31,7 @@ PIPELINE 2 — trending news digest (GitHub Actions, every ~3h)
      │            per-topic quotas so every channel's domain reaches the judge
      │  [judge]   GLM tags TOPIC + HEAT, picks 0–N worth posting — sober, no hype
      │  [dedupe]  state/news_seen.json (before quotas + judge — no slot wasted on a repeat)
-     ▼  [publish] Discord webhook for the topic's channel (coding → #ai-dev-tools, …)
+     ▼  [publish] Discord webhook for the topic's channel (coding → #ai-llm-tools, …)
      │  [health]  a real run that posts 0 cards warns 🔒-staff-chat (no silent failures)
 
 PIPELINE 3 — on-demand portal + /share (GCP VM, manual)
@@ -44,7 +44,7 @@ PIPELINE 4 — @EconomyApp stock digest (VM cron, daily ~09:00 MYT)
   the X account's Bluesky mirror (public AT Protocol API — free, keyless, IP-agnostic)
      │  [fetch]   newest posts (images carried) — NO LLM, no auth, no cookie to expire
      │  [dedupe]  state/x_seen_<screen>.json   (MAX_AGE_DAYS=7; stale feed alerts staff)
-     ▼  [publish] DISCORD_STOCK_INVEST_WEBHOOK_URL → #stock-invest   (mode = x-digest)
+     ▼  [publish] DISCORD_STOCK_FINANCIAL_REPORT_WEBHOOK_URL → #stock-financial-report   (mode = x-digest)
 ```
 
 ## Setup
@@ -102,7 +102,7 @@ python -m pipeline.main --mode x-digest
 ```
 Mirrors the X account via its **Bluesky mirror** (public AT Protocol API) — no LLM, no
 auth, no cookie to expire. The post text is the card verbatim (faithful to the figures).
-Needs `DISCORD_STOCK_INVEST_WEBHOOK_URL`; a stale or unreachable feed alerts `🔒-staff-chat`.
+Needs `DISCORD_STOCK_FINANCIAL_REPORT_WEBHOOK_URL`; a stale or unreachable feed alerts `🔒-staff-chat`.
 See [STOCK-DIGEST-CHALLENGES.md](STOCK-DIGEST-CHALLENGES.md) for why this isn't X directly.
 
 ### Share any URL as a news card (`/share`)
@@ -169,15 +169,15 @@ Tags: **`[VM]`** = GCP pipeline VM (summarizer + portal + `/share` + stock diges
 | Env var | Posts to |
 |---|---|
 | `DISCORD_YOUTUBE_WEBHOOK_URL` (`DISCORD_WEBHOOK_URL`) | `#youtube-ai-video` — creator-watch summarizer |
-| `DISCORD_DEVTOOLS_WEBHOOK_URL` (`DISCORD_NEWS_WEBHOOK_URL`) | `#ai-llm-tools` — coding / LLM / agent news |
+| `DISCORD_LLM_TOOLS_WEBHOOK_URL` (`DEVTOOLS` / `NEWS`) | `#ai-llm-tools` — coding / LLM / agent news |
 | `DISCORD_IMAGE_CREATION_WEBHOOK_URL` | `#image-creation` |
 | `DISCORD_VIDEO_CREATION_WEBHOOK_URL` | `#video-creation-aigc` |
 | `DISCORD_VOICE_STUDIO_WEBHOOK_URL` | `#voice-studio` |
-| `DISCORD_EDUCATION_WEBHOOK_URL` | `#research-with-ai` (was `#study-with-ai`; env name stays EDUCATION) |
-| `DISCORD_FINANCE_WEBHOOK_URL` | `#earn-money-with-ai` — individual / builder money-with-AI |
+| `DISCORD_RESEARCH_WEBHOOK_URL` (`EDUCATION`) | `#research-with-ai` (was `#study-with-ai`) |
+| `DISCORD_EARN_MONEY_WEBHOOK_URL` (`FINANCE`) | `#earn-money-with-ai` — individual / builder money-with-AI |
 | `DISCORD_COMPANY_INVESTMENT_WEBHOOK_URL` | `#ai-company-investment` — AI-industry money/strategy/policy |
-| `DISCORD_CYBERSECURITY_WEBHOOK_URL` | `#ai-cybersecurity-bypass` — AI security (incidents, jailbreaks, cyber-purpose tools) |
-| `DISCORD_STOCK_INVEST_WEBHOOK_URL` | `#stock-financial-report` (was `#stock-invest`) — `@EconomyApp` daily digest |
+| `DISCORD_CYBERSECURITY_BYPASS_WEBHOOK_URL` | `#ai-cybersecurity-bypass` — AI security (incidents, jailbreaks, cyber-purpose tools) |
+| `DISCORD_STOCK_FINANCIAL_REPORT_WEBHOOK_URL` (`STOCK_INVEST`) | `#stock-financial-report` (was `#stock-invest`) — `@EconomyApp` daily digest |
 | `DISCORD_STAFF_CHAT_WEBHOOK_URL` | `🔒-staff-chat` — health warnings + weekly digest |
 
 **Stock-digest tuning** (`[both]`, optional): `X_BSKY_API_BASE` (default `https://public.api.bsky.app`) · `X_STALE_DAYS` (default `6`).
@@ -228,22 +228,23 @@ round-robin merged, drops items older than `RSS_MAX_AGE_DAYS=14`. Reddit uses OA
 
 | key | channel | webhook env | reddit_subs | github min ⭐ |
 |---|---|---|---|---|
-| `coding` | #ai-llm-tools | `DISCORD_DEVTOOLS_WEBHOOK_URL` | LocalLLaMA, ClaudeAI, OpenAI, ChatGPTCoding, ClaudeCode, AI_Agents, cursor, singularity | 150 |
+| `coding` | #ai-llm-tools | `DISCORD_LLM_TOOLS_WEBHOOK_URL` | LocalLLaMA, ClaudeAI, OpenAI, ChatGPTCoding, ClaudeCode, AI_Agents, cursor, singularity | 150 |
 | `creative_image` | #image-creation | `DISCORD_IMAGE_CREATION_WEBHOOK_URL` | StableDiffusion, comfyui, midjourney, FluxAI, aiArt | 200 |
 | `creative_video` | #video-creation-aigc | `DISCORD_VIDEO_CREATION_WEBHOOK_URL` | aivideo, KlingAI, runwayml, VeoAI, AIVideoGeneration | 200 |
 | `creative_voice` | #voice-studio | `DISCORD_VOICE_STUDIO_WEBHOOK_URL` | SunoAI, elevenlabs, udiomusic, AIMusic | 150 |
-| `research_study` | #research-with-ai | `DISCORD_EDUCATION_WEBHOOK_URL` | learnmachinelearning, artificial, MachineLearning, deeplearning | 100 |
-| `research_productivity` | #research-with-ai | `DISCORD_EDUCATION_WEBHOOK_URL` | ChatGPT, PromptEngineering, notebooklm, perplexity_ai, Productivity | 150 |
-| `finance` | #earn-money-with-ai | `DISCORD_FINANCE_WEBHOOK_URL` | algotrading, quant, QuantFinance, SideProject, Entrepreneur, indiehackers, micro_saas, StartupSoloFounder, SaaS, solopreneur | 150 |
+| `research_study` | #research-with-ai | `DISCORD_RESEARCH_WEBHOOK_URL` | learnmachinelearning, artificial, MachineLearning, deeplearning | 100 |
+| `research_productivity` | #research-with-ai | `DISCORD_RESEARCH_WEBHOOK_URL` | ChatGPT, PromptEngineering, notebooklm, perplexity_ai, Productivity | 150 |
+| `finance` | #earn-money-with-ai | `DISCORD_EARN_MONEY_WEBHOOK_URL` | algotrading, quant, QuantFinance, SideProject, Entrepreneur, indiehackers, micro_saas, StartupSoloFounder, SaaS, solopreneur | 150 |
 | `company_investment` | #ai-company-investment | `DISCORD_COMPANY_INVESTMENT_WEBHOOK_URL` | investing, stocks, wallstreetbets, technology, business, Economics | 50 |
-| `cybersecurity` | #ai-cybersecurity-bypass | `DISCORD_CYBERSECURITY_WEBHOOK_URL` | cybersecurity, netsec, hacking, security, redteamsec, cryptography | 100 |
+| `cybersecurity` | #ai-cybersecurity-bypass | `DISCORD_CYBERSECURITY_BYPASS_WEBHOOK_URL` | cybersecurity, netsec, hacking, security, redteamsec, cryptography | 100 |
 
 > ⚠️ `company_investment` + `cybersecurity` (added 2026-08-07) **peel two beats out of the
 > old `coding` catch-all** — deals/strategy/org/policy and security/cyber-purpose tools now
 > route to their own channels. Their subs are disjoint from every other topic (no duplicate
 > fetch); cross-beat stories that originate on `coding`'s subs still reach them via the
 > pooled judge + shared HN/RSS. The `research_*` topics post to `#research-with-ai` (channel
-> renamed from `#study-with-ai`; env var stays `DISCORD_EDUCATION_WEBHOOK_URL`). Product
+> renamed from `#study-with-ai`; webhook env `DISCORD_RESEARCH_WEBHOOK_URL`, legacy alias
+> `DISCORD_EDUCATION_WEBHOOK_URL`). Product
 > names (Kling, Nano Banana…) belong in `AI_KEYWORDS` + the judge prompt, **not**
 > `github_keywords` (which only matches repos *created in the last 7 days*). See the comment
 > above `TOPICS` for the two-list cost-model rules.
@@ -287,7 +288,7 @@ final line — telemetry never halts the run.
 
 ### Stock digest (PIPELINE 4)
 
-- **Watched account:** `@EconomyApp` → `#stock-invest`, via its Bluesky mirror DID
+- **Watched account:** `@EconomyApp` → `#stock-financial-report`, via its Bluesky mirror DID
   `did:plc:kio5ffqovakoioxtxbuat6mr` (`X_SUBSCRIPTIONS` in `x_digest.py`).
 - No LLM, no auth — public AT Protocol API. `MAX_PER_RUN=8` posts/run · `MAX_AGE_DAYS=7` ·
   first-run capped at `FIRST_RUN_MAX=3` (so a source switch can't dump a week at once) ·
