@@ -1,41 +1,40 @@
 {
-  "updated_at": "2026-08-07T07:43:31Z",
+  "updated_at": "2026-08-07T10:12:14Z",
   "half_life_days": 14,
-  "n_events": 14943,
+  "n_events": 14919,
   "topic": {
-    "creative_image": 0.079,
-    "creative_video": 0.287,
-    "creative_voice": 0.047,
-    "coding": 0.215,
-    "research_productivity": 0.389,
+    "creative_video": 0.19,
+    "creative_image": 0.082,
+    "coding": 0.213,
+    "creative_voice": 0.048,
+    "research_productivity": 0.384,
     "research_study": 0.0,
-    "finance": 0.396
+    "finance": 0.394
   },
   "source": {
-    "HN": 0.243,
-    "r/StableDiffusion": 0.02,
-    "r/SunoAI": 0.0,
-    "huggingface": 0.114,
-    "github": 0.163,
-    "r/comfyui": 0.089,
-    "official": 0.169,
-    "r/ClaudeAI": 2.125,
+    "HN": 0.187,
+    "r/StableDiffusion": 0.021,
+    "huggingface": 0.112,
+    "github": 0.16,
+    "r/comfyui": 0.088,
+    "official": 0.167,
+    "r/ClaudeAI": 2.085,
     "r/MachineLearning": 0.0,
     "r/algotrading": 0.0,
-    "r/ClaudeCode": 0.997,
-    "r/cursor": 0.747,
+    "r/ClaudeCode": 0.98,
+    "r/cursor": 0.737,
     "r/VeoAI": 0.0,
-    "r/artificial": 0.079,
+    "r/artificial": 0.081,
     "r/midjourney": 0.0,
-    "r/LocalLLaMA": 0.605,
+    "r/LocalLLaMA": 0.597,
     "r/runwayml": 0.0,
     "r/FluxAI": 0.0,
-    "r/singularity": 0.002,
+    "r/singularity": 0.003,
     "r/notebooklm": 0.0,
     "r/deeplearning": 0.0,
     "r/ChatGPT": 0.0,
-    "r/perplexity_ai": 1.49,
-    "r/PromptEngineering": 1.558,
+    "r/perplexity_ai": 1.47,
+    "r/PromptEngineering": 1.511,
     "r/learnmachinelearning": 0.0,
     "r/micro_saas": 0.0,
     "r/quant": 0.0,
@@ -44,39 +43,40 @@
     "r/StartupSoloFounder": 2.065,
     "r/KLINGai": 0.0,
     "r/udiomusic": 0.0,
-    "r/OpenAI": 0.104,
-    "r/SideProject": 0.528,
+    "r/OpenAI": 0.11,
+    "r/SunoAI": 0.0,
+    "r/SideProject": 0.521,
     "r/aiMusic": 0.0
   },
   "category": {
-    "LAUNCH": 0.312,
-    "OPEN_SOURCE": 0.12,
-    "UPDATE": 0.329,
-    "RELEASE": 0.156,
+    "LAUNCH": 0.315,
+    "RELEASE": 0.154,
+    "UPDATE": 0.332,
+    "OPEN_SOURCE": 0.072,
     "PRICING": 0.0,
     "BENCHMARK": 0.089,
-    "DEAL": 0.034
+    "DEAL": 0.037
   },
   "exemplars": {
     "top": [
       {
-        "headline": "Palmier Pro: open-source macOS video editor built for AI workflows",
-        "reward": 5.0
-      },
-      {
-        "headline": "Palmier Pro: open-source macOS video editor built for AI workflows",
-        "reward": 5.0
-      },
-      {
-        "headline": "Palmier Pro: open-source macOS video editor built for AI workflows",
-        "reward": 5.0
-      },
-      {
-        "headline": "Palmier Pro: open-source macOS video editor built for AI workflows",
+        "headline": "video-shotcraft: cinematic product video agent skill for Claude Code & Codex (1.3k stars)",
         "reward": 5.0
       },
       {
         "headline": "video-shotcraft: cinematic product video agent skill for Claude Code & Codex (1.3k stars)",
+        "reward": 5.0
+      },
+      {
+        "headline": "Anthropic launches Claude Opus 5: near-Fable 5 performance at half the token price",
+        "reward": 5.0
+      },
+      {
+        "headline": "Claude Opus 5 is now available in GitHub Copilot",
+        "reward": 5.0
+      },
+      {
+        "headline": "Google releases Gemini 3.6 Flash, 3.5 Flash-Lite, and 3.5 Flash Cyber",
         "reward": 5.0
       }
     ],
