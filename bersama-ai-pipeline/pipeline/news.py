@@ -43,11 +43,12 @@ HEADERS = {"User-Agent": "BersamaAi-news/1.0 (community bot)"}
 
 HN_TOPN = 30
 # Keep >= (live topics x PER_TOPIC_QUOTA) + HN_QUOTA + HF_QUOTA + RSS_QUOTA, or the
-# tail of the candidate list is sliced off before the judge. Static today: 7x8 + 8 +
-# 3 + 12 = 79. With the bandit actuator ON the quotas can total more; gather puts the
-# shared sources FIRST so any overflow trims the lowest-preference topic tail, which
-# is the intended degradation — it never starves HN/HF/RSS again.
-LOCAL_LIMIT = 80          # max candidates sent to the judge per run
+# tail of the candidate list is sliced off before the judge. Static today: 9x8 + 8 +
+# 3 + 12 = 95 (9 live topics after company_investment + cybersecurity were added).
+# With the bandit actuator ON the quotas can total more; gather puts the shared
+# sources FIRST so any overflow trims the lowest-preference topic tail, which is the
+# intended degradation — it never starves HN/HF/RSS again.
+LOCAL_LIMIT = 100         # max candidates sent to the judge per run
 MAX_POST_PER_RUN = 15     # global safety cap (rarely hit; per-topic cap below governs)
 MAX_PER_TOPIC = 3         # max posts per channel per run — every channel gets a turn
 
@@ -80,7 +81,9 @@ class Topic:
 #   NEW repo (Kling, Seedance, Nano Banana…) belongs in AI_KEYWORDS + the judge
 #   prompt instead — putting it here just burns 3s a run for an empty result.
 TOPICS: list[Topic] = [
-    Topic("coding", "#ai-dev-tools", "DISCORD_DEVTOOLS_WEBHOOK_URL",
+    Topic("coding", "#ai-llm-tools", "DISCORD_DEVTOOLS_WEBHOOK_URL",
+          # channel renamed 2026-08-07 (was #ai-dev-tools); same ID + webhook. The env-var
+          # name is left as DISCORD_DEVTOOLS_WEBHOOK_URL to avoid a half-migrated .env.
           reddit_subs=["LocalLLaMA", "ClaudeAI", "OpenAI", "ChatGPTCoding",
                        "ClaudeCode", "AI_Agents", "cursor", "singularity"],
           github_keywords=["ai agent", "coding agent", "agentic", "llm", "mcp",
@@ -107,13 +110,13 @@ TOPICS: list[Topic] = [
           github_keywords=["text to speech", "voice clone", "tts", "music generation",
                            "speech to text", "voice agent", "audio generation"],
           github_min_stars=150, live=True),
-    Topic("research_study", "#education", "DISCORD_EDUCATION_WEBHOOK_URL",
+    Topic("research_study", "#research-with-ai", "DISCORD_EDUCATION_WEBHOOK_URL",
           # r/ArtificialIntelligence 404s; r/artificial is the one that resolves.
           reddit_subs=["learnmachinelearning", "artificial", "MachineLearning", "deeplearning"],
           github_keywords=["learn ai", "ai course", "ml tutorial", "ai from scratch",
                            "ai book", "llm course"],
           github_min_stars=100, live=True),
-    Topic("research_productivity", "#education", "DISCORD_EDUCATION_WEBHOOK_URL",
+    Topic("research_productivity", "#research-with-ai", "DISCORD_EDUCATION_WEBHOOK_URL",
           reddit_subs=["ChatGPT", "PromptEngineering", "notebooklm", "perplexity_ai", "Productivity"],
           github_keywords=["deep research", "research agent", "ai notes", "knowledge graph",
                            "second brain", "document ai"],
@@ -130,6 +133,30 @@ TOPICS: list[Topic] = [
           github_keywords=["fintech", "trading bot", "algorithmic trading", "quant",
                            "ai finance", "backtesting"],
           github_min_stars=150, live=True),
+    # ── added 2026-08-07: peel two beats out of the old coding catch-all so the
+    # judge can route precisely. Both subs lists are DISJOINT from every other
+    # topic -> no duplicate multireddit fetch; the shared HN + official-RSS pool
+    # (fetched once) + the pooled judge still catch cross-beat stories that
+    # originate on coding's subs (e.g. an HN "AMD acquires Taalas" -> routed here).
+    Topic("company_investment", "#ai-company-investment", "DISCORD_COMPANY_INVESTMENT_WEBHOOK_URL",
+          # AI INDUSTRY money/ownership/strategy/org/policy: M&A, funding, IPO, compute
+          # & chip-capacity deals, pricing, leadership/reorg, open-weight POLICY stances
+          # + open-letter coalitions, AI fund/stock/earnings. Broad scope (owner-confirmed).
+          # Finance subs (not AI subs) — the _looks_ai filter keeps only AI-naming posts;
+          # AI-industry stories on coding's subs reach this topic via the judge, not re-fetch.
+          reddit_subs=["investing", "stocks", "wallstreetbets", "technology",
+                       "business", "Economics"],
+          github_keywords=["ai investment", "funding tracker", "ai stock"],
+          github_min_stars=50, live=True),
+    Topic("cybersecurity", "#ai-cybersecurity-bypass", "DISCORD_CYBERSECURITY_WEBHOOK_URL",
+          # AI SECURITY as the subject: hacking incidents, jailbreaks/safety-bypass,
+          # eval escapes, red-teaming, AI-found vulns, AI cryptanalysis, supply-chain
+          # intrusions, AND cyber-purpose model/tool launches (subject wins over category).
+          reddit_subs=["cybersecurity", "netsec", "hacking", "security",
+                       "redteamsec", "cryptography"],
+          github_keywords=["jailbreak", "prompt injection", "llm security",
+                           "red team", "pentest", "ai security"],
+          github_min_stars=100, live=True),
 ]
 TOPIC_BY_KEY = {t.key: t for t in TOPICS}
 LIVE_TOPICS = [t for t in TOPICS if t.live]
@@ -856,12 +883,31 @@ ships, the one below it stops being news:
 TOPICS (assign exactly one). The examples are the CURRENT landscape, not a whitelist —
 a model or tool you don't recognise still belongs to whichever topic it fits, and a
 brand-new name nobody has heard of is a POSITIVE signal, not a reason to skip it:
-- coding — AI coding agents / agentic / dev tools / LLM releases / chat & assistants.
-  ANY maker: bigco + startup + community/open-source; US + Chinese. e.g. Claude Code,
-  Codex, Cursor, Cline, Aider, Windsurf, Copilot, Antigravity, Jules, Replit, Devin,
-  Hermes, OpenClaw; frontier models — GPT-5.6, Claude Opus 4.8 / Claude 5, Gemini 3.x,
-  Grok 4.5 / Grok Build, Kimi K3, DeepSeek, Qwen 3.x, GLM-5.2, Meta Muse Spark, MiniMax;
-  local inference (llama.cpp, Ollama, vLLM, LM Studio) and MCP / agent-skill tooling.
+- coding — DEFAULT catch-all for the agent / LLM beat: frontier-model releases, coding
+  agents, dev tools, harnesses, MCP / agent-skill tooling, general agent AND robotics
+  PRODUCT launches, inference tooling. ANY maker: bigco + startup + community/open-source;
+  US + Chinese. If a story is agentic / LLM and NOT clearly investment, cyber, money, or
+  research, it lands here. e.g. Claude Code, Codex, Cursor, Cline, Aider, Windsurf,
+  Copilot, Antigravity, Jules, Replit, Devin, Hermes, OpenClaw; frontier models — GPT-5.6,
+  Claude Opus 4.8 / Claude 5, Gemini 3.x, Grok 4.5 / Grok Build, Kimi K3, DeepSeek,
+  Qwen 3.x, GLM-5.2, Meta Muse Spark, MiniMax; local inference (llama.cpp, Ollama, vLLM,
+  LM Studio); robotics products like Gemini Robotics ER 2.
+- company_investment — the AI INDUSTRY's money / ownership / strategy / org / policy:
+  acquisitions & M&A (a creative-AI company being acquired lands HERE — the deal is the
+  story), funding rounds, IPOs, big investments, compute & chip-capacity deals (GPU
+  clusters, memory standards, custom-silicon PROGRAMS), PRICING changes (even for a
+  creative tool — pricing is strategy, not product), CEO / leadership changes, reorgs,
+  company open-weight POLICY stances and industry open-letter coalitions, AI fund / stock
+  / earnings market moves. Test: is the STORY about money, ownership, strategy, org, or
+  policy? -> here. Is it about a NEW THING shipping? -> not here (coding, or a creative
+  channel).
+- cybersecurity — AI SECURITY as the SUBJECT: hacking incidents, jailbreaks / safety-bypass
+  frameworks, models escaping cyber-eval sandboxes, red-teaming, AI-found vulnerabilities,
+  AI cryptanalysis, supply-chain intrusions of AI infra, AND cybersecurity-PURPOSE model /
+  tool releases (a Cyber model, a pentest agent) -> route here even though those are also
+  Launches. If the thing's PURPOSE is offense / defense / security, it is cybersecurity,
+  regardless of the category tag. (A deepfake-voice FRAUD incident is a security incident
+  -> here, NOT creative_voice.)
 - creative_image — image generation + editing: Nano Banana Pro / Nano Banana 2 (Gemini
   Image), GPT Image 2, Seedream 5.0, FLUX.2 / FLUX 3, Midjourney, Ideogram, Recraft,
   Krea, Qwen-Image, Stable Diffusion, ComfyUI workflows, LoRA / ControlNet.
@@ -871,16 +917,65 @@ brand-new name nobody has heard of is a POSITIVE signal, not a reason to skip it
   (OpenAI's Sora app was discontinued in 2026 — Sora news is now shutdown/migration news.)
 - creative_voice — voice / audio / TTS / music: ElevenLabs + Eleven Music, Suno v5,
   Udio, Whisper, Kokoro, Cartesia, Sesame, VibeVoice, Chatterbox, voice agents, cloning.
-- research_study — study / learning AI tools, courses, from-scratch implementations.
+- research_study — research papers, academic studies, science-publishing norms,
+  from-scratch implementations, courses, learning material. A research FINDING or paper
+  = here, even when the subject is agents or a model. Tie-break vs cybersecurity: a paper
+  that STUDIES / MEASURES security = here; one that SHIPS an attack/defense artifact (a
+  jailbreak repo, a pentest harness) = cybersecurity.
 - research_productivity — research / productivity AI tools (deep research, NotebookLM,
   Perplexity, notes / knowledge work, document + OCR agents).
-- finance — fintech / AI trading / quant / algorithmic trading / making money with AI
-  (algotrading, trading bots, robo-advisors, prediction markets, AI side-income and
-  indie-builder revenue stories). The AI × money overlap.
+- finance — the INDIVIDUAL / BUILDER making money WITH AI: side income, indie / SaaS /
+  vibe-coding revenue, autonomous-business runs, AI trading / quant / algorithmic trading,
+  robo-advisors, prediction markets. NOT institutional / market flows -> those are
+  company_investment. Test: can a PERSON use this to earn? -> finance; is the MARKET /
+  INDUSTRY moving? -> company_investment.
+
+ROUTING CALIBRATION — learn these patterns. SUBJECT WINS OVER CATEGORY: a story is filed
+by what it is ABOUT, not by the tag (LAUNCH, RELEASE, DEAL) it carries. Four boundary
+rules, each with positives and the "looks-like-X-but-goes-to-Y" trap:
+1. Robotics / model PRODUCT LAUNCHES are `coding`, NOT `company_investment`. A new thing
+   SHIPPING is a product story, not a money story — even from a big lab.
+   POSITIVES (`coding`): "DeepMind launches Gemini Robotics ER 2"; "Anthropic releases
+   Claude Opus 4.8"; "Moonshot open-sources Kimi K3 weights" (an OPEN_SOURCE model drop).
+   TRAP (-> `company_investment`): a CEO change, funding round, IPO, or acquisition at
+   that SAME company is a money / org story, not a product ship.
+2. Cybersecurity-PURPOSE launches are `cybersecurity`, NOT `coding`, even though they are
+   also Launches. If the tool's PURPOSE is offense / defense / security, route here.
+   POSITIVES (`cybersecurity`): "Microsoft launches MAI-Cyber"; "Google ships Gemini Flash
+   Cyber for threat analysis"; "NERV-BREAK jailbreak / safety-bypass framework"; "Anthropic
+   cryptanalysis demo breaks RSA variants"; "Red team finds CVE via AI; supply-chain
+   intrusion of an AI PyPI package."
+   TRAP (-> `coding`): a general frontier-model release (GPT-5.6, Claude Opus 4.8, Gemini
+   3.x) with NO security purpose is `coding`. A coding assistant that adds a vuln-scan
+   FEATURE stays `coding` — its purpose is still development, not pentest / red-team.
+3. Individual-vs-institutional money split. Can a PERSON use this to earn? -> `finance`.
+   Is the MARKET / INDUSTRY moving? -> `company_investment`.
+   POSITIVES (`finance`): "Indie dev makes $12k/mo from a vibe-coded SaaS"; "Autonomous
+   agent runs a profitable prediction-market play"; "AI quant bot backtest beats S&P over
+   90 days (open-source repo)."
+   TRAPS (-> `company_investment`): "AI hedge fund collapses / mark-to-market loss";
+   "Nvidia earnings beat; AI index up 4%"; a creative-AI company getting ACQUIRED (the
+   deal is industry money).
+4. Open-weight POLICY / letters / coalitions are `company_investment` (industry STRATEGY),
+   NOT `coding` — even though "open weights" sounds like a release. PRICING announcements
+   are `company_investment` even when the product is creative (pricing = strategy).
+   POSITIVES (`company_investment`): "Jensen Huang founds an open-weight alliance"; "Google
+   / Meta / Nvidia / IBM sign open letter on AI openness"; "AI founders lobby EU on
+   open-source rules"; "OpenAI $40B funding round closes; valuation $500B"; "AMD acquires
+   AI chip startup; CEO replaced in reorg"; "Midjourney raises prices."
+   TRAP (-> `coding`): a lab actually DROPPING model weights ("Moonshot open-sources Kimi
+   K3") is an OPEN_SOURCE product release -> `coding`, not a policy stance.
+When two rules could both apply, the PURPOSE test breaks the tie: security purpose ->
+`cybersecurity`; a product shipping -> `coding`; a money / market / org / policy story ->
+`company_investment`; a person earning -> `finance`; a paper studying / measuring ->
+`research_study`.
 
 AGENTIC-AI SUBJECT MATTER — this era's beats. A genuine move in any of these is as
-newsworthy as a model release, and they are all `coding` unless the story is clearly
-image / video / voice / money. An agent is four layers, and each is its own beat:
+newsworthy as a model release, and they are all `coding` UNLESS the ROUTING CALIBRATION
+above sends them elsewhere — clearly image / video / voice; a money story (finance vs
+company_investment); a security incident or cyber-purpose tool (cybersecurity); an
+industry deal / strategy / policy / funding / leadership story (company_investment); or
+a research paper (research_study). An agent is four layers, and each is its own beat:
 1. INSTRUCTION — the prompt: prompt engineering, prompt optimisation, system-prompt
    design, role/rules/output-format control.
 2. CONTEXT — what gets injected this turn: RAG and retrieval, short- and long-term
@@ -1245,6 +1340,8 @@ TOPIC_LABEL = {
     "research_study": "Research · Study",
     "research_productivity": "Research · Productivity",
     "finance": "Finance · Earn with AI",
+    "company_investment": "Investment · Industry",
+    "cybersecurity": "Security · Cyber",
 }
 
 
@@ -1708,14 +1805,35 @@ If a VIDEO TRANSCRIPT is included, base the body on what the video actually show
 demonstrates — the caption is often promotional ("comment X to get Y"), so trust the
 transcript for the real content and pick the topic from what the video is about.
 
-Assign exactly one TOPIC:
-- coding — AI coding agents / agentic / dev tools / LLM / chat & assistants
+Assign exactly one TOPIC (by its literal key). SUBJECT WINS OVER CATEGORY:
+- coding — LLM / frontier-model releases, coding agents, dev tools, MCP / agent-skill
+  tooling, inference tooling, general agent + robotics PRODUCT launches. DEFAULT catch-all
+  for the agent/LLM beat; NOT investment, cyber, money, or research. A coding assistant
+  that adds a security FEATURE stays here (purpose is still coding).
+- company_investment — AI INDUSTRY business / money / strategy / org / policy: acquisitions
+  & M&A (a creative-AI company being acquired = here — the deal is the story), funding
+  rounds, IPO, big investments, compute + chip-capacity deals (GPU clusters, custom-silicon
+  programs), PRICING changes (even for a creative tool — pricing = strategy), CEO /
+  leadership / reorg moves, company open-weight POLICY stances + industry open-letter
+  coalitions, AI fund / stock / earnings market moves. NOT a new thing shipping.
+- cybersecurity — AI SECURITY as the SUBJECT: hacking incidents, jailbreaks / safety-bypass,
+  models escaping eval sandboxes, red-teaming, AI-found vulnerabilities, AI cryptanalysis,
+  supply-chain intrusions of AI infra, AND cybersecurity-PURPOSE model/tool releases (a
+  Cyber model, a pentest agent) -> here even though they are also Launches. A deepfake-voice
+  fraud incident = here, not creative_voice.
 - creative_image — image generation
 - creative_video — video generation + AI editing
 - creative_voice — voice / audio / TTS / music
-- research_study — study / learning AI tools
-- research_productivity — research / productivity AI tools
-- finance — fintech / AI trading / quant / making money with AI
+- research_study — research papers, academic studies, science-publishing norms, from-scratch
+  / learning material. A research finding or paper = here even when about agents. Tie-break:
+  a paper that SHIPS an attack/defense artifact (jailbreak repo, pentest harness) =
+  cybersecurity; one that STUDIES / MEASURES = here.
+- research_productivity — productivity / knowledge-work AI tools, deep-research agents,
+  notes / second-brain / document tools.
+- finance — the INDIVIDUAL / BUILDER earning WITH AI: side income, indie / SaaS / vibe-coding
+  revenue, autonomous-business runs, AI trading / quant / prediction-market plays. NOT
+  institutional / market flows (a fund collapsing, index moves, an M&A deal) -> those are
+  company_investment.
 
 Return: topic, category (LAUNCH|RELEASE|PRICING|BENCHMARK|OPEN_SOURCE|DEAL|UPDATE),
 headline (<=110 chars, the news itself), body (1-2 sentences: what + why it matters),

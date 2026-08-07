@@ -2,10 +2,10 @@
 
 The recurring content engine for the BersamaAi Malaysia AI community. **Four modes:**
 
-1. **Talk summarizer** — turns a YouTube talk into a 5-point summary ~09:03 MYT daily, auto-publishes to **Discord** (`#youtube-resources`) and (optionally) **Telegram**, and stages a ready-to-paste bundle for Threads / Facebook.
-2. **Trending news digest** — gathers per-topic Reddit subs + Hacker News + GitHub Trending + HuggingFace trending + official lab/newsroom RSS every ~3h; an LLM judge tags each item with a topic + heat and routes it to that topic's channel (`#ai-dev-tools`, `#image-creation`, `#video-creation-aigc-tvc`, `#voice-studio`, `#study-with-ai` / `#research-with-ai`, `#earn-money-with-ai`).
+1. **Talk summarizer** — turns a YouTube talk into a 5-point summary ~09:03 MYT daily, auto-publishes to **Discord** (`#youtube-ai-video`) and (optionally) **Telegram**, and stages a ready-to-paste bundle for Threads / Facebook.
+2. **Trending news digest** — gathers per-topic Reddit subs + Hacker News + GitHub Trending + HuggingFace trending + official lab/newsroom RSS every ~3h; an LLM judge tags each item with a topic + heat and routes it to that topic's channel (`#ai-llm-tools`, `#image-creation`, `#video-creation-aigc-tvc`, `#voice-studio`, `#research-with-ai`, `#earn-money-with-ai`, `#ai-company-investment`, `#ai-cybersecurity-bypass`).
 3. **On-demand portal + `/share`** — a phone-friendly web UI (`on_demand.py`, port 8080) to summarize one URL (`/run`) or share any URL as a news card (`/share`).
-4. **`@EconomyApp` stock digest** — mirrors an X account via its **Bluesky mirror** (public AT Protocol API — free, keyless, cookieless, IP-agnostic) and posts the day's posts to `#stock-invest`. No LLM (the post text IS the card); VM cron ~09:00 MYT daily.
+4. **`@EconomyApp` stock digest** — mirrors an X account via its **Bluesky mirror** (public AT Protocol API — free, keyless, cookieless, IP-agnostic) and posts the day's posts to `#stock-financial-report`. No LLM (the post text IS the card); VM cron ~09:00 MYT daily.
 
 **Runs split across two clouds** (see [`PROJECT-CONTEXT.md`](../PROJECT-CONTEXT.md) for the full picture):
 - **GCP VM** — creator-watch summarizer (daily ~09:03 MYT) + the on-demand portal + `/share` + the `@EconomyApp` stock digest (cron daily ~09:00 MYT). YouTube bot-blocks Azure/GitHub-Actions datacenter IPs but not GCP, and the VM already hosts the always-on bot.
@@ -168,14 +168,16 @@ Tags: **`[VM]`** = GCP pipeline VM (summarizer + portal + `/share` + stock diges
 
 | Env var | Posts to |
 |---|---|
-| `DISCORD_YOUTUBE_WEBHOOK_URL` (`DISCORD_WEBHOOK_URL`) | `#youtube-resources` — creator-watch summarizer |
-| `DISCORD_DEVTOOLS_WEBHOOK_URL` (`DISCORD_NEWS_WEBHOOK_URL`) | `#ai-dev-tools` — coding news |
+| `DISCORD_YOUTUBE_WEBHOOK_URL` (`DISCORD_WEBHOOK_URL`) | `#youtube-ai-video` — creator-watch summarizer |
+| `DISCORD_DEVTOOLS_WEBHOOK_URL` (`DISCORD_NEWS_WEBHOOK_URL`) | `#ai-llm-tools` — coding / LLM / agent news |
 | `DISCORD_IMAGE_CREATION_WEBHOOK_URL` | `#image-creation` |
 | `DISCORD_VIDEO_CREATION_WEBHOOK_URL` | `#video-creation-aigc` |
 | `DISCORD_VOICE_STUDIO_WEBHOOK_URL` | `#voice-studio` |
-| `DISCORD_EDUCATION_WEBHOOK_URL` | `#study-with-ai` / `#research-with-ai` |
-| `DISCORD_FINANCE_WEBHOOK_URL` | `#earn-money-with-ai` |
-| `DISCORD_STOCK_INVEST_WEBHOOK_URL` | `#stock-invest` — `@EconomyApp` daily digest |
+| `DISCORD_EDUCATION_WEBHOOK_URL` | `#research-with-ai` (was `#study-with-ai`; env name stays EDUCATION) |
+| `DISCORD_FINANCE_WEBHOOK_URL` | `#earn-money-with-ai` — individual / builder money-with-AI |
+| `DISCORD_COMPANY_INVESTMENT_WEBHOOK_URL` | `#ai-company-investment` — AI-industry money/strategy/policy |
+| `DISCORD_CYBERSECURITY_WEBHOOK_URL` | `#ai-cybersecurity-bypass` — AI security (incidents, jailbreaks, cyber-purpose tools) |
+| `DISCORD_STOCK_INVEST_WEBHOOK_URL` | `#stock-financial-report` (was `#stock-invest`) — `@EconomyApp` daily digest |
 | `DISCORD_STAFF_CHAT_WEBHOOK_URL` | `🔒-staff-chat` — health warnings + weekly digest |
 
 **Stock-digest tuning** (`[both]`, optional): `X_BSKY_API_BASE` (default `https://public.api.bsky.app`) · `X_STALE_DAYS` (default `6`).
@@ -206,7 +208,7 @@ Five sources — Reddit + GitHub are **per-topic**; HN + HuggingFace + official 
 | HuggingFace | shared | `HF_VIRAL_LIKES=200` (boombastic-only gate) | `HF_QUOTA=3` |
 | Official RSS | shared | `OFFICIAL_RSS` (below) | `RSS_QUOTA=12` |
 
-Global caps: `LOCAL_LIMIT=80` candidates to the judge · `MAX_POST_PER_RUN=15` ·
+Global caps: `LOCAL_LIMIT=100` candidates to the judge · `MAX_POST_PER_RUN=15` ·
 `MAX_PER_TOPIC=3` posts/channel/run. RSS takes `RSS_PER_FEED=4` newest per feed,
 round-robin merged, drops items older than `RSS_MAX_AGE_DAYS=14`. Reddit uses OAuth JSON
 (real upvotes) when `REDDIT_CLIENT_ID/SECRET` are set, else public multireddit RSS
@@ -222,23 +224,29 @@ round-robin merged, drops items older than `RSS_MAX_AGE_DAYS=14`. Reddit uses OA
 > ByteDance/Seed, Kuaishou (Kling), ElevenLabs, Runway, Black Forest Labs — arrive via
 > the tier-2 newsrooms. (Checked 2026-07-24; every plausible URL 404s.)
 
-**`TOPICS`** — all 7 are `live=True`; each routes to its own channel webhook:
+**`TOPICS`** — all 9 are `live=True`; each routes to its own channel webhook:
 
 | key | channel | webhook env | reddit_subs | github min ⭐ |
 |---|---|---|---|---|
-| `coding` | #ai-dev-tools | `DISCORD_DEVTOOLS_WEBHOOK_URL` | LocalLLaMA, ClaudeAI, OpenAI, ChatGPTCoding, ClaudeCode, AI_Agents, cursor, singularity | 150 |
+| `coding` | #ai-llm-tools | `DISCORD_DEVTOOLS_WEBHOOK_URL` | LocalLLaMA, ClaudeAI, OpenAI, ChatGPTCoding, ClaudeCode, AI_Agents, cursor, singularity | 150 |
 | `creative_image` | #image-creation | `DISCORD_IMAGE_CREATION_WEBHOOK_URL` | StableDiffusion, comfyui, midjourney, FluxAI, aiArt | 200 |
 | `creative_video` | #video-creation-aigc | `DISCORD_VIDEO_CREATION_WEBHOOK_URL` | aivideo, KlingAI, runwayml, VeoAI, AIVideoGeneration | 200 |
 | `creative_voice` | #voice-studio | `DISCORD_VOICE_STUDIO_WEBHOOK_URL` | SunoAI, elevenlabs, udiomusic, AIMusic | 150 |
-| `research_study` | #study-with-ai | `DISCORD_EDUCATION_WEBHOOK_URL` | learnmachinelearning, artificial, MachineLearning, deeplearning | 100 |
+| `research_study` | #research-with-ai | `DISCORD_EDUCATION_WEBHOOK_URL` | learnmachinelearning, artificial, MachineLearning, deeplearning | 100 |
 | `research_productivity` | #research-with-ai | `DISCORD_EDUCATION_WEBHOOK_URL` | ChatGPT, PromptEngineering, notebooklm, perplexity_ai, Productivity | 150 |
 | `finance` | #earn-money-with-ai | `DISCORD_FINANCE_WEBHOOK_URL` | algotrading, quant, QuantFinance, SideProject, Entrepreneur, indiehackers, micro_saas, StartupSoloFounder, SaaS, solopreneur | 150 |
+| `company_investment` | #ai-company-investment | `DISCORD_COMPANY_INVESTMENT_WEBHOOK_URL` | investing, stocks, wallstreetbets, technology, business, Economics | 50 |
+| `cybersecurity` | #ai-cybersecurity-bypass | `DISCORD_CYBERSECURITY_WEBHOOK_URL` | cybersecurity, netsec, hacking, security, redteamsec, cryptography | 100 |
 
-> ⚠️ The `research_*` topics' `channel` field says `#education`, but **no `#education`
-> channel exists** — `DISCORD_EDUCATION_WEBHOOK_URL` posts to `#study-with-ai` /
-> `#research-with-ai`. Product names (Kling, Nano Banana…) belong in `AI_KEYWORDS` +
-> the judge prompt, **not** `github_keywords` (which only matches repos *created in the
-> last 7 days*). See the comment above `TOPICS` for the two-list cost-model rules.
+> ⚠️ `company_investment` + `cybersecurity` (added 2026-08-07) **peel two beats out of the
+> old `coding` catch-all** — deals/strategy/org/policy and security/cyber-purpose tools now
+> route to their own channels. Their subs are disjoint from every other topic (no duplicate
+> fetch); cross-beat stories that originate on `coding`'s subs still reach them via the
+> pooled judge + shared HN/RSS. The `research_*` topics post to `#research-with-ai` (channel
+> renamed from `#study-with-ai`; env var stays `DISCORD_EDUCATION_WEBHOOK_URL`). Product
+> names (Kling, Nano Banana…) belong in `AI_KEYWORDS` + the judge prompt, **not**
+> `github_keywords` (which only matches repos *created in the last 7 days*). See the comment
+> above `TOPICS` for the two-list cost-model rules.
 
 ### State files (`state/` — committed by the news-digest workflow)
 
