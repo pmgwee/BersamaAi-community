@@ -1,40 +1,40 @@
 {
-  "updated_at": "2026-08-07T16:09:54Z",
+  "updated_at": "2026-08-07T19:17:24Z",
   "half_life_days": 14,
-  "n_events": 15023,
+  "n_events": 14812,
   "topic": {
-    "coding": 0.208,
-    "creative_video": 0.19,
-    "creative_voice": 0.047,
-    "creative_image": 0.088,
-    "research_productivity": 0.375,
+    "coding": 0.193,
+    "creative_image": 0.091,
     "research_study": 0.0,
-    "finance": 0.389
+    "creative_video": 0.097,
+    "finance": 0.386,
+    "research_productivity": 0.389,
+    "creative_voice": 0.048
   },
   "source": {
-    "huggingface": 0.111,
-    "HN": 0.185,
-    "github": 0.155,
-    "r/comfyui": 0.087,
+    "r/ClaudeAI": 1.975,
     "official": 0.163,
-    "r/ClaudeAI": 2.01,
+    "huggingface": 0.124,
     "r/MachineLearning": 0.0,
-    "r/StableDiffusion": 0.023,
+    "r/StableDiffusion": 0.024,
     "r/algotrading": 0.0,
-    "r/ClaudeCode": 0.947,
-    "r/cursor": 0.717,
+    "HN": 0.142,
+    "r/ClaudeCode": 0.931,
+    "r/cursor": 0.708,
     "r/VeoAI": 0.0,
-    "r/artificial": 0.086,
+    "r/artificial": 0.091,
     "r/midjourney": 0.0,
-    "r/LocalLLaMA": 0.583,
+    "r/LocalLLaMA": 0.576,
     "r/runwayml": 0.0,
     "r/FluxAI": 0.0,
-    "r/singularity": 0.008,
+    "r/singularity": 0.012,
     "r/notebooklm": 0.0,
+    "github": 0.064,
+    "r/comfyui": 0.09,
     "r/deeplearning": 0.0,
     "r/ChatGPT": 0.0,
-    "r/perplexity_ai": 1.433,
-    "r/PromptEngineering": 1.38,
+    "r/perplexity_ai": 1.416,
+    "r/PromptEngineering": 1.322,
     "r/learnmachinelearning": 0.0,
     "r/micro_saas": 0.0,
     "r/quant": 0.0,
@@ -43,30 +43,22 @@
     "r/StartupSoloFounder": 2.065,
     "r/KLINGai": 0.0,
     "r/udiomusic": 0.0,
-    "r/OpenAI": 0.123,
+    "r/OpenAI": 0.129,
     "r/SunoAI": 0.0,
-    "r/SideProject": 0.509,
+    "r/SideProject": 0.503,
     "r/aiMusic": 0.0
   },
   "category": {
-    "RELEASE": 0.157,
-    "LAUNCH": 0.313,
-    "UPDATE": 0.327,
-    "OPEN_SOURCE": 0.07,
+    "RELEASE": 0.121,
+    "UPDATE": 0.326,
+    "OPEN_SOURCE": 0.071,
+    "LAUNCH": 0.229,
     "PRICING": 0.0,
     "BENCHMARK": 0.088,
-    "DEAL": 0.042
+    "DEAL": 0.045
   },
   "exemplars": {
     "top": [
-      {
-        "headline": "video-shotcraft: cinematic product video agent skill for Claude Code & Codex (1.3k stars)",
-        "reward": 5.0
-      },
-      {
-        "headline": "video-shotcraft: cinematic product video agent skill for Claude Code & Codex (1.3k stars)",
-        "reward": 5.0
-      },
       {
         "headline": "Anthropic launches Claude Opus 5: near-Fable 5 performance at half the token price",
         "reward": 5.0
@@ -77,6 +69,14 @@
       },
       {
         "headline": "Google releases Gemini 3.6 Flash, 3.5 Flash-Lite, and 3.5 Flash Cyber",
+        "reward": 5.0
+      },
+      {
+        "headline": "Anthropic launches Claude Opus 5: near-Fable 5 performance at half the token price",
+        "reward": 5.0
+      },
+      {
+        "headline": "Claude Opus 5 is now available in GitHub Copilot",
         "reward": 5.0
       }
     ],
