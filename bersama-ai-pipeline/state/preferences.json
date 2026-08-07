@@ -1,41 +1,41 @@
 {
-  "updated_at": "2026-08-06T14:36:43Z",
+  "updated_at": "2026-08-07T00:16:50Z",
   "half_life_days": 14,
-  "n_events": 14804,
+  "n_events": 14895,
   "topic": {
-    "coding": 0.242,
     "creative_image": 0.077,
     "creative_voice": 0.044,
-    "creative_video": 0.395,
-    "research_productivity": 0.404,
+    "coding": 0.218,
+    "creative_video": 0.39,
+    "research_productivity": 0.399,
     "research_study": 0.0,
-    "finance": 0.401
+    "finance": 0.399
   },
   "source": {
-    "official": 0.249,
-    "HN": 0.248,
-    "r/StableDiffusion": 0.112,
-    "huggingface": 0.105,
+    "r/StableDiffusion": 0.111,
+    "huggingface": 0.104,
+    "HN": 0.247,
     "r/SunoAI": 0.0,
-    "github": 0.173,
-    "r/comfyui": 0.091,
-    "r/ClaudeAI": 2.257,
+    "github": 0.17,
+    "r/comfyui": 0.09,
+    "official": 0.173,
+    "r/ClaudeAI": 2.211,
     "r/MachineLearning": 0.0,
     "r/algotrading": 0.0,
-    "r/ClaudeCode": 1.084,
-    "r/cursor": 0.778,
+    "r/ClaudeCode": 1.053,
+    "r/cursor": 0.768,
     "r/VeoAI": 0.0,
-    "r/artificial": 0.076,
+    "r/artificial": 0.077,
     "r/midjourney": 0.0,
-    "r/LocalLLaMA": 0.637,
+    "r/LocalLLaMA": 0.626,
     "r/runwayml": 0.0,
     "r/FluxAI": 0.0,
     "r/singularity": 0.0,
     "r/notebooklm": 0.0,
     "r/deeplearning": 0.0,
     "r/ChatGPT": 0.0,
-    "r/perplexity_ai": 1.552,
-    "r/PromptEngineering": 1.718,
+    "r/perplexity_ai": 1.531,
+    "r/PromptEngineering": 1.661,
     "r/learnmachinelearning": 0.0,
     "r/micro_saas": 0.0,
     "r/quant": 0.0,
@@ -44,31 +44,23 @@
     "r/StartupSoloFounder": 2.065,
     "r/KLINGai": 0.0,
     "r/udiomusic": 0.0,
-    "r/OpenAI": 0.086,
-    "r/SideProject": 0.548,
+    "r/OpenAI": 0.092,
+    "r/SideProject": 0.541,
     "r/aiMusic": 0.0
   },
   "category": {
-    "LAUNCH": 0.41,
-    "BENCHMARK": 0.089,
-    "RELEASE": 0.204,
-    "UPDATE": 0.338,
-    "OPEN_SOURCE": 0.125,
+    "LAUNCH": 0.315,
+    "RELEASE": 0.202,
+    "UPDATE": 0.334,
+    "OPEN_SOURCE": 0.123,
     "PRICING": 0.0,
-    "DEAL": 0.025
+    "BENCHMARK": 0.09,
+    "DEAL": 0.028
   },
   "exemplars": {
     "top": [
       {
-        "headline": "OpenAI launches Health in ChatGPT with connected medical records",
-        "reward": 5.0
-      },
-      {
-        "headline": "OpenAI launches Health in ChatGPT with connected medical records",
-        "reward": 5.0
-      },
-      {
-        "headline": "OpenAI launches Health in ChatGPT with connected medical records",
+        "headline": "LTX Director 2.0 — free open-source all-in-one AI video tool for ComfyUI with full editing suite",
         "reward": 5.0
       },
       {
@@ -76,7 +68,15 @@
         "reward": 5.0
       },
       {
-        "headline": "OpenAI launches Health in ChatGPT with connected medical records",
+        "headline": "Palmier Pro: open-source macOS video editor built for AI workflows",
+        "reward": 5.0
+      },
+      {
+        "headline": "LTX Director 2.0 — free open-source all-in-one AI video tool for ComfyUI with full editing suite",
+        "reward": 5.0
+      },
+      {
+        "headline": "Palmier Pro: open-source macOS video editor built for AI workflows",
         "reward": 5.0
       }
     ],
