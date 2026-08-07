@@ -13,19 +13,19 @@ Three independent components that all reach the same Discord server (guild `1528
 ## Where things run
 | Component | Runs where |
 |---|---|
-| Summarizer + on-demand portal (`on_demand.py`, port 8080) + `/share` | GCP VM (`~/bersama/bersama-ai-pipeline/`) |
-| Community bot | GCP VM (`~/BersamaAi-community/bersama-bot/`), systemd service `bersama`, 24/7 |
+| Summarizer + on-demand portal (`on_demand.py`, port 8080) + `/share` | **Pipeline VM** `beresama-ai-news-pipelines` (`~/bersama/bersama-ai-pipeline/`) |
+| Community bot | **Bot VM** `bersama-ai-bot` (`~/BersamaAi-community/bersama-bot/`), systemd service `bersama`, 24/7 |
 | News digest + engagement loop | GitHub Actions (`.github/workflows/news-digest.yml` every 3h; `engagement-digest.yml` weekly) |
-| Stock digest (`@EconomyApp` → `#stock-invest`) | GCP VM cron (no LLM) — but the fetch is now **IP-agnostic**, so it could equally run on GitHub Actions. Reads `@EconomyApp`'s **Bluesky mirror** (`did:plc:kio5ffqovakoioxtxbuat6mr`) via the public AT Protocol API: free, keyless, cookieless. X blocks anonymous scraping from datacenter IPs; **RSSHub + `TWITTER_AUTH_TOKEN` was abandoned** because the cookie expires and the job rots silently. See [STOCK-DIGEST-CHALLENGES.md](STOCK-DIGEST-CHALLENGES.md). |
+| Stock digest (`@EconomyApp` → `#stock-financial-report`) | **Pipeline VM** cron (no LLM) — but the fetch is now **IP-agnostic**, so it could equally run on GitHub Actions. Reads `@EconomyApp`'s **Bluesky mirror** (`did:plc:kio5ffqovakoioxtxbuat6mr`) via the public AT Protocol API: free, keyless, cookieless. X blocks anonymous scraping from datacenter IPs; **RSSHub + `TWITTER_AUTH_TOKEN` was abandoned** because the cookie expires and the job rots silently. See [STOCK-DIGEST-CHALLENGES.md](STOCK-DIGEST-CHALLENGES.md). |
 | discord-mcp admin jar | Local only, on-demand (`localhost:8085`) |
 
-> **ONE GCP VM, TWO directories** (not two VMs) — the same machine hosts:
-> - `~/bersama/bersama-ai-pipeline/` — the **pipeline** (summarizer + on-demand portal + `/share`; `pipeline/news.py` *lives* here, though the news digest *runs* on GitHub Actions)
-> - `~/BersamaAi-community/` — the **bot** (`bersama-bot/`, systemd service `bersama`)
+> **TWO GCP VMs** (split 2026-08-07; was one VM with two directories):
+> - **Pipeline VM** `beresama-ai-news-pipelines` — checkout `~/bersama/` (repo root); runs the pipeline from `bersama-ai-pipeline/`: summarizer cron + on-demand portal (`on_demand.py` :8080) + `/share` + the `@EconomyApp` stock-digest cron. `pipeline/news.py` *lives* here, though the news *digest* runs on GitHub Actions.
+> - **Bot VM** `bersama-ai-bot` — checkout `~/BersamaAi-community/` (repo root); runs `bersama-bot/` (systemd `bersama`, 24/7).
 >
-> There is **no "news VM"** — the news digest + engagement loop run on **GitHub Actions**, not on the VM.
+> The **news digest + engagement loop run on GitHub Actions, NOT on either VM.** (The old "no news VM" line meant the *digest* isn't VM-cron-scheduled — true — but the pipeline/portal/summarizer now have their own dedicated VM.)
 >
-> **Rule: every code change must explicitly name WHICH directory it's in (pipeline vs bot) and whether that dir needs a VM pull.** News/engagement code lives in the pipeline dir but runs on GH Actions → **no VM pull**. Never leave "which checkout/VM" for the owner to guess — say it every time.
+> **Rule: every code change must explicitly name WHICH checkout (pipeline vs bot) AND which VM it lives on, and whether that VM needs a pull.** News/engagement code lives in the pipeline checkout but runs on GH Actions → **no VM pull**. Never leave "which checkout/VM" for the owner to guess — say it every time.
 
 The bot and the MCP jar deliberately **share one Discord bot token** (Discord allows concurrent Gateway sessions). If the token is reset, update both `.env` files together.
 
@@ -47,12 +47,12 @@ python -m pipeline.main --mode x-digest               # @EconomyApp → #stock-f
 python -m pipeline.main --mode share --url "<URL>"    # share any URL as a news card
 python on_demand.py                                   # the phone portal (port 8080)
 
-# Bot (on the VM — systemd manages it)
+# Bot (on the BOT VM `bersama-ai-bot` — systemd manages it)
 sudo systemctl status bersama
 sudo systemctl restart bersama && tail -n 4 ~/BersamaAi-community/bersama-bot/bersama.log
 ```
 
-### Creator-watch summarizer daily cron (the VM's crontab — `crontab -e`)
+### Creator-watch summarizer daily cron (the PIPELINE VM's crontab — `crontab -e`)
 ```cron
 # creator-watch summarizer → #youtube-ai-video, once a day. 01:03 UTC = 09:03 MYT.
 # run-daily.sh (VM-only, NOT in the repo) cds into the pipeline dir (load-bearing
@@ -64,7 +64,7 @@ sudo systemctl restart bersama && tail -n 4 ~/BersamaAi-community/bersama-bot/be
 ```
 > The script ends with `|| true`, so cron always reports success — failures surface only via the `alert()` → 🔒-staff-chat path (set `DISCORD_STAFF_CHAT_WEBHOOK_URL`) and in `logs/daily.log`. Safe manual test: `cd ~/bersama/bersama-ai-pipeline && source .venv/bin/activate && python -m pipeline.main --mode scheduled --dry-run` (posts/marks nothing).
 
-### Stock-digest daily cron (the VM's crontab — `crontab -e`)
+### Stock-digest daily cron (the PIPELINE VM's crontab — `crontab -e`)
 ```cron
 # @EconomyApp → #stock-financial-report, once a day. 01:00 UTC = 09:00 MYT, ~4h after the
 # US close, so the previous session's earnings posts are already mirrored.
@@ -109,7 +109,7 @@ to main). Mid-task WIP commits still need asking.
    Never `git add -A` blind: local pipeline runs rewrite `state/*.json` (CI owns those)
    and Windows CRLF can create phantom whole-file diffs. Stage only the files you edited.
 2. **Commit + push** to `main`. End the commit message with the co-author trailer.
-3. **Hand back the sync command — decide by WHAT CHANGED.** It's one GCP VM with two checkouts; the news digest is not on the VM:
+3. **Hand back the sync command — decide by WHAT CHANGED.** It's TWO GCP VMs — pipeline `beresama-ai-news-pipelines` (`~/bersama/`) and bot `bersama-ai-bot` (`~/BersamaAi-community/`); the news digest runs on neither (GitHub Actions):
 
    | What you changed | VM pull? | Restart? |
    |---|---|---|
@@ -141,8 +141,8 @@ to main). Mid-task WIP commits still need asking.
    present, even when the answer is "nothing to do", and never left for the owner to infer.
    State it as exactly one of these three, copy-pasteable:
    - **No VM action — GitHub Actions** (gather-side news/engagement, docs)
-   - **Pull the pipeline checkout**: `cd ~/bersama/bersama-ai-pipeline && git pull --ff-only` (+ portal restart line if runtime changed)
-   - **Pull the bot checkout**: `cd ~/BersamaAi-community && git pull --ff-only && sudo systemctl restart bersama`
+   - **Pull the pipeline VM** (`beresama-ai-news-pipelines`): `cd ~/bersama/bersama-ai-pipeline && git pull --ff-only` (+ portal restart line if runtime changed)
+   - **Pull the bot VM** (`bersama-ai-bot`): `cd ~/BersamaAi-community && git pull --ff-only && sudo systemctl restart bersama`
 
    Say **why** in half a sentence ("gather-side only, `/share` unaffected"), so the owner can
    sanity-check the call rather than trust it blindly. If a change spans both checkouts, give
