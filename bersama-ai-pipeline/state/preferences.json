@@ -1,60 +1,60 @@
 {
-  "updated_at": "2026-08-08T07:16:54Z",
+  "updated_at": "2026-08-08T09:55:59Z",
   "half_life_days": 14,
-  "n_events": 14649,
+  "n_events": 14575,
   "topic": {
-    "coding": 0.104,
-    "creative_image": 0.094,
+    "coding": 0.105,
+    "creative_image": 0.097,
     "creative_voice": 0.046,
-    "creative_video": 0.102,
-    "research_productivity": 0.393,
+    "creative_video": 0.101,
+    "research_productivity": 0.389,
     "research_study": 0.0,
-    "finance": 0.395
+    "finance": 0.392
   },
   "source": {
-    "HN": 0.092,
-    "official": 0.062,
-    "r/artificial": 0.107,
-    "r/StableDiffusion": 0.026,
+    "official": 0.063,
     "r/midjourney": 0.0,
-    "r/LocalLLaMA": 0.553,
+    "r/LocalLLaMA": 0.548,
+    "HN": 0.093,
     "r/runwayml": 0.0,
     "r/FluxAI": 0.0,
-    "r/singularity": 0.025,
+    "r/StableDiffusion": 0.027,
+    "r/singularity": 0.028,
     "r/notebooklm": 0.0,
     "github": 0.061,
-    "r/comfyui": 0.087,
+    "r/comfyui": 0.086,
     "r/deeplearning": 0.0,
     "r/ClaudeCode": 0.0,
     "r/ChatGPT": 0.0,
-    "r/perplexity_ai": 1.388,
+    "r/perplexity_ai": 1.381,
+    "r/artificial": 0.128,
     "r/MachineLearning": 0.0,
-    "r/PromptEngineering": 1.134,
-    "r/ClaudeAI": 0.991,
+    "r/PromptEngineering": 1.095,
+    "r/ClaudeAI": 0.973,
     "r/learnmachinelearning": 0.0,
     "r/micro_saas": 0.0,
     "r/quant": 0.0,
     "r/AI_Agents": 0.0,
-    "huggingface": 0.126,
+    "huggingface": 0.125,
     "r/ElevenLabs": 0.0,
     "r/algotrading": 0.0,
     "r/StartupSoloFounder": 2.065,
     "r/KLINGai": 0.0,
-    "r/cursor": 1.032,
+    "r/cursor": 1.013,
     "r/udiomusic": 0.0,
-    "r/OpenAI": 0.151,
+    "r/OpenAI": 0.157,
     "r/SunoAI": 0.0,
-    "r/SideProject": 0.482,
+    "r/SideProject": 0.477,
     "r/aiMusic": 0.0
   },
   "category": {
-    "BENCHMARK": 0.087,
-    "PRICING": 0.0,
-    "UPDATE": 0.268,
-    "OPEN_SOURCE": 0.069,
     "LAUNCH": 0.152,
+    "BENCHMARK": 0.089,
     "RELEASE": 0.017,
-    "DEAL": 0.061
+    "OPEN_SOURCE": 0.069,
+    "PRICING": 0.0,
+    "UPDATE": 0.27,
+    "DEAL": 0.065
   },
   "exemplars": {
     "top": [
@@ -81,15 +81,15 @@
     ],
     "bottom": [
       {
-        "headline": "Community finds MiniMax H3 can generate near-realtime audio at 32×32",
+        "headline": "Google DeepMind launches Gemini Robotics ER 2 with multi-robot collaboration and task orchestration",
         "reward": 0.0
       },
       {
-        "headline": "Midjourney 8.2 users report skin and hair quality regression vs 8.1",
+        "headline": "Runway blocks Seedance 2.5's 30-second generations on Explore plan, capping users at 15s",
         "reward": 0.0
       },
       {
-        "headline": "Stanford and Arc Institute use AI to design 16 novel functional viruses",
+        "headline": "ComfyUI MiniMax H3 Director: open-source workflow for director-level control over H3 video",
         "reward": 0.0
       }
     ]
