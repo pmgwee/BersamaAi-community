@@ -1,66 +1,66 @@
 {
-  "updated_at": "2026-08-07T21:57:11Z",
+  "updated_at": "2026-08-08T02:23:00Z",
   "half_life_days": 14,
-  "n_events": 14595,
+  "n_events": 14613,
   "topic": {
-    "coding": 0.134,
-    "research_productivity": 0.385,
-    "creative_video": 0.099,
+    "coding": 0.115,
+    "research_productivity": 0.381,
+    "creative_video": 0.098,
     "creative_image": 0.094,
-    "creative_voice": 0.048,
+    "creative_voice": 0.047,
     "research_study": 0.0,
-    "finance": 0.404
+    "finance": 0.401
   },
   "source": {
-    "HN": 0.14,
-    "r/ClaudeCode": 0.916,
-    "r/cursor": 0.699,
+    "r/ClaudeCode": 0.901,
+    "r/cursor": 0.69,
     "official": 0.033,
     "r/VeoAI": 0.0,
-    "r/artificial": 0.095,
+    "HN": 0.093,
+    "r/artificial": 0.099,
     "r/StableDiffusion": 0.025,
     "r/midjourney": 0.0,
-    "r/LocalLLaMA": 0.57,
+    "r/LocalLLaMA": 0.564,
     "r/runwayml": 0.0,
     "r/FluxAI": 0.0,
-    "r/singularity": 0.015,
+    "r/singularity": 0.019,
     "r/notebooklm": 0.0,
     "github": 0.063,
-    "r/comfyui": 0.089,
+    "r/comfyui": 0.088,
     "r/deeplearning": 0.0,
     "r/ChatGPT": 0.0,
-    "r/perplexity_ai": 1.409,
+    "r/perplexity_ai": 1.401,
     "r/MachineLearning": 0.0,
-    "r/PromptEngineering": 1.27,
-    "r/ClaudeAI": 1.05,
+    "r/PromptEngineering": 1.221,
+    "r/ClaudeAI": 1.029,
     "r/learnmachinelearning": 0.0,
     "r/micro_saas": 0.0,
     "r/quant": 0.0,
     "r/AI_Agents": 0.0,
-    "huggingface": 0.129,
+    "huggingface": 0.128,
     "r/ElevenLabs": 0.0,
     "r/algotrading": 0.0,
     "r/StartupSoloFounder": 2.065,
     "r/KLINGai": 0.0,
     "r/udiomusic": 0.0,
-    "r/OpenAI": 0.134,
+    "r/OpenAI": 0.14,
     "r/SunoAI": 0.0,
-    "r/SideProject": 0.497,
+    "r/SideProject": 0.492,
     "r/aiMusic": 0.0
   },
   "category": {
-    "UPDATE": 0.291,
-    "LAUNCH": 0.227,
+    "LAUNCH": 0.226,
     "PRICING": 0.0,
+    "UPDATE": 0.254,
     "RELEASE": 0.017,
     "BENCHMARK": 0.088,
-    "OPEN_SOURCE": 0.071,
-    "DEAL": 0.047
+    "OPEN_SOURCE": 0.07,
+    "DEAL": 0.052
   },
   "exemplars": {
     "top": [
       {
-        "headline": "Nvidia, Microsoft, Meta, and IBM urge US to protect open-weight AI models",
+        "headline": "Anthropic launches Claude Opus 5 — #1 on Artificial Analysis at half of Fable 5's token price",
         "reward": 5.0
       },
       {
@@ -68,7 +68,7 @@
         "reward": 5.0
       },
       {
-        "headline": "Nvidia, Microsoft, Meta, and IBM urge US to protect open-weight AI models",
+        "headline": "Anthropic launches Claude Opus 5 — #1 on Artificial Analysis at half of Fable 5's token price",
         "reward": 5.0
       },
       {
@@ -76,7 +76,7 @@
         "reward": 5.0
       },
       {
-        "headline": "Nvidia, Microsoft, Meta, and IBM urge US to protect open-weight AI models",
+        "headline": "Anthropic launches Claude Opus 5 — #1 on Artificial Analysis at half of Fable 5's token price",
         "reward": 5.0
       }
     ],
