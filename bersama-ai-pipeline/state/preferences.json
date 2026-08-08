@@ -1,97 +1,96 @@
 {
-  "updated_at": "2026-08-08T02:23:00Z",
+  "updated_at": "2026-08-08T04:29:49Z",
   "half_life_days": 14,
-  "n_events": 14613,
+  "n_events": 14490,
   "topic": {
-    "coding": 0.115,
-    "research_productivity": 0.381,
-    "creative_video": 0.098,
+    "coding": 0.104,
     "creative_image": 0.094,
     "creative_voice": 0.047,
+    "creative_video": 0.102,
+    "research_productivity": 0.397,
     "research_study": 0.0,
-    "finance": 0.401
+    "finance": 0.398
   },
   "source": {
-    "r/ClaudeCode": 0.901,
-    "r/cursor": 0.69,
-    "official": 0.033,
-    "r/VeoAI": 0.0,
     "HN": 0.093,
-    "r/artificial": 0.099,
+    "official": 0.062,
+    "r/artificial": 0.103,
     "r/StableDiffusion": 0.025,
     "r/midjourney": 0.0,
-    "r/LocalLLaMA": 0.564,
+    "r/LocalLLaMA": 0.559,
     "r/runwayml": 0.0,
     "r/FluxAI": 0.0,
-    "r/singularity": 0.019,
+    "r/singularity": 0.022,
     "r/notebooklm": 0.0,
-    "github": 0.063,
-    "r/comfyui": 0.088,
+    "github": 0.062,
+    "r/comfyui": 0.087,
     "r/deeplearning": 0.0,
+    "r/ClaudeCode": 0.0,
     "r/ChatGPT": 0.0,
-    "r/perplexity_ai": 1.401,
+    "r/perplexity_ai": 1.394,
     "r/MachineLearning": 0.0,
-    "r/PromptEngineering": 1.221,
-    "r/ClaudeAI": 1.029,
+    "r/PromptEngineering": 1.176,
+    "r/ClaudeAI": 1.01,
     "r/learnmachinelearning": 0.0,
     "r/micro_saas": 0.0,
     "r/quant": 0.0,
     "r/AI_Agents": 0.0,
-    "huggingface": 0.128,
+    "huggingface": 0.127,
     "r/ElevenLabs": 0.0,
     "r/algotrading": 0.0,
     "r/StartupSoloFounder": 2.065,
     "r/KLINGai": 0.0,
+    "r/cursor": 1.051,
     "r/udiomusic": 0.0,
-    "r/OpenAI": 0.14,
+    "r/OpenAI": 0.146,
     "r/SunoAI": 0.0,
-    "r/SideProject": 0.492,
+    "r/SideProject": 0.487,
     "r/aiMusic": 0.0
   },
   "category": {
-    "LAUNCH": 0.226,
-    "PRICING": 0.0,
-    "UPDATE": 0.254,
-    "RELEASE": 0.017,
     "BENCHMARK": 0.088,
+    "PRICING": 0.0,
+    "UPDATE": 0.271,
     "OPEN_SOURCE": 0.07,
-    "DEAL": 0.052
+    "LAUNCH": 0.152,
+    "RELEASE": 0.017,
+    "DEAL": 0.057
   },
   "exemplars": {
     "top": [
       {
-        "headline": "Anthropic launches Claude Opus 5 — #1 on Artificial Analysis at half of Fable 5's token price",
+        "headline": "Google publicly backs open-weight AI models",
         "reward": 5.0
       },
       {
-        "headline": "Anthropic launches Claude Opus 5 — #1 on Artificial Analysis at half of Fable 5's token price",
+        "headline": "Google publicly backs open-weight AI models",
         "reward": 5.0
       },
       {
-        "headline": "Anthropic launches Claude Opus 5 — #1 on Artificial Analysis at half of Fable 5's token price",
+        "headline": "Google publicly backs open-weight AI models",
         "reward": 5.0
       },
       {
-        "headline": "Anthropic launches Claude Opus 5 — #1 on Artificial Analysis at half of Fable 5's token price",
+        "headline": "Karpathy appears to have left Anthropic, removes company from X bio",
         "reward": 5.0
       },
       {
-        "headline": "Anthropic launches Claude Opus 5 — #1 on Artificial Analysis at half of Fable 5's token price",
+        "headline": "Google publicly backs open-weight AI models",
         "reward": 5.0
       }
     ],
     "bottom": [
       {
-        "headline": "Meta, Microsoft, Nvidia, IBM sign open-weight AI letter — OpenAI declines",
-        "reward": -2.0
+        "headline": "Community finds MiniMax H3 can generate near-realtime audio at 32×32",
+        "reward": 0.0
       },
       {
-        "headline": "Meta, Microsoft, Nvidia, IBM sign open-weight AI letter — OpenAI declines",
-        "reward": -2.0
+        "headline": "Midjourney 8.2 users report skin and hair quality regression vs 8.1",
+        "reward": 0.0
       },
       {
-        "headline": "Meta, Microsoft, Nvidia, IBM sign open-weight AI letter — OpenAI declines",
-        "reward": -2.0
+        "headline": "Stanford and Arc Institute use AI to design 16 novel functional viruses",
+        "reward": 0.0
       }
     ]
   }
