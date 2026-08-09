@@ -1,35 +1,32 @@
 {
-  "updated_at": "2026-08-09T13:17:19Z",
+  "updated_at": "2026-08-09T15:48:18Z",
   "half_life_days": 14,
-  "n_events": 13827,
+  "n_events": 13661,
   "topic": {
-    "coding": 0.062,
-    "finance": 0.388,
-    "research_productivity": 0.23,
-    "creative_image": 0.114,
-    "creative_video": 0.092,
+    "coding": 0.063,
+    "creative_video": 0.091,
+    "creative_image": 0.116,
     "research_study": 0.0,
+    "finance": 0.225,
+    "research_productivity": 0.138,
     "creative_voice": 0.046,
     "cybersecurity": 0.0,
     "company_investment": 0.0
   },
   "source": {
-    "github": 0.059,
-    "r/LocalLLaMA": 0.054,
-    "r/PromptEngineering": 0.836,
-    "r/ClaudeAI": 0.779,
-    "official": 0.008,
-    "r/FluxAI": 0.0,
+    "official": 0.009,
+    "github": 0.06,
     "r/StableDiffusion": 0.016,
-    "r/comfyui": 0.096,
+    "r/comfyui": 0.095,
     "r/learnmachinelearning": 0.0,
     "r/micro_saas": 0.0,
     "r/quant": 0.0,
     "r/AI_Agents": 0.0,
     "HN": 0.097,
-    "huggingface": 0.115,
+    "huggingface": 0.114,
+    "r/LocalLLaMA": 0.06,
     "r/ElevenLabs": 0.0,
-    "r/singularity": 0.06,
+    "r/singularity": 0.061,
     "r/notebooklm": 0.0,
     "r/artificial": 0.162,
     "r/algotrading": 0.0,
@@ -37,13 +34,16 @@
     "r/midjourney": 0.0,
     "r/deeplearning": 0.0,
     "r/KLINGai": 0.0,
-    "r/cursor": 0.869,
-    "r/perplexity_ai": 0.707,
+    "r/cursor": 0.855,
+    "r/perplexity_ai": 0.706,
     "r/udiomusic": 0.0,
-    "r/OpenAI": 0.199,
+    "r/OpenAI": 0.204,
     "r/SunoAI": 0.0,
-    "r/SideProject": 0.44,
+    "r/FluxAI": 0.0,
+    "r/SideProject": 0.436,
     "r/MachineLearning": 0.0,
+    "r/PromptEngineering": 0.0,
+    "r/ClaudeAI": 0.287,
     "r/ClaudeCode": 0.0,
     "r/runwayml": 0.0,
     "r/aiMusic": 0.0,
@@ -53,34 +53,34 @@
     "r/security": 0.0
   },
   "category": {
-    "OPEN_SOURCE": 0.068,
-    "UPDATE": 0.2,
-    "LAUNCH": 0.094,
+    "LAUNCH": 0.096,
     "RELEASE": 0.011,
+    "OPEN_SOURCE": 0.069,
+    "UPDATE": 0.147,
     "BENCHMARK": 0.037,
-    "DEAL": 0.106,
+    "DEAL": 0.109,
     "PRICING": 0.0
   },
   "exemplars": {
     "top": [
       {
-        "headline": "ChatGPT can now price your items, write listings, post to marketplace, and negotiate with buyers",
+        "headline": "Moonshot open-sources Kimi-K3, surges to #1 on HuggingFace",
         "reward": 5.0
       },
       {
-        "headline": "ChatGPT can now price your items, write listings, post to marketplace, and negotiate with buyers",
+        "headline": "Moonshot open-sources Kimi-K3, surges to #1 on HuggingFace",
         "reward": 5.0
       },
       {
-        "headline": "ChatGPT can now price your items, write listings, post to marketplace, and negotiate with buyers",
+        "headline": "open-ai-canvas：面向AI影视创作的开源无限画布工作台",
         "reward": 5.0
       },
       {
-        "headline": "ChatGPT can now price your items, write listings, post to marketplace, and negotiate with buyers",
+        "headline": "Moonshot open-sources Kimi-K3, surges to #1 on HuggingFace",
         "reward": 5.0
       },
       {
-        "headline": "ChatGPT can now price your items, write listings, post to marketplace, and negotiate with buyers",
+        "headline": "open-ai-canvas：面向AI影视创作的开源无限画布工作台",
         "reward": 5.0
       }
     ],
