@@ -1,45 +1,45 @@
 {
-  "updated_at": "2026-08-10T19:18:53Z",
+  "updated_at": "2026-08-10T21:59:59Z",
   "half_life_days": 14,
-  "n_events": 13120,
+  "n_events": 13112,
   "topic": {
-    "coding": 0.059,
+    "coding": 0.06,
     "creative_video": 0.039,
     "creative_image": 0.147,
-    "finance": 0.234,
+    "finance": 0.232,
     "creative_voice": 0.046,
-    "research_productivity": 0.145,
+    "research_productivity": 0.143,
     "research_study": 0.0,
     "cybersecurity": 0.0,
-    "company_investment": 0.037
+    "company_investment": 0.039
   },
   "source": {
-    "official": 0.017,
-    "HN": 0.096,
-    "github": 0.014,
     "r/artificial": 0.167,
+    "official": 0.019,
     "huggingface": 0.0,
     "r/StableDiffusion": 0.026,
-    "r/comfyui": 0.104,
+    "r/comfyui": 0.103,
+    "HN": 0.096,
     "r/algotrading": 0.0,
+    "github": 0.015,
     "r/StartupSoloFounder": 2.065,
-    "r/singularity": 0.083,
+    "r/singularity": 0.085,
     "r/midjourney": 0.0,
     "r/deeplearning": 0.0,
     "r/KLINGai": 0.0,
-    "r/cursor": 0.75,
-    "r/perplexity_ai": 0.697,
+    "r/cursor": 0.74,
+    "r/perplexity_ai": 0.696,
     "r/notebooklm": 0.0,
     "r/udiomusic": 0.0,
-    "r/OpenAI": 0.238,
-    "r/LocalLLaMA": 0.072,
+    "r/OpenAI": 0.242,
+    "r/LocalLLaMA": 0.073,
     "r/SunoAI": 0.0,
     "r/FluxAI": 0.0,
-    "r/SideProject": 0.404,
+    "r/SideProject": 0.401,
     "r/ElevenLabs": 0.0,
     "r/MachineLearning": 0.0,
     "r/PromptEngineering": 0.0,
-    "r/ClaudeAI": 0.259,
+    "r/ClaudeAI": 0.256,
     "r/ClaudeCode": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/runwayml": 0.0,
@@ -49,15 +49,16 @@
     "r/netsec": 0.0,
     "r/hacking": 0.0,
     "r/security": 0.0,
-    "r/redteamsec": 0.0
+    "r/redteamsec": 0.0,
+    "r/technology": 0.0
   },
   "category": {
     "RELEASE": 0.014,
-    "LAUNCH": 0.114,
     "OPEN_SOURCE": 0.018,
-    "UPDATE": 0.143,
+    "UPDATE": 0.141,
+    "LAUNCH": 0.117,
     "BENCHMARK": 0.043,
-    "DEAL": 0.168,
+    "DEAL": 0.171,
     "PRICING": 0.0
   },
   "exemplars": {
@@ -85,15 +86,15 @@
     ],
     "bottom": [
       {
-        "headline": "Google may retire Gemini Gems by October, forcing migration to paid Skills",
+        "headline": "gauntlet-loop: prompt-driven builder/critic agent loop with blind comparison",
         "reward": 0.0
       },
       {
-        "headline": "Building a pronunciation correction layer for ElevenLabs TTS",
+        "headline": "MCP server gives AI agents their own phone number and SMS verification",
         "reward": 0.0
       },
       {
-        "headline": "Violin: agentic pentesting framework that separates model from harness capability",
+        "headline": "OpenChamber: a new agentic development environment",
         "reward": 0.0
       }
     ]
