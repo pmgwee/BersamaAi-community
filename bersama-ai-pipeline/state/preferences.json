@@ -1,45 +1,45 @@
 {
-  "updated_at": "2026-08-10T16:10:13Z",
+  "updated_at": "2026-08-10T19:18:53Z",
   "half_life_days": 14,
-  "n_events": 13267,
+  "n_events": 13120,
   "topic": {
-    "coding": 0.057,
-    "creative_voice": 0.045,
-    "creative_video": 0.096,
-    "creative_image": 0.142,
-    "research_productivity": 0.137,
-    "finance": 0.237,
+    "coding": 0.059,
+    "creative_video": 0.039,
+    "creative_image": 0.147,
+    "finance": 0.234,
+    "creative_voice": 0.046,
+    "research_productivity": 0.145,
     "research_study": 0.0,
     "cybersecurity": 0.0,
-    "company_investment": 0.033
+    "company_investment": 0.037
   },
   "source": {
-    "HN": 0.095,
-    "official": 0.016,
-    "r/singularity": 0.074,
+    "official": 0.017,
+    "HN": 0.096,
+    "github": 0.014,
+    "r/artificial": 0.167,
     "huggingface": 0.0,
-    "github": 0.065,
-    "r/StableDiffusion": 0.024,
-    "r/notebooklm": 0.0,
-    "r/artificial": 0.166,
-    "r/comfyui": 0.105,
+    "r/StableDiffusion": 0.026,
+    "r/comfyui": 0.104,
     "r/algotrading": 0.0,
     "r/StartupSoloFounder": 2.065,
+    "r/singularity": 0.083,
     "r/midjourney": 0.0,
     "r/deeplearning": 0.0,
     "r/KLINGai": 0.0,
-    "r/cursor": 0.76,
-    "r/perplexity_ai": 0.698,
+    "r/cursor": 0.75,
+    "r/perplexity_ai": 0.697,
+    "r/notebooklm": 0.0,
     "r/udiomusic": 0.0,
-    "r/OpenAI": 0.235,
+    "r/OpenAI": 0.238,
     "r/LocalLLaMA": 0.072,
     "r/SunoAI": 0.0,
     "r/FluxAI": 0.0,
-    "r/SideProject": 0.407,
+    "r/SideProject": 0.404,
     "r/ElevenLabs": 0.0,
     "r/MachineLearning": 0.0,
     "r/PromptEngineering": 0.0,
-    "r/ClaudeAI": 0.261,
+    "r/ClaudeAI": 0.259,
     "r/ClaudeCode": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/runwayml": 0.0,
@@ -48,33 +48,34 @@
     "r/ChatGPT": 0.0,
     "r/netsec": 0.0,
     "r/hacking": 0.0,
-    "r/security": 0.0
+    "r/security": 0.0,
+    "r/redteamsec": 0.0
   },
   "category": {
-    "OPEN_SOURCE": 0.044,
-    "RELEASE": 0.013,
-    "DEAL": 0.148,
-    "UPDATE": 0.143,
+    "RELEASE": 0.014,
     "LAUNCH": 0.114,
-    "BENCHMARK": 0.042,
+    "OPEN_SOURCE": 0.018,
+    "UPDATE": 0.143,
+    "BENCHMARK": 0.043,
+    "DEAL": 0.168,
     "PRICING": 0.0
   },
   "exemplars": {
     "top": [
       {
-        "headline": "open-ai-canvas：面向AI影视创作的开源无限画布工作台",
+        "headline": "FeyNoBg: automatic background removal model and training library",
         "reward": 5.0
       },
       {
-        "headline": "open-ai-canvas：面向AI影视创作的开源无限画布工作台",
+        "headline": "How an AI automation agency broke through its year-long $40K/month ceiling",
         "reward": 5.0
       },
       {
-        "headline": "open-ai-canvas：面向AI影视创作的开源无限画布工作台",
+        "headline": "FeyNoBg: automatic background removal model and training library",
         "reward": 5.0
       },
       {
-        "headline": "open-ai-canvas：面向AI影视创作的开源无限画布工作台",
+        "headline": "How an AI automation agency broke through its year-long $40K/month ceiling",
         "reward": 5.0
       },
       {
@@ -84,15 +85,15 @@
     ],
     "bottom": [
       {
-        "headline": "Revision Prompting: send a diff instead of regenerating when only part of your input changes",
+        "headline": "Google may retire Gemini Gems by October, forcing migration to paid Skills",
         "reward": 0.0
       },
       {
-        "headline": "AI agents at a cybersecurity conference used Artifactory as an unexpected proxy to reach the internet",
+        "headline": "Building a pronunciation correction layer for ElevenLabs TTS",
         "reward": 0.0
       },
       {
-        "headline": "Open-source TWAP trading bot for Polymarket prediction markets",
+        "headline": "Violin: agentic pentesting framework that separates model from harness capability",
         "reward": 0.0
       }
     ]
