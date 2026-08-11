@@ -1,45 +1,44 @@
 {
-  "updated_at": "2026-08-11T02:29:26Z",
+  "updated_at": "2026-08-11T04:41:45Z",
   "half_life_days": 14,
-  "n_events": 12969,
+  "n_events": 12774,
   "topic": {
-    "coding": 0.061,
-    "creative_image": 0.088,
-    "creative_video": 0.04,
-    "creative_voice": 0.045,
-    "finance": 0.244,
-    "research_productivity": 0.142,
+    "coding": 0.062,
+    "creative_image": 0.095,
+    "creative_video": 0.041,
+    "creative_voice": 0.047,
+    "finance": 0.115,
+    "research_productivity": 0.14,
     "research_study": 0.0,
     "cybersecurity": 0.0,
-    "company_investment": 0.042
+    "company_investment": 0.044
   },
   "source": {
-    "HN": 0.073,
-    "official": 0.021,
-    "github": 0.015,
-    "r/comfyui": 0.109,
-    "r/StableDiffusion": 0.028,
-    "r/StartupSoloFounder": 2.065,
-    "r/singularity": 0.087,
+    "r/singularity": 0.088,
+    "HN": 0.075,
+    "official": 0.022,
+    "r/StableDiffusion": 0.03,
+    "r/comfyui": 0.114,
     "r/midjourney": 0.0,
+    "github": 0.015,
     "huggingface": 0.0,
     "r/deeplearning": 0.0,
     "r/KLINGai": 0.0,
     "r/algotrading": 0.0,
-    "r/cursor": 0.73,
+    "r/cursor": 0.718,
     "r/perplexity_ai": 0.695,
     "r/notebooklm": 0.0,
     "r/udiomusic": 0.0,
-    "r/OpenAI": 0.245,
-    "r/LocalLLaMA": 0.073,
+    "r/OpenAI": 0.248,
+    "r/LocalLLaMA": 0.074,
     "r/artificial": 0.194,
     "r/SunoAI": 0.0,
     "r/FluxAI": 0.0,
-    "r/SideProject": 0.397,
+    "r/SideProject": 0.394,
     "r/ElevenLabs": 0.0,
     "r/MachineLearning": 0.0,
     "r/PromptEngineering": 0.0,
-    "r/ClaudeAI": 0.254,
+    "r/ClaudeAI": 0.252,
     "r/ClaudeCode": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/runwayml": 0.0,
@@ -53,26 +52,18 @@
     "r/technology": 0.0
   },
   "category": {
-    "UPDATE": 0.142,
-    "OPEN_SOURCE": 0.018,
-    "RELEASE": 0.014,
     "BENCHMARK": 0.044,
-    "DEAL": 0.174,
-    "LAUNCH": 0.073,
+    "RELEASE": 0.014,
+    "OPEN_SOURCE": 0.019,
+    "UPDATE": 0.121,
+    "DEAL": 0.178,
+    "LAUNCH": 0.074,
     "PRICING": 0.0
   },
   "exemplars": {
     "top": [
       {
-        "headline": "How an AI automation agency broke through its year-long $40K/month ceiling",
-        "reward": 5.0
-      },
-      {
-        "headline": "How an AI automation agency broke through its year-long $40K/month ceiling",
-        "reward": 5.0
-      },
-      {
-        "headline": "How an AI automation agency broke through its year-long $40K/month ceiling",
+        "headline": "Blender MCP + Hunyuan3D pipeline turns one photo into a full 3D mecha figure",
         "reward": 5.0
       },
       {
@@ -80,21 +71,29 @@
         "reward": 5.0
       },
       {
-        "headline": "How an AI automation agency broke through its year-long $40K/month ceiling",
+        "headline": "Blender MCP + Hunyuan3D pipeline turns one photo into a full 3D mecha figure",
+        "reward": 5.0
+      },
+      {
+        "headline": "Blender MCP + Hunyuan3D pipeline turns one photo into a full 3D mecha figure",
+        "reward": 5.0
+      },
+      {
+        "headline": "Grok 4.6 reportedly arriving around August 7, Grok 4.7 in early September",
         "reward": 5.0
       }
     ],
     "bottom": [
       {
-        "headline": "gauntlet-loop: prompt-driven builder/critic agent loop with blind comparison",
+        "headline": "KADATH: evolutionary multi-agent runtime that breeds and improves autonomous agents",
         "reward": 0.0
       },
       {
-        "headline": "MCP server gives AI agents their own phone number and SMS verification",
+        "headline": "Analog in-memory compute accuracy collapses at a hard threshold, not gradually",
         "reward": 0.0
       },
       {
-        "headline": "OpenChamber: a new agentic development environment",
+        "headline": "White's reality check demolishes 1.4 million backtested trading models — all noise",
         "reward": 0.0
       }
     ]
