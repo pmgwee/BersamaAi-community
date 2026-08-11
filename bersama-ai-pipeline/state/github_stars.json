@@ -28,12 +28,12 @@
     "ts": "2026-08-02T22:14:43+00:00"
   },
   "Binaryify/open-kimi-ppt-skill": {
-    "stars": 1602,
-    "ts": "2026-08-11T19:27:57+00:00"
+    "stars": 1603,
+    "ts": "2026-08-11T22:07:17+00:00"
   },
   "ShawnPana/phone-harness": {
-    "stars": 1482,
-    "ts": "2026-08-11T19:27:57+00:00"
+    "stars": 1488,
+    "ts": "2026-08-11T22:07:17+00:00"
   },
   "Jakubantalik/thinking-orbs": {
     "stars": 1164,
@@ -60,8 +60,8 @@
     "ts": "2026-07-28T22:18:53+00:00"
   },
   "eternityspring/shuohao-skills": {
-    "stars": 834,
-    "ts": "2026-08-11T19:27:57+00:00"
+    "stars": 854,
+    "ts": "2026-08-11T22:07:17+00:00"
   },
   "mikiarlo3/awesome-growth-hacking-skills": {
     "stars": 818,
@@ -84,12 +84,12 @@
     "ts": "2026-08-03T22:19:43+00:00"
   },
   "T8mars/comfyui-minimax-h3-audio-T8": {
-    "stars": 616,
-    "ts": "2026-08-11T19:28:38+00:00"
+    "stars": 617,
+    "ts": "2026-08-11T22:07:44+00:00"
   },
   "sv-number/mcp-server": {
-    "stars": 605,
-    "ts": "2026-08-11T19:27:57+00:00"
+    "stars": 613,
+    "ts": "2026-08-11T22:07:17+00:00"
   },
   "hahhforest/pi-textbook": {
     "stars": 588,
@@ -123,13 +123,13 @@
     "stars": 513,
     "ts": "2026-08-08T21:48:08+00:00"
   },
+  "SaladDay/pi-from-scratch": {
+    "stars": 510,
+    "ts": "2026-08-11T22:07:17+00:00"
+  },
   "s1dashu/animated-voiceover": {
     "stars": 507,
     "ts": "2026-08-06T14:38:24+00:00"
-  },
-  "SaladDay/pi-from-scratch": {
-    "stars": 505,
-    "ts": "2026-08-11T19:27:57+00:00"
   },
   "XYZ-AI-Lab/AxisAgentic": {
     "stars": 469,
@@ -168,12 +168,12 @@
     "ts": "2026-07-26T22:15:29+00:00"
   },
   "NikoDemon80/ComfyUI-H3-Motion-Context": {
-    "stars": 402,
-    "ts": "2026-08-11T19:28:38+00:00"
+    "stars": 408,
+    "ts": "2026-08-11T22:07:44+00:00"
   },
   "Larryvrh/ComfyUI-MiniMax-H3-Turbo": {
     "stars": 392,
-    "ts": "2026-08-11T19:28:38+00:00"
+    "ts": "2026-08-11T22:07:44+00:00"
   },
   "perplexityai/numbat": {
     "stars": 374,
@@ -185,7 +185,7 @@
   },
   "Sateezg/codex-bridge": {
     "stars": 357,
-    "ts": "2026-08-11T19:28:38+00:00"
+    "ts": "2026-08-11T22:07:44+00:00"
   },
   "Anionex/agent-vision-toolkit": {
     "stars": 348,
@@ -199,6 +199,10 @@
     "stars": 339,
     "ts": "2026-08-04T22:33:09+00:00"
   },
+  "tanishqkancharla/calldiff": {
+    "stars": 339,
+    "ts": "2026-08-11T22:07:17+00:00"
+  },
   "SeanJ1ang/design-judge-skills": {
     "stars": 335,
     "ts": "2026-07-24T22:24:05+00:00"
@@ -206,10 +210,6 @@
   "MarcosSete/awesome-free-ai-books": {
     "stars": 334,
     "ts": "2026-07-28T22:21:15+00:00"
-  },
-  "tanishqkancharla/calldiff": {
-    "stars": 332,
-    "ts": "2026-08-11T19:27:57+00:00"
   },
   "Eversmile12/leaked-llm-prompts": {
     "stars": 329,
@@ -227,29 +227,29 @@
     "stars": 305,
     "ts": "2026-07-27T22:20:34+00:00"
   },
+  "UditAkhourii/neuroarxiv": {
+    "stars": 299,
+    "ts": "2026-08-11T22:07:17+00:00"
+  },
   "ddcat-ai/open-ai-canvas": {
     "stars": 296,
     "ts": "2026-07-28T22:18:53+00:00"
   },
-  "UditAkhourii/neuroarxiv": {
-    "stars": 292,
-    "ts": "2026-08-11T19:27:57+00:00"
-  },
   "robonuggets/gauntlet-loop": {
-    "stars": 283,
-    "ts": "2026-08-11T19:27:57+00:00"
+    "stars": 286,
+    "ts": "2026-08-11T22:07:17+00:00"
   },
   "ruudkoeyvoets/polymarket-trading-bot-twap": {
     "stars": 279,
-    "ts": "2026-08-11T19:31:16+00:00"
+    "ts": "2026-08-11T22:10:28+00:00"
+  },
+  "nkxx188/ComfyUI-MiniMaxH3-Easy": {
+    "stars": 276,
+    "ts": "2026-08-11T22:08:22+00:00"
   },
   "Anionex/codex-vision-proxy": {
     "stars": 275,
     "ts": "2026-08-05T03:35:42+00:00"
-  },
-  "nkxx188/ComfyUI-MiniMaxH3-Easy": {
-    "stars": 274,
-    "ts": "2026-08-11T19:29:15+00:00"
   },
   "alikon-art/DeterminFlow": {
     "stars": 271,
@@ -267,6 +267,10 @@
     "stars": 263,
     "ts": "2026-07-26T22:15:29+00:00"
   },
+  "liujunxibaba/douyin-tiktok-story-skill-agent": {
+    "stars": 262,
+    "ts": "2026-08-11T22:07:17+00:00"
+  },
   "aws/context-ontology-accelerator": {
     "stars": 260,
     "ts": "2026-08-03T22:19:43+00:00"
@@ -281,11 +285,7 @@
   },
   "antinomie-lab/pi-book": {
     "stars": 253,
-    "ts": "2026-08-11T19:27:57+00:00"
-  },
-  "liujunxibaba/douyin-tiktok-story-skill-agent": {
-    "stars": 249,
-    "ts": "2026-08-11T19:27:57+00:00"
+    "ts": "2026-08-11T22:07:17+00:00"
   },
   "TryCaspian/caspian-sdk": {
     "stars": 247,
@@ -311,17 +311,17 @@
     "stars": 230,
     "ts": "2026-08-09T21:50:37+00:00"
   },
+  "0xnyn/airship": {
+    "stars": 226,
+    "ts": "2026-08-11T22:07:17+00:00"
+  },
   "AIMixer/ComfyUI_MiniMaxH3_Director": {
     "stars": 223,
     "ts": "2026-08-10T22:01:27+00:00"
   },
   "ayi-ai/nie-grassroots-logic": {
-    "stars": 215,
-    "ts": "2026-08-11T19:27:57+00:00"
-  },
-  "0xnyn/airship": {
-    "stars": 214,
-    "ts": "2026-08-11T19:27:57+00:00"
+    "stars": 219,
+    "ts": "2026-08-11T22:07:17+00:00"
   },
   "paxlabs-inc/machine-genome": {
     "stars": 213,
@@ -349,7 +349,7 @@
   },
   "oliverb-io1902e8/agent-skills-collection": {
     "stars": 204,
-    "ts": "2026-08-11T19:27:57+00:00"
+    "ts": "2026-08-11T22:07:17+00:00"
   },
   "icebird1998/scientific-illustrator": {
     "stars": 203,
@@ -377,15 +377,15 @@
   },
   "lbx154/Argus": {
     "stars": 189,
-    "ts": "2026-08-11T19:30:40+00:00"
+    "ts": "2026-08-11T22:10:04+00:00"
+  },
+  "i3T4AN/KADATH": {
+    "stars": 185,
+    "ts": "2026-08-11T22:07:17+00:00"
   },
   "opentokenz/mcpx": {
     "stars": 184,
     "ts": "2026-08-05T22:29:33+00:00"
-  },
-  "i3T4AN/KADATH": {
-    "stars": 181,
-    "ts": "2026-08-11T19:27:57+00:00"
   },
   "freestylefly/wesight-obsidian": {
     "stars": 174,
@@ -421,7 +421,7 @@
   },
   "surya-koritala/loomfeed": {
     "stars": 156,
-    "ts": "2026-08-11T19:27:57+00:00"
+    "ts": "2026-08-11T22:07:17+00:00"
   },
   "lincwang123-bot/moonlit-stories": {
     "stars": 153,
@@ -437,7 +437,7 @@
   },
   "jundizhou/easy-stock": {
     "stars": 112,
-    "ts": "2026-08-11T19:31:30+00:00"
+    "ts": "2026-08-11T22:10:56+00:00"
   },
   "AFan4724/clone-chat": {
     "stars": 111,

@@ -1,32 +1,30 @@
 {
-  "updated_at": "2026-08-11T19:27:09Z",
+  "updated_at": "2026-08-11T22:06:27Z",
   "half_life_days": 14,
-  "n_events": 12763,
+  "n_events": 12737,
   "topic": {
-    "coding": 0.068,
-    "creative_voice": 0.046,
-    "finance": 0.115,
-    "creative_image": 0.04,
-    "research_productivity": 0.132,
-    "creative_video": 0.042,
+    "coding": 0.06,
+    "creative_image": 0.041,
+    "research_productivity": 0.131,
+    "finance": 0.122,
+    "creative_video": 0.041,
     "research_study": 0.0,
+    "creative_voice": 0.047,
     "cybersecurity": 0.0,
-    "company_investment": 0.055
+    "company_investment": 0.064
   },
   "source": {
-    "HN": 0.078,
-    "r/cursor": 0.669,
-    "official": 0.029,
-    "r/algotrading": 0.0,
+    "HN": 0.079,
+    "official": 0.031,
     "r/StableDiffusion": 0.037,
     "r/comfyui": 0.0,
     "r/perplexity_ai": 0.69,
     "r/notebooklm": 0.0,
     "r/udiomusic": 0.0,
-    "r/OpenAI": 0.264,
-    "r/LocalLLaMA": 0.076,
+    "r/OpenAI": 0.267,
+    "r/LocalLLaMA": 0.075,
     "huggingface": 0.0,
-    "r/singularity": 0.119,
+    "r/singularity": 0.12,
     "r/artificial": 0.188,
     "github": 0.016,
     "r/deeplearning": 0.0,
@@ -36,38 +34,36 @@
     "r/midjourney": 0.0,
     "r/ElevenLabs": 0.0,
     "r/MachineLearning": 0.0,
+    "r/algotrading": 0.0,
     "r/PromptEngineering": 0.0,
-    "r/ClaudeAI": 0.226,
+    "r/ClaudeAI": 0.22,
     "r/ClaudeCode": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/runwayml": 0.0,
     "r/AI_Agents": 0.0,
+    "r/cursor": 0.096,
     "r/aiMusic": 0.0,
     "r/ChatGPT": 0.0,
     "r/netsec": 0.0,
     "r/hacking": 0.0,
     "r/security": 0.0,
     "r/redteamsec": 0.0,
-    "r/technology": 0.069,
+    "r/technology": 0.113,
     "r/cybersecurity": 0.0
   },
   "category": {
-    "UPDATE": 0.102,
-    "BENCHMARK": 0.049,
-    "LAUNCH": 0.078,
     "OPEN_SOURCE": 0.019,
     "RELEASE": 0.015,
-    "DEAL": 0.207,
+    "UPDATE": 0.086,
+    "DEAL": 0.21,
+    "LAUNCH": 0.08,
+    "BENCHMARK": 0.05,
     "PRICING": 0.0
   },
   "exemplars": {
     "top": [
       {
-        "headline": "Grok 4.6 reportedly arriving around August 7, Grok 4.7 in early September",
-        "reward": 5.0
-      },
-      {
-        "headline": "Grok 4.6 reportedly arriving around August 7, Grok 4.7 in early September",
+        "headline": "Kimi 3 added to Perplexity Pro plan",
         "reward": 5.0
       },
       {
@@ -75,7 +71,11 @@
         "reward": 5.0
       },
       {
-        "headline": "Grok 4.6 reportedly arriving around August 7, Grok 4.7 in early September",
+        "headline": "Kimi 3 added to Perplexity Pro plan",
+        "reward": 5.0
+      },
+      {
+        "headline": "Kimi 3 added to Perplexity Pro plan",
         "reward": 5.0
       },
       {
