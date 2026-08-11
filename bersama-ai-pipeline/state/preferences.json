@@ -1,36 +1,36 @@
 {
-  "updated_at": "2026-08-11T13:44:47Z",
+  "updated_at": "2026-08-11T16:11:50Z",
   "half_life_days": 14,
-  "n_events": 12823,
+  "n_events": 12785,
   "topic": {
-    "coding": 0.065,
-    "creative_voice": 0.045,
-    "creative_image": 0.036,
-    "creative_video": 0.042,
-    "finance": 0.11,
-    "research_productivity": 0.135,
+    "coding": 0.067,
+    "creative_video": 0.041,
+    "finance": 0.109,
+    "creative_voice": 0.047,
+    "creative_image": 0.039,
+    "research_productivity": 0.134,
     "research_study": 0.0,
     "cybersecurity": 0.0,
-    "company_investment": 0.045
+    "company_investment": 0.044
   },
   "source": {
-    "github": 0.015,
-    "huggingface": 0.0,
-    "r/singularity": 0.103,
-    "official": 0.026,
-    "r/StableDiffusion": 0.034,
-    "HN": 0.078,
+    "HN": 0.077,
+    "official": 0.028,
     "r/deeplearning": 0.0,
     "r/KLINGai": 0.0,
     "r/algotrading": 0.0,
-    "r/cursor": 0.687,
+    "r/cursor": 0.678,
+    "r/StableDiffusion": 0.036,
     "r/comfyui": 0.0,
-    "r/perplexity_ai": 0.692,
+    "r/perplexity_ai": 0.691,
     "r/notebooklm": 0.0,
     "r/udiomusic": 0.0,
-    "r/OpenAI": 0.258,
-    "r/LocalLLaMA": 0.075,
-    "r/artificial": 0.192,
+    "r/OpenAI": 0.261,
+    "r/LocalLLaMA": 0.076,
+    "huggingface": 0.0,
+    "r/singularity": 0.119,
+    "r/artificial": 0.189,
+    "github": 0.016,
     "r/SunoAI": 0.0,
     "r/FluxAI": 0.0,
     "r/SideProject": 0.385,
@@ -38,7 +38,7 @@
     "r/ElevenLabs": 0.0,
     "r/MachineLearning": 0.0,
     "r/PromptEngineering": 0.0,
-    "r/ClaudeAI": 0.239,
+    "r/ClaudeAI": 0.232,
     "r/ClaudeCode": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/runwayml": 0.0,
@@ -53,12 +53,12 @@
     "r/cybersecurity": 0.0
   },
   "category": {
-    "OPEN_SOURCE": 0.019,
-    "RELEASE": 0.014,
-    "BENCHMARK": 0.049,
-    "DEAL": 0.183,
+    "RELEASE": 0.015,
     "LAUNCH": 0.076,
-    "UPDATE": 0.102,
+    "UPDATE": 0.1,
+    "BENCHMARK": 0.049,
+    "OPEN_SOURCE": 0.019,
+    "DEAL": 0.204,
     "PRICING": 0.0
   },
   "exemplars": {
@@ -86,15 +86,15 @@
     ],
     "bottom": [
       {
-        "headline": "Kimi K3 escaped sandbox during UK cyber eval, retrieved answers from GitHub",
+        "headline": "pi-book: source-backed architecture notes for building production agents",
         "reward": 0.0
       },
       {
-        "headline": "ComfyUI-H3-Motion-Context: clip chaining for MiniMax H3 with continuous motion and audio",
+        "headline": "600行TypeScript从零实现的迷你pi-agent，支持完全自主运行",
         "reward": 0.0
       },
       {
-        "headline": "OpenAI acquires NextSlide to bring AI-generated presentations into ChatGPT",
+        "headline": "Comparing embedding models with synthetic query probing",
         "reward": 0.0
       }
     ]
