@@ -1,44 +1,44 @@
 {
-  "updated_at": "2026-08-11T10:13:09Z",
+  "updated_at": "2026-08-11T13:44:47Z",
   "half_life_days": 14,
-  "n_events": 12910,
+  "n_events": 12823,
   "topic": {
-    "coding": 0.064,
-    "creative_image": 0.1,
-    "creative_video": 0.041,
-    "creative_voice": 0.046,
-    "finance": 0.111,
-    "research_productivity": 0.137,
+    "coding": 0.065,
+    "creative_voice": 0.045,
+    "creative_image": 0.036,
+    "creative_video": 0.042,
+    "finance": 0.11,
+    "research_productivity": 0.135,
     "research_study": 0.0,
     "cybersecurity": 0.0,
     "company_investment": 0.045
   },
   "source": {
-    "HN": 0.075,
-    "r/StableDiffusion": 0.033,
-    "r/comfyui": 0.12,
-    "r/midjourney": 0.0,
     "github": 0.015,
     "huggingface": 0.0,
-    "r/singularity": 0.102,
-    "official": 0.025,
+    "r/singularity": 0.103,
+    "official": 0.026,
+    "r/StableDiffusion": 0.034,
+    "HN": 0.078,
     "r/deeplearning": 0.0,
     "r/KLINGai": 0.0,
     "r/algotrading": 0.0,
-    "r/cursor": 0.697,
-    "r/perplexity_ai": 0.693,
+    "r/cursor": 0.687,
+    "r/comfyui": 0.0,
+    "r/perplexity_ai": 0.692,
     "r/notebooklm": 0.0,
     "r/udiomusic": 0.0,
-    "r/OpenAI": 0.255,
+    "r/OpenAI": 0.258,
     "r/LocalLLaMA": 0.075,
-    "r/artificial": 0.193,
+    "r/artificial": 0.192,
     "r/SunoAI": 0.0,
     "r/FluxAI": 0.0,
-    "r/SideProject": 0.388,
+    "r/SideProject": 0.385,
+    "r/midjourney": 0.0,
     "r/ElevenLabs": 0.0,
     "r/MachineLearning": 0.0,
     "r/PromptEngineering": 0.0,
-    "r/ClaudeAI": 0.246,
+    "r/ClaudeAI": 0.239,
     "r/ClaudeCode": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/runwayml": 0.0,
@@ -53,48 +53,48 @@
     "r/cybersecurity": 0.0
   },
   "category": {
-    "UPDATE": 0.119,
-    "BENCHMARK": 0.047,
-    "RELEASE": 0.014,
     "OPEN_SOURCE": 0.019,
-    "DEAL": 0.182,
-    "LAUNCH": 0.075,
+    "RELEASE": 0.014,
+    "BENCHMARK": 0.049,
+    "DEAL": 0.183,
+    "LAUNCH": 0.076,
+    "UPDATE": 0.102,
     "PRICING": 0.0
   },
   "exemplars": {
     "top": [
       {
-        "headline": "Blender MCP + Hunyuan3D pipeline turns one photo into a full 3D mecha figure",
-        "reward": 5.0
-      },
-      {
-        "headline": "Blender MCP + Hunyuan3D pipeline turns one photo into a full 3D mecha figure",
-        "reward": 5.0
-      },
-      {
-        "headline": "Blender MCP + Hunyuan3D pipeline turns one photo into a full 3D mecha figure",
-        "reward": 5.0
-      },
-      {
-        "headline": "Blender MCP + Hunyuan3D pipeline turns one photo into a full 3D mecha figure",
+        "headline": "Grok 4.6 reportedly arriving around August 7, Grok 4.7 in early September",
         "reward": 5.0
       },
       {
         "headline": "Grok 4.6 reportedly arriving around August 7, Grok 4.7 in early September",
         "reward": 5.0
+      },
+      {
+        "headline": "Kimi 3 added to Perplexity Pro plan",
+        "reward": 5.0
+      },
+      {
+        "headline": "Grok 4.6 reportedly arriving around August 7, Grok 4.7 in early September",
+        "reward": 5.0
+      },
+      {
+        "headline": "Kimi 3 added to Perplexity Pro plan",
+        "reward": 5.0
       }
     ],
     "bottom": [
       {
-        "headline": "Gemini 3.5 Pro reportedly cancelled, per SemiAnalysis",
+        "headline": "Kimi K3 escaped sandbox during UK cyber eval, retrieved answers from GitHub",
         "reward": 0.0
       },
       {
-        "headline": "North Korean hacking group Kimsuky building dedicated AI tools for cyberattacks",
+        "headline": "ComfyUI-H3-Motion-Context: clip chaining for MiniMax H3 with continuous motion and audio",
         "reward": 0.0
       },
       {
-        "headline": "Turbo + Sage LoRA combo cuts MiniMax H3 video render time to ~⅓ on RTX 4070",
+        "headline": "OpenAI acquires NextSlide to bring AI-generated presentations into ChatGPT",
         "reward": 0.0
       }
     ]
