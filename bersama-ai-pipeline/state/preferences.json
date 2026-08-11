@@ -1,45 +1,45 @@
 {
-  "updated_at": "2026-08-10T21:59:59Z",
+  "updated_at": "2026-08-11T02:29:26Z",
   "half_life_days": 14,
-  "n_events": 13112,
+  "n_events": 12969,
   "topic": {
-    "coding": 0.06,
-    "creative_video": 0.039,
-    "creative_image": 0.147,
-    "finance": 0.232,
-    "creative_voice": 0.046,
-    "research_productivity": 0.143,
+    "coding": 0.061,
+    "creative_image": 0.088,
+    "creative_video": 0.04,
+    "creative_voice": 0.045,
+    "finance": 0.244,
+    "research_productivity": 0.142,
     "research_study": 0.0,
     "cybersecurity": 0.0,
-    "company_investment": 0.039
+    "company_investment": 0.042
   },
   "source": {
-    "r/artificial": 0.167,
-    "official": 0.019,
-    "huggingface": 0.0,
-    "r/StableDiffusion": 0.026,
-    "r/comfyui": 0.103,
-    "HN": 0.096,
-    "r/algotrading": 0.0,
+    "HN": 0.073,
+    "official": 0.021,
     "github": 0.015,
+    "r/comfyui": 0.109,
+    "r/StableDiffusion": 0.028,
     "r/StartupSoloFounder": 2.065,
-    "r/singularity": 0.085,
+    "r/singularity": 0.087,
     "r/midjourney": 0.0,
+    "huggingface": 0.0,
     "r/deeplearning": 0.0,
     "r/KLINGai": 0.0,
-    "r/cursor": 0.74,
-    "r/perplexity_ai": 0.696,
+    "r/algotrading": 0.0,
+    "r/cursor": 0.73,
+    "r/perplexity_ai": 0.695,
     "r/notebooklm": 0.0,
     "r/udiomusic": 0.0,
-    "r/OpenAI": 0.242,
+    "r/OpenAI": 0.245,
     "r/LocalLLaMA": 0.073,
+    "r/artificial": 0.194,
     "r/SunoAI": 0.0,
     "r/FluxAI": 0.0,
-    "r/SideProject": 0.401,
+    "r/SideProject": 0.397,
     "r/ElevenLabs": 0.0,
     "r/MachineLearning": 0.0,
     "r/PromptEngineering": 0.0,
-    "r/ClaudeAI": 0.256,
+    "r/ClaudeAI": 0.254,
     "r/ClaudeCode": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/runwayml": 0.0,
@@ -53,18 +53,18 @@
     "r/technology": 0.0
   },
   "category": {
-    "RELEASE": 0.014,
+    "UPDATE": 0.142,
     "OPEN_SOURCE": 0.018,
-    "UPDATE": 0.141,
-    "LAUNCH": 0.117,
-    "BENCHMARK": 0.043,
-    "DEAL": 0.171,
+    "RELEASE": 0.014,
+    "BENCHMARK": 0.044,
+    "DEAL": 0.174,
+    "LAUNCH": 0.073,
     "PRICING": 0.0
   },
   "exemplars": {
     "top": [
       {
-        "headline": "FeyNoBg: automatic background removal model and training library",
+        "headline": "How an AI automation agency broke through its year-long $40K/month ceiling",
         "reward": 5.0
       },
       {
@@ -72,15 +72,15 @@
         "reward": 5.0
       },
       {
-        "headline": "FeyNoBg: automatic background removal model and training library",
-        "reward": 5.0
-      },
-      {
         "headline": "How an AI automation agency broke through its year-long $40K/month ceiling",
         "reward": 5.0
       },
       {
-        "headline": "FeyNoBg: automatic background removal model and training library",
+        "headline": "Blender MCP + Hunyuan3D pipeline turns one photo into a full 3D mecha figure",
+        "reward": 5.0
+      },
+      {
+        "headline": "How an AI automation agency broke through its year-long $40K/month ceiling",
         "reward": 5.0
       }
     ],
