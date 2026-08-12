@@ -1,45 +1,45 @@
 {
-  "updated_at": "2026-08-12T19:28:32Z",
+  "updated_at": "2026-08-12T22:04:47Z",
   "half_life_days": 14,
-  "n_events": 12580,
+  "n_events": 12491,
   "topic": {
     "coding": 0.066,
-    "research_productivity": 0.057,
-    "creative_voice": 0.046,
-    "creative_image": 0.06,
-    "creative_video": 0.04,
+    "creative_image": 0.064,
     "research_study": 0.0,
-    "finance": 0.138,
+    "creative_voice": 0.047,
+    "creative_video": 0.04,
+    "research_productivity": 0.06,
+    "finance": 0.135,
     "cybersecurity": 0.0,
-    "company_investment": 0.081
+    "company_investment": 0.082
   },
   "source": {
+    "official": 0.041,
     "HN": 0.079,
-    "huggingface": 0.0,
-    "r/LocalLLaMA": 0.083,
-    "official": 0.039,
-    "r/StableDiffusion": 0.048,
-    "r/comfyui": 0.0,
+    "r/StableDiffusion": 0.049,
     "r/deeplearning": 0.0,
+    "huggingface": 0.0,
     "r/FluxAI": 0.0,
     "r/SideProject": 0.385,
     "github": 0.016,
+    "r/LocalLLaMA": 0.089,
     "r/midjourney": 0.0,
     "r/ElevenLabs": 0.0,
     "r/MachineLearning": 0.0,
+    "r/comfyui": 0.0,
     "r/SunoAI": 0.0,
     "r/perplexity_ai": 0.357,
-    "r/singularity": 0.166,
+    "r/singularity": 0.167,
     "r/algotrading": 0.0,
-    "r/artificial": 0.207,
+    "r/artificial": 0.206,
     "r/OpenAI": 0.387,
     "r/PromptEngineering": 0.0,
-    "r/ClaudeAI": 0.166,
+    "r/ClaudeAI": 0.16,
     "r/ClaudeCode": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/runwayml": 0.0,
     "r/AI_Agents": 0.0,
-    "r/cursor": 0.141,
+    "r/cursor": 0.146,
     "r/notebooklm": 0.0,
     "r/aiMusic": 0.0,
     "r/ChatGPT": 0.0,
@@ -47,7 +47,7 @@
     "r/hacking": 0.0,
     "r/security": 0.0,
     "r/redteamsec": 0.0,
-    "r/technology": 0.221,
+    "r/technology": 0.228,
     "r/cybersecurity": 0.0,
     "r/stocks": 0.0,
     "r/wallstreetbets": 0.0,
@@ -56,13 +56,13 @@
     "r/quant": 0.0
   },
   "category": {
-    "BENCHMARK": 0.05,
-    "RELEASE": 0.016,
-    "LAUNCH": 0.085,
+    "LAUNCH": 0.086,
+    "BENCHMARK": 0.052,
+    "UPDATE": 0.072,
     "OPEN_SOURCE": 0.019,
-    "UPDATE": 0.073,
+    "RELEASE": 0.017,
     "PRICING": 0.0,
-    "DEAL": 0.257
+    "DEAL": 0.256
   },
   "exemplars": {
     "top": [
@@ -89,15 +89,15 @@
     ],
     "bottom": [
       {
-        "headline": "Developer puts GitHub Copilot behind a MitM proxy to inspect its traffic",
+        "headline": "Community analysis ties Suno's new download limits to Warner Music partnership",
         "reward": 0.0
       },
       {
-        "headline": "Stratechery dissects Nvidia's strategic vulnerabilities as the AI build-out matures",
+        "headline": "OpenAI completes $7 billion employee stock buyback at $852B valuation",
         "reward": 0.0
       },
       {
-        "headline": "YC startup Prodigy claims its AI quant beats top Jane Street traders with 100% live returns",
+        "headline": "Google's AMIE medical AI demonstrates real-time clinical video consultations",
         "reward": 0.0
       }
     ]
