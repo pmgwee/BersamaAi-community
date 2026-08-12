@@ -1,28 +1,27 @@
 {
-  "updated_at": "2026-08-12T02:46:27Z",
+  "updated_at": "2026-08-12T05:05:02Z",
   "half_life_days": 14,
-  "n_events": 12591,
+  "n_events": 12668,
   "topic": {
-    "coding": 0.061,
-    "creative_image": 0.046,
+    "coding": 0.062,
+    "creative_image": 0.047,
     "creative_video": 0.04,
     "research_study": 0.0,
-    "finance": 0.13,
+    "finance": 0.128,
     "research_productivity": 0.052,
-    "creative_voice": 0.047,
+    "creative_voice": 0.046,
     "cybersecurity": 0.0,
-    "company_investment": 0.069
+    "company_investment": 0.072
   },
   "source": {
-    "official": 0.032,
-    "r/OpenAI": 0.27,
-    "r/LocalLLaMA": 0.075,
+    "r/LocalLLaMA": 0.074,
     "r/comfyui": 0.0,
-    "r/StableDiffusion": 0.039,
+    "r/StableDiffusion": 0.04,
     "HN": 0.08,
     "huggingface": 0.0,
-    "r/singularity": 0.121,
-    "r/artificial": 0.187,
+    "official": 0.034,
+    "r/singularity": 0.122,
+    "r/artificial": 0.186,
     "github": 0.015,
     "r/deeplearning": 0.0,
     "r/SunoAI": 0.0,
@@ -31,15 +30,16 @@
     "r/midjourney": 0.0,
     "r/ElevenLabs": 0.0,
     "r/MachineLearning": 0.0,
-    "r/perplexity_ai": 0.345,
+    "r/perplexity_ai": 0.348,
     "r/algotrading": 0.0,
+    "r/OpenAI": 0.387,
     "r/PromptEngineering": 0.0,
-    "r/ClaudeAI": 0.21,
+    "r/ClaudeAI": 0.201,
     "r/ClaudeCode": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/runwayml": 0.0,
     "r/AI_Agents": 0.0,
-    "r/cursor": 0.105,
+    "r/cursor": 0.111,
     "r/notebooklm": 0.0,
     "r/aiMusic": 0.0,
     "r/ChatGPT": 0.0,
@@ -47,19 +47,19 @@
     "r/hacking": 0.0,
     "r/security": 0.0,
     "r/redteamsec": 0.0,
-    "r/technology": 0.143,
+    "r/technology": 0.164,
     "r/cybersecurity": 0.0,
     "r/stocks": 0.0,
     "r/wallstreetbets": 0.0
   },
   "category": {
-    "LAUNCH": 0.081,
-    "BENCHMARK": 0.05,
-    "UPDATE": 0.072,
     "PRICING": 0.0,
     "RELEASE": 0.015,
-    "OPEN_SOURCE": 0.019,
-    "DEAL": 0.233
+    "OPEN_SOURCE": 0.018,
+    "LAUNCH": 0.083,
+    "DEAL": 0.233,
+    "UPDATE": 0.072,
+    "BENCHMARK": 0.05
   },
   "exemplars": {
     "top": [
@@ -86,15 +86,15 @@
     ],
     "bottom": [
       {
-        "headline": "OpenAI reportedly completes $7 billion employee tender offer",
+        "headline": "douyin-tiktok-story-skill-agent: local-first agent for short-video script creation",
         "reward": 0.0
       },
       {
-        "headline": "Claude will watermark AI-generated content to comply with EU rules",
+        "headline": "Complete technical whitepaper on GPU memory mechanics, PagedAttention, and model routing",
         "reward": 0.0
       },
       {
-        "headline": "Dan Luu analyzes which programming languages work best for coding agents",
+        "headline": "OpenAI sends letter to Texas Governor Abbott on responsible AI infrastructure",
         "reward": 0.0
       }
     ]
