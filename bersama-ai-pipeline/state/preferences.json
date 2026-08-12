@@ -1,45 +1,45 @@
 {
-  "updated_at": "2026-08-12T13:49:52Z",
+  "updated_at": "2026-08-12T16:10:51Z",
   "half_life_days": 14,
-  "n_events": 12643,
+  "n_events": 12587,
   "topic": {
-    "coding": 0.064,
-    "research_productivity": 0.056,
+    "coding": 0.065,
     "creative_video": 0.04,
-    "finance": 0.132,
-    "creative_image": 0.055,
-    "creative_voice": 0.047,
+    "creative_image": 0.056,
+    "research_productivity": 0.058,
+    "creative_voice": 0.046,
     "research_study": 0.0,
+    "finance": 0.141,
     "cybersecurity": 0.0,
-    "company_investment": 0.076
+    "company_investment": 0.079
   },
   "source": {
+    "r/singularity": 0.143,
     "huggingface": 0.0,
-    "r/LocalLLaMA": 0.077,
-    "github": 0.016,
-    "r/StableDiffusion": 0.047,
-    "r/SunoAI": 0.0,
-    "r/singularity": 0.142,
-    "HN": 0.08,
+    "HN": 0.079,
     "r/comfyui": 0.0,
-    "official": 0.037,
+    "r/LocalLLaMA": 0.084,
+    "official": 0.038,
+    "r/StableDiffusion": 0.048,
     "r/deeplearning": 0.0,
     "r/FluxAI": 0.0,
     "r/SideProject": 0.385,
+    "github": 0.016,
     "r/midjourney": 0.0,
     "r/ElevenLabs": 0.0,
     "r/MachineLearning": 0.0,
+    "r/SunoAI": 0.0,
     "r/perplexity_ai": 0.357,
     "r/algotrading": 0.0,
-    "r/artificial": 0.21,
+    "r/artificial": 0.209,
     "r/OpenAI": 0.387,
     "r/PromptEngineering": 0.0,
-    "r/ClaudeAI": 0.18,
+    "r/ClaudeAI": 0.173,
     "r/ClaudeCode": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/runwayml": 0.0,
     "r/AI_Agents": 0.0,
-    "r/cursor": 0.13,
+    "r/cursor": 0.136,
     "r/notebooklm": 0.0,
     "r/aiMusic": 0.0,
     "r/ChatGPT": 0.0,
@@ -47,20 +47,21 @@
     "r/hacking": 0.0,
     "r/security": 0.0,
     "r/redteamsec": 0.0,
-    "r/technology": 0.205,
+    "r/technology": 0.214,
     "r/cybersecurity": 0.0,
     "r/stocks": 0.0,
     "r/wallstreetbets": 0.0,
-    "r/Economics": 0.0
+    "r/Economics": 0.0,
+    "r/ChatGPTCoding": 0.0
   },
   "category": {
-    "RELEASE": 0.015,
-    "UPDATE": 0.072,
+    "UPDATE": 0.073,
+    "RELEASE": 0.016,
     "OPEN_SOURCE": 0.019,
     "BENCHMARK": 0.051,
     "LAUNCH": 0.085,
     "PRICING": 0.0,
-    "DEAL": 0.258
+    "DEAL": 0.257
   },
   "exemplars": {
     "top": [
@@ -87,15 +88,15 @@
     ],
     "bottom": [
       {
-        "headline": "30-second one-shot AI motion capture with Seedance 2.5 — workflow shared",
+        "headline": "Developer shares production setup for running Codex and Claude Code as a team, with full configs",
         "reward": 0.0
       },
       {
-        "headline": "r/AI_Agents debates: is 'Loop Engineering' just a fancy name for cron jobs?",
+        "headline": "Claude Code hook pipes Claude's output through Gemini to strip verbose 'Claudish' writing style",
         "reward": 0.0
       },
       {
-        "headline": "NotebookLM 'Exam Saver' workflow: turn 80 pages of course material into structured notes",
+        "headline": "Picchio: run a 117B MoE on consumer hardware with only 5 GB RAM by streaming experts from disk",
         "reward": 0.0
       }
     ]
