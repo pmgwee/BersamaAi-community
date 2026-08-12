@@ -1,45 +1,45 @@
 {
-  "updated_at": "2026-08-12T07:54:10Z",
+  "updated_at": "2026-08-12T10:27:32Z",
   "half_life_days": 14,
-  "n_events": 12890,
+  "n_events": 12746,
   "topic": {
-    "coding": 0.062,
-    "creative_image": 0.048,
-    "creative_video": 0.039,
+    "coding": 0.063,
+    "creative_video": 0.04,
+    "creative_voice": 0.045,
+    "creative_image": 0.051,
     "research_study": 0.0,
-    "finance": 0.126,
-    "research_productivity": 0.052,
-    "creative_voice": 0.046,
+    "research_productivity": 0.056,
+    "finance": 0.134,
     "cybersecurity": 0.0,
-    "company_investment": 0.074
+    "company_investment": 0.075
   },
   "source": {
-    "r/LocalLLaMA": 0.073,
-    "r/comfyui": 0.0,
-    "r/StableDiffusion": 0.04,
-    "HN": 0.079,
-    "huggingface": 0.0,
-    "official": 0.035,
-    "r/singularity": 0.123,
+    "r/singularity": 0.124,
     "r/artificial": 0.185,
     "github": 0.015,
+    "r/StableDiffusion": 0.042,
     "r/deeplearning": 0.0,
+    "huggingface": 0.0,
+    "r/LocalLLaMA": 0.078,
     "r/SunoAI": 0.0,
+    "HN": 0.08,
+    "r/comfyui": 0.0,
+    "official": 0.036,
     "r/FluxAI": 0.0,
     "r/SideProject": 0.385,
     "r/midjourney": 0.0,
     "r/ElevenLabs": 0.0,
     "r/MachineLearning": 0.0,
-    "r/perplexity_ai": 0.351,
+    "r/perplexity_ai": 0.354,
     "r/algotrading": 0.0,
     "r/OpenAI": 0.387,
     "r/PromptEngineering": 0.0,
-    "r/ClaudeAI": 0.193,
+    "r/ClaudeAI": 0.186,
     "r/ClaudeCode": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/runwayml": 0.0,
     "r/AI_Agents": 0.0,
-    "r/cursor": 0.117,
+    "r/cursor": 0.124,
     "r/notebooklm": 0.0,
     "r/aiMusic": 0.0,
     "r/ChatGPT": 0.0,
@@ -47,20 +47,20 @@
     "r/hacking": 0.0,
     "r/security": 0.0,
     "r/redteamsec": 0.0,
-    "r/technology": 0.181,
+    "r/technology": 0.194,
     "r/cybersecurity": 0.0,
     "r/stocks": 0.0,
     "r/wallstreetbets": 0.0,
     "r/Economics": 0.0
   },
   "category": {
-    "PRICING": 0.0,
-    "RELEASE": 0.015,
+    "UPDATE": 0.071,
     "OPEN_SOURCE": 0.018,
-    "LAUNCH": 0.083,
-    "DEAL": 0.233,
-    "UPDATE": 0.072,
-    "BENCHMARK": 0.05
+    "BENCHMARK": 0.049,
+    "RELEASE": 0.015,
+    "LAUNCH": 0.084,
+    "PRICING": 0.0,
+    "DEAL": 0.259
   },
   "exemplars": {
     "top": [
@@ -87,15 +87,15 @@
     ],
     "bottom": [
       {
-        "headline": "Free ComfyUI workflow pairs FLUX2 and LTX2.3 for AI architecture visualization",
+        "headline": "30-second one-shot AI motion capture with Seedance 2.5 — workflow shared",
         "reward": 0.0
       },
       {
-        "headline": "Top economist warns AI profits are 'funded by investors, not earned from customers'",
+        "headline": "r/AI_Agents debates: is 'Loop Engineering' just a fancy name for cron jobs?",
         "reward": 0.0
       },
       {
-        "headline": "easy-stock: 基于大模型的A股AI行情分析与智能投研工作台",
+        "headline": "NotebookLM 'Exam Saver' workflow: turn 80 pages of course material into structured notes",
         "reward": 0.0
       }
     ]
