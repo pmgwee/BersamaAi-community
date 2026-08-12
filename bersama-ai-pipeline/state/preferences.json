@@ -1,26 +1,25 @@
 {
-  "updated_at": "2026-08-12T16:10:51Z",
+  "updated_at": "2026-08-12T19:28:32Z",
   "half_life_days": 14,
-  "n_events": 12587,
+  "n_events": 12580,
   "topic": {
-    "coding": 0.065,
-    "creative_video": 0.04,
-    "creative_image": 0.056,
-    "research_productivity": 0.058,
+    "coding": 0.066,
+    "research_productivity": 0.057,
     "creative_voice": 0.046,
+    "creative_image": 0.06,
+    "creative_video": 0.04,
     "research_study": 0.0,
-    "finance": 0.141,
+    "finance": 0.138,
     "cybersecurity": 0.0,
-    "company_investment": 0.079
+    "company_investment": 0.081
   },
   "source": {
-    "r/singularity": 0.143,
-    "huggingface": 0.0,
     "HN": 0.079,
-    "r/comfyui": 0.0,
-    "r/LocalLLaMA": 0.084,
-    "official": 0.038,
+    "huggingface": 0.0,
+    "r/LocalLLaMA": 0.083,
+    "official": 0.039,
     "r/StableDiffusion": 0.048,
+    "r/comfyui": 0.0,
     "r/deeplearning": 0.0,
     "r/FluxAI": 0.0,
     "r/SideProject": 0.385,
@@ -30,16 +29,17 @@
     "r/MachineLearning": 0.0,
     "r/SunoAI": 0.0,
     "r/perplexity_ai": 0.357,
+    "r/singularity": 0.166,
     "r/algotrading": 0.0,
-    "r/artificial": 0.209,
+    "r/artificial": 0.207,
     "r/OpenAI": 0.387,
     "r/PromptEngineering": 0.0,
-    "r/ClaudeAI": 0.173,
+    "r/ClaudeAI": 0.166,
     "r/ClaudeCode": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/runwayml": 0.0,
     "r/AI_Agents": 0.0,
-    "r/cursor": 0.136,
+    "r/cursor": 0.141,
     "r/notebooklm": 0.0,
     "r/aiMusic": 0.0,
     "r/ChatGPT": 0.0,
@@ -47,19 +47,20 @@
     "r/hacking": 0.0,
     "r/security": 0.0,
     "r/redteamsec": 0.0,
-    "r/technology": 0.214,
+    "r/technology": 0.221,
     "r/cybersecurity": 0.0,
     "r/stocks": 0.0,
     "r/wallstreetbets": 0.0,
     "r/Economics": 0.0,
-    "r/ChatGPTCoding": 0.0
+    "r/ChatGPTCoding": 0.0,
+    "r/quant": 0.0
   },
   "category": {
-    "UPDATE": 0.073,
+    "BENCHMARK": 0.05,
     "RELEASE": 0.016,
-    "OPEN_SOURCE": 0.019,
-    "BENCHMARK": 0.051,
     "LAUNCH": 0.085,
+    "OPEN_SOURCE": 0.019,
+    "UPDATE": 0.073,
     "PRICING": 0.0,
     "DEAL": 0.257
   },
@@ -88,15 +89,15 @@
     ],
     "bottom": [
       {
-        "headline": "Developer shares production setup for running Codex and Claude Code as a team, with full configs",
+        "headline": "Developer puts GitHub Copilot behind a MitM proxy to inspect its traffic",
         "reward": 0.0
       },
       {
-        "headline": "Claude Code hook pipes Claude's output through Gemini to strip verbose 'Claudish' writing style",
+        "headline": "Stratechery dissects Nvidia's strategic vulnerabilities as the AI build-out matures",
         "reward": 0.0
       },
       {
-        "headline": "Picchio: run a 117B MoE on consumer hardware with only 5 GB RAM by streaming experts from disk",
+        "headline": "YC startup Prodigy claims its AI quant beats top Jane Street traders with 100% live returns",
         "reward": 0.0
       }
     ]
