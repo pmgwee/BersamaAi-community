@@ -1,27 +1,27 @@
 {
-  "updated_at": "2026-08-12T05:05:02Z",
+  "updated_at": "2026-08-12T07:54:10Z",
   "half_life_days": 14,
-  "n_events": 12668,
+  "n_events": 12890,
   "topic": {
     "coding": 0.062,
-    "creative_image": 0.047,
-    "creative_video": 0.04,
+    "creative_image": 0.048,
+    "creative_video": 0.039,
     "research_study": 0.0,
-    "finance": 0.128,
+    "finance": 0.126,
     "research_productivity": 0.052,
     "creative_voice": 0.046,
     "cybersecurity": 0.0,
-    "company_investment": 0.072
+    "company_investment": 0.074
   },
   "source": {
-    "r/LocalLLaMA": 0.074,
+    "r/LocalLLaMA": 0.073,
     "r/comfyui": 0.0,
     "r/StableDiffusion": 0.04,
-    "HN": 0.08,
+    "HN": 0.079,
     "huggingface": 0.0,
-    "official": 0.034,
-    "r/singularity": 0.122,
-    "r/artificial": 0.186,
+    "official": 0.035,
+    "r/singularity": 0.123,
+    "r/artificial": 0.185,
     "github": 0.015,
     "r/deeplearning": 0.0,
     "r/SunoAI": 0.0,
@@ -30,16 +30,16 @@
     "r/midjourney": 0.0,
     "r/ElevenLabs": 0.0,
     "r/MachineLearning": 0.0,
-    "r/perplexity_ai": 0.348,
+    "r/perplexity_ai": 0.351,
     "r/algotrading": 0.0,
     "r/OpenAI": 0.387,
     "r/PromptEngineering": 0.0,
-    "r/ClaudeAI": 0.201,
+    "r/ClaudeAI": 0.193,
     "r/ClaudeCode": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/runwayml": 0.0,
     "r/AI_Agents": 0.0,
-    "r/cursor": 0.111,
+    "r/cursor": 0.117,
     "r/notebooklm": 0.0,
     "r/aiMusic": 0.0,
     "r/ChatGPT": 0.0,
@@ -47,10 +47,11 @@
     "r/hacking": 0.0,
     "r/security": 0.0,
     "r/redteamsec": 0.0,
-    "r/technology": 0.164,
+    "r/technology": 0.181,
     "r/cybersecurity": 0.0,
     "r/stocks": 0.0,
-    "r/wallstreetbets": 0.0
+    "r/wallstreetbets": 0.0,
+    "r/Economics": 0.0
   },
   "category": {
     "PRICING": 0.0,
@@ -86,15 +87,15 @@
     ],
     "bottom": [
       {
-        "headline": "douyin-tiktok-story-skill-agent: local-first agent for short-video script creation",
+        "headline": "Free ComfyUI workflow pairs FLUX2 and LTX2.3 for AI architecture visualization",
         "reward": 0.0
       },
       {
-        "headline": "Complete technical whitepaper on GPU memory mechanics, PagedAttention, and model routing",
+        "headline": "Top economist warns AI profits are 'funded by investors, not earned from customers'",
         "reward": 0.0
       },
       {
-        "headline": "OpenAI sends letter to Texas Governor Abbott on responsible AI infrastructure",
+        "headline": "easy-stock: 基于大模型的A股AI行情分析与智能投研工作台",
         "reward": 0.0
       }
     ]
