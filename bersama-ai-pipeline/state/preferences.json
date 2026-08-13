@@ -1,56 +1,56 @@
 {
-  "updated_at": "2026-08-13T13:50:33Z",
+  "updated_at": "2026-08-13T16:11:22Z",
   "half_life_days": 14,
-  "n_events": 12791,
+  "n_events": 12815,
   "topic": {
-    "coding": 0.064,
-    "creative_video": 0.036,
-    "research_productivity": 0.056,
+    "coding": 0.065,
+    "research_productivity": 0.055,
     "creative_voice": 0.013,
     "research_study": 0.002,
     "creative_image": 0.075,
-    "finance": 0.122,
+    "creative_video": 0.036,
+    "finance": 0.12,
     "cybersecurity": 0.0,
-    "company_investment": 0.096
+    "company_investment": 0.098
   },
   "source": {
-    "github": 0.014,
-    "r/LocalLLaMA": 0.082,
-    "HN": 0.07,
-    "r/midjourney": 0.0,
-    "r/StableDiffusion": 0.053,
     "huggingface": 0.0,
+    "HN": 0.071,
+    "github": 0.014,
     "r/ElevenLabs": 0.0,
     "r/MachineLearning": 0.0,
     "r/comfyui": 0.0,
-    "r/SunoAI": 0.017,
-    "r/perplexity_ai": 0.334,
-    "r/singularity": 0.181,
-    "official": 0.047,
+    "r/SunoAI": 0.021,
+    "r/perplexity_ai": 0.329,
+    "r/singularity": 0.183,
+    "r/StableDiffusion": 0.056,
+    "official": 0.048,
     "r/algotrading": 0.0,
     "r/FluxAI": 0.0,
-    "r/artificial": 0.201,
+    "r/artificial": 0.2,
     "r/deeplearning": 0.0,
     "r/OpenAI": 0.387,
     "r/SideProject": 0.222,
+    "r/LocalLLaMA": 0.088,
     "r/PromptEngineering": 0.0,
-    "r/ClaudeAI": 0.134,
+    "r/ClaudeAI": 0.129,
     "r/ClaudeCode": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/runwayml": 0.0,
     "r/AI_Agents": 0.0,
-    "r/cursor": 0.167,
+    "r/cursor": 0.168,
     "r/notebooklm": 0.0,
     "r/aiMusic": 0.0,
     "r/ChatGPT": 0.0,
+    "r/midjourney": 0.0,
     "r/netsec": 0.0,
     "r/hacking": 0.0,
     "r/security": 0.0,
     "r/redteamsec": 0.0,
-    "r/technology": 0.249,
+    "r/technology": 0.252,
     "r/cybersecurity": 0.0,
     "r/stocks": 0.0,
-    "r/wallstreetbets": 0.147,
+    "r/wallstreetbets": 0.164,
     "r/Economics": 0.0,
     "r/ChatGPTCoding": 0.0,
     "r/quant": 0.0,
@@ -58,13 +58,13 @@
     "r/investing": 0.0
   },
   "category": {
-    "OPEN_SOURCE": 0.009,
-    "UPDATE": 0.064,
-    "LAUNCH": 0.091,
     "RELEASE": 0.017,
+    "LAUNCH": 0.092,
+    "OPEN_SOURCE": 0.009,
     "BENCHMARK": 0.053,
+    "UPDATE": 0.065,
     "PRICING": 0.0,
-    "DEAL": 0.248
+    "DEAL": 0.246
   },
   "exemplars": {
     "top": [
@@ -91,15 +91,15 @@
     ],
     "bottom": [
       {
-        "headline": "Meta releases Muse Glimmer: 30B dense multimodal agent model under Apache 2.0",
+        "headline": "Grok Bot's hidden settings picker reveals 33 internal models behind the scenes",
         "reward": 0.0
       },
       {
-        "headline": "GhostSplice: malicious MCP servers trick AI coding agents into leaking secrets",
+        "headline": "Fields medalist Timothy Gowers analyzes what kind of maths LLMs are actually good at",
         "reward": 0.0
       },
       {
-        "headline": "Abliterated Model Large integrated with Cyberstrike offensive security harness",
+        "headline": "AI code-testing startup Blacksmith hits $550M valuation as revenue grows 10x",
         "reward": 0.0
       }
     ]
