@@ -28,8 +28,8 @@
     "ts": "2026-08-02T22:14:43+00:00"
   },
   "ShawnPana/phone-harness": {
-    "stars": 1706,
-    "ts": "2026-08-13T16:12:11+00:00"
+    "stars": 1708,
+    "ts": "2026-08-13T19:28:16+00:00"
   },
   "Binaryify/open-kimi-ppt-skill": {
     "stars": 1603,
@@ -63,9 +63,13 @@
     "stars": 989,
     "ts": "2026-07-28T22:18:53+00:00"
   },
+  "Leutenegger/book-to-skill": {
+    "stars": 872,
+    "ts": "2026-08-13T19:28:16+00:00"
+  },
   "SaladDay/pi-from-scratch": {
-    "stars": 846,
-    "ts": "2026-08-13T16:12:11+00:00"
+    "stars": 851,
+    "ts": "2026-08-13T19:28:16+00:00"
   },
   "mikiarlo3/awesome-growth-hacking-skills": {
     "stars": 818,
@@ -91,10 +95,6 @@
     "stars": 617,
     "ts": "2026-08-11T22:07:44+00:00"
   },
-  "sv-number/mcp-server": {
-    "stars": 601,
-    "ts": "2026-08-13T16:12:11+00:00"
-  },
   "hahhforest/pi-textbook": {
     "stars": 588,
     "ts": "2026-07-27T22:20:34+00:00"
@@ -115,6 +115,10 @@
     "stars": 565,
     "ts": "2026-08-01T22:13:32+00:00"
   },
+  "sv-number/mcp-server": {
+    "stars": 559,
+    "ts": "2026-08-13T19:28:16+00:00"
+  },
   "AMAP-ML/LongHorizon-Harness": {
     "stars": 548,
     "ts": "2026-08-10T22:00:46+00:00"
@@ -127,13 +131,13 @@
     "stars": 513,
     "ts": "2026-08-08T21:48:08+00:00"
   },
+  "NikoDemon80/ComfyUI-H3-Motion-Context": {
+    "stars": 512,
+    "ts": "2026-08-13T19:28:44+00:00"
+  },
   "s1dashu/animated-voiceover": {
     "stars": 507,
     "ts": "2026-08-06T14:38:24+00:00"
-  },
-  "NikoDemon80/ComfyUI-H3-Motion-Context": {
-    "stars": 507,
-    "ts": "2026-08-13T16:12:38+00:00"
   },
   "XYZ-AI-Lab/AxisAgentic": {
     "stars": 469,
@@ -164,16 +168,16 @@
     "ts": "2026-08-10T22:00:46+00:00"
   },
   "ayi-ai/nie-grassroots-logic": {
-    "stars": 420,
-    "ts": "2026-08-13T16:12:11+00:00"
+    "stars": 426,
+    "ts": "2026-08-13T19:28:16+00:00"
+  },
+  "0xnyn/airship": {
+    "stars": 419,
+    "ts": "2026-08-13T19:28:16+00:00"
   },
   "KinetiNode/claude-fable-5-system-prompt-clean": {
     "stars": 418,
     "ts": "2026-07-25T22:12:59+00:00"
-  },
-  "0xnyn/airship": {
-    "stars": 413,
-    "ts": "2026-08-13T16:12:11+00:00"
   },
   "Kritt-ai/open-kritt": {
     "stars": 411,
@@ -184,8 +188,8 @@
     "ts": "2026-08-12T22:06:02+00:00"
   },
   "tanishqkancharla/calldiff": {
-    "stars": 377,
-    "ts": "2026-08-13T16:12:11+00:00"
+    "stars": 383,
+    "ts": "2026-08-13T19:28:16+00:00"
   },
   "perplexityai/numbat": {
     "stars": 374,
@@ -195,21 +199,17 @@
     "stars": 374,
     "ts": "2026-08-01T22:13:32+00:00"
   },
-  "i3T4AN/KADATH": {
-    "stars": 362,
-    "ts": "2026-08-13T16:12:11+00:00"
-  },
   "Anionex/agent-vision-toolkit": {
     "stars": 348,
     "ts": "2026-08-07T21:57:59+00:00"
   },
-  "Leutenegger/book-to-skill": {
-    "stars": 348,
-    "ts": "2026-08-13T16:12:11+00:00"
-  },
   "patchy631/time-to-first-token": {
     "stars": 347,
     "ts": "2026-08-08T21:48:08+00:00"
+  },
+  "i3T4AN/KADATH": {
+    "stars": 346,
+    "ts": "2026-08-13T19:28:16+00:00"
   },
   "Audio8-AI/Audio8_TTS": {
     "stars": 339,
@@ -247,10 +247,6 @@
     "stars": 299,
     "ts": "2026-08-11T22:07:17+00:00"
   },
-  "Sateezg/codex-bridge": {
-    "stars": 298,
-    "ts": "2026-08-13T16:12:38+00:00"
-  },
   "ddcat-ai/open-ai-canvas": {
     "stars": 296,
     "ts": "2026-07-28T22:18:53+00:00"
@@ -261,7 +257,7 @@
   },
   "antinomie-lab/pi-book": {
     "stars": 285,
-    "ts": "2026-08-13T16:12:11+00:00"
+    "ts": "2026-08-13T19:28:16+00:00"
   },
   "nkxx188/ComfyUI-MiniMaxH3-Easy": {
     "stars": 276,
@@ -270,6 +266,10 @@
   "Anionex/codex-vision-proxy": {
     "stars": 275,
     "ts": "2026-08-05T03:35:42+00:00"
+  },
+  "Sateezg/codex-bridge": {
+    "stars": 273,
+    "ts": "2026-08-13T19:28:44+00:00"
   },
   "alikon-art/DeterminFlow": {
     "stars": 271,
@@ -303,13 +303,13 @@
     "stars": 254,
     "ts": "2026-07-24T22:21:15+00:00"
   },
+  "lexmount/moli": {
+    "stars": 250,
+    "ts": "2026-08-13T19:28:16+00:00"
+  },
   "TryCaspian/caspian-sdk": {
     "stars": 247,
     "ts": "2026-07-26T22:15:29+00:00"
-  },
-  "lexmount/moli": {
-    "stars": 244,
-    "ts": "2026-08-13T16:12:11+00:00"
   },
   "AmazingAng/old-coder": {
     "stars": 241,
@@ -335,17 +335,13 @@
     "stars": 223,
     "ts": "2026-08-10T22:01:27+00:00"
   },
-  "KiaBush/Persian-IPA-to-Speech-F5": {
-    "stars": 220,
-    "ts": "2026-08-13T16:13:41+00:00"
-  },
   "paxlabs-inc/machine-genome": {
     "stars": 213,
     "ts": "2026-07-26T22:15:29+00:00"
   },
   "surya-koritala/loomfeed": {
     "stars": 212,
-    "ts": "2026-08-13T16:12:11+00:00"
+    "ts": "2026-08-13T19:28:16+00:00"
   },
   "TaiT-tt/tait-crt-interface-skill": {
     "stars": 211,
@@ -383,17 +379,25 @@
     "stars": 199,
     "ts": "2026-07-26T22:15:29+00:00"
   },
+  "KiaBush/Persian-IPA-to-Speech-F5": {
+    "stars": 194,
+    "ts": "2026-08-13T19:29:48+00:00"
+  },
+  "miqdadbadjuber/anti-slop": {
+    "stars": 194,
+    "ts": "2026-08-13T19:28:16+00:00"
+  },
   "0xwilliamortiz/agents-council": {
     "stars": 193,
     "ts": "2026-07-26T22:15:29+00:00"
   },
+  "ccch1mneyyy/dsh-cc-tui": {
+    "stars": 192,
+    "ts": "2026-08-13T19:28:16+00:00"
+  },
   "Mr-funny/hbg-classical-poem-silk-video": {
     "stars": 191,
     "ts": "2026-08-09T21:50:10+00:00"
-  },
-  "miqdadbadjuber/anti-slop": {
-    "stars": 190,
-    "ts": "2026-08-13T16:12:11+00:00"
   },
   "robbin/wechat-exporter": {
     "stars": 189,
@@ -441,7 +445,7 @@
   },
   "jundizhou/easy-stock": {
     "stars": 162,
-    "ts": "2026-08-13T16:15:32+00:00"
+    "ts": "2026-08-13T19:31:54+00:00"
   },
   "lincwang123-bot/moonlit-stories": {
     "stars": 153,
