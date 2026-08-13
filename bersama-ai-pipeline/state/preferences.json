@@ -1,45 +1,45 @@
 {
-  "updated_at": "2026-08-12T22:04:47Z",
+  "updated_at": "2026-08-13T02:48:55Z",
   "half_life_days": 14,
-  "n_events": 12491,
+  "n_events": 12501,
   "topic": {
-    "coding": 0.066,
-    "creative_image": 0.064,
+    "coding": 0.062,
+    "creative_voice": 0.046,
+    "creative_image": 0.067,
+    "creative_video": 0.039,
     "research_study": 0.0,
-    "creative_voice": 0.047,
-    "creative_video": 0.04,
-    "research_productivity": 0.06,
-    "finance": 0.135,
+    "research_productivity": 0.059,
+    "finance": 0.133,
     "cybersecurity": 0.0,
-    "company_investment": 0.082
+    "company_investment": 0.083
   },
   "source": {
-    "official": 0.041,
-    "HN": 0.079,
-    "r/StableDiffusion": 0.049,
-    "r/deeplearning": 0.0,
+    "HN": 0.069,
     "huggingface": 0.0,
+    "official": 0.043,
+    "r/StableDiffusion": 0.051,
     "r/FluxAI": 0.0,
     "r/SideProject": 0.385,
-    "github": 0.016,
-    "r/LocalLLaMA": 0.089,
+    "github": 0.015,
+    "r/LocalLLaMA": 0.088,
     "r/midjourney": 0.0,
     "r/ElevenLabs": 0.0,
     "r/MachineLearning": 0.0,
     "r/comfyui": 0.0,
     "r/SunoAI": 0.0,
     "r/perplexity_ai": 0.357,
-    "r/singularity": 0.167,
+    "r/singularity": 0.17,
     "r/algotrading": 0.0,
-    "r/artificial": 0.206,
+    "r/artificial": 0.205,
+    "r/deeplearning": 0.0,
     "r/OpenAI": 0.387,
     "r/PromptEngineering": 0.0,
-    "r/ClaudeAI": 0.16,
+    "r/ClaudeAI": 0.155,
     "r/ClaudeCode": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/runwayml": 0.0,
     "r/AI_Agents": 0.0,
-    "r/cursor": 0.146,
+    "r/cursor": 0.151,
     "r/notebooklm": 0.0,
     "r/aiMusic": 0.0,
     "r/ChatGPT": 0.0,
@@ -47,7 +47,7 @@
     "r/hacking": 0.0,
     "r/security": 0.0,
     "r/redteamsec": 0.0,
-    "r/technology": 0.228,
+    "r/technology": 0.233,
     "r/cybersecurity": 0.0,
     "r/stocks": 0.0,
     "r/wallstreetbets": 0.0,
@@ -56,26 +56,18 @@
     "r/quant": 0.0
   },
   "category": {
-    "LAUNCH": 0.086,
+    "RELEASE": 0.016,
     "BENCHMARK": 0.052,
-    "UPDATE": 0.072,
+    "UPDATE": 0.063,
+    "LAUNCH": 0.088,
     "OPEN_SOURCE": 0.019,
-    "RELEASE": 0.017,
     "PRICING": 0.0,
-    "DEAL": 0.256
+    "DEAL": 0.254
   },
   "exemplars": {
     "top": [
       {
-        "headline": "Claude reports elevated errors across all models",
-        "reward": 5.0
-      },
-      {
-        "headline": "Claude reports elevated errors across all models",
-        "reward": 5.0
-      },
-      {
-        "headline": "Claude reports elevated errors across all models",
+        "headline": "Open-source Chrome extension transcribes WhatsApp Web voice notes for free",
         "reward": 5.0
       },
       {
@@ -83,21 +75,29 @@
         "reward": 5.0
       },
       {
-        "headline": "Claude reports elevated errors across all models",
-        "reward": 5.0
+        "headline": "Open-source Chrome extension transcribes WhatsApp Web voice notes for free",
+        "reward": 0.6
+      },
+      {
+        "headline": "Open-source Chrome extension transcribes WhatsApp Web voice notes for free",
+        "reward": 0.6
+      },
+      {
+        "headline": "Open-source Chrome extension transcribes WhatsApp Web voice notes for free",
+        "reward": 0.6
       }
     ],
     "bottom": [
       {
-        "headline": "Community analysis ties Suno's new download limits to Warner Music partnership",
+        "headline": "OpenAI's Daybreak cybersecurity models now available on AWS Bedrock",
         "reward": 0.0
       },
       {
-        "headline": "OpenAI completes $7 billion employee stock buyback at $852B valuation",
+        "headline": "HyperSAE: hyperbolic geometry fixes dead latent collapse in sparse autoencoders",
         "reward": 0.0
       },
       {
-        "headline": "Google's AMIE medical AI demonstrates real-time clinical video consultations",
+        "headline": "Study of an AI bot running a San Francisco store finds it friendly but not very smart",
         "reward": 0.0
       }
     ]
