@@ -1,45 +1,45 @@
 {
-  "updated_at": "2026-08-13T05:08:28Z",
+  "updated_at": "2026-08-13T07:55:21Z",
   "half_life_days": 14,
-  "n_events": 12554,
+  "n_events": 12795,
   "topic": {
     "coding": 0.063,
     "creative_image": 0.068,
-    "creative_video": 0.038,
-    "research_study": 0.0,
-    "creative_voice": 0.048,
-    "research_productivity": 0.058,
-    "finance": 0.13,
+    "creative_video": 0.037,
+    "research_study": 0.001,
+    "creative_voice": 0.047,
+    "research_productivity": 0.057,
+    "finance": 0.128,
     "cybersecurity": 0.0,
-    "company_investment": 0.087
+    "company_investment": 0.091
   },
   "source": {
     "HN": 0.069,
-    "r/StableDiffusion": 0.05,
+    "r/StableDiffusion": 0.049,
     "r/FluxAI": 0.0,
     "r/SideProject": 0.385,
     "huggingface": 0.0,
     "github": 0.015,
-    "r/LocalLLaMA": 0.086,
+    "r/LocalLLaMA": 0.085,
     "r/midjourney": 0.0,
     "r/ElevenLabs": 0.0,
     "r/MachineLearning": 0.0,
     "r/comfyui": 0.0,
-    "r/SunoAI": 0.0,
-    "r/perplexity_ai": 0.351,
-    "r/singularity": 0.173,
+    "r/SunoAI": 0.006,
+    "r/perplexity_ai": 0.345,
+    "r/singularity": 0.175,
     "official": 0.045,
     "r/algotrading": 0.0,
-    "r/artificial": 0.204,
+    "r/artificial": 0.202,
     "r/deeplearning": 0.0,
     "r/OpenAI": 0.387,
     "r/PromptEngineering": 0.0,
-    "r/ClaudeAI": 0.149,
+    "r/ClaudeAI": 0.144,
     "r/ClaudeCode": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/runwayml": 0.0,
     "r/AI_Agents": 0.0,
-    "r/cursor": 0.155,
+    "r/cursor": 0.159,
     "r/notebooklm": 0.0,
     "r/aiMusic": 0.0,
     "r/ChatGPT": 0.0,
@@ -47,14 +47,15 @@
     "r/hacking": 0.0,
     "r/security": 0.0,
     "r/redteamsec": 0.0,
-    "r/technology": 0.238,
+    "r/technology": 0.242,
     "r/cybersecurity": 0.0,
     "r/stocks": 0.0,
-    "r/wallstreetbets": 0.057,
+    "r/wallstreetbets": 0.096,
     "r/Economics": 0.0,
     "r/ChatGPTCoding": 0.0,
     "r/quant": 0.0,
-    "r/business": 0.6
+    "r/business": 0.6,
+    "r/investing": 0.0
   },
   "category": {
     "UPDATE": 0.063,
@@ -63,7 +64,7 @@
     "OPEN_SOURCE": 0.018,
     "RELEASE": 0.017,
     "PRICING": 0.0,
-    "DEAL": 0.254
+    "DEAL": 0.251
   },
   "exemplars": {
     "top": [
@@ -90,15 +91,15 @@
     ],
     "bottom": [
       {
-        "headline": "Autonomous Claude agent given $90 and global access chooses to save a dying tree",
+        "headline": "Cursor prepares to launch Origin automated code review platform",
         "reward": 0.0
       },
       {
-        "headline": "Flux 3 Video draws excitement across the Flux community with early clips",
+        "headline": "SK Hynix and SanDisk unveil High Bandwidth Flash standard for cheaper AI memory",
         "reward": 0.0
       },
       {
-        "headline": "Perplexity introduces new hard usage limits on Pro subscriptions",
+        "headline": "Mistral announces European sovereign AI infrastructure, in-region inference, and open models",
         "reward": 0.0
       }
     ]
