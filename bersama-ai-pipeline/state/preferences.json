@@ -1,45 +1,45 @@
 {
-  "updated_at": "2026-08-13T19:27:26Z",
+  "updated_at": "2026-08-13T22:04:51Z",
   "half_life_days": 14,
-  "n_events": 12791,
+  "n_events": 12735,
   "topic": {
-    "coding": 0.066,
-    "creative_image": 0.075,
-    "research_study": 0.003,
-    "creative_voice": 0.013,
-    "research_productivity": 0.058,
-    "creative_video": 0.036,
-    "finance": 0.117,
+    "coding": 0.067,
+    "creative_image": 0.079,
+    "creative_video": 0.035,
+    "creative_voice": 0.014,
+    "research_study": 0.004,
+    "finance": 0.115,
+    "research_productivity": 0.061,
     "cybersecurity": 0.0,
-    "company_investment": 0.099
+    "company_investment": 0.1
   },
   "source": {
-    "HN": 0.071,
+    "HN": 0.072,
+    "r/singularity": 0.188,
+    "r/StableDiffusion": 0.053,
+    "official": 0.049,
     "github": 0.014,
-    "r/comfyui": 0.0,
-    "r/SunoAI": 0.026,
-    "r/perplexity_ai": 0.324,
-    "r/singularity": 0.185,
-    "r/StableDiffusion": 0.055,
-    "official": 0.048,
     "r/algotrading": 0.0,
     "huggingface": 0.0,
+    "r/SunoAI": 0.038,
+    "r/comfyui": 0.0,
     "r/FluxAI": 0.0,
-    "r/artificial": 0.199,
+    "r/artificial": 0.198,
     "r/MachineLearning": 0.0,
     "r/deeplearning": 0.0,
     "r/OpenAI": 0.387,
     "r/ElevenLabs": 0.0,
     "r/SideProject": 0.222,
-    "r/LocalLLaMA": 0.086,
+    "r/LocalLLaMA": 0.084,
     "r/PromptEngineering": 0.0,
-    "r/ClaudeAI": 0.125,
+    "r/ClaudeAI": 0.12,
     "r/ClaudeCode": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/runwayml": 0.0,
     "r/AI_Agents": 0.0,
-    "r/cursor": 0.169,
+    "r/cursor": 0.17,
     "r/notebooklm": 0.0,
+    "r/perplexity_ai": 0.502,
     "r/aiMusic": 0.0,
     "r/ChatGPT": 0.0,
     "r/midjourney": 0.0,
@@ -47,10 +47,10 @@
     "r/hacking": 0.0,
     "r/security": 0.0,
     "r/redteamsec": 0.0,
-    "r/technology": 0.254,
+    "r/technology": 0.257,
     "r/cybersecurity": 0.0,
     "r/stocks": 0.0,
-    "r/wallstreetbets": 0.178,
+    "r/wallstreetbets": 0.189,
     "r/Economics": 0.0,
     "r/ChatGPTCoding": 0.0,
     "r/quant": 0.0,
@@ -58,13 +58,13 @@
     "r/investing": 0.0
   },
   "category": {
-    "BENCHMARK": 0.054,
-    "OPEN_SOURCE": 0.009,
-    "UPDATE": 0.065,
     "PRICING": 0.0,
-    "RELEASE": 0.017,
-    "LAUNCH": 0.096,
-    "DEAL": 0.243
+    "BENCHMARK": 0.056,
+    "UPDATE": 0.066,
+    "OPEN_SOURCE": 0.009,
+    "RELEASE": 0.016,
+    "LAUNCH": 0.095,
+    "DEAL": 0.24
   },
   "exemplars": {
     "top": [
@@ -91,15 +91,15 @@
     ],
     "bottom": [
       {
-        "headline": "Baidu releases Unlimited-OCR model on Hugging Face",
+        "headline": "Claude Opus 5 autonomously builds a GTA-style open-world game in 24 hours",
         "reward": 0.0
       },
       {
-        "headline": "DeepMind launches SL2T sign language-to-text model",
+        "headline": "Mass vulnerability scans spoof AI crawlers like ClaudeBot to evade detection",
         "reward": 0.0
       },
       {
-        "headline": "Lovable raises $400M at $13.3B valuation after hitting $500M ARR",
+        "headline": "Runway Agent adds Figma, Dropbox, and Notion connectors",
         "reward": 0.0
       }
     ]
