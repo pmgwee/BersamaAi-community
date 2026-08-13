@@ -28,8 +28,8 @@
     "ts": "2026-08-02T22:14:43+00:00"
   },
   "ShawnPana/phone-harness": {
-    "stars": 1648,
-    "ts": "2026-08-13T02:49:42+00:00"
+    "stars": 1662,
+    "ts": "2026-08-13T05:09:17+00:00"
   },
   "Binaryify/open-kimi-ppt-skill": {
     "stars": 1603,
@@ -68,8 +68,8 @@
     "ts": "2026-08-10T22:00:46+00:00"
   },
   "SaladDay/pi-from-scratch": {
-    "stars": 793,
-    "ts": "2026-08-13T02:49:42+00:00"
+    "stars": 806,
+    "ts": "2026-08-13T05:09:17+00:00"
   },
   "pireel/pireel": {
     "stars": 770,
@@ -92,8 +92,8 @@
     "ts": "2026-08-11T22:07:44+00:00"
   },
   "sv-number/mcp-server": {
-    "stars": 597,
-    "ts": "2026-08-13T02:49:42+00:00"
+    "stars": 602,
+    "ts": "2026-08-13T05:09:17+00:00"
   },
   "hahhforest/pi-textbook": {
     "stars": 588,
@@ -132,8 +132,8 @@
     "ts": "2026-08-06T14:38:24+00:00"
   },
   "NikoDemon80/ComfyUI-H3-Motion-Context": {
-    "stars": 485,
-    "ts": "2026-08-13T02:50:08+00:00"
+    "stars": 486,
+    "ts": "2026-08-13T05:09:44+00:00"
   },
   "XYZ-AI-Lab/AxisAgentic": {
     "stars": 469,
@@ -176,8 +176,8 @@
     "ts": "2026-08-12T22:06:02+00:00"
   },
   "0xnyn/airship": {
-    "stars": 382,
-    "ts": "2026-08-13T02:49:42+00:00"
+    "stars": 385,
+    "ts": "2026-08-13T05:09:17+00:00"
   },
   "perplexityai/numbat": {
     "stars": 374,
@@ -188,12 +188,12 @@
     "ts": "2026-08-01T22:13:32+00:00"
   },
   "ayi-ai/nie-grassroots-logic": {
-    "stars": 364,
-    "ts": "2026-08-13T02:49:42+00:00"
+    "stars": 374,
+    "ts": "2026-08-13T05:09:17+00:00"
   },
   "tanishqkancharla/calldiff": {
-    "stars": 362,
-    "ts": "2026-08-13T02:49:42+00:00"
+    "stars": 363,
+    "ts": "2026-08-13T05:09:17+00:00"
   },
   "Anionex/agent-vision-toolkit": {
     "stars": 348,
@@ -229,7 +229,7 @@
   },
   "Sateezg/codex-bridge": {
     "stars": 307,
-    "ts": "2026-08-13T02:50:08+00:00"
+    "ts": "2026-08-13T05:09:44+00:00"
   },
   "0xwilliamortiz/andrej-karpathy-skills": {
     "stars": 305,
@@ -251,13 +251,13 @@
     "stars": 286,
     "ts": "2026-08-11T22:07:17+00:00"
   },
+  "antinomie-lab/pi-book": {
+    "stars": 279,
+    "ts": "2026-08-13T05:09:17+00:00"
+  },
   "nkxx188/ComfyUI-MiniMaxH3-Easy": {
     "stars": 276,
     "ts": "2026-08-11T22:08:22+00:00"
-  },
-  "antinomie-lab/pi-book": {
-    "stars": 276,
-    "ts": "2026-08-13T02:49:42+00:00"
   },
   "Anionex/codex-vision-proxy": {
     "stars": 275,
@@ -363,6 +363,10 @@
     "stars": 199,
     "ts": "2026-07-26T22:15:29+00:00"
   },
+  "lexmount/moli": {
+    "stars": 199,
+    "ts": "2026-08-13T05:09:17+00:00"
+  },
   "0xwilliamortiz/agents-council": {
     "stars": 193,
     "ts": "2026-07-26T22:15:29+00:00"
@@ -383,9 +387,9 @@
     "stars": 184,
     "ts": "2026-08-05T22:29:33+00:00"
   },
-  "lexmount/moli": {
-    "stars": 183,
-    "ts": "2026-08-13T02:49:42+00:00"
+  "miqdadbadjuber/anti-slop": {
+    "stars": 177,
+    "ts": "2026-08-13T05:09:17+00:00"
   },
   "freestylefly/wesight-obsidian": {
     "stars": 174,
@@ -395,13 +399,9 @@
     "stars": 173,
     "ts": "2026-07-29T22:18:15+00:00"
   },
-  "miqdadbadjuber/anti-slop": {
-    "stars": 173,
-    "ts": "2026-08-13T02:49:42+00:00"
-  },
   "i3T4AN/KADATH": {
-    "stars": 172,
-    "ts": "2026-08-13T02:49:42+00:00"
+    "stars": 173,
+    "ts": "2026-08-13T05:09:17+00:00"
   },
   "0xtresser/Transcript-of-Liang-Wenfengs-DeepSeek-Founder-4-Hour-Investor-Meeting": {
     "stars": 170,
@@ -416,12 +416,12 @@
     "ts": "2026-07-25T22:12:59+00:00"
   },
   "surya-koritala/loomfeed": {
-    "stars": 165,
-    "ts": "2026-08-13T02:49:42+00:00"
+    "stars": 166,
+    "ts": "2026-08-13T05:09:17+00:00"
   },
   "KiaBush/Persian-IPA-to-Speech-F5": {
     "stars": 164,
-    "ts": "2026-08-13T02:51:11+00:00"
+    "ts": "2026-08-13T05:10:48+00:00"
   },
   "NextWeb4/official-document-ai-assistant": {
     "stars": 164,
@@ -448,8 +448,8 @@
     "ts": "2026-08-08T21:48:08+00:00"
   },
   "jundizhou/easy-stock": {
-    "stars": 138,
-    "ts": "2026-08-13T02:52:59+00:00"
+    "stars": 142,
+    "ts": "2026-08-13T05:12:54+00:00"
   },
   "AFan4724/clone-chat": {
     "stars": 111,
