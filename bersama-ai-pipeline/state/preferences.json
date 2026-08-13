@@ -1,45 +1,45 @@
 {
-  "updated_at": "2026-08-13T07:55:21Z",
+  "updated_at": "2026-08-13T10:29:34Z",
   "half_life_days": 14,
-  "n_events": 12795,
+  "n_events": 12681,
   "topic": {
     "coding": 0.063,
-    "creative_image": 0.068,
     "creative_video": 0.037,
-    "research_study": 0.001,
-    "creative_voice": 0.047,
     "research_productivity": 0.057,
-    "finance": 0.128,
+    "creative_voice": 0.013,
+    "research_study": 0.001,
+    "creative_image": 0.075,
+    "finance": 0.125,
     "cybersecurity": 0.0,
-    "company_investment": 0.091
+    "company_investment": 0.094
   },
   "source": {
-    "HN": 0.069,
-    "r/StableDiffusion": 0.049,
-    "r/FluxAI": 0.0,
-    "r/SideProject": 0.385,
     "huggingface": 0.0,
-    "github": 0.015,
-    "r/LocalLLaMA": 0.085,
+    "github": 0.014,
+    "r/LocalLLaMA": 0.084,
+    "HN": 0.071,
     "r/midjourney": 0.0,
+    "r/StableDiffusion": 0.054,
     "r/ElevenLabs": 0.0,
     "r/MachineLearning": 0.0,
     "r/comfyui": 0.0,
-    "r/SunoAI": 0.006,
-    "r/perplexity_ai": 0.345,
-    "r/singularity": 0.175,
-    "official": 0.045,
+    "r/SunoAI": 0.012,
+    "r/perplexity_ai": 0.34,
+    "r/singularity": 0.178,
+    "official": 0.046,
     "r/algotrading": 0.0,
-    "r/artificial": 0.202,
+    "r/FluxAI": 0.0,
+    "r/artificial": 0.201,
     "r/deeplearning": 0.0,
     "r/OpenAI": 0.387,
+    "r/SideProject": 0.222,
     "r/PromptEngineering": 0.0,
-    "r/ClaudeAI": 0.144,
+    "r/ClaudeAI": 0.139,
     "r/ClaudeCode": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/runwayml": 0.0,
     "r/AI_Agents": 0.0,
-    "r/cursor": 0.159,
+    "r/cursor": 0.163,
     "r/notebooklm": 0.0,
     "r/aiMusic": 0.0,
     "r/ChatGPT": 0.0,
@@ -47,10 +47,10 @@
     "r/hacking": 0.0,
     "r/security": 0.0,
     "r/redteamsec": 0.0,
-    "r/technology": 0.242,
+    "r/technology": 0.245,
     "r/cybersecurity": 0.0,
     "r/stocks": 0.0,
-    "r/wallstreetbets": 0.096,
+    "r/wallstreetbets": 0.125,
     "r/Economics": 0.0,
     "r/ChatGPTCoding": 0.0,
     "r/quant": 0.0,
@@ -58,48 +58,48 @@
     "r/investing": 0.0
   },
   "category": {
-    "UPDATE": 0.063,
-    "LAUNCH": 0.088,
-    "BENCHMARK": 0.052,
-    "OPEN_SOURCE": 0.018,
     "RELEASE": 0.017,
+    "OPEN_SOURCE": 0.01,
+    "UPDATE": 0.064,
+    "LAUNCH": 0.091,
+    "BENCHMARK": 0.054,
     "PRICING": 0.0,
-    "DEAL": 0.251
+    "DEAL": 0.249
   },
   "exemplars": {
     "top": [
       {
-        "headline": "Open-source Chrome extension transcribes WhatsApp Web voice notes for free",
-        "reward": 5.0
-      },
-      {
-        "headline": "Open-source Chrome extension transcribes WhatsApp Web voice notes for free",
-        "reward": 5.0
-      },
-      {
-        "headline": "Open-source Chrome extension transcribes WhatsApp Web voice notes for free",
+        "headline": "AI helped Google patch more Chrome bugs in June than the previous two years combined",
         "reward": 0.6
       },
       {
-        "headline": "Open-source Chrome extension transcribes WhatsApp Web voice notes for free",
+        "headline": "AI helped Google patch more Chrome bugs in June than the previous two years combined",
         "reward": 0.6
       },
       {
-        "headline": "Open-source Chrome extension transcribes WhatsApp Web voice notes for free",
+        "headline": "Moonshot trained Kimi on 20,000 Nvidia GPU cluster rented from Alibaba",
+        "reward": 0.6
+      },
+      {
+        "headline": "AI helped Google patch more Chrome bugs in June than the previous two years combined",
+        "reward": 0.6
+      },
+      {
+        "headline": "Moonshot trained Kimi on 20,000 Nvidia GPU cluster rented from Alibaba",
         "reward": 0.6
       }
     ],
     "bottom": [
       {
-        "headline": "Cursor prepares to launch Origin automated code review platform",
+        "headline": "shuohao-skills: agent skill collection for AI short-drama production in Claude Code and Codex",
         "reward": 0.0
       },
       {
-        "headline": "SK Hynix and SanDisk unveil High Bandwidth Flash standard for cheaper AI memory",
+        "headline": "DeepMind's WeatherNext AI achieves breakthrough in cyclone forecasting",
         "reward": 0.0
       },
       {
-        "headline": "Mistral announces European sovereign AI infrastructure, in-region inference, and open models",
+        "headline": "Open-source TWAP trading bot for Polymarket prediction markets",
         "reward": 0.0
       }
     ]

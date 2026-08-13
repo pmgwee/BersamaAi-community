@@ -28,8 +28,8 @@
     "ts": "2026-08-02T22:14:43+00:00"
   },
   "ShawnPana/phone-harness": {
-    "stars": 1682,
-    "ts": "2026-08-13T07:56:09+00:00"
+    "stars": 1691,
+    "ts": "2026-08-13T10:30:23+00:00"
   },
   "Binaryify/open-kimi-ppt-skill": {
     "stars": 1603,
@@ -64,8 +64,8 @@
     "ts": "2026-07-28T22:18:53+00:00"
   },
   "SaladDay/pi-from-scratch": {
-    "stars": 823,
-    "ts": "2026-08-13T07:56:09+00:00"
+    "stars": 831,
+    "ts": "2026-08-13T10:30:23+00:00"
   },
   "mikiarlo3/awesome-growth-hacking-skills": {
     "stars": 818,
@@ -92,8 +92,8 @@
     "ts": "2026-08-11T22:07:44+00:00"
   },
   "sv-number/mcp-server": {
-    "stars": 604,
-    "ts": "2026-08-13T07:56:09+00:00"
+    "stars": 611,
+    "ts": "2026-08-13T10:30:23+00:00"
   },
   "hahhforest/pi-textbook": {
     "stars": 588,
@@ -132,8 +132,8 @@
     "ts": "2026-08-06T14:38:24+00:00"
   },
   "NikoDemon80/ComfyUI-H3-Motion-Context": {
-    "stars": 493,
-    "ts": "2026-08-13T07:56:36+00:00"
+    "stars": 501,
+    "ts": "2026-08-13T10:30:50+00:00"
   },
   "XYZ-AI-Lab/AxisAgentic": {
     "stars": 469,
@@ -176,12 +176,12 @@
     "ts": "2026-08-12T22:06:02+00:00"
   },
   "0xnyn/airship": {
-    "stars": 390,
-    "ts": "2026-08-13T07:56:09+00:00"
+    "stars": 398,
+    "ts": "2026-08-13T10:30:23+00:00"
   },
   "ayi-ai/nie-grassroots-logic": {
-    "stars": 380,
-    "ts": "2026-08-13T07:56:09+00:00"
+    "stars": 396,
+    "ts": "2026-08-13T10:30:23+00:00"
   },
   "perplexityai/numbat": {
     "stars": 374,
@@ -192,8 +192,12 @@
     "ts": "2026-08-01T22:13:32+00:00"
   },
   "tanishqkancharla/calldiff": {
-    "stars": 364,
-    "ts": "2026-08-13T07:56:09+00:00"
+    "stars": 370,
+    "ts": "2026-08-13T10:30:23+00:00"
+  },
+  "i3T4AN/KADATH": {
+    "stars": 367,
+    "ts": "2026-08-13T10:30:23+00:00"
   },
   "Anionex/agent-vision-toolkit": {
     "stars": 348,
@@ -228,16 +232,12 @@
     "ts": "2026-08-04T22:31:22+00:00"
   },
   "Sateezg/codex-bridge": {
-    "stars": 307,
-    "ts": "2026-08-13T07:56:36+00:00"
+    "stars": 308,
+    "ts": "2026-08-13T10:30:50+00:00"
   },
   "0xwilliamortiz/andrej-karpathy-skills": {
     "stars": 305,
     "ts": "2026-07-27T22:20:34+00:00"
-  },
-  "i3T4AN/KADATH": {
-    "stars": 304,
-    "ts": "2026-08-13T07:56:09+00:00"
   },
   "ruudkoeyvoets/polymarket-trading-bot-twap": {
     "stars": 302,
@@ -257,7 +257,7 @@
   },
   "antinomie-lab/pi-book": {
     "stars": 282,
-    "ts": "2026-08-13T07:56:09+00:00"
+    "ts": "2026-08-13T10:30:23+00:00"
   },
   "nkxx188/ComfyUI-MiniMaxH3-Easy": {
     "stars": 276,
@@ -323,13 +323,13 @@
     "stars": 230,
     "ts": "2026-08-09T21:50:37+00:00"
   },
+  "lexmount/moli": {
+    "stars": 225,
+    "ts": "2026-08-13T10:30:23+00:00"
+  },
   "AIMixer/ComfyUI_MiniMaxH3_Director": {
     "stars": 223,
     "ts": "2026-08-10T22:01:27+00:00"
-  },
-  "lexmount/moli": {
-    "stars": 215,
-    "ts": "2026-08-13T07:56:09+00:00"
   },
   "paxlabs-inc/machine-genome": {
     "stars": 213,
@@ -371,6 +371,10 @@
     "stars": 199,
     "ts": "2026-07-26T22:15:29+00:00"
   },
+  "KiaBush/Persian-IPA-to-Speech-F5": {
+    "stars": 195,
+    "ts": "2026-08-13T10:32:10+00:00"
+  },
   "0xwilliamortiz/agents-council": {
     "stars": 193,
     "ts": "2026-07-26T22:15:29+00:00"
@@ -392,8 +396,8 @@
     "ts": "2026-08-05T22:29:33+00:00"
   },
   "miqdadbadjuber/anti-slop": {
-    "stars": 182,
-    "ts": "2026-08-13T07:56:09+00:00"
+    "stars": 183,
+    "ts": "2026-08-13T10:30:23+00:00"
   },
   "freestylefly/wesight-obsidian": {
     "stars": 174,
@@ -402,10 +406,6 @@
   "codejunkie99/graph-engineering": {
     "stars": 173,
     "ts": "2026-07-29T22:18:15+00:00"
-  },
-  "KiaBush/Persian-IPA-to-Speech-F5": {
-    "stars": 171,
-    "ts": "2026-08-13T07:57:39+00:00"
   },
   "0xtresser/Transcript-of-Liang-Wenfengs-DeepSeek-Founder-4-Hour-Investor-Meeting": {
     "stars": 170,
@@ -417,7 +417,7 @@
   },
   "surya-koritala/loomfeed": {
     "stars": 167,
-    "ts": "2026-08-13T07:56:09+00:00"
+    "ts": "2026-08-13T10:30:23+00:00"
   },
   "Prism-Shadow/penguin-harness": {
     "stars": 166,
@@ -439,6 +439,10 @@
     "stars": 153,
     "ts": "2026-08-10T22:03:06+00:00"
   },
+  "jundizhou/easy-stock": {
+    "stars": 153,
+    "ts": "2026-08-13T10:34:02+00:00"
+  },
   "arcships/aimux": {
     "stars": 152,
     "ts": "2026-08-03T22:19:43+00:00"
@@ -446,10 +450,6 @@
   "xyaz1313/phoenix": {
     "stars": 151,
     "ts": "2026-08-08T21:48:08+00:00"
-  },
-  "jundizhou/easy-stock": {
-    "stars": 148,
-    "ts": "2026-08-13T07:59:30+00:00"
   },
   "AFan4724/clone-chat": {
     "stars": 111,
