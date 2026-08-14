@@ -1,70 +1,71 @@
 {
-  "updated_at": "2026-08-14T02:47:35Z",
+  "updated_at": "2026-08-14T05:04:48Z",
   "half_life_days": 14,
-  "n_events": 12806,
+  "n_events": 12751,
   "topic": {
-    "creative_video": 0.034,
-    "coding": 0.067,
+    "coding": 0.068,
     "creative_voice": 0.014,
-    "research_study": 0.004,
-    "finance": 0.113,
+    "creative_video": 0.034,
+    "finance": 0.119,
+    "research_study": 0.005,
     "creative_image": 0.084,
-    "research_productivity": 0.06,
+    "research_productivity": 0.059,
     "cybersecurity": 0.0,
-    "company_investment": 0.101
+    "company_investment": 0.102
   },
   "source": {
-    "r/StableDiffusion": 0.056,
-    "HN": 0.073,
-    "official": 0.049,
-    "github": 0.014,
-    "r/algotrading": 0.0,
+    "HN": 0.074,
     "huggingface": 0.0,
-    "r/SunoAI": 0.043,
+    "r/SunoAI": 0.047,
     "r/comfyui": 0.0,
+    "official": 0.05,
     "r/FluxAI": 0.0,
-    "r/artificial": 0.197,
+    "r/artificial": 0.196,
     "r/MachineLearning": 0.0,
+    "github": 0.014,
     "r/deeplearning": 0.0,
-    "r/singularity": 0.22,
+    "r/singularity": 0.222,
+    "r/StableDiffusion": 0.059,
     "r/OpenAI": 0.387,
     "r/ElevenLabs": 0.0,
     "r/SideProject": 0.222,
-    "r/LocalLLaMA": 0.082,
+    "r/LocalLLaMA": 0.081,
     "r/PromptEngineering": 0.0,
-    "r/ClaudeAI": 0.115,
+    "r/ClaudeAI": 0.111,
     "r/ClaudeCode": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/runwayml": 0.0,
     "r/AI_Agents": 0.0,
-    "r/cursor": 0.17,
+    "r/cursor": 0.171,
     "r/notebooklm": 0.0,
-    "r/perplexity_ai": 0.491,
+    "r/perplexity_ai": 0.48,
     "r/aiMusic": 0.0,
     "r/ChatGPT": 0.0,
+    "r/algotrading": 0.0,
     "r/midjourney": 0.0,
     "r/netsec": 0.0,
     "r/hacking": 0.0,
     "r/security": 0.0,
     "r/redteamsec": 0.0,
-    "r/technology": 0.259,
+    "r/technology": 0.261,
     "r/cybersecurity": 0.0,
     "r/stocks": 0.0,
-    "r/wallstreetbets": 0.199,
+    "r/wallstreetbets": 0.207,
     "r/Economics": 0.0,
     "r/ChatGPTCoding": 0.0,
     "r/quant": 0.0,
     "r/business": 0.6,
-    "r/investing": 0.0
+    "r/investing": 0.0,
+    "r/StartupSoloFounder": 0.0
   },
   "category": {
-    "OPEN_SOURCE": 0.009,
-    "BENCHMARK": 0.057,
     "UPDATE": 0.067,
     "RELEASE": 0.016,
-    "LAUNCH": 0.094,
+    "OPEN_SOURCE": 0.009,
+    "BENCHMARK": 0.06,
+    "LAUNCH": 0.093,
     "PRICING": 0.0,
-    "DEAL": 0.237
+    "DEAL": 0.234
   },
   "exemplars": {
     "top": [
@@ -91,15 +92,15 @@
     ],
     "bottom": [
       {
-        "headline": "Grok 4.6 scores 61 on Artificial Analysis Intelligence Index, tying GPT-5.6 Sol",
+        "headline": "moli: a browser built specifically for AI agents, written in Rust",
         "reward": 0.0
       },
       {
-        "headline": "GitHub launches Agent Plugins 1.0 across VS Code, Copilot CLI, and Copilot app",
+        "headline": "Japan's top court rules AI cannot be listed as inventor on patents",
         "reward": 0.0
       },
       {
-        "headline": "codex-bridge: GPT-5 subagents and gpt-image-2 inside Claude Code, no API key needed",
+        "headline": "Solo dev's HolyClaude hits 2,478 GitHub stars — but only 1 paying customer",
         "reward": 0.0
       }
     ]
