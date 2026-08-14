@@ -1,56 +1,56 @@
 {
-  "updated_at": "2026-08-14T10:18:19Z",
+  "updated_at": "2026-08-14T13:45:26Z",
   "half_life_days": 14,
-  "n_events": 13088,
+  "n_events": 13354,
   "topic": {
     "coding": 0.064,
-    "creative_video": 0.033,
-    "finance": 0.114,
+    "creative_video": 0.032,
+    "finance": 0.112,
     "research_study": 0.006,
-    "creative_image": 0.083,
-    "creative_voice": 0.015,
-    "research_productivity": 0.058,
+    "creative_image": 0.082,
+    "creative_voice": 0.014,
+    "research_productivity": 0.057,
     "cybersecurity": 0.0,
     "company_investment": 0.104
   },
   "source": {
-    "HN": 0.067,
-    "official": 0.051,
+    "HN": 0.066,
+    "official": 0.052,
     "r/FluxAI": 0.0,
-    "r/artificial": 0.193,
+    "r/artificial": 0.191,
     "r/MachineLearning": 0.0,
     "github": 0.013,
     "r/deeplearning": 0.0,
     "r/comfyui": 0.0,
     "r/singularity": 0.225,
-    "r/StableDiffusion": 0.056,
+    "r/StableDiffusion": 0.055,
     "r/OpenAI": 0.387,
     "r/ElevenLabs": 0.0,
     "r/SideProject": 0.222,
     "huggingface": 0.0,
-    "r/LocalLLaMA": 0.078,
+    "r/LocalLLaMA": 0.076,
     "r/PromptEngineering": 0.0,
-    "r/ClaudeAI": 0.104,
+    "r/ClaudeAI": 0.1,
     "r/ClaudeCode": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/runwayml": 0.0,
     "r/AI_Agents": 0.0,
-    "r/cursor": 0.168,
+    "r/cursor": 0.167,
     "r/notebooklm": 0.0,
-    "r/perplexity_ai": 0.459,
+    "r/perplexity_ai": 0.45,
     "r/aiMusic": 0.0,
     "r/ChatGPT": 0.0,
-    "r/SunoAI": 0.072,
+    "r/SunoAI": 0.076,
     "r/algotrading": 0.0,
     "r/midjourney": 0.0,
     "r/netsec": 0.0,
     "r/hacking": 0.0,
     "r/security": 0.0,
     "r/redteamsec": 0.0,
-    "r/technology": 0.27,
+    "r/technology": 0.276,
     "r/cybersecurity": 0.0,
     "r/stocks": 0.0,
-    "r/wallstreetbets": 0.22,
+    "r/wallstreetbets": 0.225,
     "r/Economics": 0.0,
     "r/ChatGPTCoding": 0.0,
     "r/quant": 0.0,
@@ -61,11 +61,11 @@
   "category": {
     "UPDATE": 0.064,
     "OPEN_SOURCE": 0.009,
-    "BENCHMARK": 0.059,
-    "LAUNCH": 0.092,
+    "BENCHMARK": 0.058,
+    "LAUNCH": 0.091,
     "RELEASE": 0.015,
     "PRICING": 0.0,
-    "DEAL": 0.23
+    "DEAL": 0.227
   },
   "exemplars": {
     "top": [
@@ -92,15 +92,15 @@
     ],
     "bottom": [
       {
-        "headline": "OpenAI launches Codex Desktop for Linux",
+        "headline": "Midjourney 8.2 released, users test new style controls",
         "reward": 0.0
       },
       {
-        "headline": "Kohya-SS quietly releases ControlNet enabling Anima-style image editing",
+        "headline": "ComfyUI-H3-FaceRefine restores face detail in MiniMax H3 video clips",
         "reward": 0.0
       },
       {
-        "headline": "KADATH: evolutionary multi-agent runtime that breeds and improves agents",
+        "headline": "calldiff: AST-based diffs for function call stacks across git commits",
         "reward": 0.0
       }
     ]
