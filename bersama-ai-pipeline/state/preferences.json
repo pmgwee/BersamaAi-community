@@ -1,56 +1,56 @@
 {
-  "updated_at": "2026-08-14T07:52:25Z",
+  "updated_at": "2026-08-14T10:18:19Z",
   "half_life_days": 14,
-  "n_events": 13009,
+  "n_events": 13088,
   "topic": {
-    "coding": 0.067,
-    "creative_voice": 0.014,
+    "coding": 0.064,
     "creative_video": 0.033,
-    "finance": 0.117,
-    "research_study": 0.005,
+    "finance": 0.114,
+    "research_study": 0.006,
     "creative_image": 0.083,
-    "research_productivity": 0.059,
+    "creative_voice": 0.015,
+    "research_productivity": 0.058,
     "cybersecurity": 0.0,
-    "company_investment": 0.103
+    "company_investment": 0.104
   },
   "source": {
-    "HN": 0.073,
-    "huggingface": 0.0,
-    "r/SunoAI": 0.051,
-    "r/comfyui": 0.0,
+    "HN": 0.067,
     "official": 0.051,
     "r/FluxAI": 0.0,
-    "r/artificial": 0.194,
+    "r/artificial": 0.193,
     "r/MachineLearning": 0.0,
     "github": 0.013,
     "r/deeplearning": 0.0,
-    "r/singularity": 0.223,
-    "r/StableDiffusion": 0.057,
+    "r/comfyui": 0.0,
+    "r/singularity": 0.225,
+    "r/StableDiffusion": 0.056,
     "r/OpenAI": 0.387,
     "r/ElevenLabs": 0.0,
     "r/SideProject": 0.222,
-    "r/LocalLLaMA": 0.079,
+    "huggingface": 0.0,
+    "r/LocalLLaMA": 0.078,
     "r/PromptEngineering": 0.0,
-    "r/ClaudeAI": 0.107,
+    "r/ClaudeAI": 0.104,
     "r/ClaudeCode": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/runwayml": 0.0,
     "r/AI_Agents": 0.0,
-    "r/cursor": 0.169,
+    "r/cursor": 0.168,
     "r/notebooklm": 0.0,
-    "r/perplexity_ai": 0.469,
+    "r/perplexity_ai": 0.459,
     "r/aiMusic": 0.0,
     "r/ChatGPT": 0.0,
+    "r/SunoAI": 0.072,
     "r/algotrading": 0.0,
     "r/midjourney": 0.0,
     "r/netsec": 0.0,
     "r/hacking": 0.0,
     "r/security": 0.0,
     "r/redteamsec": 0.0,
-    "r/technology": 0.263,
+    "r/technology": 0.27,
     "r/cybersecurity": 0.0,
     "r/stocks": 0.0,
-    "r/wallstreetbets": 0.214,
+    "r/wallstreetbets": 0.22,
     "r/Economics": 0.0,
     "r/ChatGPTCoding": 0.0,
     "r/quant": 0.0,
@@ -59,13 +59,13 @@
     "r/StartupSoloFounder": 0.0
   },
   "category": {
-    "UPDATE": 0.067,
-    "RELEASE": 0.015,
+    "UPDATE": 0.064,
     "OPEN_SOURCE": 0.009,
     "BENCHMARK": 0.059,
-    "LAUNCH": 0.093,
+    "LAUNCH": 0.092,
+    "RELEASE": 0.015,
     "PRICING": 0.0,
-    "DEAL": 0.232
+    "DEAL": 0.23
   },
   "exemplars": {
     "top": [
@@ -92,15 +92,15 @@
     ],
     "bottom": [
       {
-        "headline": "ComfyUI v0.32.0 adds native LTX 2.5 and Qwen Image 3.0 support",
+        "headline": "OpenAI launches Codex Desktop for Linux",
         "reward": 0.0
       },
       {
-        "headline": "Grok 4.6 High undercuts Cursor Auto mode on token-per-dollar during promo",
+        "headline": "Kohya-SS quietly releases ControlNet enabling Anima-style image editing",
         "reward": 0.0
       },
       {
-        "headline": "Open-source demo defends learned concepts against data poisoning in untrusted pipelines",
+        "headline": "KADATH: evolutionary multi-agent runtime that breeds and improves agents",
         "reward": 0.0
       }
     ]
