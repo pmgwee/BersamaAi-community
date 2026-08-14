@@ -1,45 +1,45 @@
 {
-  "updated_at": "2026-08-13T22:04:51Z",
+  "updated_at": "2026-08-14T02:47:35Z",
   "half_life_days": 14,
-  "n_events": 12735,
+  "n_events": 12806,
   "topic": {
+    "creative_video": 0.034,
     "coding": 0.067,
-    "creative_image": 0.079,
-    "creative_video": 0.035,
     "creative_voice": 0.014,
     "research_study": 0.004,
-    "finance": 0.115,
-    "research_productivity": 0.061,
+    "finance": 0.113,
+    "creative_image": 0.084,
+    "research_productivity": 0.06,
     "cybersecurity": 0.0,
-    "company_investment": 0.1
+    "company_investment": 0.101
   },
   "source": {
-    "HN": 0.072,
-    "r/singularity": 0.188,
-    "r/StableDiffusion": 0.053,
+    "r/StableDiffusion": 0.056,
+    "HN": 0.073,
     "official": 0.049,
     "github": 0.014,
     "r/algotrading": 0.0,
     "huggingface": 0.0,
-    "r/SunoAI": 0.038,
+    "r/SunoAI": 0.043,
     "r/comfyui": 0.0,
     "r/FluxAI": 0.0,
-    "r/artificial": 0.198,
+    "r/artificial": 0.197,
     "r/MachineLearning": 0.0,
     "r/deeplearning": 0.0,
+    "r/singularity": 0.22,
     "r/OpenAI": 0.387,
     "r/ElevenLabs": 0.0,
     "r/SideProject": 0.222,
-    "r/LocalLLaMA": 0.084,
+    "r/LocalLLaMA": 0.082,
     "r/PromptEngineering": 0.0,
-    "r/ClaudeAI": 0.12,
+    "r/ClaudeAI": 0.115,
     "r/ClaudeCode": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/runwayml": 0.0,
     "r/AI_Agents": 0.0,
     "r/cursor": 0.17,
     "r/notebooklm": 0.0,
-    "r/perplexity_ai": 0.502,
+    "r/perplexity_ai": 0.491,
     "r/aiMusic": 0.0,
     "r/ChatGPT": 0.0,
     "r/midjourney": 0.0,
@@ -47,10 +47,10 @@
     "r/hacking": 0.0,
     "r/security": 0.0,
     "r/redteamsec": 0.0,
-    "r/technology": 0.257,
+    "r/technology": 0.259,
     "r/cybersecurity": 0.0,
     "r/stocks": 0.0,
-    "r/wallstreetbets": 0.189,
+    "r/wallstreetbets": 0.199,
     "r/Economics": 0.0,
     "r/ChatGPTCoding": 0.0,
     "r/quant": 0.0,
@@ -58,13 +58,13 @@
     "r/investing": 0.0
   },
   "category": {
-    "PRICING": 0.0,
-    "BENCHMARK": 0.056,
-    "UPDATE": 0.066,
     "OPEN_SOURCE": 0.009,
+    "BENCHMARK": 0.057,
+    "UPDATE": 0.067,
     "RELEASE": 0.016,
-    "LAUNCH": 0.095,
-    "DEAL": 0.24
+    "LAUNCH": 0.094,
+    "PRICING": 0.0,
+    "DEAL": 0.237
   },
   "exemplars": {
     "top": [
@@ -91,15 +91,15 @@
     ],
     "bottom": [
       {
-        "headline": "Claude Opus 5 autonomously builds a GTA-style open-world game in 24 hours",
+        "headline": "Grok 4.6 scores 61 on Artificial Analysis Intelligence Index, tying GPT-5.6 Sol",
         "reward": 0.0
       },
       {
-        "headline": "Mass vulnerability scans spoof AI crawlers like ClaudeBot to evade detection",
+        "headline": "GitHub launches Agent Plugins 1.0 across VS Code, Copilot CLI, and Copilot app",
         "reward": 0.0
       },
       {
-        "headline": "Runway Agent adds Figma, Dropbox, and Notion connectors",
+        "headline": "codex-bridge: GPT-5 subagents and gpt-image-2 inside Claude Code, no API key needed",
         "reward": 0.0
       }
     ]
