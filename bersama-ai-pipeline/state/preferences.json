@@ -1,56 +1,56 @@
 {
-  "updated_at": "2026-08-14T13:45:26Z",
+  "updated_at": "2026-08-14T16:07:13Z",
   "half_life_days": 14,
-  "n_events": 13354,
+  "n_events": 13274,
   "topic": {
-    "coding": 0.064,
-    "creative_video": 0.032,
-    "finance": 0.112,
-    "research_study": 0.006,
-    "creative_image": 0.082,
+    "coding": 0.062,
+    "research_study": 0.007,
+    "creative_image": 0.081,
     "creative_voice": 0.014,
-    "research_productivity": 0.057,
+    "finance": 0.046,
+    "creative_video": 0.032,
+    "research_productivity": 0.056,
     "cybersecurity": 0.0,
-    "company_investment": 0.104
+    "company_investment": 0.105
   },
   "source": {
-    "HN": 0.066,
-    "official": 0.052,
-    "r/FluxAI": 0.0,
-    "r/artificial": 0.191,
-    "r/MachineLearning": 0.0,
-    "github": 0.013,
+    "github": 0.012,
+    "official": 0.053,
+    "HN": 0.058,
     "r/deeplearning": 0.0,
     "r/comfyui": 0.0,
-    "r/singularity": 0.225,
-    "r/StableDiffusion": 0.055,
+    "r/singularity": 0.223,
+    "r/StableDiffusion": 0.054,
     "r/OpenAI": 0.387,
     "r/ElevenLabs": 0.0,
+    "r/artificial": 0.157,
     "r/SideProject": 0.222,
     "huggingface": 0.0,
-    "r/LocalLLaMA": 0.076,
+    "r/LocalLLaMA": 0.074,
     "r/PromptEngineering": 0.0,
-    "r/ClaudeAI": 0.1,
+    "r/ClaudeAI": 0.096,
     "r/ClaudeCode": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/runwayml": 0.0,
     "r/AI_Agents": 0.0,
-    "r/cursor": 0.167,
+    "r/MachineLearning": 0.0,
+    "r/cursor": 0.165,
     "r/notebooklm": 0.0,
-    "r/perplexity_ai": 0.45,
+    "r/perplexity_ai": 0.44,
     "r/aiMusic": 0.0,
     "r/ChatGPT": 0.0,
-    "r/SunoAI": 0.076,
+    "r/SunoAI": 0.08,
     "r/algotrading": 0.0,
     "r/midjourney": 0.0,
     "r/netsec": 0.0,
     "r/hacking": 0.0,
     "r/security": 0.0,
+    "r/FluxAI": 0.0,
     "r/redteamsec": 0.0,
-    "r/technology": 0.276,
+    "r/technology": 0.281,
     "r/cybersecurity": 0.0,
     "r/stocks": 0.0,
-    "r/wallstreetbets": 0.225,
+    "r/wallstreetbets": 0.23,
     "r/Economics": 0.0,
     "r/ChatGPTCoding": 0.0,
     "r/quant": 0.0,
@@ -59,22 +59,18 @@
     "r/StartupSoloFounder": 0.0
   },
   "category": {
-    "UPDATE": 0.064,
     "OPEN_SOURCE": 0.009,
-    "BENCHMARK": 0.058,
-    "LAUNCH": 0.091,
-    "RELEASE": 0.015,
+    "LAUNCH": 0.09,
+    "UPDATE": 0.055,
+    "RELEASE": 0.014,
+    "BENCHMARK": 0.06,
     "PRICING": 0.0,
-    "DEAL": 0.227
+    "DEAL": 0.225
   },
   "exemplars": {
     "top": [
       {
-        "headline": "AI helped Google patch more Chrome bugs in June than the previous two years combined",
-        "reward": 0.6
-      },
-      {
-        "headline": "AI helped Google patch more Chrome bugs in June than the previous two years combined",
+        "headline": "Moonshot trained Kimi on 20,000 Nvidia GPU cluster rented from Alibaba",
         "reward": 0.6
       },
       {
@@ -82,7 +78,11 @@
         "reward": 0.6
       },
       {
-        "headline": "AI helped Google patch more Chrome bugs in June than the previous two years combined",
+        "headline": "Moonshot trained Kimi on 20,000 Nvidia GPU cluster rented from Alibaba",
+        "reward": 0.6
+      },
+      {
+        "headline": "Moonshot trained Kimi on 20,000 Nvidia GPU cluster rented from Alibaba",
         "reward": 0.6
       },
       {
@@ -92,15 +92,15 @@
     ],
     "bottom": [
       {
-        "headline": "Midjourney 8.2 released, users test new style controls",
+        "headline": "ComfyUI PR signals MiniMax Music 3 is incoming",
         "reward": 0.0
       },
       {
-        "headline": "ComfyUI-H3-FaceRefine restores face detail in MiniMax H3 video clips",
+        "headline": "DeepSeek open-sources its harness framework on GitHub",
         "reward": 0.0
       },
       {
-        "headline": "calldiff: AST-based diffs for function call stacks across git commits",
+        "headline": "pi-book: source-backed architecture notes for building agents",
         "reward": 0.0
       }
     ]
