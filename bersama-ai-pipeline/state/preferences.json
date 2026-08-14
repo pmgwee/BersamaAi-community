@@ -1,45 +1,45 @@
 {
-  "updated_at": "2026-08-14T19:15:47Z",
+  "updated_at": "2026-08-14T21:42:52Z",
   "half_life_days": 14,
-  "n_events": 13284,
+  "n_events": 13346,
   "topic": {
     "coding": 0.059,
-    "research_study": 0.008,
-    "creative_image": 0.086,
     "creative_voice": 0.014,
-    "finance": 0.045,
-    "creative_video": 0.031,
-    "research_productivity": 0.056,
+    "creative_image": 0.09,
+    "finance": 0.044,
+    "creative_video": 0.03,
+    "research_study": 0.008,
+    "research_productivity": 0.055,
     "cybersecurity": 0.0,
     "company_investment": 0.105
   },
   "source": {
-    "github": 0.012,
-    "r/singularity": 0.221,
-    "HN": 0.053,
-    "r/StableDiffusion": 0.052,
     "official": 0.055,
     "r/OpenAI": 0.387,
     "r/ElevenLabs": 0.0,
-    "r/artificial": 0.155,
+    "r/singularity": 0.255,
+    "r/artificial": 0.153,
     "r/deeplearning": 0.0,
     "r/comfyui": 0.0,
+    "r/StableDiffusion": 0.054,
     "r/SideProject": 0.222,
+    "HN": 0.054,
     "huggingface": 0.0,
-    "r/LocalLLaMA": 0.072,
+    "github": 0.012,
+    "r/LocalLLaMA": 0.071,
     "r/PromptEngineering": 0.0,
-    "r/ClaudeAI": 0.093,
+    "r/ClaudeAI": 0.089,
     "r/ClaudeCode": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/runwayml": 0.0,
     "r/AI_Agents": 0.0,
     "r/MachineLearning": 0.0,
-    "r/cursor": 0.164,
+    "r/cursor": 0.163,
     "r/notebooklm": 0.0,
-    "r/perplexity_ai": 0.432,
+    "r/perplexity_ai": 0.423,
     "r/aiMusic": 0.0,
     "r/ChatGPT": 0.0,
-    "r/SunoAI": 0.084,
+    "r/SunoAI": 0.087,
     "r/algotrading": 0.0,
     "r/midjourney": 0.0,
     "r/netsec": 0.0,
@@ -47,10 +47,10 @@
     "r/security": 0.0,
     "r/FluxAI": 0.0,
     "r/redteamsec": 0.0,
-    "r/technology": 0.281,
+    "r/technology": 0.28,
     "r/cybersecurity": 0.0,
     "r/stocks": 0.0,
-    "r/wallstreetbets": 0.234,
+    "r/wallstreetbets": 0.238,
     "r/Economics": 0.0,
     "r/ChatGPTCoding": 0.0,
     "r/quant": 0.0,
@@ -59,13 +59,13 @@
     "r/StartupSoloFounder": 0.0
   },
   "category": {
+    "PRICING": 0.001,
+    "UPDATE": 0.052,
     "LAUNCH": 0.092,
     "BENCHMARK": 0.06,
     "OPEN_SOURCE": 0.008,
-    "UPDATE": 0.052,
     "RELEASE": 0.014,
-    "PRICING": 0.001,
-    "DEAL": 0.222
+    "DEAL": 0.22
   },
   "exemplars": {
     "top": [
@@ -92,15 +92,15 @@
     ],
     "bottom": [
       {
-        "headline": "ElevenLabs launches Sounds: free AI-generated audio loop library on ElevenMusic",
+        "headline": "xAI's Grok 4.6 scores 61 on Intelligence Index with strong agentic results",
         "reward": 0.0
       },
       {
-        "headline": "Comfy-Org publishes MiniMax Music 3 model weights on HuggingFace",
+        "headline": "Mistral ships OCR 4.1 document understanding model",
         "reward": 0.0
       },
       {
-        "headline": "MiniMax H3 generates 42-second video on a single RTX Pro 6000 in 80 minutes",
+        "headline": "Suno launches Studio 2.0 with MIDI, built-in synths, and audio effects",
         "reward": 0.0
       }
     ]
