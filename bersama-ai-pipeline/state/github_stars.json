@@ -44,8 +44,8 @@
     "ts": "2026-08-12T22:05:35+00:00"
   },
   "Leutenegger/book-to-skill": {
-    "stars": 1062,
-    "ts": "2026-08-14T21:43:42+00:00"
+    "stars": 1073,
+    "ts": "2026-08-15T01:52:13+00:00"
   },
   "Accio-org/RealReplicaBench": {
     "stars": 1042,
@@ -68,12 +68,12 @@
     "ts": "2026-07-28T22:18:53+00:00"
   },
   "SaladDay/pi-from-scratch": {
-    "stars": 976,
-    "ts": "2026-08-14T21:43:42+00:00"
+    "stars": 982,
+    "ts": "2026-08-15T01:52:13+00:00"
   },
   "ccch1mneyyy/dsh-TUI": {
-    "stars": 887,
-    "ts": "2026-08-14T21:43:42+00:00"
+    "stars": 912,
+    "ts": "2026-08-15T01:52:13+00:00"
   },
   "mikiarlo3/awesome-growth-hacking-skills": {
     "stars": 818,
@@ -99,6 +99,10 @@
     "stars": 617,
     "ts": "2026-08-11T22:07:44+00:00"
   },
+  "vercel-labs/eve-software-factory-template": {
+    "stars": 593,
+    "ts": "2026-08-15T01:52:13+00:00"
+  },
   "hahhforest/pi-textbook": {
     "stars": 588,
     "ts": "2026-07-27T22:20:34+00:00"
@@ -123,10 +127,6 @@
     "stars": 561,
     "ts": "2026-08-13T22:05:38+00:00"
   },
-  "vercel-labs/eve-software-factory-template": {
-    "stars": 559,
-    "ts": "2026-08-14T21:43:42+00:00"
-  },
   "AMAP-ML/LongHorizon-Harness": {
     "stars": 548,
     "ts": "2026-08-10T22:00:46+00:00"
@@ -147,6 +147,10 @@
     "stars": 507,
     "ts": "2026-08-06T14:38:24+00:00"
   },
+  "ayi-ai/nie-grassroots-logic": {
+    "stars": 472,
+    "ts": "2026-08-15T01:52:13+00:00"
+  },
   "XYZ-AI-Lab/AxisAgentic": {
     "stars": 469,
     "ts": "2026-07-29T22:15:45+00:00"
@@ -155,13 +159,9 @@
     "stars": 468,
     "ts": "2026-08-10T22:01:27+00:00"
   },
-  "ayi-ai/nie-grassroots-logic": {
-    "stars": 468,
-    "ts": "2026-08-14T21:43:42+00:00"
-  },
   "0xnyn/airship": {
-    "stars": 439,
-    "ts": "2026-08-14T21:43:42+00:00"
+    "stars": 442,
+    "ts": "2026-08-15T01:52:13+00:00"
   },
   "SandAI-org/MAGI-2-preview": {
     "stars": 438,
@@ -179,9 +179,17 @@
     "stars": 431,
     "ts": "2026-08-09T21:51:14+00:00"
   },
+  "DrHazemAli/enterprise-system-design": {
+    "stars": 429,
+    "ts": "2026-08-15T01:56:09+00:00"
+  },
   "criptogus/HermesOffice": {
     "stars": 426,
     "ts": "2026-08-10T22:00:46+00:00"
+  },
+  "elie222/rakazo": {
+    "stars": 419,
+    "ts": "2026-08-15T01:52:13+00:00"
   },
   "KinetiNode/claude-fable-5-system-prompt-clean": {
     "stars": 418,
@@ -195,21 +203,21 @@
     "stars": 411,
     "ts": "2026-08-12T22:06:02+00:00"
   },
-  "DrHazemAli/enterprise-system-design": {
-    "stars": 409,
-    "ts": "2026-08-14T21:47:27+00:00"
-  },
-  "elie222/rakazo": {
-    "stars": 403,
-    "ts": "2026-08-14T21:43:42+00:00"
-  },
   "0xsline/awesome-deepseek-harness": {
-    "stars": 397,
-    "ts": "2026-08-14T21:43:42+00:00"
+    "stars": 404,
+    "ts": "2026-08-15T01:52:13+00:00"
+  },
+  "NousResearch/Hermes-Bot-Mode": {
+    "stars": 391,
+    "ts": "2026-08-15T01:52:13+00:00"
   },
   "tanishqkancharla/calldiff": {
     "stars": 387,
     "ts": "2026-08-13T22:05:38+00:00"
+  },
+  "decionis/agent-safe-pipeline": {
+    "stars": 376,
+    "ts": "2026-08-15T01:52:13+00:00"
   },
   "perplexityai/numbat": {
     "stars": 374,
@@ -218,14 +226,6 @@
   "deerwork-ai/deer-workflow": {
     "stars": 374,
     "ts": "2026-08-01T22:13:32+00:00"
-  },
-  "decionis/agent-safe-pipeline": {
-    "stars": 366,
-    "ts": "2026-08-14T21:43:42+00:00"
-  },
-  "NousResearch/Hermes-Bot-Mode": {
-    "stars": 360,
-    "ts": "2026-08-14T21:43:42+00:00"
   },
   "i3T4AN/KADATH": {
     "stars": 352,
@@ -243,6 +243,10 @@
     "stars": 339,
     "ts": "2026-08-04T22:33:09+00:00"
   },
+  "Anionex/dsh-vision-toolkit": {
+    "stars": 339,
+    "ts": "2026-08-15T01:52:13+00:00"
+  },
   "SeanJ1ang/design-judge-skills": {
     "stars": 335,
     "ts": "2026-07-24T22:24:05+00:00"
@@ -254,10 +258,6 @@
   "Eversmile12/leaked-llm-prompts": {
     "stars": 329,
     "ts": "2026-07-30T22:29:27+00:00"
-  },
-  "Anionex/dsh-vision-toolkit": {
-    "stars": 328,
-    "ts": "2026-08-14T21:43:42+00:00"
   },
   "lingbol088-spec/5.6-JAILBREAK-NERV-codex-instruct-5.6": {
     "stars": 315,
@@ -291,13 +291,13 @@
     "stars": 286,
     "ts": "2026-08-11T22:07:17+00:00"
   },
+  "lexmount/moli": {
+    "stars": 286,
+    "ts": "2026-08-15T01:52:13+00:00"
+  },
   "nkxx188/ComfyUI-MiniMaxH3-Easy": {
     "stars": 276,
     "ts": "2026-08-11T22:08:22+00:00"
-  },
-  "lexmount/moli": {
-    "stars": 276,
-    "ts": "2026-08-14T21:43:42+00:00"
   },
   "Anionex/codex-vision-proxy": {
     "stars": 275,
@@ -305,7 +305,7 @@
   },
   "Sateezg/codex-bridge": {
     "stars": 272,
-    "ts": "2026-08-14T21:44:09+00:00"
+    "ts": "2026-08-15T01:52:39+00:00"
   },
   "alikon-art/DeterminFlow": {
     "stars": 271,
@@ -367,17 +367,21 @@
     "stars": 223,
     "ts": "2026-08-10T22:01:27+00:00"
   },
+  "OpenSparX/MasterAgent": {
+    "stars": 215,
+    "ts": "2026-08-15T01:52:13+00:00"
+  },
+  "surya-koritala/loomfeed": {
+    "stars": 214,
+    "ts": "2026-08-15T01:52:13+00:00"
+  },
   "paxlabs-inc/machine-genome": {
     "stars": 213,
     "ts": "2026-07-26T22:15:29+00:00"
   },
-  "surya-koritala/loomfeed": {
-    "stars": 213,
-    "ts": "2026-08-14T21:43:42+00:00"
-  },
   "wzchav/tokentab": {
     "stars": 212,
-    "ts": "2026-08-14T21:43:42+00:00"
+    "ts": "2026-08-15T01:52:13+00:00"
   },
   "TaiT-tt/tait-crt-interface-skill": {
     "stars": 211,
@@ -385,7 +389,7 @@
   },
   "Innate-Labs/Noobi.ai": {
     "stars": 211,
-    "ts": "2026-08-14T21:43:42+00:00"
+    "ts": "2026-08-15T01:52:13+00:00"
   },
   "KimGLee/Cambium": {
     "stars": 209,
@@ -399,6 +403,10 @@
     "stars": 207,
     "ts": "2026-08-04T22:31:22+00:00"
   },
+  "Electricitysheep/dsh-handbook": {
+    "stars": 207,
+    "ts": "2026-08-15T01:52:13+00:00"
+  },
   "livetennisapi/livetennisapi-mcp": {
     "stars": 205,
     "ts": "2026-07-24T22:21:15+00:00"
@@ -409,15 +417,11 @@
   },
   "luvrix/fluxmend": {
     "stars": 204,
-    "ts": "2026-08-14T21:44:09+00:00"
+    "ts": "2026-08-15T01:52:39+00:00"
   },
   "icebird1998/scientific-illustrator": {
     "stars": 203,
     "ts": "2026-07-30T22:29:27+00:00"
-  },
-  "Electricitysheep/dsh-handbook": {
-    "stars": 202,
-    "ts": "2026-08-14T21:43:42+00:00"
   },
   "ccch1mneyyy/dsh-cc-tui": {
     "stars": 201,
@@ -455,17 +459,13 @@
     "stars": 189,
     "ts": "2026-08-11T22:10:04+00:00"
   },
-  "OpenSparX/MasterAgent": {
-    "stars": 187,
-    "ts": "2026-08-14T21:43:42+00:00"
-  },
   "opentokenz/mcpx": {
     "stars": 184,
     "ts": "2026-08-05T22:29:33+00:00"
   },
   "N-allpass/modex-mh-agent": {
     "stars": 179,
-    "ts": "2026-08-14T21:43:42+00:00"
+    "ts": "2026-08-15T01:52:13+00:00"
   },
   "freestylefly/wesight-obsidian": {
     "stars": 174,

@@ -1,45 +1,45 @@
 {
-  "updated_at": "2026-08-14T21:42:52Z",
+  "updated_at": "2026-08-15T01:51:25Z",
   "half_life_days": 14,
-  "n_events": 13346,
+  "n_events": 13457,
   "topic": {
-    "coding": 0.059,
-    "creative_voice": 0.014,
+    "coding": 0.06,
     "creative_image": 0.09,
-    "finance": 0.044,
+    "finance": 0.043,
     "creative_video": 0.03,
-    "research_study": 0.008,
-    "research_productivity": 0.055,
+    "creative_voice": 0.014,
+    "research_study": 0.009,
+    "research_productivity": 0.054,
     "cybersecurity": 0.0,
-    "company_investment": 0.105
+    "company_investment": 0.106
   },
   "source": {
-    "official": 0.055,
-    "r/OpenAI": 0.387,
-    "r/ElevenLabs": 0.0,
-    "r/singularity": 0.255,
-    "r/artificial": 0.153,
+    "r/singularity": 0.251,
+    "r/artificial": 0.151,
     "r/deeplearning": 0.0,
     "r/comfyui": 0.0,
-    "r/StableDiffusion": 0.054,
+    "r/StableDiffusion": 0.053,
     "r/SideProject": 0.222,
-    "HN": 0.054,
+    "HN": 0.053,
     "huggingface": 0.0,
     "github": 0.012,
-    "r/LocalLLaMA": 0.071,
+    "r/LocalLLaMA": 0.069,
+    "official": 0.057,
     "r/PromptEngineering": 0.0,
-    "r/ClaudeAI": 0.089,
+    "r/ClaudeAI": 0.087,
     "r/ClaudeCode": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/runwayml": 0.0,
     "r/AI_Agents": 0.0,
     "r/MachineLearning": 0.0,
-    "r/cursor": 0.163,
+    "r/OpenAI": 0.582,
+    "r/ElevenLabs": 0.0,
+    "r/cursor": 0.162,
     "r/notebooklm": 0.0,
-    "r/perplexity_ai": 0.423,
+    "r/perplexity_ai": 0.415,
     "r/aiMusic": 0.0,
     "r/ChatGPT": 0.0,
-    "r/SunoAI": 0.087,
+    "r/SunoAI": 0.09,
     "r/algotrading": 0.0,
     "r/midjourney": 0.0,
     "r/netsec": 0.0,
@@ -50,7 +50,7 @@
     "r/technology": 0.28,
     "r/cybersecurity": 0.0,
     "r/stocks": 0.0,
-    "r/wallstreetbets": 0.238,
+    "r/wallstreetbets": 0.241,
     "r/Economics": 0.0,
     "r/ChatGPTCoding": 0.0,
     "r/quant": 0.0,
@@ -59,13 +59,13 @@
     "r/StartupSoloFounder": 0.0
   },
   "category": {
-    "PRICING": 0.001,
-    "UPDATE": 0.052,
-    "LAUNCH": 0.092,
+    "LAUNCH": 0.091,
     "BENCHMARK": 0.06,
     "OPEN_SOURCE": 0.008,
+    "UPDATE": 0.054,
     "RELEASE": 0.014,
-    "DEAL": 0.22
+    "DEAL": 0.218,
+    "PRICING": 0.002
   },
   "exemplars": {
     "top": [
@@ -92,15 +92,15 @@
     ],
     "bottom": [
       {
-        "headline": "xAI's Grok 4.6 scores 61 on Intelligence Index with strong agentic results",
+        "headline": "Week 2 of AI agent algo trading on Robinhood Agentic — all strategies turn green",
         "reward": 0.0
       },
       {
-        "headline": "Mistral ships OCR 4.1 document understanding model",
+        "headline": "Florida teen arrested for mass shooting plan shared a 61-page AI-generated manifesto",
         "reward": 0.0
       },
       {
-        "headline": "Suno launches Studio 2.0 with MIDI, built-in synths, and audio effects",
+        "headline": "How Compaction Works in Pi — deep dive on agent context compression",
         "reward": 0.0
       }
     ]
