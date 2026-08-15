@@ -1,12 +1,12 @@
 {
-  "updated_at": "2026-08-15T13:00:21Z",
+  "updated_at": "2026-08-15T15:36:35Z",
   "half_life_days": 14,
-  "n_events": 14325,
+  "n_events": 14618,
   "topic": {
     "creative_video": 0.027,
-    "coding": 0.056,
+    "coding": 0.055,
     "creative_voice": 0.013,
-    "creative_image": 0.099,
+    "creative_image": 0.098,
     "research_study": 0.01,
     "finance": 0.0,
     "research_productivity": 0.051,
@@ -16,13 +16,13 @@
   "source": {
     "HN": 0.05,
     "huggingface": 0.0,
-    "r/StableDiffusion": 0.051,
+    "r/StableDiffusion": 0.05,
     "github": 0.011,
-    "r/LocalLLaMA": 0.062,
+    "r/LocalLLaMA": 0.061,
     "official": 0.057,
     "r/comfyui": 0.0,
     "r/PromptEngineering": 0.0,
-    "r/ClaudeAI": 0.076,
+    "r/ClaudeAI": 0.073,
     "r/ClaudeCode": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/SideProject": 0.0,
@@ -30,16 +30,16 @@
     "r/AI_Agents": 0.0,
     "r/MachineLearning": 0.0,
     "r/deeplearning": 0.0,
-    "r/OpenAI": 0.518,
+    "r/OpenAI": 0.504,
     "r/ElevenLabs": 0.0,
     "r/cursor": 0.159,
     "r/notebooklm": 0.0,
-    "r/perplexity_ai": 0.385,
-    "r/artificial": 0.158,
-    "r/singularity": 0.247,
+    "r/perplexity_ai": 0.378,
+    "r/artificial": 0.155,
+    "r/singularity": 0.244,
     "r/aiMusic": 0.0,
     "r/ChatGPT": 0.0,
-    "r/SunoAI": 0.098,
+    "r/SunoAI": 0.1,
     "r/algotrading": 0.0,
     "r/midjourney": 0.0,
     "r/netsec": 0.0,
@@ -50,7 +50,7 @@
     "r/technology": 0.279,
     "r/cybersecurity": 0.0,
     "r/stocks": 0.0,
-    "r/wallstreetbets": 0.252,
+    "r/wallstreetbets": 0.254,
     "r/Economics": 0.0,
     "r/ChatGPTCoding": 0.0,
     "r/quant": 0.0,
@@ -59,12 +59,12 @@
     "r/StartupSoloFounder": 0.0
   },
   "category": {
-    "RELEASE": 0.013,
+    "RELEASE": 0.012,
     "OPEN_SOURCE": 0.007,
     "BENCHMARK": 0.058,
-    "UPDATE": 0.054,
-    "LAUNCH": 0.077,
-    "DEAL": 0.209,
+    "UPDATE": 0.055,
+    "LAUNCH": 0.076,
+    "DEAL": 0.207,
     "PRICING": 0.003
   },
   "exemplars": {
@@ -92,15 +92,15 @@
     ],
     "bottom": [
       {
-        "headline": "awesome-deepseek-harness: a curated hub for the DeepSeek Harness plugin ecosystem",
+        "headline": "LTX-2.5 vs MiniMax H3: a 2:47 mini-documentary rebuilt shot-for-shot on 16 GB",
         "reward": 0.0
       },
       {
-        "headline": "DeepSeek API adds peak/off-peak pricing",
+        "headline": "MiniMax H3 doubles as a single-image edit model",
         "reward": 0.0
       },
       {
-        "headline": "Apollo's Torsten Sløk: AI profits 'funded by investors rather than earned from customers'",
+        "headline": "enterprise-system-design: a source-grounded course for systems that must survive reality",
         "reward": 0.0
       }
     ]
