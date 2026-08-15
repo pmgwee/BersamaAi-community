@@ -1,28 +1,28 @@
 {
-  "updated_at": "2026-08-15T06:59:32Z",
+  "updated_at": "2026-08-15T09:42:22Z",
   "half_life_days": 14,
-  "n_events": 13750,
+  "n_events": 14034,
   "topic": {
     "creative_video": 0.028,
-    "coding": 0.058,
+    "coding": 0.057,
     "creative_voice": 0.014,
-    "creative_image": 0.101,
-    "research_study": 0.009,
+    "creative_image": 0.1,
+    "research_study": 0.01,
     "finance": 0.0,
-    "research_productivity": 0.053,
+    "research_productivity": 0.052,
     "cybersecurity": 0.0,
     "company_investment": 0.106
   },
   "source": {
     "HN": 0.051,
     "huggingface": 0.0,
-    "r/StableDiffusion": 0.053,
+    "r/StableDiffusion": 0.052,
     "github": 0.011,
-    "r/LocalLLaMA": 0.065,
+    "r/LocalLLaMA": 0.064,
     "official": 0.057,
     "r/comfyui": 0.0,
     "r/PromptEngineering": 0.0,
-    "r/ClaudeAI": 0.081,
+    "r/ClaudeAI": 0.078,
     "r/ClaudeCode": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/SideProject": 0.0,
@@ -30,16 +30,16 @@
     "r/AI_Agents": 0.0,
     "r/MachineLearning": 0.0,
     "r/deeplearning": 0.0,
-    "r/OpenAI": 0.548,
+    "r/OpenAI": 0.532,
     "r/ElevenLabs": 0.0,
-    "r/cursor": 0.161,
+    "r/cursor": 0.16,
     "r/notebooklm": 0.0,
-    "r/perplexity_ai": 0.399,
-    "r/artificial": 0.162,
-    "r/singularity": 0.254,
+    "r/perplexity_ai": 0.392,
+    "r/artificial": 0.16,
+    "r/singularity": 0.251,
     "r/aiMusic": 0.0,
     "r/ChatGPT": 0.0,
-    "r/SunoAI": 0.094,
+    "r/SunoAI": 0.096,
     "r/algotrading": 0.0,
     "r/midjourney": 0.0,
     "r/netsec": 0.0,
@@ -50,7 +50,7 @@
     "r/technology": 0.279,
     "r/cybersecurity": 0.0,
     "r/stocks": 0.0,
-    "r/wallstreetbets": 0.247,
+    "r/wallstreetbets": 0.25,
     "r/Economics": 0.0,
     "r/ChatGPTCoding": 0.0,
     "r/quant": 0.0,
@@ -61,10 +61,10 @@
   "category": {
     "RELEASE": 0.013,
     "OPEN_SOURCE": 0.008,
-    "BENCHMARK": 0.06,
+    "BENCHMARK": 0.059,
     "UPDATE": 0.054,
-    "LAUNCH": 0.079,
-    "DEAL": 0.213,
+    "LAUNCH": 0.078,
+    "DEAL": 0.211,
     "PRICING": 0.003
   },
   "exemplars": {
@@ -92,15 +92,15 @@
     ],
     "bottom": [
       {
-        "headline": "Senior engineer shares production agent loop-orchestrator architecture",
-        "reward": 0.0
-      },
-      {
-        "headline": "rakazo: open-source Grok Bot alternative hits 280 stars",
-        "reward": 0.0
-      },
-      {
         "headline": "Four months monetizing AI-generated content: an honest $2,147 breakdown",
+        "reward": 0.0
+      },
+      {
+        "headline": "Qwen3.6-27B uncensored community merge tops HuggingFace trending at 1997 score",
+        "reward": 0.0
+      },
+      {
+        "headline": "Needle 2: open 45M-parameter tool-calling model ships as a 14MB binary",
         "reward": 0.0
       }
     ]
