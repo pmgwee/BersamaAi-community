@@ -1,28 +1,28 @@
 {
-  "updated_at": "2026-08-15T09:42:22Z",
+  "updated_at": "2026-08-15T13:00:21Z",
   "half_life_days": 14,
-  "n_events": 14034,
+  "n_events": 14325,
   "topic": {
-    "creative_video": 0.028,
-    "coding": 0.057,
-    "creative_voice": 0.014,
-    "creative_image": 0.1,
+    "creative_video": 0.027,
+    "coding": 0.056,
+    "creative_voice": 0.013,
+    "creative_image": 0.099,
     "research_study": 0.01,
     "finance": 0.0,
-    "research_productivity": 0.052,
+    "research_productivity": 0.051,
     "cybersecurity": 0.0,
     "company_investment": 0.106
   },
   "source": {
-    "HN": 0.051,
+    "HN": 0.05,
     "huggingface": 0.0,
-    "r/StableDiffusion": 0.052,
+    "r/StableDiffusion": 0.051,
     "github": 0.011,
-    "r/LocalLLaMA": 0.064,
+    "r/LocalLLaMA": 0.062,
     "official": 0.057,
     "r/comfyui": 0.0,
     "r/PromptEngineering": 0.0,
-    "r/ClaudeAI": 0.078,
+    "r/ClaudeAI": 0.076,
     "r/ClaudeCode": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/SideProject": 0.0,
@@ -30,16 +30,16 @@
     "r/AI_Agents": 0.0,
     "r/MachineLearning": 0.0,
     "r/deeplearning": 0.0,
-    "r/OpenAI": 0.532,
+    "r/OpenAI": 0.518,
     "r/ElevenLabs": 0.0,
-    "r/cursor": 0.16,
+    "r/cursor": 0.159,
     "r/notebooklm": 0.0,
-    "r/perplexity_ai": 0.392,
-    "r/artificial": 0.16,
-    "r/singularity": 0.251,
+    "r/perplexity_ai": 0.385,
+    "r/artificial": 0.158,
+    "r/singularity": 0.247,
     "r/aiMusic": 0.0,
     "r/ChatGPT": 0.0,
-    "r/SunoAI": 0.096,
+    "r/SunoAI": 0.098,
     "r/algotrading": 0.0,
     "r/midjourney": 0.0,
     "r/netsec": 0.0,
@@ -50,7 +50,7 @@
     "r/technology": 0.279,
     "r/cybersecurity": 0.0,
     "r/stocks": 0.0,
-    "r/wallstreetbets": 0.25,
+    "r/wallstreetbets": 0.252,
     "r/Economics": 0.0,
     "r/ChatGPTCoding": 0.0,
     "r/quant": 0.0,
@@ -60,11 +60,11 @@
   },
   "category": {
     "RELEASE": 0.013,
-    "OPEN_SOURCE": 0.008,
-    "BENCHMARK": 0.059,
+    "OPEN_SOURCE": 0.007,
+    "BENCHMARK": 0.058,
     "UPDATE": 0.054,
-    "LAUNCH": 0.078,
-    "DEAL": 0.211,
+    "LAUNCH": 0.077,
+    "DEAL": 0.209,
     "PRICING": 0.003
   },
   "exemplars": {
@@ -92,15 +92,15 @@
     ],
     "bottom": [
       {
-        "headline": "Four months monetizing AI-generated content: an honest $2,147 breakdown",
+        "headline": "awesome-deepseek-harness: a curated hub for the DeepSeek Harness plugin ecosystem",
         "reward": 0.0
       },
       {
-        "headline": "Qwen3.6-27B uncensored community merge tops HuggingFace trending at 1997 score",
+        "headline": "DeepSeek API adds peak/off-peak pricing",
         "reward": 0.0
       },
       {
-        "headline": "Needle 2: open 45M-parameter tool-calling model ships as a 14MB binary",
+        "headline": "Apollo's Torsten Sløk: AI profits 'funded by investors rather than earned from customers'",
         "reward": 0.0
       }
     ]
