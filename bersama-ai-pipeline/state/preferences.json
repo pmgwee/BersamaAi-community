@@ -1,45 +1,45 @@
 {
-  "updated_at": "2026-08-15T03:55:59Z",
+  "updated_at": "2026-08-15T06:59:32Z",
   "half_life_days": 14,
-  "n_events": 13739,
+  "n_events": 13750,
   "topic": {
-    "coding": 0.059,
-    "creative_image": 0.089,
-    "finance": 0.042,
-    "creative_video": 0.029,
+    "creative_video": 0.028,
+    "coding": 0.058,
     "creative_voice": 0.014,
+    "creative_image": 0.101,
     "research_study": 0.009,
+    "finance": 0.0,
     "research_productivity": 0.053,
     "cybersecurity": 0.0,
     "company_investment": 0.106
   },
   "source": {
-    "r/singularity": 0.248,
-    "r/artificial": 0.149,
-    "r/deeplearning": 0.0,
-    "r/comfyui": 0.0,
-    "r/StableDiffusion": 0.051,
-    "r/SideProject": 0.222,
-    "HN": 0.052,
+    "HN": 0.051,
     "huggingface": 0.0,
-    "github": 0.012,
-    "r/LocalLLaMA": 0.067,
+    "r/StableDiffusion": 0.053,
+    "github": 0.011,
+    "r/LocalLLaMA": 0.065,
     "official": 0.057,
+    "r/comfyui": 0.0,
     "r/PromptEngineering": 0.0,
-    "r/ClaudeAI": 0.084,
+    "r/ClaudeAI": 0.081,
     "r/ClaudeCode": 0.0,
     "r/learnmachinelearning": 0.0,
+    "r/SideProject": 0.0,
     "r/runwayml": 0.0,
     "r/AI_Agents": 0.0,
     "r/MachineLearning": 0.0,
-    "r/OpenAI": 0.564,
+    "r/deeplearning": 0.0,
+    "r/OpenAI": 0.548,
     "r/ElevenLabs": 0.0,
-    "r/cursor": 0.162,
+    "r/cursor": 0.161,
     "r/notebooklm": 0.0,
-    "r/perplexity_ai": 0.407,
+    "r/perplexity_ai": 0.399,
+    "r/artificial": 0.162,
+    "r/singularity": 0.254,
     "r/aiMusic": 0.0,
     "r/ChatGPT": 0.0,
-    "r/SunoAI": 0.092,
+    "r/SunoAI": 0.094,
     "r/algotrading": 0.0,
     "r/midjourney": 0.0,
     "r/netsec": 0.0,
@@ -47,10 +47,10 @@
     "r/security": 0.0,
     "r/FluxAI": 0.0,
     "r/redteamsec": 0.0,
-    "r/technology": 0.28,
+    "r/technology": 0.279,
     "r/cybersecurity": 0.0,
     "r/stocks": 0.0,
-    "r/wallstreetbets": 0.244,
+    "r/wallstreetbets": 0.247,
     "r/Economics": 0.0,
     "r/ChatGPTCoding": 0.0,
     "r/quant": 0.0,
@@ -59,13 +59,13 @@
     "r/StartupSoloFounder": 0.0
   },
   "category": {
-    "LAUNCH": 0.089,
-    "BENCHMARK": 0.059,
-    "OPEN_SOURCE": 0.008,
-    "UPDATE": 0.054,
     "RELEASE": 0.013,
-    "DEAL": 0.215,
-    "PRICING": 0.002
+    "OPEN_SOURCE": 0.008,
+    "BENCHMARK": 0.06,
+    "UPDATE": 0.054,
+    "LAUNCH": 0.079,
+    "DEAL": 0.213,
+    "PRICING": 0.003
   },
   "exemplars": {
     "top": [
@@ -92,15 +92,15 @@
     ],
     "bottom": [
       {
-        "headline": "How AI text watermarking works: a technical deep dive on embedding and detecting statistical fingerprints",
+        "headline": "Senior engineer shares production agent loop-orchestrator architecture",
         "reward": 0.0
       },
       {
-        "headline": "Open-source news-memory tool persists and queries ticker news for algo trading pipelines",
+        "headline": "rakazo: open-source Grok Bot alternative hits 280 stars",
         "reward": 0.0
       },
       {
-        "headline": "OpenAI publishes evidence-based study on how organizations actually use ChatGPT",
+        "headline": "Four months monetizing AI-generated content: an honest $2,147 breakdown",
         "reward": 0.0
       }
     ]
