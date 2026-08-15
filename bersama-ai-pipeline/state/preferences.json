@@ -1,28 +1,28 @@
 {
-  "updated_at": "2026-08-15T15:36:35Z",
+  "updated_at": "2026-08-15T18:49:11Z",
   "half_life_days": 14,
-  "n_events": 14618,
+  "n_events": 14913,
   "topic": {
-    "creative_video": 0.027,
+    "creative_video": 0.026,
     "coding": 0.055,
     "creative_voice": 0.013,
-    "creative_image": 0.098,
-    "research_study": 0.01,
+    "creative_image": 0.097,
+    "research_study": 0.011,
     "finance": 0.0,
-    "research_productivity": 0.051,
+    "research_productivity": 0.05,
     "cybersecurity": 0.0,
-    "company_investment": 0.106
+    "company_investment": 0.107
   },
   "source": {
-    "HN": 0.05,
+    "HN": 0.049,
     "huggingface": 0.0,
-    "r/StableDiffusion": 0.05,
-    "github": 0.011,
-    "r/LocalLLaMA": 0.061,
-    "official": 0.057,
+    "r/StableDiffusion": 0.048,
+    "github": 0.01,
+    "r/LocalLLaMA": 0.059,
+    "official": 0.056,
     "r/comfyui": 0.0,
     "r/PromptEngineering": 0.0,
-    "r/ClaudeAI": 0.073,
+    "r/ClaudeAI": 0.071,
     "r/ClaudeCode": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/SideProject": 0.0,
@@ -30,16 +30,16 @@
     "r/AI_Agents": 0.0,
     "r/MachineLearning": 0.0,
     "r/deeplearning": 0.0,
-    "r/OpenAI": 0.504,
+    "r/OpenAI": 0.491,
     "r/ElevenLabs": 0.0,
-    "r/cursor": 0.159,
+    "r/cursor": 0.162,
     "r/notebooklm": 0.0,
-    "r/perplexity_ai": 0.378,
-    "r/artificial": 0.155,
-    "r/singularity": 0.244,
+    "r/perplexity_ai": 0.372,
+    "r/artificial": 0.153,
+    "r/singularity": 0.24,
     "r/aiMusic": 0.0,
     "r/ChatGPT": 0.0,
-    "r/SunoAI": 0.1,
+    "r/SunoAI": 0.101,
     "r/algotrading": 0.0,
     "r/midjourney": 0.0,
     "r/netsec": 0.0,
@@ -50,22 +50,22 @@
     "r/technology": 0.279,
     "r/cybersecurity": 0.0,
     "r/stocks": 0.0,
-    "r/wallstreetbets": 0.254,
+    "r/wallstreetbets": 0.256,
     "r/Economics": 0.0,
     "r/ChatGPTCoding": 0.0,
     "r/quant": 0.0,
-    "r/business": 0.6,
+    "r/business": 0.571,
     "r/investing": 0.0,
     "r/StartupSoloFounder": 0.0
   },
   "category": {
     "RELEASE": 0.012,
     "OPEN_SOURCE": 0.007,
-    "BENCHMARK": 0.058,
+    "BENCHMARK": 0.057,
     "UPDATE": 0.055,
-    "LAUNCH": 0.076,
-    "DEAL": 0.207,
-    "PRICING": 0.003
+    "LAUNCH": 0.075,
+    "DEAL": 0.206,
+    "PRICING": 0.004
   },
   "exemplars": {
     "top": [
@@ -92,15 +92,15 @@
     ],
     "bottom": [
       {
-        "headline": "LTX-2.5 vs MiniMax H3: a 2:47 mini-documentary rebuilt shot-for-shot on 16 GB",
+        "headline": "Every sampler × scheduler combo tested for MiniMax-H3 + LightX2V Turbo 4-step in ComfyUI",
         "reward": 0.0
       },
       {
-        "headline": "MiniMax H3 doubles as a single-image edit model",
+        "headline": "Hugging Face publishes State of Open Models: Summer 2026 Observations",
         "reward": 0.0
       },
       {
-        "headline": "enterprise-system-design: a source-grounded course for systems that must survive reality",
+        "headline": "Fortune: Anthropic's $2T valuation demands Amazon-scale earnings it hasn't shown",
         "reward": 0.0
       }
     ]
