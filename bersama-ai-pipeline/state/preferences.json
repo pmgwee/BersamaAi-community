@@ -1,10 +1,10 @@
 {
-  "updated_at": "2026-08-16T07:01:05Z",
+  "updated_at": "2026-08-16T09:43:42Z",
   "half_life_days": 14,
-  "n_events": 16111,
+  "n_events": 16432,
   "topic": {
-    "creative_video": 0.024,
-    "coding": 0.052,
+    "creative_video": 0.023,
+    "coding": 0.051,
     "creative_voice": 0.012,
     "creative_image": 0.097,
     "research_study": 0.012,
@@ -16,13 +16,13 @@
   "source": {
     "HN": 0.047,
     "huggingface": 0.0,
-    "r/StableDiffusion": 0.044,
-    "github": 0.01,
-    "r/LocalLLaMA": 0.054,
-    "official": 0.057,
+    "r/StableDiffusion": 0.043,
+    "github": 0.009,
+    "r/LocalLLaMA": 0.053,
+    "official": 0.058,
     "r/comfyui": 0.0,
     "r/PromptEngineering": 0.0,
-    "r/ClaudeAI": 0.063,
+    "r/ClaudeAI": 0.061,
     "r/ClaudeCode": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/SideProject": 0.0,
@@ -30,16 +30,16 @@
     "r/AI_Agents": 0.0,
     "r/MachineLearning": 0.0,
     "r/deeplearning": 0.0,
-    "r/OpenAI": 0.434,
+    "r/OpenAI": 0.414,
     "r/ElevenLabs": 0.0,
-    "r/cursor": 0.172,
+    "r/cursor": 0.175,
     "r/notebooklm": 0.0,
-    "r/perplexity_ai": 0.348,
-    "r/artificial": 0.147,
-    "r/singularity": 0.226,
+    "r/perplexity_ai": 0.342,
+    "r/artificial": 0.145,
+    "r/singularity": 0.222,
     "r/aiMusic": 0.0,
     "r/ChatGPT": 0.0,
-    "r/SunoAI": 0.107,
+    "r/SunoAI": 0.108,
     "r/algotrading": 0.0,
     "r/midjourney": 0.0,
     "r/netsec": 0.0,
@@ -47,14 +47,14 @@
     "r/security": 0.0,
     "r/FluxAI": 0.0,
     "r/redteamsec": 0.0,
-    "r/technology": 0.269,
+    "r/technology": 0.264,
     "r/cybersecurity": 0.0,
     "r/stocks": 0.0,
-    "r/wallstreetbets": 0.26,
+    "r/wallstreetbets": 0.262,
     "r/Economics": 0.0,
-    "r/ChatGPTCoding": 0.0,
+    "r/ChatGPTCoding": 0.019,
     "r/quant": 0.0,
-    "r/business": 0.492,
+    "r/business": 0.479,
     "r/investing": 0.0,
     "r/StartupSoloFounder": 0.0,
     "r/udiomusic": 0.0
@@ -63,10 +63,10 @@
     "RELEASE": 0.012,
     "OPEN_SOURCE": 0.006,
     "BENCHMARK": 0.054,
-    "UPDATE": 0.055,
-    "LAUNCH": 0.072,
-    "DEAL": 0.2,
-    "PRICING": 0.004
+    "UPDATE": 0.056,
+    "LAUNCH": 0.071,
+    "DEAL": 0.199,
+    "PRICING": 0.005
   },
   "exemplars": {
     "top": [
@@ -93,15 +93,15 @@
     ],
     "bottom": [
       {
-        "headline": "OpenAI talent exodus called a 'huge red flag' ahead of its IPO",
+        "headline": "OpenAI reports Goldman Sachs analyst to FBI over ChatGPT conversations",
         "reward": 0.0
       },
       {
-        "headline": "Google launches Sheets canvas: Gemini layer that turns spreadsheet data into mini-apps",
+        "headline": "Runway pushes yearly-unlimited subscribers toward Max plan; users unsure what happens Aug 24",
         "reward": 0.0
       },
       {
-        "headline": "dsh-handbook：DeepSeek Harness 从 0 到 1 深度手册（中英双语）",
+        "headline": "ComfyUI-H3-FaceRefine: per-frame face cleanup for small faces in MiniMax H3 video",
         "reward": 0.0
       }
     ]
