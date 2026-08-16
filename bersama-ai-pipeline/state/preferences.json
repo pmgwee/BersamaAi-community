@@ -1,28 +1,28 @@
 {
-  "updated_at": "2026-08-16T13:02:10Z",
+  "updated_at": "2026-08-16T15:37:37Z",
   "half_life_days": 14,
-  "n_events": 16758,
+  "n_events": 17092,
   "topic": {
-    "creative_video": 0.023,
-    "coding": 0.051,
-    "creative_voice": 0.012,
+    "creative_video": 0.022,
+    "coding": 0.05,
+    "creative_voice": 0.011,
     "creative_image": 0.097,
     "research_study": 0.013,
     "finance": 0.0,
-    "research_productivity": 0.046,
+    "research_productivity": 0.045,
     "cybersecurity": 0.0,
     "company_investment": 0.108
   },
   "source": {
-    "HN": 0.046,
+    "HN": 0.045,
     "huggingface": 0.0,
-    "r/StableDiffusion": 0.042,
+    "r/StableDiffusion": 0.041,
     "github": 0.009,
-    "r/LocalLLaMA": 0.052,
+    "r/LocalLLaMA": 0.05,
     "official": 0.058,
     "r/comfyui": 0.0,
     "r/PromptEngineering": 0.0,
-    "r/ClaudeAI": 0.06,
+    "r/ClaudeAI": 0.058,
     "r/ClaudeCode": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/SideProject": 0.0,
@@ -30,16 +30,16 @@
     "r/AI_Agents": 0.0,
     "r/MachineLearning": 0.0,
     "r/deeplearning": 0.0,
-    "r/OpenAI": 0.396,
+    "r/OpenAI": 0.38,
     "r/ElevenLabs": 0.0,
-    "r/cursor": 0.177,
+    "r/cursor": 0.179,
     "r/notebooklm": 0.0,
-    "r/perplexity_ai": 0.337,
-    "r/artificial": 0.143,
-    "r/singularity": 0.219,
+    "r/perplexity_ai": 0.326,
+    "r/artificial": 0.141,
+    "r/singularity": 0.215,
     "r/aiMusic": 0.0,
     "r/ChatGPT": 0.0,
-    "r/SunoAI": 0.109,
+    "r/SunoAI": 0.11,
     "r/algotrading": 0.0,
     "r/midjourney": 0.0,
     "r/netsec": 0.0,
@@ -47,14 +47,14 @@
     "r/security": 0.0,
     "r/FluxAI": 0.0,
     "r/redteamsec": 0.0,
-    "r/technology": 0.259,
+    "r/technology": 0.252,
     "r/cybersecurity": 0.0,
     "r/stocks": 0.0,
-    "r/wallstreetbets": 0.265,
+    "r/wallstreetbets": 0.267,
     "r/Economics": 0.0,
-    "r/ChatGPTCoding": 0.035,
+    "r/ChatGPTCoding": 0.049,
     "r/quant": 0.0,
-    "r/business": 0.467,
+    "r/business": 0.457,
     "r/investing": 0.0,
     "r/StartupSoloFounder": 0.0,
     "r/udiomusic": 0.0
@@ -62,10 +62,10 @@
   "category": {
     "RELEASE": 0.012,
     "OPEN_SOURCE": 0.006,
-    "BENCHMARK": 0.054,
+    "BENCHMARK": 0.053,
     "UPDATE": 0.056,
-    "LAUNCH": 0.07,
-    "DEAL": 0.197,
+    "LAUNCH": 0.069,
+    "DEAL": 0.196,
     "PRICING": 0.005
   },
   "exemplars": {
@@ -93,15 +93,15 @@
     ],
     "bottom": [
       {
-        "headline": "Qwen 3.8 35BA3B config spotted in ms-swift commit; r/LocalLLaMA digs in",
+        "headline": "Angle-bracket tags add non-verbal sounds and emphasis to MiniMax H3 dialogues",
         "reward": 0.0
       },
       {
-        "headline": "Plaintiff's invisible prompt injections in court filings likened to jury tampering",
+        "headline": "Perplexity rolls out a new privacy notice; users flag substantial changes",
         "reward": 0.0
       },
       {
-        "headline": "Zuckerberg letter calls for AI 'for everyone' as Muse Spark stays API-locked",
+        "headline": "UK and Irish booksellers suspect AI firms behind 'strange' bulk secondhand orders",
         "reward": 0.0
       }
     ]
