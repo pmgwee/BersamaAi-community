@@ -33,6 +33,7 @@ from . import fetch, publish, state, bundle
 from .summarize import summarize, stub_summary, SummarizeError, Summary
 from .news import run_news, post_url_as_news
 from .x_digest import run_x_digest
+from .serenity_digest import run_serenity_digest
 
 # Guards
 MAX_PER_RUN = 5                 # global backstop: total NEW videos across ALL channels/run
@@ -297,7 +298,7 @@ def run_scheduled(*, dry_run: bool, stub: bool) -> list[str]:
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description="BersamaAi summarization pipeline")
     ap.add_argument("--mode", required=True,
-                    choices=["scheduled", "url", "news", "share", "x-digest"])
+                    choices=["scheduled", "url", "news", "share", "x-digest", "serenity"])
     ap.add_argument("--url", help="a single video URL (mode=url)")
     ap.add_argument("--dry-run", action="store_true", help="print payloads, don't post")
     ap.add_argument("--stub-summary", action="store_true",
@@ -332,6 +333,12 @@ def main(argv=None) -> int:
             )]
         elif args.mode == "x-digest":
             results = run_x_digest(dry_run=args.dry_run, alert_fn=alert)
+        elif args.mode == "serenity":
+            creds = llm_creds()
+            results = run_serenity_digest(
+                dry_run=args.dry_run, alert_fn=alert,
+                api_key=creds["api_key"], model=creds["model"], base_url=creds["base_url"],
+            )
         else:
             results = run_scheduled(dry_run=args.dry_run, stub=args.stub_summary)
     except state.StateCorruptError as e:
@@ -347,9 +354,12 @@ def main(argv=None) -> int:
     # Red the Actions run only if we attempted videos and NONE produced a good outcome
     # (a single transient failure should not fail the whole daily run).
     OK = {"PUBLISHED", "SKIPPED_LONG", "SKIPPED_NOCAPTION", "REVIEW_SHORT", "NEWS_POSTED",
-          "SHARED", "SHARED_DRY", "X_POSTED", "X_DRY"}
+          "SHARED", "SHARED_DRY", "X_POSTED", "X_DRY",
+          "SERENITY_POSTED", "SERENITY_DRY"}
     SKIP = ("DEDUPED", "NEWS_DEDUPED", "NEWS_NOTHING_TO_POST", "NEWS_NO_CANDIDATES",
-            "X_NO_NEW", "X_NO_WEBHOOK", "X_WEBHOOK_IS_STAFF", "X_FETCH_FAILED")
+            "X_NO_NEW", "X_NO_WEBHOOK", "X_WEBHOOK_IS_STAFF", "X_FETCH_FAILED",
+            "SERENITY_NO_NEW", "SERENITY_NO_WEBHOOK", "SERENITY_WEBHOOK_IS_STAFF",
+            "SERENITY_FETCH_FAILED", "SERENITY_PARSE_FAILED")
     attempted = [r.split(maxsplit=1)[0] for r in results if not r.startswith(SKIP)]
     if attempted and not any(s in OK for s in attempted):
         print("\n!!! run produced no successful outcomes", file=sys.stderr)
