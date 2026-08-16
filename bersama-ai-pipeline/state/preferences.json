@@ -1,11 +1,11 @@
 {
-  "updated_at": "2026-08-15T21:36:13Z",
+  "updated_at": "2026-08-16T01:58:30Z",
   "half_life_days": 14,
-  "n_events": 15202,
+  "n_events": 15496,
   "topic": {
-    "creative_video": 0.026,
-    "coding": 0.054,
-    "creative_voice": 0.013,
+    "creative_video": 0.025,
+    "coding": 0.053,
+    "creative_voice": 0.012,
     "creative_image": 0.096,
     "research_study": 0.011,
     "finance": 0.0,
@@ -14,15 +14,15 @@
     "company_investment": 0.107
   },
   "source": {
-    "HN": 0.049,
+    "HN": 0.048,
     "huggingface": 0.0,
-    "r/StableDiffusion": 0.047,
+    "r/StableDiffusion": 0.046,
     "github": 0.01,
-    "r/LocalLLaMA": 0.058,
-    "official": 0.056,
+    "r/LocalLLaMA": 0.056,
+    "official": 0.057,
     "r/comfyui": 0.0,
     "r/PromptEngineering": 0.0,
-    "r/ClaudeAI": 0.069,
+    "r/ClaudeAI": 0.067,
     "r/ClaudeCode": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/SideProject": 0.0,
@@ -30,16 +30,16 @@
     "r/AI_Agents": 0.0,
     "r/MachineLearning": 0.0,
     "r/deeplearning": 0.0,
-    "r/OpenAI": 0.478,
+    "r/OpenAI": 0.466,
     "r/ElevenLabs": 0.0,
-    "r/cursor": 0.165,
+    "r/cursor": 0.167,
     "r/notebooklm": 0.0,
-    "r/perplexity_ai": 0.366,
-    "r/artificial": 0.151,
-    "r/singularity": 0.235,
+    "r/perplexity_ai": 0.359,
+    "r/artificial": 0.15,
+    "r/singularity": 0.233,
     "r/aiMusic": 0.0,
     "r/ChatGPT": 0.0,
-    "r/SunoAI": 0.103,
+    "r/SunoAI": 0.104,
     "r/algotrading": 0.0,
     "r/midjourney": 0.0,
     "r/netsec": 0.0,
@@ -50,21 +50,21 @@
     "r/technology": 0.278,
     "r/cybersecurity": 0.0,
     "r/stocks": 0.0,
-    "r/wallstreetbets": 0.258,
+    "r/wallstreetbets": 0.26,
     "r/Economics": 0.0,
     "r/ChatGPTCoding": 0.0,
     "r/quant": 0.0,
-    "r/business": 0.546,
+    "r/business": 0.525,
     "r/investing": 0.0,
     "r/StartupSoloFounder": 0.0
   },
   "category": {
-    "RELEASE": 0.012,
+    "RELEASE": 0.011,
     "OPEN_SOURCE": 0.007,
     "BENCHMARK": 0.056,
     "UPDATE": 0.055,
     "LAUNCH": 0.074,
-    "DEAL": 0.205,
+    "DEAL": 0.203,
     "PRICING": 0.004
   },
   "exemplars": {
@@ -92,15 +92,15 @@
     ],
     "bottom": [
       {
-        "headline": "Every sampler × scheduler combo tested for MiniMax-H3 + LightX2V Turbo 4-step in ComfyUI",
+        "headline": "MiniMax H3 round-up: keyframing support merged into ComfyUI",
         "reward": 0.0
       },
       {
-        "headline": "Hugging Face publishes State of Open Models: Summer 2026 Observations",
+        "headline": "AI by Hand: learning AI fundamentals through hand-worked exercises",
         "reward": 0.0
       },
       {
-        "headline": "Fortune: Anthropic's $2T valuation demands Amazon-scale earnings it hasn't shown",
+        "headline": "Open-source Hermes pentesting profile manages structured pen tests",
         "reward": 0.0
       }
     ]
