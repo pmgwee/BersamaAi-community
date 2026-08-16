@@ -1,28 +1,26 @@
 {
-  "updated_at": "2026-08-16T15:37:37Z",
+  "updated_at": "2026-08-16T18:48:12Z",
   "half_life_days": 14,
-  "n_events": 17092,
+  "n_events": 17184,
   "topic": {
-    "creative_video": 0.022,
-    "coding": 0.05,
+    "coding": 0.051,
     "creative_voice": 0.011,
     "creative_image": 0.097,
-    "research_study": 0.013,
+    "creative_video": 0.012,
+    "research_study": 0.014,
     "finance": 0.0,
-    "research_productivity": 0.045,
+    "research_productivity": 0.044,
     "cybersecurity": 0.0,
     "company_investment": 0.108
   },
   "source": {
-    "HN": 0.045,
-    "huggingface": 0.0,
-    "r/StableDiffusion": 0.041,
     "github": 0.009,
-    "r/LocalLLaMA": 0.05,
-    "official": 0.058,
+    "r/LocalLLaMA": 0.049,
+    "official": 0.059,
     "r/comfyui": 0.0,
+    "HN": 0.04,
     "r/PromptEngineering": 0.0,
-    "r/ClaudeAI": 0.058,
+    "r/ClaudeAI": 0.057,
     "r/ClaudeCode": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/SideProject": 0.0,
@@ -30,16 +28,18 @@
     "r/AI_Agents": 0.0,
     "r/MachineLearning": 0.0,
     "r/deeplearning": 0.0,
-    "r/OpenAI": 0.38,
+    "r/OpenAI": 0.364,
     "r/ElevenLabs": 0.0,
+    "huggingface": 0.0,
     "r/cursor": 0.179,
     "r/notebooklm": 0.0,
-    "r/perplexity_ai": 0.326,
-    "r/artificial": 0.141,
-    "r/singularity": 0.215,
+    "r/perplexity_ai": 0.315,
+    "r/StableDiffusion": 0.042,
+    "r/artificial": 0.139,
+    "r/singularity": 0.212,
     "r/aiMusic": 0.0,
     "r/ChatGPT": 0.0,
-    "r/SunoAI": 0.11,
+    "r/SunoAI": 0.111,
     "r/algotrading": 0.0,
     "r/midjourney": 0.0,
     "r/netsec": 0.0,
@@ -47,61 +47,61 @@
     "r/security": 0.0,
     "r/FluxAI": 0.0,
     "r/redteamsec": 0.0,
-    "r/technology": 0.252,
+    "r/technology": 0.247,
     "r/cybersecurity": 0.0,
     "r/stocks": 0.0,
-    "r/wallstreetbets": 0.267,
+    "r/wallstreetbets": 0.269,
     "r/Economics": 0.0,
-    "r/ChatGPTCoding": 0.049,
+    "r/ChatGPTCoding": 0.062,
     "r/quant": 0.0,
-    "r/business": 0.457,
+    "r/business": 0.448,
     "r/investing": 0.0,
     "r/StartupSoloFounder": 0.0,
     "r/udiomusic": 0.0
   },
   "category": {
-    "RELEASE": 0.012,
     "OPEN_SOURCE": 0.006,
-    "BENCHMARK": 0.053,
     "UPDATE": 0.056,
-    "LAUNCH": 0.069,
-    "DEAL": 0.196,
+    "BENCHMARK": 0.054,
+    "LAUNCH": 0.068,
+    "RELEASE": 0.003,
+    "DEAL": 0.195,
     "PRICING": 0.005
   },
   "exemplars": {
     "top": [
       {
-        "headline": "ByteDance launches Seedance 2.5 with one-take creation and flexible referencing",
+        "headline": "Single-prompt agentic loop builds a playable GTA 6 demo, hits #1 on r/ClaudeAI",
         "reward": 0.6
       },
       {
-        "headline": "ByteDance launches Seedance 2.5 with one-take creation and flexible referencing",
+        "headline": "Single-prompt agentic loop builds a playable GTA 6 demo, hits #1 on r/ClaudeAI",
         "reward": 0.6
       },
       {
-        "headline": "ByteDance launches Seedance 2.5 with one-take creation and flexible referencing",
+        "headline": "Single-prompt agentic loop builds a playable GTA 6 demo, hits #1 on r/ClaudeAI",
         "reward": 0.6
       },
       {
-        "headline": "ByteDance launches Seedance 2.5 with one-take creation and flexible referencing",
+        "headline": "Single-prompt agentic loop builds a playable GTA 6 demo, hits #1 on r/ClaudeAI",
         "reward": 0.6
       },
       {
-        "headline": "ByteDance launches Seedance 2.5 with one-take creation and flexible referencing",
+        "headline": "Single-prompt agentic loop builds a playable GTA 6 demo, hits #1 on r/ClaudeAI",
         "reward": 0.6
       }
     ],
     "bottom": [
       {
-        "headline": "Angle-bracket tags add non-verbal sounds and emphasis to MiniMax H3 dialogues",
+        "headline": "tinytensor: debuggable tensor library with lazy graph evaluation and CPU/CUDA kernels",
         "reward": 0.0
       },
       {
-        "headline": "Perplexity rolls out a new privacy notice; users flag substantial changes",
+        "headline": "ComfyUI node extends MiniMax H3 into longer clips with automatic seam correction",
         "reward": 0.0
       },
       {
-        "headline": "UK and Irish booksellers suspect AI firms behind 'strange' bulk secondhand orders",
+        "headline": "Analyst gets probation after telling ChatGPT about plans to rape and kill his ex",
         "reward": 0.0
       }
     ]
