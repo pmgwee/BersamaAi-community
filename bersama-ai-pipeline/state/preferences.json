@@ -1,40 +1,40 @@
 {
-  "updated_at": "2026-08-17T18:59:33Z",
+  "updated_at": "2026-08-17T21:42:55Z",
   "half_life_days": 14,
-  "n_events": 19128,
+  "n_events": 19329,
   "topic": {
-    "coding": 0.047,
-    "creative_video": 0.01,
     "creative_voice": 0.01,
+    "coding": 0.044,
     "research_study": 0.017,
-    "research_productivity": 0.039,
+    "creative_video": 0.01,
+    "research_productivity": 0.038,
     "finance": 0.0,
-    "creative_image": 0.108,
+    "creative_image": 0.106,
     "cybersecurity": 0.0,
     "company_investment": 0.112
   },
   "source": {
-    "HN": 0.039,
-    "r/LocalLLaMA": 0.044,
-    "r/runwayml": 0.0,
     "official": 0.064,
+    "HN": 0.039,
     "r/AI_Agents": 0.0,
     "github": 0.008,
     "r/MachineLearning": 0.0,
     "r/deeplearning": 0.0,
-    "r/OpenAI": 0.276,
+    "r/OpenAI": 0.268,
     "r/PromptEngineering": 0.0,
     "r/ElevenLabs": 0.0,
     "huggingface": 0.0,
     "r/cursor": 0.183,
     "r/ClaudeAI": 0.0,
+    "r/LocalLLaMA": 0.0,
     "r/notebooklm": 0.0,
-    "r/perplexity_ai": 0.234,
-    "r/StableDiffusion": 0.035,
+    "r/perplexity_ai": 0.226,
+    "r/StableDiffusion": 0.034,
     "r/comfyui": 0.0,
+    "r/runwayml": 0.0,
     "r/ClaudeCode": 0.0,
-    "r/artificial": 0.121,
-    "r/singularity": 0.183,
+    "r/artificial": 0.118,
+    "r/singularity": 0.18,
     "r/aiMusic": 0.0,
     "r/ChatGPT": 0.0,
     "r/SunoAI": 0.116,
@@ -45,39 +45,31 @@
     "r/security": 0.0,
     "r/FluxAI": 0.0,
     "r/redteamsec": 0.0,
-    "r/technology": 0.205,
+    "r/technology": 0.2,
     "r/cybersecurity": 0.0,
-    "r/stocks": 0.107,
+    "r/stocks": 0.116,
     "r/wallstreetbets": 0.296,
     "r/Economics": 0.0,
-    "r/ChatGPTCoding": 0.128,
+    "r/ChatGPTCoding": 0.133,
     "r/quant": 0.0,
-    "r/business": 0.398,
+    "r/business": 0.394,
     "r/investing": 0.0,
     "r/StartupSoloFounder": 0.0,
     "r/udiomusic": 0.0
   },
   "category": {
-    "UPDATE": 0.058,
+    "LAUNCH": 0.065,
+    "OPEN_SOURCE": 0.005,
+    "BENCHMARK": 0.042,
+    "UPDATE": 0.055,
     "RELEASE": 0.007,
     "PRICING": 0.006,
-    "LAUNCH": 0.066,
-    "OPEN_SOURCE": 0.005,
-    "BENCHMARK": 0.043,
     "DEAL": 0.202
   },
   "exemplars": {
     "top": [
       {
-        "headline": "Insider breaks down the four different strategic bets Chinese AI labs are making",
-        "reward": 0.6
-      },
-      {
-        "headline": "Insider breaks down the four different strategic bets Chinese AI labs are making",
-        "reward": 0.6
-      },
-      {
-        "headline": "Insider breaks down the four different strategic bets Chinese AI labs are making",
+        "headline": "Only one OpenAI model left in Arena WebDev top 10 as open-weight Chinese models hit frontier quality",
         "reward": 0.6
       },
       {
@@ -85,7 +77,15 @@
         "reward": 0.6
       },
       {
-        "headline": "Insider breaks down the four different strategic bets Chinese AI labs are making",
+        "headline": "Only one OpenAI model left in Arena WebDev top 10 as open-weight Chinese models hit frontier quality",
+        "reward": 0.6
+      },
+      {
+        "headline": "Only one OpenAI model left in Arena WebDev top 10 as open-weight Chinese models hit frontier quality",
+        "reward": 0.6
+      },
+      {
+        "headline": "Revolut drops Perplexity Pro in favour of ChatGPT Go for premium members",
         "reward": 0.6
       }
     ],
