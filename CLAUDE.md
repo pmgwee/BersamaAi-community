@@ -17,7 +17,7 @@ Three independent components that all reach the same Discord server (guild `1528
 | Community bot | **Bot VM** `bersama-ai-bot` (`~/BersamaAi-community/bersama-bot/`), systemd service `bersama`, 24/7 |
 | News digest + engagement loop | GitHub Actions (`.github/workflows/news-digest.yml` every 3h; `engagement-digest.yml` weekly) |
 | Stock digest (`@EconomyApp` → `#stock-financial-report`) | **Pipeline VM** cron (no LLM) — but the fetch is now **IP-agnostic**, so it could equally run on GitHub Actions. Reads `@EconomyApp`'s **Bluesky mirror** (`did:plc:kio5ffqovakoioxtxbuat6mr`) via the public AT Protocol API: free, keyless, cookieless. X blocks anonymous scraping from datacenter IPs; **RSSHub + `TWITTER_AUTH_TOKEN` was abandoned** because the cookie expires and the job rots silently. See [STOCK-DIGEST-CHALLENGES.md](STOCK-DIGEST-CHALLENGES.md). |
-| Serenity digest (`@aleabitoreddit` → `#serenity-x-posts`) | **Pipeline VM** cron 01:07 UTC (uses GLM for topic tags). Reads **trackserenity.com's public `signals.json`** (the same feed as the subscription-agent Stocks Page — his Bluesky account is stale since 2026-07-21), pills every `$TICKER` (cashtags ∪ regex), and pulls post photos via fxtwitter's keyless API (optional, tolerant). |
+| Serenity digest (`@aleabitoreddit` → `#serenity-x-posts`) | **Pipeline VM** cron **twice daily** — 01:07 + 13:07 UTC = 09:07/21:07 MYT (morning = US-close recap, evening = pre-bell; he posts around the clock, only 11% in US regular hours). Reads **trackserenity.com's public `signals.json`** (the same feed as the subscription-agent Stocks Page — his Bluesky account is stale since 2026-07-21), tags topics via GLM, pills every `$TICKER` (cashtags ∪ regex), and pulls post photos via fxtwitter's keyless API (optional, tolerant). |
 | discord-mcp admin jar | Local only, on-demand (`localhost:8085`) |
 
 > **TWO GCP VMs** (split 2026-08-07; was one VM with two directories):
@@ -78,17 +78,21 @@ sudo systemctl restart bersama && tail -n 4 ~/BersamaAi-community/bersama-bot/be
 > in the log) instead of failing. Missing a day is harmless — `MAX_AGE_DAYS=7`
 > means the next run picks up anything from the last week.
 
-### Serenity-digest daily cron (the PIPELINE VM's crontab — `crontab -e`)
+### Serenity-digest cron — TWICE daily (the PIPELINE VM's crontab — `crontab -e`)
 ```cron
-# @Serenity (@aleabitoreddit, the AI-semis stock-picker) → #serenity-x-posts, once a
-# day. 01:07 UTC = 09:07 MYT — staggered 7 min after the stock digest. Reads
-# trackserenity.com's PUBLIC /data/signals.json (same feed as the subscription-agent
-# Stocks Page), tags 1-4 topics via GLM (needs ZAI_API_KEY; keyword-rule fallback),
-# pills every $TICKER (cashtags ∪ $-regex), and attaches the post's photo via
-# fxtwitter when it has one. Same load-bearing `cd` as the stock digest.
-7 1 * * * cd /home/ngxiaohao123/bersama/bersama-ai-pipeline && ./.venv/bin/python -m pipeline.main --mode serenity >> /home/ngxiaohao123/bersama/serenity-digest.log 2>&1
+# @Serenity (@aleabitoreddit, the AI-semis stock-picker) → #serenity-x-posts, twice a
+# day. Reads trackserenity.com's PUBLIC /data/signals.json (same feed as the
+# subscription-agent Stocks Page), tags 1-4 topics via GLM (needs ZAI_API_KEY;
+# keyword-rule fallback), pills every $TICKER (cashtags ∪ $-regex), and attaches the
+# post's photo via fxtwitter when it has one. Same load-bearing `cd` as the stock digest.
+#
+# 01:07 UTC = 09:07 MYT morning — digests the MYT night (his overnight + US-session
+#             posts; ~4h after the US close, like the stock digest).
+# 13:07 UTC = 21:07 MYT evening — digests the MYT day (his biggest batch), landing
+#             23 min before the US opening bell (9:07 ET).
+7 1,13 * * * cd /home/ngxiaohao123/bersama/bersama-ai-pipeline && ./.venv/bin/python -m pipeline.main --mode serenity >> /home/ngxiaohao123/bersama/serenity-digest.log 2>&1
 ```
-> He posts ~5.3/day (cap 12/run; first run posts only 3 back-cards). Staleness guards mirror x-digest: feed unreachable/empty, or newest post ≥ 4 days old → 🔒-staff-chat alert. Safe manual test: `cd ~/bersama/bersama-ai-pipeline && source .venv/bin/activate && python -m pipeline.main --mode serenity --dry-run`.
+> He posts ~5.3/day, AROUND THE CLOCK — only 11% lands in US regular hours; his peaks are 09:00–12:00 + 16:00–19:00 MYT (measured over 80 posts / 24 days, 2026-08-17). The two windows split his volume 62/38 (avg 2.1 + 1.2 posts, busiest observed window 6) — both far under the 12/run cap, and max card latency is ~12h instead of ~24h. First-ever run posts only 3 back-cards. Staleness guards mirror x-digest: feed unreachable/empty, no parsable dates, or newest post ≥ 4 days old → 🔒-staff-chat alert. Safe manual test: `cd ~/bersama/bersama-ai-pipeline && source .venv/bin/activate && python -m pipeline.main --mode serenity --dry-run`.
 
 ## Env & secrets
 Each component has a complete, tagged `.env.example` (copy → `.env`; never commit the real one):
