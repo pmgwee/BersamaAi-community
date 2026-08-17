@@ -12,12 +12,14 @@ cookieless near-real-time mirror of his posts (robots.txt `Allow: /`). This is
 the SAME feed the Stocks Page reads, so the two stay in parity by
 construction. The Bluesky account (aleabitoreddit.bsky.social) was rejected as
 a source: it stopped updating 2026-07-21. signals.json carries `cashtags[]`
-and the direct X link but NO images, so the card image (when the post has one)
-is fetched from fxtwitter's keyless status API — verified to return durable
-pbs.twimg.com URLs; ~5 of 7 recent posts carry a photo. Both are third-party
-free services, so the x-digest staleness doctrine applies: a reachable feed
-whose newest post is too old raises a staff alert instead of failing silently,
-and an image-fetch failure just posts the card without the picture.
+and the direct X link but NO images — and it truncates every post at
+~280-305 chars — so the card's image AND its full text (longest measured:
+3,387 chars, t.co links already expanded) come from fxtwitter's keyless status
+API; ~5 of 7 recent posts carry a photo. Both are third-party free services,
+so the x-digest staleness doctrine applies: a reachable feed whose newest post
+is too old raises a staff alert instead of failing silently, and a fxtwitter
+failure just posts the card from the mirror's truncated text (with a
+read-more link) instead of failing.
 
 Tagging: GLM (the pipeline's own Z.ai creds) picks 1-3 topics from the
 19-area taxonomy ported from subscription-agent's `lib/serenity/topics.ts`,
@@ -133,6 +135,13 @@ KEYWORD_RULES = [
 # Every $CASHTAG in the text (e.g. "$NVDA, $LITE, $AAOI, $COHR, $AXTI") —
 # uppercase-only by X cashtag convention; a leading letter stops "$5M" matches.
 _TICKER_RE = re.compile(r"\$([A-Z][A-Z0-9]{1,9})\b")
+# X's t.co shorteners: noise on the card — the bold lead line already links the
+# post (fxtwitter text carries none anyway; this guards the mirror fallback).
+_TCO_RE = re.compile(r"https?://t\.co/\w+")
+# Post body shown on the card before cutting; longer → word-boundary cut plus an
+# explicit read-the-full-post link (the mirror's own ~300-char truncation is the
+# reason the full text is pulled from fxtwitter at all — see _fetch_fxtweet).
+BODY_LIMIT = 1000
 
 
 def _extract_tickers(text: str, cashtags: list) -> list[str]:
@@ -254,22 +263,28 @@ def _parse_serenity_posts(payload: dict) -> list[dict]:
     return posts
 
 
-def _fetch_image(tweet_id: str) -> str:
-    """First photo of the post, via fxtwitter's keyless status API (durable
-    pbs.twimg.com URLs — Discord fetches them fine). Any failure → "" — the
-    card posts without a picture; not every post has one anyway."""
+def _fetch_fxtweet(tweet_id: str) -> tuple[str, str]:
+    """(first photo, FULL post text) from fxtwitter's keyless status API.
+
+    signals.json truncates every post at ~280-305 chars (64 of 80 measured end
+    mid-sentence), while fxtwitter carries the complete text (longest measured:
+    3,387 chars) with t.co shorteners already expanded away. One call feeds the
+    card's body AND its image (durable pbs.twimg.com URLs). Any failure returns
+    ("", "") and the caller falls back to the mirror's truncated text."""
     r = _http_get(FXTWITTER_STATUS.format(tweet_id=tweet_id))
     if r is None:
-        return ""
+        return "", ""
     try:
-        photos = (((r.json().get("tweet") or {}).get("media") or {}).get("photos")) or []
-        if not photos:  # most posts carry no picture — that's a shape, not a failure
-            return ""
-        url = str(photos[0].get("url") or "").strip()
-        return url if url.startswith(("http://", "https://")) else ""
-    except Exception as e:  # noqa: BLE001 — malformed body → no image, keep going
+        tw = r.json().get("tweet") or {}
+        photos = ((tw.get("media") or {}).get("photos")) or []
+        image = ""
+        if photos:  # most posts carry no picture — that's a shape, not a failure
+            u = str(photos[0].get("url") or "").strip()
+            image = u if u.startswith(("http://", "https://")) else ""
+        return image, str(tw.get("text") or "")
+    except Exception as e:  # noqa: BLE001 — malformed body → no extras, keep going
         print(f"[serenity] fxtwitter parse failed for {tweet_id}: {e}")
-        return ""
+        return "", ""
 
 
 # ── card ─────────────────────────────────────────────────────────────────────
@@ -277,22 +292,29 @@ def _fetch_image(tweet_id: str) -> str:
 def build_serenity_card(post: dict, topics: list[str], tickers: list[str]) -> dict:
     """One embed = one post, cloning the reference design: @Serenity · X badge,
     the lead line as a bold hyperlink (title+link in one, x-digest style), the
-    post body, then the topic chip row (bullet tags) and the ticker pill row
-    (inline-code `$TICKER`), with the post's photo as the bottom image."""
-    lead, _, rest = post["text"].partition("\n")
+    FULL post body (word-boundary cut + a bold read-more link when it exceeds
+    BODY_LIMIT — a silent mid-sentence cut is never acceptable), then the topic
+    pills and ticker pills (both inline-code chips so they read as tags, not
+    body bullets), with the post's photo as the bottom image."""
+    lead, _, rest = post["body"].partition("\n")
     lead, rest = lead.strip(), rest.strip("\n")
-    if lead and post["url"]:
-        head = f"**[{_md_escape(lead)}]({post['url']})**"
-    else:
-        head = f"**{lead}**" if lead else ""
-    topic_row = "  ".join(f"• {t}" for t in topics)
+    head = (f"**[{_md_escape(lead)}]({post['url']})**" if lead and post["url"]
+            else (f"**{lead}**" if lead else ""))
+    # Cut honestly: our own BODY_LIMIT cut OR the mirror's ~300-char truncation
+    # (fxtwitter unreachable → we only have the source-truncated text).
+    cut = post.get("source_cut", False)
+    if len(rest) > BODY_LIMIT:
+        rest = rest[:BODY_LIMIT].rsplit(" ", 1)[0].rstrip(",;:") + " …"
+        cut = True
+    if cut:
+        rest += f"\n\n**[read the full post on X →]({post['url']})**"
+    topic_row = "  ".join(f"`• {t}`" for t in topics)
     ticker_row = "  ".join(f"`${tk}`" for tk in tickers)
     desc = "\n\n".join(p for p in (head, rest, topic_row, ticker_row) if p)
     embed: dict = {
         "author": {"name": BADGE},
         "description": desc[:4096],
         "color": BRAND_COLOR,
-        "footer": {"text": "via trackserenity.com · auto-tagged"},
     }
     if post.get("image"):
         embed["image"] = {"url": post["image"]}
@@ -380,13 +402,20 @@ def run_serenity_digest(*, dry_run: bool = False, alert_fn=None,
 
     posted = 0
     # Seen ids are committed AFTER EACH successful post, not once at the end:
-    # this loop is slow (image fetch + GLM tag per card), and a mid-run kill
-    # (VM reboot, Ctrl-C on a hung call) must not re-post cards already sent.
+    # this loop is slow (full-text/image fetch + GLM tag per card), and a
+    # mid-run kill (VM reboot, Ctrl-C on a hung call) must not re-post cards
+    # already sent.
     saved: list[str] = list(seen)
     for p in to_post:
-        p["image"] = _fetch_image(p["id"])
-        topics = _tag_topics(p["text"], api_key=api_key, model=model, base_url=base_url)
-        tickers = _extract_tickers(p["text"], p["cashtags"])
+        image, full_text = _fetch_fxtweet(p["id"])
+        p["image"] = image
+        # Full text from fxtwitter (t.co-stripped); the mirror's ~300-char
+        # truncation is the fallback. `source_cut` marks the fallback case so
+        # the card shows a read-more link even though WE didn't cut it.
+        p["body"] = _clean_multiline(_TCO_RE.sub("", full_text or p["text"]))
+        p["source_cut"] = not full_text and len(p["text"]) >= 270
+        topics = _tag_topics(p["body"], api_key=api_key, model=model, base_url=base_url)
+        tickers = _extract_tickers(p["body"], p["cashtags"])
         payload = build_serenity_card(p, topics, tickers)
         if dry_run:
             print(f"\n[serenity DRY-RUN] -> {LABEL}\n"
