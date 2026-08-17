@@ -1,42 +1,42 @@
 {
-  "updated_at": "2026-08-17T09:59:06Z",
+  "updated_at": "2026-08-17T13:07:47Z",
   "half_life_days": 14,
-  "n_events": 18326,
+  "n_events": 18565,
   "topic": {
-    "coding": 0.05,
+    "coding": 0.047,
     "research_study": 0.016,
     "finance": 0.0,
     "creative_video": 0.011,
-    "creative_voice": 0.011,
-    "research_productivity": 0.041,
+    "creative_voice": 0.01,
+    "research_productivity": 0.04,
     "creative_image": 0.11,
     "cybersecurity": 0.0,
     "company_investment": 0.111
   },
   "source": {
-    "official": 0.063,
-    "r/ClaudeAI": 0.05,
     "HN": 0.039,
     "r/ClaudeCode": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/SideProject": 0.0,
-    "r/LocalLLaMA": 0.047,
+    "r/LocalLLaMA": 0.046,
     "r/runwayml": 0.0,
+    "official": 0.064,
     "r/AI_Agents": 0.0,
-    "github": 0.009,
+    "github": 0.008,
     "r/MachineLearning": 0.0,
     "r/deeplearning": 0.0,
-    "r/OpenAI": 0.304,
+    "r/OpenAI": 0.294,
     "r/PromptEngineering": 0.0,
     "r/ElevenLabs": 0.0,
     "huggingface": 0.0,
     "r/cursor": 0.182,
+    "r/ClaudeAI": 0.0,
     "r/notebooklm": 0.0,
-    "r/perplexity_ai": 0.264,
-    "r/StableDiffusion": 0.037,
+    "r/perplexity_ai": 0.253,
+    "r/StableDiffusion": 0.036,
     "r/comfyui": 0.0,
-    "r/artificial": 0.127,
-    "r/singularity": 0.193,
+    "r/artificial": 0.125,
+    "r/singularity": 0.19,
     "r/aiMusic": 0.0,
     "r/ChatGPT": 0.0,
     "r/SunoAI": 0.116,
@@ -47,47 +47,47 @@
     "r/security": 0.0,
     "r/FluxAI": 0.0,
     "r/redteamsec": 0.0,
-    "r/technology": 0.222,
+    "r/technology": 0.217,
     "r/cybersecurity": 0.0,
-    "r/stocks": 0.076,
-    "r/wallstreetbets": 0.291,
+    "r/stocks": 0.087,
+    "r/wallstreetbets": 0.295,
     "r/Economics": 0.0,
-    "r/ChatGPTCoding": 0.109,
+    "r/ChatGPTCoding": 0.116,
     "r/quant": 0.0,
-    "r/business": 0.413,
+    "r/business": 0.407,
     "r/investing": 0.0,
     "r/StartupSoloFounder": 0.0,
     "r/udiomusic": 0.0
   },
   "category": {
-    "LAUNCH": 0.066,
-    "BENCHMARK": 0.055,
     "UPDATE": 0.057,
     "RELEASE": 0.006,
     "DEAL": 0.195,
     "PRICING": 0.006,
-    "OPEN_SOURCE": 0.006
+    "LAUNCH": 0.068,
+    "OPEN_SOURCE": 0.005,
+    "BENCHMARK": 0.043
   },
   "exemplars": {
     "top": [
       {
-        "headline": "Single-prompt agentic loop builds a playable GTA 6 demo, hits #1 on r/ClaudeAI",
+        "headline": "Insider breaks down the four different strategic bets Chinese AI labs are making",
         "reward": 0.6
       },
       {
-        "headline": "Single-prompt agentic loop builds a playable GTA 6 demo, hits #1 on r/ClaudeAI",
+        "headline": "Insider breaks down the four different strategic bets Chinese AI labs are making",
         "reward": 0.6
       },
       {
-        "headline": "Single-prompt agentic loop builds a playable GTA 6 demo, hits #1 on r/ClaudeAI",
+        "headline": "Insider breaks down the four different strategic bets Chinese AI labs are making",
         "reward": 0.6
       },
       {
-        "headline": "Single-prompt agentic loop builds a playable GTA 6 demo, hits #1 on r/ClaudeAI",
+        "headline": "Only one OpenAI model left in Arena WebDev top 10 as open-weight Chinese models hit frontier quality",
         "reward": 0.6
       },
       {
-        "headline": "Single-prompt agentic loop builds a playable GTA 6 demo, hits #1 on r/ClaudeAI",
+        "headline": "Insider breaks down the four different strategic bets Chinese AI labs are making",
         "reward": 0.6
       }
     ],
