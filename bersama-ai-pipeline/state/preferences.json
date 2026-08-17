@@ -1,40 +1,40 @@
 {
-  "updated_at": "2026-08-17T15:42:36Z",
+  "updated_at": "2026-08-17T18:59:33Z",
   "half_life_days": 14,
-  "n_events": 18714,
+  "n_events": 19128,
   "topic": {
     "coding": 0.047,
-    "creative_video": 0.011,
+    "creative_video": 0.01,
     "creative_voice": 0.01,
     "research_study": 0.017,
     "research_productivity": 0.039,
     "finance": 0.0,
-    "creative_image": 0.109,
+    "creative_image": 0.108,
     "cybersecurity": 0.0,
     "company_investment": 0.112
   },
   "source": {
     "HN": 0.039,
-    "r/LocalLLaMA": 0.045,
+    "r/LocalLLaMA": 0.044,
     "r/runwayml": 0.0,
-    "official": 0.065,
+    "official": 0.064,
     "r/AI_Agents": 0.0,
     "github": 0.008,
     "r/MachineLearning": 0.0,
     "r/deeplearning": 0.0,
-    "r/OpenAI": 0.285,
+    "r/OpenAI": 0.276,
     "r/PromptEngineering": 0.0,
     "r/ElevenLabs": 0.0,
     "huggingface": 0.0,
     "r/cursor": 0.183,
     "r/ClaudeAI": 0.0,
     "r/notebooklm": 0.0,
-    "r/perplexity_ai": 0.243,
+    "r/perplexity_ai": 0.234,
     "r/StableDiffusion": 0.035,
     "r/comfyui": 0.0,
     "r/ClaudeCode": 0.0,
-    "r/artificial": 0.123,
-    "r/singularity": 0.186,
+    "r/artificial": 0.121,
+    "r/singularity": 0.183,
     "r/aiMusic": 0.0,
     "r/ChatGPT": 0.0,
     "r/SunoAI": 0.116,
@@ -45,26 +45,26 @@
     "r/security": 0.0,
     "r/FluxAI": 0.0,
     "r/redteamsec": 0.0,
-    "r/technology": 0.212,
+    "r/technology": 0.205,
     "r/cybersecurity": 0.0,
-    "r/stocks": 0.097,
-    "r/wallstreetbets": 0.295,
+    "r/stocks": 0.107,
+    "r/wallstreetbets": 0.296,
     "r/Economics": 0.0,
-    "r/ChatGPTCoding": 0.122,
+    "r/ChatGPTCoding": 0.128,
     "r/quant": 0.0,
-    "r/business": 0.402,
+    "r/business": 0.398,
     "r/investing": 0.0,
     "r/StartupSoloFounder": 0.0,
     "r/udiomusic": 0.0
   },
   "category": {
-    "UPDATE": 0.059,
+    "UPDATE": 0.058,
     "RELEASE": 0.007,
     "PRICING": 0.006,
-    "LAUNCH": 0.067,
+    "LAUNCH": 0.066,
     "OPEN_SOURCE": 0.005,
     "BENCHMARK": 0.043,
-    "DEAL": 0.203
+    "DEAL": 0.202
   },
   "exemplars": {
     "top": [
@@ -91,15 +91,15 @@
     ],
     "bottom": [
       {
-        "headline": "Suno users tally the nerfs: no 'Full song' lyrics, worse covers, download limits, watermarking",
+        "headline": "MiniMax H3's text-to-image output surprises r/StableDiffusion",
         "reward": 0.0
       },
       {
-        "headline": "Report: Alibaba's Qwen overtakes Meta and Google to claim top spot globally among open models",
+        "headline": "Google makes visible AI watermarks optional as Anthropic faces cancellations",
         "reward": 0.0
       },
       {
-        "headline": "Study: training models not to claim consciousness reshapes their entire value system",
+        "headline": "ComfyUI-ALLinONE-MinimaxH3: one node for MiniMax H3 workflows",
         "reward": 0.0
       }
     ]
