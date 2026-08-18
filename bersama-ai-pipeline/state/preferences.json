@@ -1,28 +1,28 @@
 {
-  "updated_at": "2026-08-18T18:58:12Z",
+  "updated_at": "2026-08-18T21:40:41Z",
   "half_life_days": 14,
-  "n_events": 20578,
+  "n_events": 20741,
   "topic": {
-    "coding": 0.04,
-    "research_study": 0.02,
     "creative_video": 0.0,
+    "coding": 0.04,
     "finance": 0.0,
-    "creative_image": 0.098,
+    "creative_image": 0.097,
+    "research_study": 0.02,
     "creative_voice": 0.0,
     "research_productivity": 0.0,
     "cybersecurity": 0.0,
-    "company_investment": 0.113
+    "company_investment": 0.112
   },
   "source": {
-    "HN": 0.038,
-    "github": 0.007,
-    "official": 0.065,
     "r/comfyui": 0.0,
     "r/runwayml": 0.0,
     "r/ClaudeCode": 0.0,
+    "github": 0.007,
+    "HN": 0.039,
+    "official": 0.065,
     "r/LocalLLaMA": 0.0,
-    "r/artificial": 0.113,
-    "r/singularity": 0.159,
+    "r/artificial": 0.112,
+    "r/singularity": 0.157,
     "huggingface": 0.0,
     "r/MachineLearning": 0.0,
     "r/StableDiffusion": 0.0,
@@ -41,16 +41,16 @@
     "r/ClaudeAI": 0.0,
     "r/FluxAI": 0.0,
     "r/redteamsec": 0.0,
-    "r/technology": 0.161,
-    "r/cursor": 0.201,
+    "r/technology": 0.156,
+    "r/cursor": 0.199,
     "r/cybersecurity": 0.0,
-    "r/stocks": 0.162,
+    "r/stocks": 0.167,
     "r/wallstreetbets": 0.297,
     "r/Economics": 0.0,
     "r/AI_Agents": 0.0,
-    "r/ChatGPTCoding": 0.162,
+    "r/ChatGPTCoding": 0.166,
     "r/quant": 0.0,
-    "r/business": 0.353,
+    "r/business": 0.345,
     "r/perplexity_ai": 0.0,
     "r/investing": 0.0,
     "r/StartupSoloFounder": 0.0,
@@ -61,11 +61,11 @@
   },
   "category": {
     "LAUNCH": 0.063,
-    "OPEN_SOURCE": 0.005,
-    "BENCHMARK": 0.022,
+    "RELEASE": 0.01,
     "UPDATE": 0.056,
-    "RELEASE": 0.009,
-    "DEAL": 0.183,
+    "OPEN_SOURCE": 0.004,
+    "BENCHMARK": 0.023,
+    "DEAL": 0.182,
     "PRICING": 0.007
   },
   "exemplars": {
@@ -93,15 +93,15 @@
     ],
     "bottom": [
       {
-        "headline": "Nvidia invests $1.5B in SoftBank data center developer behind OpenAI project",
+        "headline": "BYU review: wrong-way AI use may leave users worse off than no AI",
         "reward": 0.0
       },
       {
-        "headline": "One redditor trained three LLMs from scratch for about $750 — base, SFT and GRPO each",
+        "headline": "Unauthenticated RCE found in CircleCI's MCP server",
         "reward": 0.0
       },
       {
-        "headline": "ComfyUI-H3-FaceRefine cleans up small faces in MiniMax H3 video, frame by frame",
+        "headline": "Speko (YC S26) launches 'OpenRouter for Voice AI'",
         "reward": 0.0
       }
     ]
