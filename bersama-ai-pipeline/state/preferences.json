@@ -1,40 +1,39 @@
 {
-  "updated_at": "2026-08-18T07:05:54Z",
+  "updated_at": "2026-08-18T09:50:20Z",
   "half_life_days": 14,
-  "n_events": 19947,
+  "n_events": 20103,
   "topic": {
     "coding": 0.04,
+    "research_productivity": 0.038,
     "creative_video": 0.01,
-    "research_productivity": 0.036,
     "research_study": 0.019,
     "creative_voice": 0.01,
     "finance": 0.0,
-    "creative_image": 0.103,
+    "creative_image": 0.101,
     "cybersecurity": 0.0,
     "company_investment": 0.113
   },
   "source": {
-    "huggingface": 0.0,
-    "r/cursor": 0.181,
     "HN": 0.039,
-    "github": 0.008,
     "r/ClaudeAI": 0.0,
     "r/LocalLLaMA": 0.0,
+    "huggingface": 0.0,
     "r/notebooklm": 0.0,
-    "r/perplexity_ai": 0.204,
-    "r/StableDiffusion": 0.031,
+    "github": 0.007,
+    "r/perplexity_ai": 0.198,
+    "r/StableDiffusion": 0.03,
     "official": 0.065,
     "r/comfyui": 0.0,
     "r/runwayml": 0.0,
     "r/ClaudeCode": 0.0,
-    "r/artificial": 0.116,
-    "r/singularity": 0.171,
+    "r/artificial": 0.115,
+    "r/singularity": 0.168,
     "r/MachineLearning": 0.0,
     "r/aiMusic": 0.0,
     "r/ElevenLabs": 0.0,
     "r/ChatGPT": 0.0,
     "r/PromptEngineering": 0.0,
-    "r/SunoAI": 0.115,
+    "r/SunoAI": 0.114,
     "r/algotrading": 0.0,
     "r/midjourney": 0.0,
     "r/deeplearning": 0.0,
@@ -43,15 +42,16 @@
     "r/security": 0.0,
     "r/FluxAI": 0.0,
     "r/redteamsec": 0.0,
-    "r/technology": 0.182,
+    "r/technology": 0.177,
+    "r/cursor": 0.209,
     "r/cybersecurity": 0.0,
-    "r/stocks": 0.138,
-    "r/wallstreetbets": 0.296,
+    "r/stocks": 0.145,
+    "r/wallstreetbets": 0.297,
     "r/Economics": 0.0,
     "r/AI_Agents": 0.0,
-    "r/ChatGPTCoding": 0.147,
+    "r/ChatGPTCoding": 0.152,
     "r/quant": 0.0,
-    "r/business": 0.383,
+    "r/business": 0.38,
     "r/investing": 0.0,
     "r/StartupSoloFounder": 0.0,
     "r/OpenAI": 0.0,
@@ -59,13 +59,13 @@
     "r/SideProject": 0.0
   },
   "category": {
-    "RELEASE": 0.008,
-    "PRICING": 0.007,
-    "OPEN_SOURCE": 0.005,
     "LAUNCH": 0.063,
-    "BENCHMARK": 0.032,
+    "BENCHMARK": 0.033,
     "UPDATE": 0.056,
-    "DEAL": 0.2
+    "RELEASE": 0.009,
+    "OPEN_SOURCE": 0.005,
+    "DEAL": 0.2,
+    "PRICING": 0.007
   },
   "exemplars": {
     "top": [
@@ -92,15 +92,15 @@
     ],
     "bottom": [
       {
-        "headline": "Google's AMIE handles real-time video consultations in first-of-its-kind study",
+        "headline": "ComfyUI now runs MiniMax H3 single-image reference generation natively",
         "reward": 0.0
       },
       {
-        "headline": "Poll finds young people intensely distrust AI CEOs",
+        "headline": "Cambridge proposes a 'Red Queen hypothesis' for self-improving AI",
         "reward": 0.0
       },
       {
-        "headline": "Indie dev's AI bridge extension jumps from 60 to 3,500 users in 4 days",
+        "headline": "Open-source Hermes pentest profile runs structured pentests, solo or as assist",
         "reward": 0.0
       }
     ]
