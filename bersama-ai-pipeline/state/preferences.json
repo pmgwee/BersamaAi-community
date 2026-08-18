@@ -1,41 +1,40 @@
 {
-  "updated_at": "2026-08-18T01:52:18Z",
+  "updated_at": "2026-08-18T03:59:34Z",
   "half_life_days": 14,
-  "n_events": 19374,
+  "n_events": 19533,
   "topic": {
+    "coding": 0.041,
     "creative_video": 0.01,
-    "coding": 0.044,
-    "creative_voice": 0.01,
     "research_productivity": 0.037,
-    "research_study": 0.018,
+    "research_study": 0.019,
+    "creative_voice": 0.01,
     "finance": 0.0,
-    "creative_image": 0.105,
+    "creative_image": 0.104,
     "cybersecurity": 0.0,
     "company_investment": 0.113
   },
   "source": {
-    "HN": 0.039,
-    "r/OpenAI": 0.261,
-    "r/PromptEngineering": 0.0,
-    "r/ElevenLabs": 0.0,
     "huggingface": 0.0,
-    "r/cursor": 0.184,
+    "r/cursor": 0.182,
+    "HN": 0.039,
     "github": 0.008,
     "r/ClaudeAI": 0.0,
     "r/LocalLLaMA": 0.0,
     "r/notebooklm": 0.0,
-    "r/perplexity_ai": 0.218,
-    "r/StableDiffusion": 0.033,
+    "r/perplexity_ai": 0.211,
+    "r/StableDiffusion": 0.032,
     "official": 0.065,
     "r/comfyui": 0.0,
     "r/runwayml": 0.0,
     "r/ClaudeCode": 0.0,
     "r/artificial": 0.117,
-    "r/singularity": 0.177,
+    "r/singularity": 0.174,
     "r/MachineLearning": 0.0,
     "r/aiMusic": 0.0,
+    "r/ElevenLabs": 0.0,
     "r/ChatGPT": 0.0,
-    "r/SunoAI": 0.116,
+    "r/PromptEngineering": 0.0,
+    "r/SunoAI": 0.115,
     "r/algotrading": 0.0,
     "r/midjourney": 0.0,
     "r/deeplearning": 0.0,
@@ -44,44 +43,45 @@
     "r/security": 0.0,
     "r/FluxAI": 0.0,
     "r/redteamsec": 0.0,
-    "r/technology": 0.196,
+    "r/technology": 0.189,
     "r/cybersecurity": 0.0,
-    "r/stocks": 0.124,
+    "r/stocks": 0.131,
     "r/wallstreetbets": 0.296,
     "r/Economics": 0.0,
     "r/AI_Agents": 0.0,
-    "r/ChatGPTCoding": 0.138,
+    "r/ChatGPTCoding": 0.143,
     "r/quant": 0.0,
-    "r/business": 0.39,
+    "r/business": 0.386,
     "r/investing": 0.0,
     "r/StartupSoloFounder": 0.0,
+    "r/OpenAI": 0.0,
     "r/udiomusic": 0.0
   },
   "category": {
-    "OPEN_SOURCE": 0.005,
-    "UPDATE": 0.055,
-    "BENCHMARK": 0.044,
     "RELEASE": 0.008,
     "PRICING": 0.007,
-    "LAUNCH": 0.065,
+    "OPEN_SOURCE": 0.005,
+    "LAUNCH": 0.064,
+    "BENCHMARK": 0.032,
+    "UPDATE": 0.056,
     "DEAL": 0.201
   },
   "exemplars": {
     "top": [
       {
-        "headline": "Only one OpenAI model left in Arena WebDev top 10 as open-weight Chinese models hit frontier quality",
+        "headline": "Revolut drops Perplexity Pro in favour of ChatGPT Go for premium members",
         "reward": 0.6
       },
       {
-        "headline": "Only one OpenAI model left in Arena WebDev top 10 as open-weight Chinese models hit frontier quality",
+        "headline": "MiniMax H3 nearly ties Seedance 2.0 in Arena img2vid ranking",
         "reward": 0.6
       },
       {
-        "headline": "Only one OpenAI model left in Arena WebDev top 10 as open-weight Chinese models hit frontier quality",
+        "headline": "Revolut drops Perplexity Pro in favour of ChatGPT Go for premium members",
         "reward": 0.6
       },
       {
-        "headline": "Only one OpenAI model left in Arena WebDev top 10 as open-weight Chinese models hit frontier quality",
+        "headline": "MiniMax H3 nearly ties Seedance 2.0 in Arena img2vid ranking",
         "reward": 0.6
       },
       {
@@ -91,15 +91,15 @@
     ],
     "bottom": [
       {
-        "headline": "Hugging Face publishes 'State of Open Models: Summer 2026'",
+        "headline": "Inside the federal keyword lists that canceled billions in research funding",
         "reward": 0.0
       },
       {
-        "headline": "Solo quant's LLM-built systematic trading stack reaches consistent PnL",
+        "headline": "Suno users poll whether to quit as 'upcoming changes' stoke upsell anger",
         "reward": 0.0
       },
       {
-        "headline": "Black Hat duo behind 'Hijacking AI Coding Agents' opens AMA",
+        "headline": "Three free open-source NotebookLM add-ons land for Firefox and Thunderbird",
         "reward": 0.0
       }
     ]
