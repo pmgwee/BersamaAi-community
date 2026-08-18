@@ -1,34 +1,34 @@
 {
-  "updated_at": "2026-08-18T03:59:34Z",
+  "updated_at": "2026-08-18T07:05:54Z",
   "half_life_days": 14,
-  "n_events": 19533,
+  "n_events": 19947,
   "topic": {
-    "coding": 0.041,
+    "coding": 0.04,
     "creative_video": 0.01,
-    "research_productivity": 0.037,
+    "research_productivity": 0.036,
     "research_study": 0.019,
     "creative_voice": 0.01,
     "finance": 0.0,
-    "creative_image": 0.104,
+    "creative_image": 0.103,
     "cybersecurity": 0.0,
     "company_investment": 0.113
   },
   "source": {
     "huggingface": 0.0,
-    "r/cursor": 0.182,
+    "r/cursor": 0.181,
     "HN": 0.039,
     "github": 0.008,
     "r/ClaudeAI": 0.0,
     "r/LocalLLaMA": 0.0,
     "r/notebooklm": 0.0,
-    "r/perplexity_ai": 0.211,
-    "r/StableDiffusion": 0.032,
+    "r/perplexity_ai": 0.204,
+    "r/StableDiffusion": 0.031,
     "official": 0.065,
     "r/comfyui": 0.0,
     "r/runwayml": 0.0,
     "r/ClaudeCode": 0.0,
-    "r/artificial": 0.117,
-    "r/singularity": 0.174,
+    "r/artificial": 0.116,
+    "r/singularity": 0.171,
     "r/MachineLearning": 0.0,
     "r/aiMusic": 0.0,
     "r/ElevenLabs": 0.0,
@@ -43,28 +43,29 @@
     "r/security": 0.0,
     "r/FluxAI": 0.0,
     "r/redteamsec": 0.0,
-    "r/technology": 0.189,
+    "r/technology": 0.182,
     "r/cybersecurity": 0.0,
-    "r/stocks": 0.131,
+    "r/stocks": 0.138,
     "r/wallstreetbets": 0.296,
     "r/Economics": 0.0,
     "r/AI_Agents": 0.0,
-    "r/ChatGPTCoding": 0.143,
+    "r/ChatGPTCoding": 0.147,
     "r/quant": 0.0,
-    "r/business": 0.386,
+    "r/business": 0.383,
     "r/investing": 0.0,
     "r/StartupSoloFounder": 0.0,
     "r/OpenAI": 0.0,
-    "r/udiomusic": 0.0
+    "r/udiomusic": 0.0,
+    "r/SideProject": 0.0
   },
   "category": {
     "RELEASE": 0.008,
     "PRICING": 0.007,
     "OPEN_SOURCE": 0.005,
-    "LAUNCH": 0.064,
+    "LAUNCH": 0.063,
     "BENCHMARK": 0.032,
     "UPDATE": 0.056,
-    "DEAL": 0.201
+    "DEAL": 0.2
   },
   "exemplars": {
     "top": [
@@ -91,15 +92,15 @@
     ],
     "bottom": [
       {
-        "headline": "Inside the federal keyword lists that canceled billions in research funding",
+        "headline": "Google's AMIE handles real-time video consultations in first-of-its-kind study",
         "reward": 0.0
       },
       {
-        "headline": "Suno users poll whether to quit as 'upcoming changes' stoke upsell anger",
+        "headline": "Poll finds young people intensely distrust AI CEOs",
         "reward": 0.0
       },
       {
-        "headline": "Three free open-source NotebookLM add-ons land for Firefox and Thunderbird",
+        "headline": "Indie dev's AI bridge extension jumps from 60 to 3,500 users in 4 days",
         "reward": 0.0
       }
     ]
