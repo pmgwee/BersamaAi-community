@@ -1,28 +1,28 @@
 {
-  "updated_at": "2026-08-18T15:48:17Z",
+  "updated_at": "2026-08-18T18:58:12Z",
   "half_life_days": 14,
-  "n_events": 20424,
+  "n_events": 20578,
   "topic": {
     "coding": 0.04,
-    "research_study": 0.019,
-    "creative_voice": 0.009,
+    "research_study": 0.02,
     "creative_video": 0.0,
     "finance": 0.0,
-    "creative_image": 0.099,
+    "creative_image": 0.098,
+    "creative_voice": 0.0,
     "research_productivity": 0.0,
     "cybersecurity": 0.0,
     "company_investment": 0.113
   },
   "source": {
-    "r/LocalLLaMA": 0.0,
-    "official": 0.064,
+    "HN": 0.038,
     "github": 0.007,
-    "HN": 0.039,
+    "official": 0.065,
     "r/comfyui": 0.0,
     "r/runwayml": 0.0,
     "r/ClaudeCode": 0.0,
-    "r/artificial": 0.114,
-    "r/singularity": 0.162,
+    "r/LocalLLaMA": 0.0,
+    "r/artificial": 0.113,
+    "r/singularity": 0.159,
     "huggingface": 0.0,
     "r/MachineLearning": 0.0,
     "r/StableDiffusion": 0.0,
@@ -31,7 +31,7 @@
     "r/ElevenLabs": 0.0,
     "r/ChatGPT": 0.0,
     "r/PromptEngineering": 0.0,
-    "r/SunoAI": 0.113,
+    "r/SunoAI": 0.112,
     "r/algotrading": 0.0,
     "r/midjourney": 0.0,
     "r/deeplearning": 0.0,
@@ -41,30 +41,31 @@
     "r/ClaudeAI": 0.0,
     "r/FluxAI": 0.0,
     "r/redteamsec": 0.0,
-    "r/technology": 0.167,
-    "r/cursor": 0.204,
+    "r/technology": 0.161,
+    "r/cursor": 0.201,
     "r/cybersecurity": 0.0,
-    "r/stocks": 0.157,
+    "r/stocks": 0.162,
     "r/wallstreetbets": 0.297,
     "r/Economics": 0.0,
     "r/AI_Agents": 0.0,
-    "r/ChatGPTCoding": 0.159,
+    "r/ChatGPTCoding": 0.162,
     "r/quant": 0.0,
-    "r/business": 0.361,
+    "r/business": 0.353,
     "r/perplexity_ai": 0.0,
     "r/investing": 0.0,
     "r/StartupSoloFounder": 0.0,
     "r/OpenAI": 0.0,
     "r/udiomusic": 0.0,
-    "r/SideProject": 0.0
+    "r/SideProject": 0.0,
+    "r/learnmachinelearning": 0.0
   },
   "category": {
-    "LAUNCH": 0.062,
-    "RELEASE": 0.009,
+    "LAUNCH": 0.063,
     "OPEN_SOURCE": 0.005,
-    "DEAL": 0.184,
     "BENCHMARK": 0.022,
     "UPDATE": 0.056,
+    "RELEASE": 0.009,
+    "DEAL": 0.183,
     "PRICING": 0.007
   },
   "exemplars": {
@@ -92,15 +93,15 @@
     ],
     "bottom": [
       {
-        "headline": "Wispr raises $280M at a $2B valuation as it looks beyond dictation",
+        "headline": "Nvidia invests $1.5B in SoftBank data center developer behind OpenAI project",
         "reward": 0.0
       },
       {
-        "headline": "Cursor users uneasy after the $60B SpaceX acquisition",
+        "headline": "One redditor trained three LLMs from scratch for about $750 — base, SFT and GRPO each",
         "reward": 0.0
       },
       {
-        "headline": "Runway asks yearly-unlimited subscribers to move to Max plans, cutoff unclear",
+        "headline": "ComfyUI-H3-FaceRefine cleans up small faces in MiniMax H3 video, frame by frame",
         "reward": 0.0
       }
     ]
