@@ -1,32 +1,31 @@
 {
-  "updated_at": "2026-08-18T13:10:09Z",
+  "updated_at": "2026-08-18T15:48:17Z",
   "half_life_days": 14,
-  "n_events": 20263,
+  "n_events": 20424,
   "topic": {
     "coding": 0.04,
-    "research_productivity": 0.042,
-    "creative_video": 0.009,
     "research_study": 0.019,
-    "creative_voice": 0.01,
+    "creative_voice": 0.009,
+    "creative_video": 0.0,
     "finance": 0.0,
-    "creative_image": 0.1,
+    "creative_image": 0.099,
+    "research_productivity": 0.0,
     "cybersecurity": 0.0,
     "company_investment": 0.113
   },
   "source": {
-    "HN": 0.039,
-    "github": 0.007,
-    "r/perplexity_ai": 0.189,
-    "r/StableDiffusion": 0.03,
     "r/LocalLLaMA": 0.0,
-    "official": 0.065,
+    "official": 0.064,
+    "github": 0.007,
+    "HN": 0.039,
     "r/comfyui": 0.0,
     "r/runwayml": 0.0,
     "r/ClaudeCode": 0.0,
-    "r/artificial": 0.115,
-    "r/singularity": 0.165,
+    "r/artificial": 0.114,
+    "r/singularity": 0.162,
     "huggingface": 0.0,
     "r/MachineLearning": 0.0,
+    "r/StableDiffusion": 0.0,
     "r/aiMusic": 0.0,
     "r/notebooklm": 0.0,
     "r/ElevenLabs": 0.0,
@@ -42,16 +41,17 @@
     "r/ClaudeAI": 0.0,
     "r/FluxAI": 0.0,
     "r/redteamsec": 0.0,
-    "r/technology": 0.172,
-    "r/cursor": 0.207,
+    "r/technology": 0.167,
+    "r/cursor": 0.204,
     "r/cybersecurity": 0.0,
-    "r/stocks": 0.151,
+    "r/stocks": 0.157,
     "r/wallstreetbets": 0.297,
     "r/Economics": 0.0,
     "r/AI_Agents": 0.0,
-    "r/ChatGPTCoding": 0.155,
+    "r/ChatGPTCoding": 0.159,
     "r/quant": 0.0,
-    "r/business": 0.37,
+    "r/business": 0.361,
+    "r/perplexity_ai": 0.0,
     "r/investing": 0.0,
     "r/StartupSoloFounder": 0.0,
     "r/OpenAI": 0.0,
@@ -59,48 +59,48 @@
     "r/SideProject": 0.0
   },
   "category": {
-    "OPEN_SOURCE": 0.005,
-    "UPDATE": 0.056,
-    "DEAL": 0.2,
-    "BENCHMARK": 0.033,
-    "LAUNCH": 0.063,
+    "LAUNCH": 0.062,
     "RELEASE": 0.009,
+    "OPEN_SOURCE": 0.005,
+    "DEAL": 0.184,
+    "BENCHMARK": 0.022,
+    "UPDATE": 0.056,
     "PRICING": 0.007
   },
   "exemplars": {
     "top": [
       {
-        "headline": "Revolut drops Perplexity Pro in favour of ChatGPT Go for premium members",
+        "headline": "南鸢写真提示词：AI 写真 Agent Skill 开源",
         "reward": 0.6
       },
       {
-        "headline": "MiniMax H3 nearly ties Seedance 2.0 in Arena img2vid ranking",
+        "headline": "南鸢写真提示词：AI 写真 Agent Skill 开源",
         "reward": 0.6
       },
       {
-        "headline": "Revolut drops Perplexity Pro in favour of ChatGPT Go for premium members",
+        "headline": "南鸢写真提示词：AI 写真 Agent Skill 开源",
         "reward": 0.6
       },
       {
-        "headline": "MiniMax H3 nearly ties Seedance 2.0 in Arena img2vid ranking",
+        "headline": "南鸢写真提示词：AI 写真 Agent Skill 开源",
         "reward": 0.6
       },
       {
-        "headline": "Revolut drops Perplexity Pro in favour of ChatGPT Go for premium members",
+        "headline": "南鸢写真提示词：AI 写真 Agent Skill 开源",
         "reward": 0.6
       }
     ],
     "bottom": [
       {
-        "headline": "learn-agent：20 章中文 Agent 架构实战教程，配可运行 TypeScript 代码",
+        "headline": "Wispr raises $280M at a $2B valuation as it looks beyond dictation",
         "reward": 0.0
       },
       {
-        "headline": "Chinese hedge funds rotate out of Nvidia and US hyperscalers as the AI trade shifts",
+        "headline": "Cursor users uneasy after the $60B SpaceX acquisition",
         "reward": 0.0
       },
       {
-        "headline": "Show HN: Vocal Slice cuts audio by selecting text, fully on-device",
+        "headline": "Runway asks yearly-unlimited subscribers to move to Max plans, cutoff unclear",
         "reward": 0.0
       }
     ]
