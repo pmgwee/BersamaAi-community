@@ -1,56 +1,56 @@
 {
-  "updated_at": "2026-08-18T21:40:41Z",
+  "updated_at": "2026-08-19T01:54:44Z",
   "half_life_days": 14,
-  "n_events": 20741,
+  "n_events": 20894,
   "topic": {
     "creative_video": 0.0,
     "coding": 0.04,
-    "finance": 0.0,
-    "creative_image": 0.097,
-    "research_study": 0.02,
+    "research_study": 0.021,
     "creative_voice": 0.0,
     "research_productivity": 0.0,
+    "creative_image": 0.067,
+    "finance": 0.0,
     "cybersecurity": 0.0,
     "company_investment": 0.112
   },
   "source": {
-    "r/comfyui": 0.0,
-    "r/runwayml": 0.0,
-    "r/ClaudeCode": 0.0,
-    "github": 0.007,
-    "HN": 0.039,
     "official": 0.065,
     "r/LocalLLaMA": 0.0,
-    "r/artificial": 0.112,
-    "r/singularity": 0.157,
+    "r/artificial": 0.111,
+    "github": 0.0,
+    "HN": 0.038,
+    "r/singularity": 0.155,
     "huggingface": 0.0,
     "r/MachineLearning": 0.0,
     "r/StableDiffusion": 0.0,
     "r/aiMusic": 0.0,
     "r/notebooklm": 0.0,
     "r/ElevenLabs": 0.0,
+    "r/ClaudeCode": 0.0,
     "r/ChatGPT": 0.0,
     "r/PromptEngineering": 0.0,
     "r/SunoAI": 0.112,
+    "r/comfyui": 0.0,
     "r/algotrading": 0.0,
     "r/midjourney": 0.0,
     "r/deeplearning": 0.0,
+    "r/runwayml": 0.0,
     "r/netsec": 0.0,
     "r/hacking": 0.0,
     "r/security": 0.0,
     "r/ClaudeAI": 0.0,
     "r/FluxAI": 0.0,
     "r/redteamsec": 0.0,
-    "r/technology": 0.156,
-    "r/cursor": 0.199,
+    "r/technology": 0.151,
+    "r/cursor": 0.196,
     "r/cybersecurity": 0.0,
-    "r/stocks": 0.167,
+    "r/stocks": 0.174,
     "r/wallstreetbets": 0.297,
     "r/Economics": 0.0,
     "r/AI_Agents": 0.0,
-    "r/ChatGPTCoding": 0.166,
+    "r/ChatGPTCoding": 0.169,
     "r/quant": 0.0,
-    "r/business": 0.345,
+    "r/business": 0.338,
     "r/perplexity_ai": 0.0,
     "r/investing": 0.0,
     "r/StartupSoloFounder": 0.0,
@@ -60,48 +60,48 @@
     "r/learnmachinelearning": 0.0
   },
   "category": {
-    "LAUNCH": 0.063,
-    "RELEASE": 0.01,
-    "UPDATE": 0.056,
-    "OPEN_SOURCE": 0.004,
+    "OPEN_SOURCE": 0.0,
     "BENCHMARK": 0.023,
-    "DEAL": 0.182,
+    "UPDATE": 0.056,
+    "RELEASE": 0.01,
+    "LAUNCH": 0.064,
+    "DEAL": 0.18,
     "PRICING": 0.007
   },
   "exemplars": {
     "top": [
       {
-        "headline": "南鸢写真提示词：AI 写真 Agent Skill 开源",
+        "headline": "Cloudflare announces Cloudflare OS: an open platform for agents, apps, and work",
         "reward": 0.6
       },
       {
-        "headline": "南鸢写真提示词：AI 写真 Agent Skill 开源",
+        "headline": "Google DeepMind overhauls leadership: Hassabis steps back as CEO, Jeff Dean departs after 27 years",
         "reward": 0.6
       },
       {
-        "headline": "南鸢写真提示词：AI 写真 Agent Skill 开源",
+        "headline": "Meta introduces Muse Code and Muse Spark 1.2",
         "reward": 0.6
       },
       {
-        "headline": "南鸢写真提示词：AI 写真 Agent Skill 开源",
+        "headline": "Cloudflare announces Cloudflare OS: an open platform for agents, apps, and work",
         "reward": 0.6
       },
       {
-        "headline": "南鸢写真提示词：AI 写真 Agent Skill 开源",
+        "headline": "Google DeepMind overhauls leadership: Hassabis steps back as CEO, Jeff Dean departs after 27 years",
         "reward": 0.6
       }
     ],
     "bottom": [
       {
-        "headline": "BYU review: wrong-way AI use may leave users worse off than no AI",
+        "headline": "Airsec: hunt security issues in your code with Claude, Codex and CommandCode CLIs",
         "reward": 0.0
       },
       {
-        "headline": "Unauthenticated RCE found in CircleCI's MCP server",
+        "headline": "AI automation startup Relay shuts down; team joins Google's Chrome team",
         "reward": 0.0
       },
       {
-        "headline": "Speko (YC S26) launches 'OpenRouter for Voice AI'",
+        "headline": "OpenAI acquires a 17-year-old's Ethereum project, founder says",
         "reward": 0.0
       }
     ]
