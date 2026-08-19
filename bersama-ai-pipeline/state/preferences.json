@@ -1,7 +1,7 @@
 {
-  "updated_at": "2026-08-19T15:47:42Z",
+  "updated_at": "2026-08-19T18:54:50Z",
   "half_life_days": 14,
-  "n_events": 21885,
+  "n_events": 22277,
   "topic": {
     "coding": 0.036,
     "creative_voice": 0.0,
@@ -11,7 +11,7 @@
     "research_study": 0.022,
     "finance": 0.0,
     "cybersecurity": 0.0,
-    "company_investment": 0.11
+    "company_investment": 0.109
   },
   "source": {
     "HN": 0.033,
@@ -24,8 +24,8 @@
     "r/ChatGPT": 0.0,
     "r/PromptEngineering": 0.0,
     "r/SunoAI": 0.111,
-    "r/singularity": 0.148,
-    "r/artificial": 0.106,
+    "r/singularity": 0.147,
+    "r/artificial": 0.105,
     "r/comfyui": 0.0,
     "r/MachineLearning": 0.0,
     "r/algotrading": 0.0,
@@ -39,17 +39,17 @@
     "huggingface": 0.0,
     "r/FluxAI": 0.0,
     "r/redteamsec": 0.0,
-    "r/technology": 0.131,
-    "r/cursor": 0.188,
+    "r/technology": 0.127,
+    "r/cursor": 0.186,
     "r/cybersecurity": 0.0,
-    "r/stocks": 0.206,
-    "r/wallstreetbets": 0.304,
+    "r/stocks": 0.212,
+    "r/wallstreetbets": 0.305,
     "r/Economics": 0.0,
     "r/AI_Agents": 0.0,
     "r/notebooklm": 0.0,
-    "r/ChatGPTCoding": 0.183,
+    "r/ChatGPTCoding": 0.188,
     "r/quant": 0.0,
-    "r/business": 0.311,
+    "r/business": 0.306,
     "r/perplexity_ai": 0.0,
     "r/investing": 0.0,
     "r/StartupSoloFounder": 0.0,
@@ -61,11 +61,11 @@
   },
   "category": {
     "UPDATE": 0.055,
-    "BENCHMARK": 0.025,
+    "BENCHMARK": 0.026,
     "LAUNCH": 0.055,
     "OPEN_SOURCE": 0.0,
     "RELEASE": 0.011,
-    "DEAL": 0.181,
+    "DEAL": 0.18,
     "PRICING": 0.007
   },
   "exemplars": {
