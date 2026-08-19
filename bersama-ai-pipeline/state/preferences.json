@@ -1,31 +1,30 @@
 {
-  "updated_at": "2026-08-19T18:54:50Z",
+  "updated_at": "2026-08-19T21:43:07Z",
   "half_life_days": 14,
-  "n_events": 22277,
+  "n_events": 22441,
   "topic": {
-    "coding": 0.036,
-    "creative_voice": 0.0,
+    "coding": 0.03,
     "creative_video": 0.0,
-    "creative_image": 0.066,
+    "creative_image": 0.065,
     "research_productivity": 0.0,
+    "creative_voice": 0.0,
     "research_study": 0.022,
     "finance": 0.0,
     "cybersecurity": 0.0,
     "company_investment": 0.109
   },
   "source": {
-    "HN": 0.033,
-    "r/ElevenLabs": 0.0,
     "r/ClaudeCode": 0.0,
+    "HN": 0.022,
     "r/LocalLLaMA": 0.0,
     "r/StableDiffusion": 0.0,
-    "official": 0.066,
+    "official": 0.065,
     "github": 0.0,
     "r/ChatGPT": 0.0,
     "r/PromptEngineering": 0.0,
     "r/SunoAI": 0.111,
-    "r/singularity": 0.147,
-    "r/artificial": 0.105,
+    "r/singularity": 0.145,
+    "r/artificial": 0.104,
     "r/comfyui": 0.0,
     "r/MachineLearning": 0.0,
     "r/algotrading": 0.0,
@@ -35,21 +34,22 @@
     "r/netsec": 0.0,
     "r/hacking": 0.0,
     "r/security": 0.0,
+    "r/ElevenLabs": 0.0,
     "r/ClaudeAI": 0.0,
     "huggingface": 0.0,
     "r/FluxAI": 0.0,
     "r/redteamsec": 0.0,
-    "r/technology": 0.127,
-    "r/cursor": 0.186,
+    "r/technology": 0.124,
+    "r/cursor": 0.185,
     "r/cybersecurity": 0.0,
-    "r/stocks": 0.212,
-    "r/wallstreetbets": 0.305,
+    "r/stocks": 0.217,
+    "r/wallstreetbets": 0.307,
     "r/Economics": 0.0,
     "r/AI_Agents": 0.0,
     "r/notebooklm": 0.0,
-    "r/ChatGPTCoding": 0.188,
+    "r/ChatGPTCoding": 0.192,
     "r/quant": 0.0,
-    "r/business": 0.306,
+    "r/business": 0.302,
     "r/perplexity_ai": 0.0,
     "r/investing": 0.0,
     "r/StartupSoloFounder": 0.0,
@@ -60,34 +60,34 @@
     "r/aiArt": 0.0
   },
   "category": {
-    "UPDATE": 0.055,
-    "BENCHMARK": 0.026,
-    "LAUNCH": 0.055,
+    "UPDATE": 0.052,
     "OPEN_SOURCE": 0.0,
     "RELEASE": 0.011,
-    "DEAL": 0.18,
+    "LAUNCH": 0.047,
+    "BENCHMARK": 0.026,
+    "DEAL": 0.179,
     "PRICING": 0.007
   },
   "exemplars": {
     "top": [
       {
-        "headline": "Google DeepMind overhauls leadership: Hassabis steps back as CEO, Jeff Dean departs after 27 years",
+        "headline": "Leaker claims OpenAI will release GPT Astra next week",
         "reward": 0.6
       },
       {
-        "headline": "Meta introduces Muse Code and Muse Spark 1.2",
+        "headline": "Meta confirms its AI hacked another company during cybersecurity testing",
         "reward": 0.6
       },
       {
-        "headline": "Google DeepMind overhauls leadership: Hassabis steps back as CEO, Jeff Dean departs after 27 years",
+        "headline": "Leaker claims OpenAI will release GPT Astra next week",
         "reward": 0.6
       },
       {
-        "headline": "Meta introduces Muse Code and Muse Spark 1.2",
+        "headline": "Meta confirms its AI hacked another company during cybersecurity testing",
         "reward": 0.6
       },
       {
-        "headline": "Google DeepMind overhauls leadership: Hassabis steps back as CEO, Jeff Dean departs after 27 years",
+        "headline": "Leaker claims OpenAI will release GPT Astra next week",
         "reward": 0.6
       }
     ],
