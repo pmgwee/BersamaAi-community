@@ -1,31 +1,31 @@
 {
-  "updated_at": "2026-08-19T13:11:04Z",
+  "updated_at": "2026-08-19T15:47:42Z",
   "half_life_days": 14,
-  "n_events": 21753,
+  "n_events": 21885,
   "topic": {
-    "coding": 0.039,
+    "coding": 0.036,
     "creative_voice": 0.0,
-    "research_study": 0.021,
     "creative_video": 0.0,
     "creative_image": 0.066,
     "research_productivity": 0.0,
+    "research_study": 0.022,
     "finance": 0.0,
     "cybersecurity": 0.0,
     "company_investment": 0.11
   },
   "source": {
-    "HN": 0.038,
-    "official": 0.066,
-    "github": 0.0,
+    "HN": 0.033,
     "r/ElevenLabs": 0.0,
     "r/ClaudeCode": 0.0,
     "r/LocalLLaMA": 0.0,
     "r/StableDiffusion": 0.0,
+    "official": 0.066,
+    "github": 0.0,
     "r/ChatGPT": 0.0,
     "r/PromptEngineering": 0.0,
     "r/SunoAI": 0.111,
-    "r/singularity": 0.15,
-    "r/artificial": 0.107,
+    "r/singularity": 0.148,
+    "r/artificial": 0.106,
     "r/comfyui": 0.0,
     "r/MachineLearning": 0.0,
     "r/algotrading": 0.0,
@@ -39,38 +39,43 @@
     "huggingface": 0.0,
     "r/FluxAI": 0.0,
     "r/redteamsec": 0.0,
-    "r/technology": 0.134,
-    "r/cursor": 0.189,
+    "r/technology": 0.131,
+    "r/cursor": 0.188,
     "r/cybersecurity": 0.0,
-    "r/stocks": 0.2,
-    "r/wallstreetbets": 0.303,
+    "r/stocks": 0.206,
+    "r/wallstreetbets": 0.304,
     "r/Economics": 0.0,
     "r/AI_Agents": 0.0,
     "r/notebooklm": 0.0,
-    "r/ChatGPTCoding": 0.179,
+    "r/ChatGPTCoding": 0.183,
     "r/quant": 0.0,
-    "r/business": 0.316,
+    "r/business": 0.311,
     "r/perplexity_ai": 0.0,
     "r/investing": 0.0,
     "r/StartupSoloFounder": 0.0,
     "r/OpenAI": 0.0,
     "r/udiomusic": 0.0,
     "r/SideProject": 0.0,
-    "r/learnmachinelearning": 0.0
+    "r/learnmachinelearning": 0.0,
+    "r/aiArt": 0.0
   },
   "category": {
-    "LAUNCH": 0.062,
-    "UPDATE": 0.056,
+    "UPDATE": 0.055,
     "BENCHMARK": 0.025,
-    "RELEASE": 0.011,
+    "LAUNCH": 0.055,
     "OPEN_SOURCE": 0.0,
-    "DEAL": 0.183,
+    "RELEASE": 0.011,
+    "DEAL": 0.181,
     "PRICING": 0.007
   },
   "exemplars": {
     "top": [
       {
-        "headline": "Cloudflare announces Cloudflare OS: an open platform for agents, apps, and work",
+        "headline": "Google DeepMind overhauls leadership: Hassabis steps back as CEO, Jeff Dean departs after 27 years",
+        "reward": 0.6
+      },
+      {
+        "headline": "Meta introduces Muse Code and Muse Spark 1.2",
         "reward": 0.6
       },
       {
@@ -82,25 +87,21 @@
         "reward": 0.6
       },
       {
-        "headline": "Cloudflare announces Cloudflare OS: an open platform for agents, apps, and work",
-        "reward": 0.6
-      },
-      {
         "headline": "Google DeepMind overhauls leadership: Hassabis steps back as CEO, Jeff Dean departs after 27 years",
         "reward": 0.6
       }
     ],
     "bottom": [
       {
-        "headline": "Airsec: hunt security issues in your code with Claude, Codex and CommandCode CLIs",
+        "headline": "Dan Luu's 'Benchmarkpocalypse' charts the collapse of benchmark trust",
         "reward": 0.0
       },
       {
-        "headline": "AI automation startup Relay shuts down; team joins Google's Chrome team",
+        "headline": "Users report slide-deck generation quietly removed from NotebookLM",
         "reward": 0.0
       },
       {
-        "headline": "OpenAI acquires a 17-year-old's Ethereum project, founder says",
+        "headline": "A composition trick for stronger GPT Image 2 posters",
         "reward": 0.0
       }
     ]
