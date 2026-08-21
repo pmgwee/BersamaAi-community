@@ -1,24 +1,21 @@
 {
-  "updated_at": "2026-08-21T01:58:57Z",
+  "updated_at": "2026-08-21T04:03:32Z",
   "half_life_days": 14,
-  "n_events": 23945,
+  "n_events": 23926,
   "topic": {
-    "coding": 0.022,
     "creative_video": 0.0,
-    "creative_image": 0.071,
-    "research_study": 0.022,
+    "coding": 0.019,
     "cybersecurity": 0.0,
-    "company_investment": 0.105,
+    "company_investment": 0.104,
     "creative_voice": 0.0,
+    "research_study": 0.022,
     "research_productivity": 0.0,
+    "creative_image": 0.075,
     "finance": 0.0
   },
   "source": {
-    "official": 0.065,
-    "r/comfyui": 0.0,
-    "r/midjourney": 0.0,
-    "r/deeplearning": 0.0,
     "r/StableDiffusion": 0.0,
+    "official": 0.061,
     "HN": 0.017,
     "r/runwayml": 0.0,
     "github": 0.0,
@@ -26,33 +23,36 @@
     "r/hacking": 0.0,
     "r/security": 0.0,
     "r/ElevenLabs": 0.0,
-    "r/artificial": 0.069,
+    "r/artificial": 0.068,
     "r/ClaudeAI": 0.0,
     "huggingface": 0.0,
-    "r/singularity": 0.083,
+    "r/singularity": 0.082,
     "r/FluxAI": 0.0,
     "r/PromptEngineering": 0.0,
     "r/LocalLLaMA": 0.0,
     "r/ClaudeCode": 0.0,
     "r/redteamsec": 0.0,
-    "r/technology": 0.104,
+    "r/technology": 0.103,
     "r/cursor": 0.177,
     "r/MachineLearning": 0.0,
     "r/algotrading": 0.0,
     "r/cybersecurity": 0.0,
-    "r/SunoAI": 0.119,
-    "r/stocks": 0.262,
+    "r/comfyui": 0.0,
+    "r/SunoAI": 0.117,
+    "r/stocks": 0.266,
     "r/wallstreetbets": 0.306,
+    "r/deeplearning": 0.0,
     "r/ChatGPT": 0.0,
     "r/Economics": 0.0,
     "r/AI_Agents": 0.0,
     "r/notebooklm": 0.0,
-    "r/ChatGPTCoding": 0.225,
+    "r/ChatGPTCoding": 0.228,
     "r/quant": 0.0,
-    "r/business": 0.254,
+    "r/business": 0.25,
     "r/perplexity_ai": 0.0,
     "r/investing": 0.0,
     "r/StartupSoloFounder": 0.0,
+    "r/midjourney": 0.0,
     "r/OpenAI": 0.0,
     "r/udiomusic": 0.0,
     "r/SideProject": 0.0,
@@ -60,10 +60,10 @@
     "r/aiArt": 0.0
   },
   "category": {
-    "LAUNCH": 0.038,
     "UPDATE": 0.049,
-    "RELEASE": 0.013,
     "OPEN_SOURCE": 0.0,
+    "LAUNCH": 0.03,
+    "RELEASE": 0.013,
     "PRICING": 0.007,
     "BENCHMARK": 0.029,
     "DEAL": 0.155
@@ -71,23 +71,23 @@
   "exemplars": {
     "top": [
       {
-        "headline": "Meta launches Muse Code beta powered by Muse Spark 1.2",
+        "headline": "Claude Code flips to auto mode by default for Pro, Max, and Team plans starting Aug 14",
         "reward": 0.6
       },
       {
-        "headline": "Meta launches Muse Code beta powered by Muse Spark 1.2",
+        "headline": "Claude Code flips to auto mode by default for Pro, Max, and Team plans starting Aug 14",
         "reward": 0.6
       },
       {
-        "headline": "Meta launches Muse Code beta powered by Muse Spark 1.2",
+        "headline": "Claude Code flips to auto mode by default for Pro, Max, and Team plans starting Aug 14",
         "reward": 0.6
       },
       {
-        "headline": "Meta launches Muse Code beta powered by Muse Spark 1.2",
+        "headline": "Claude Code flips to auto mode by default for Pro, Max, and Team plans starting Aug 14",
         "reward": 0.6
       },
       {
-        "headline": "Meta launches Muse Code beta powered by Muse Spark 1.2",
+        "headline": "Claude Code flips to auto mode by default for Pro, Max, and Team plans starting Aug 14",
         "reward": 0.6
       }
     ],
