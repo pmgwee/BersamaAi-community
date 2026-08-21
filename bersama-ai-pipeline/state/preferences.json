@@ -1,26 +1,25 @@
 {
-  "updated_at": "2026-08-20T21:45:15Z",
+  "updated_at": "2026-08-21T01:58:57Z",
   "half_life_days": 14,
-  "n_events": 23845,
+  "n_events": 23945,
   "topic": {
-    "coding": 0.025,
-    "finance": 0.0,
+    "coding": 0.022,
     "creative_video": 0.0,
     "creative_image": 0.071,
     "research_study": 0.022,
     "cybersecurity": 0.0,
     "company_investment": 0.105,
     "creative_voice": 0.0,
-    "research_productivity": 0.0
+    "research_productivity": 0.0,
+    "finance": 0.0
   },
   "source": {
-    "HN": 0.022,
-    "r/algotrading": 0.0,
     "official": 0.065,
     "r/comfyui": 0.0,
     "r/midjourney": 0.0,
     "r/deeplearning": 0.0,
     "r/StableDiffusion": 0.0,
+    "HN": 0.017,
     "r/runwayml": 0.0,
     "github": 0.0,
     "r/netsec": 0.0,
@@ -30,26 +29,27 @@
     "r/artificial": 0.069,
     "r/ClaudeAI": 0.0,
     "huggingface": 0.0,
-    "r/singularity": 0.084,
+    "r/singularity": 0.083,
     "r/FluxAI": 0.0,
     "r/PromptEngineering": 0.0,
     "r/LocalLLaMA": 0.0,
     "r/ClaudeCode": 0.0,
     "r/redteamsec": 0.0,
-    "r/technology": 0.106,
-    "r/cursor": 0.178,
+    "r/technology": 0.104,
+    "r/cursor": 0.177,
     "r/MachineLearning": 0.0,
+    "r/algotrading": 0.0,
     "r/cybersecurity": 0.0,
-    "r/SunoAI": 0.12,
-    "r/stocks": 0.257,
+    "r/SunoAI": 0.119,
+    "r/stocks": 0.262,
     "r/wallstreetbets": 0.306,
     "r/ChatGPT": 0.0,
     "r/Economics": 0.0,
     "r/AI_Agents": 0.0,
     "r/notebooklm": 0.0,
-    "r/ChatGPTCoding": 0.221,
+    "r/ChatGPTCoding": 0.225,
     "r/quant": 0.0,
-    "r/business": 0.259,
+    "r/business": 0.254,
     "r/perplexity_ai": 0.0,
     "r/investing": 0.0,
     "r/StartupSoloFounder": 0.0,
@@ -60,22 +60,18 @@
     "r/aiArt": 0.0
   },
   "category": {
-    "BENCHMARK": 0.028,
-    "DEAL": 0.171,
-    "UPDATE": 0.049,
     "LAUNCH": 0.038,
+    "UPDATE": 0.049,
     "RELEASE": 0.013,
     "OPEN_SOURCE": 0.0,
-    "PRICING": 0.007
+    "PRICING": 0.007,
+    "BENCHMARK": 0.029,
+    "DEAL": 0.155
   },
   "exemplars": {
     "top": [
       {
-        "headline": "AMD acquires Taalas to etch LLM weights directly into silicon for faster inference",
-        "reward": 0.6
-      },
-      {
-        "headline": "AMD acquires Taalas to etch LLM weights directly into silicon for faster inference",
+        "headline": "Meta launches Muse Code beta powered by Muse Spark 1.2",
         "reward": 0.6
       },
       {
@@ -83,7 +79,11 @@
         "reward": 0.6
       },
       {
-        "headline": "AMD acquires Taalas to etch LLM weights directly into silicon for faster inference",
+        "headline": "Meta launches Muse Code beta powered by Muse Spark 1.2",
+        "reward": 0.6
+      },
+      {
+        "headline": "Meta launches Muse Code beta powered by Muse Spark 1.2",
         "reward": 0.6
       },
       {
