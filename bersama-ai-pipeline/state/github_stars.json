@@ -8,24 +8,24 @@
     "ts": "2026-08-06T14:37:33+00:00"
   },
   "s1dashu/ip-as-logo-skill": {
-    "stars": 3746,
-    "ts": "2026-08-22T18:51:10+00:00"
+    "stars": 3763,
+    "ts": "2026-08-22T21:38:43+00:00"
   },
   "FareedKhan-dev/kimi-k3-in-c": {
     "stars": 3245,
     "ts": "2026-08-07T21:57:59+00:00"
   },
   "yetone/cumora": {
-    "stars": 2896,
-    "ts": "2026-08-22T18:51:10+00:00"
+    "stars": 2899,
+    "ts": "2026-08-22T21:38:43+00:00"
   },
   "lopopolo/harness-engineering": {
     "stars": 2320,
     "ts": "2026-07-24T22:21:15+00:00"
   },
   "CopilotKit/OpenBot": {
-    "stars": 2294,
-    "ts": "2026-08-22T18:51:10+00:00"
+    "stars": 2307,
+    "ts": "2026-08-22T21:38:43+00:00"
   },
   "ccch1mneyyy/dsh-TUI": {
     "stars": 2076,
@@ -53,11 +53,11 @@
   },
   "wang2122/sprix-sage-router": {
     "stars": 1243,
-    "ts": "2026-08-22T18:51:10+00:00"
+    "ts": "2026-08-22T21:38:43+00:00"
   },
   "cinderline/northcinder": {
-    "stars": 1204,
-    "ts": "2026-08-22T18:51:10+00:00"
+    "stars": 1205,
+    "ts": "2026-08-22T21:38:43+00:00"
   },
   "Leutenegger/book-to-skill": {
     "stars": 1202,
@@ -132,20 +132,20 @@
     "ts": "2026-08-08T21:50:39+00:00"
   },
   "browser-use/macos-harness": {
-    "stars": 705,
-    "ts": "2026-08-22T18:51:10+00:00"
+    "stars": 707,
+    "ts": "2026-08-22T21:38:43+00:00"
+  },
+  "Spielewoy/autoprompt-skill": {
+    "stars": 696,
+    "ts": "2026-08-22T21:38:43+00:00"
   },
   "0xsline/awesome-deepseek-harness": {
     "stars": 687,
     "ts": "2026-08-17T21:43:43+00:00"
   },
-  "Spielewoy/autoprompt-skill": {
-    "stars": 684,
-    "ts": "2026-08-22T18:51:10+00:00"
-  },
   "SigmanticAI/apex-inference-chip": {
-    "stars": 679,
-    "ts": "2026-08-22T18:51:10+00:00"
+    "stars": 680,
+    "ts": "2026-08-22T21:38:43+00:00"
   },
   "gnipbao/story-to-handdrawn-video": {
     "stars": 667,
@@ -165,7 +165,7 @@
   },
   "missuo/herdrm": {
     "stars": 604,
-    "ts": "2026-08-22T18:51:10+00:00"
+    "ts": "2026-08-22T21:38:43+00:00"
   },
   "hahhforest/pi-textbook": {
     "stars": 588,
@@ -177,7 +177,7 @@
   },
   "Leutenegger/claudish-to-english": {
     "stars": 580,
-    "ts": "2026-08-22T18:51:10+00:00"
+    "ts": "2026-08-22T21:38:43+00:00"
   },
   "MarcosSete/awesome-free-ai-course-notes": {
     "stars": 573,
@@ -203,13 +203,13 @@
     "stars": 548,
     "ts": "2026-08-10T22:00:46+00:00"
   },
+  "bawadou/ai-data-extractor": {
+    "stars": 541,
+    "ts": "2026-08-22T21:38:43+00:00"
+  },
   "mikehasa/agentacct": {
     "stars": 538,
     "ts": "2026-07-30T22:29:27+00:00"
-  },
-  "bawadou/ai-data-extractor": {
-    "stars": 538,
-    "ts": "2026-08-22T18:51:10+00:00"
   },
   "Electricitysheep/dsh-handbook": {
     "stars": 535,
@@ -256,8 +256,8 @@
     "ts": "2026-08-16T21:36:27+00:00"
   },
   "iAmCorey/Wake": {
-    "stars": 443,
-    "ts": "2026-08-22T18:51:10+00:00"
+    "stars": 449,
+    "ts": "2026-08-22T21:38:43+00:00"
   },
   "SandAI-org/MAGI-2-preview": {
     "stars": 438,
@@ -399,6 +399,10 @@
     "stars": 271,
     "ts": "2026-08-08T21:48:08+00:00"
   },
+  "LBH-123-AI/Comfyui_Minimax_h3_latent_Upscaler": {
+    "stars": 267,
+    "ts": "2026-08-22T21:39:09+00:00"
+  },
   "crawfordxx/xiaoma-durex-copywriter": {
     "stars": 266,
     "ts": "2026-08-10T22:00:46+00:00"
@@ -406,10 +410,6 @@
   "joeseesun/qiaomu-cut-skill": {
     "stars": 265,
     "ts": "2026-07-24T22:21:15+00:00"
-  },
-  "LBH-123-AI/Comfyui_Minimax_h3_latent_Upscaler": {
-    "stars": 265,
-    "ts": "2026-08-22T18:51:37+00:00"
   },
   "NVIDIA-NeMo/labs-OO-Agents": {
     "stars": 263,
@@ -439,6 +439,10 @@
     "stars": 247,
     "ts": "2026-07-26T22:15:29+00:00"
   },
+  "jaredrhod/fullstack-agent": {
+    "stars": 247,
+    "ts": "2026-08-22T21:40:12+00:00"
+  },
   "ryzqi/learn-agent": {
     "stars": 246,
     "ts": "2026-08-19T21:46:18+00:00"
@@ -454,10 +458,6 @@
   "uczltw6/trace-file-lineage": {
     "stars": 240,
     "ts": "2026-08-04T22:31:22+00:00"
-  },
-  "jaredrhod/fullstack-agent": {
-    "stars": 238,
-    "ts": "2026-08-22T18:52:40+00:00"
   },
   "cristicretu/diri": {
     "stars": 236,
@@ -480,8 +480,8 @@
     "ts": "2026-08-09T21:50:37+00:00"
   },
   "JetBrains/benjamin-plus-skill": {
-    "stars": 228,
-    "ts": "2026-08-22T18:51:10+00:00"
+    "stars": 229,
+    "ts": "2026-08-22T21:38:43+00:00"
   },
   "OpenLabs-so/openanalytics": {
     "stars": 225,
@@ -496,8 +496,8 @@
     "ts": "2026-08-18T21:41:28+00:00"
   },
   "disler/fixing-smartass-opus-5": {
-    "stars": 222,
-    "ts": "2026-08-22T18:51:10+00:00"
+    "stars": 223,
+    "ts": "2026-08-22T21:38:43+00:00"
   },
   "surya-koritala/loomfeed": {
     "stars": 216,
@@ -513,7 +513,7 @@
   },
   "amitshekhariitbhu/llm-inference-engineering": {
     "stars": 214,
-    "ts": "2026-08-22T18:51:10+00:00"
+    "ts": "2026-08-22T21:38:43+00:00"
   },
   "paxlabs-inc/machine-genome": {
     "stars": 213,
@@ -557,7 +557,7 @@
   },
   "ZSeven-W/dsh-ios": {
     "stars": 206,
-    "ts": "2026-08-22T18:51:10+00:00"
+    "ts": "2026-08-22T21:38:43+00:00"
   },
   "livetennisapi/livetennisapi-mcp": {
     "stars": 205,
@@ -657,7 +657,7 @@
   },
   "Yevanchen/reclaim-code-entropy": {
     "stars": 174,
-    "ts": "2026-08-22T18:51:10+00:00"
+    "ts": "2026-08-22T21:38:43+00:00"
   },
   "codejunkie99/graph-engineering": {
     "stars": 173,
@@ -666,6 +666,10 @@
   "howmp/dsh-pentest": {
     "stars": 173,
     "ts": "2026-08-21T21:46:06+00:00"
+  },
+  "adnanakil/nobuzz": {
+    "stars": 171,
+    "ts": "2026-08-22T21:38:43+00:00"
   },
   "0xtresser/Transcript-of-Liang-Wenfengs-DeepSeek-Founder-4-Hour-Investor-Meeting": {
     "stars": 170,
@@ -683,9 +687,9 @@
     "stars": 168,
     "ts": "2026-08-19T21:43:56+00:00"
   },
-  "adnanakil/nobuzz": {
+  "furkankly/zoetrope": {
     "stars": 168,
-    "ts": "2026-08-22T18:51:10+00:00"
+    "ts": "2026-08-22T21:38:43+00:00"
   },
   "Prism-Shadow/penguin-harness": {
     "stars": 166,
@@ -698,10 +702,6 @@
   "Anionex/codex-deepseek-vision": {
     "stars": 164,
     "ts": "2026-08-02T08:38:50+00:00"
-  },
-  "furkankly/zoetrope": {
-    "stars": 164,
-    "ts": "2026-08-22T18:51:10+00:00"
   },
   "mrpulor-gh/nuphus-mcp": {
     "stars": 163,
@@ -729,7 +729,11 @@
   },
   "chengyi-ai/native-subtitle-quote-image": {
     "stars": 158,
-    "ts": "2026-08-22T18:51:10+00:00"
+    "ts": "2026-08-22T21:38:43+00:00"
+  },
+  "iamlukethedev/Hermes3D": {
+    "stars": 157,
+    "ts": "2026-08-22T21:38:43+00:00"
   },
   "hewzhew/dsh-agent-rp": {
     "stars": 155,
@@ -749,7 +753,7 @@
   },
   "RopemakerEnd/ds4windows-lab-2026": {
     "stars": 151,
-    "ts": "2026-08-22T18:51:10+00:00"
+    "ts": "2026-08-22T21:38:43+00:00"
   },
   "xyaz1313/phoenix": {
     "stars": 151,
@@ -759,17 +763,13 @@
     "stars": 151,
     "ts": "2026-08-13T22:05:38+00:00"
   },
-  "iamlukethedev/Hermes3D": {
-    "stars": 151,
-    "ts": "2026-08-22T18:51:10+00:00"
-  },
   "3641397194-wq/gpt5.6-claude-grok4.6-deepseekv4pro": {
-    "stars": 144,
-    "ts": "2026-08-22T18:55:09+00:00"
+    "stars": 145,
+    "ts": "2026-08-22T21:42:25+00:00"
   },
   "azrtydxb/procoder": {
-    "stars": 139,
-    "ts": "2026-08-22T18:55:09+00:00"
+    "stars": 140,
+    "ts": "2026-08-22T21:42:25+00:00"
   },
   "bas3line/Airsec": {
     "stars": 134,
@@ -787,12 +787,12 @@
     "stars": 106,
     "ts": "2026-08-07T22:02:34+00:00"
   },
+  "Zyrexnn/Cybermes": {
+    "stars": 104,
+    "ts": "2026-08-22T21:42:25+00:00"
+  },
   "alex193a/Root-My-Pixel": {
     "stars": 103,
     "ts": "2026-08-08T21:52:06+00:00"
-  },
-  "Zyrexnn/Cybermes": {
-    "stars": 101,
-    "ts": "2026-08-22T18:55:09+00:00"
   }
 }
