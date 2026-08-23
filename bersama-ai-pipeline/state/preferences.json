@@ -1,7 +1,7 @@
 {
-  "updated_at": "2026-08-23T07:02:53Z",
+  "updated_at": "2026-08-23T09:44:27Z",
   "half_life_days": 14,
-  "n_events": 26537,
+  "n_events": 26731,
   "topic": {
     "coding": 0.019,
     "creative_image": 0.079,
@@ -23,9 +23,9 @@
     "r/redteamsec": 0.0,
     "r/ElevenLabs": 0.0,
     "HN": 0.016,
-    "r/technology": 0.076,
+    "r/technology": 0.075,
     "huggingface": 0.0,
-    "r/cursor": 0.172,
+    "r/cursor": 0.171,
     "r/hacking": 0.0,
     "r/MachineLearning": 0.0,
     "r/algotrading": 0.0,
@@ -34,9 +34,9 @@
     "r/artificial": 0.076,
     "r/cybersecurity": 0.0,
     "r/comfyui": 0.0,
-    "r/singularity": 0.074,
+    "r/singularity": 0.073,
     "r/SunoAI": 0.1,
-    "r/stocks": 0.325,
+    "r/stocks": 0.328,
     "r/wallstreetbets": 0.306,
     "r/deeplearning": 0.0,
     "r/ChatGPT": 0.0,
@@ -46,7 +46,7 @@
     "r/notebooklm": 0.0,
     "r/ChatGPTCoding": 0.273,
     "r/quant": 0.0,
-    "r/business": 0.197,
+    "r/business": 0.196,
     "r/perplexity_ai": 0.0,
     "r/investing": 0.0,
     "r/netsec": 0.0,
@@ -59,12 +59,12 @@
     "r/aiArt": 0.0
   },
   "category": {
-    "UPDATE": 0.049,
+    "UPDATE": 0.048,
     "OPEN_SOURCE": 0.0,
     "LAUNCH": 0.029,
     "RELEASE": 0.015,
     "BENCHMARK": 0.03,
-    "DEAL": 0.143,
+    "DEAL": 0.142,
     "PRICING": 0.007
   },
   "exemplars": {
