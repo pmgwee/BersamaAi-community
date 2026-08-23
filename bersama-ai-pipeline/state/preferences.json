@@ -1,29 +1,27 @@
 {
-  "updated_at": "2026-08-23T15:38:56Z",
+  "updated_at": "2026-08-23T18:49:43Z",
   "half_life_days": 14,
-  "n_events": 27101,
+  "n_events": 26818,
   "topic": {
-    "coding": 0.019,
-    "creative_image": 0.078,
     "creative_video": 0.0,
-    "cybersecurity": 0.0,
-    "finance": 0.0,
     "research_study": 0.02,
+    "coding": 0.016,
+    "cybersecurity": 0.0,
     "company_investment": 0.1,
     "creative_voice": 0.0,
-    "research_productivity": 0.0
+    "research_productivity": 0.0,
+    "finance": 0.0,
+    "creative_image": 0.05
   },
   "source": {
-    "official": 0.059,
     "github": 0.0,
-    "r/StableDiffusion": 0.0,
-    "r/PromptEngineering": 0.0,
     "r/LocalLLaMA": 0.0,
     "r/ClaudeCode": 0.0,
     "r/redteamsec": 0.0,
+    "official": 0.05,
     "r/ElevenLabs": 0.0,
     "HN": 0.015,
-    "r/technology": 0.074,
+    "r/technology": 0.073,
     "huggingface": 0.0,
     "r/cursor": 0.169,
     "r/hacking": 0.0,
@@ -36,7 +34,8 @@
     "r/comfyui": 0.0,
     "r/singularity": 0.072,
     "r/SunoAI": 0.098,
-    "r/stocks": 0.333,
+    "r/stocks": 0.336,
+    "r/StableDiffusion": 0.0,
     "r/wallstreetbets": 0.306,
     "r/deeplearning": 0.0,
     "r/ChatGPT": 0.0,
@@ -46,7 +45,7 @@
     "r/notebooklm": 0.0,
     "r/ChatGPTCoding": 0.273,
     "r/quant": 0.0,
-    "r/business": 0.193,
+    "r/business": 0.191,
     "r/perplexity_ai": 0.0,
     "r/investing": 0.0,
     "r/netsec": 0.0,
@@ -59,9 +58,9 @@
     "r/aiArt": 0.0
   },
   "category": {
-    "UPDATE": 0.048,
     "OPEN_SOURCE": 0.0,
-    "LAUNCH": 0.029,
+    "UPDATE": 0.045,
+    "LAUNCH": 0.022,
     "RELEASE": 0.014,
     "BENCHMARK": 0.03,
     "DEAL": 0.142,
@@ -70,23 +69,23 @@
   "exemplars": {
     "top": [
       {
-        "headline": "Claude Code flips to auto mode by default for Pro, Max, and Team plans starting Aug 14",
+        "headline": "Cursor now blocks Codex and Claude Code extensions from running alongside Cursor Agent",
         "reward": 0.6
       },
       {
-        "headline": "Claude Code flips to auto mode by default for Pro, Max, and Team plans starting Aug 14",
+        "headline": "Cursor now blocks Codex and Claude Code extensions from running alongside Cursor Agent",
         "reward": 0.6
       },
       {
-        "headline": "Claude Code flips to auto mode by default for Pro, Max, and Team plans starting Aug 14",
+        "headline": "Cursor now blocks Codex and Claude Code extensions from running alongside Cursor Agent",
         "reward": 0.6
       },
       {
-        "headline": "Claude Code flips to auto mode by default for Pro, Max, and Team plans starting Aug 14",
+        "headline": "Cursor now blocks Codex and Claude Code extensions from running alongside Cursor Agent",
         "reward": 0.6
       },
       {
-        "headline": "Claude Code flips to auto mode by default for Pro, Max, and Team plans starting Aug 14",
+        "headline": "Cursor now blocks Codex and Claude Code extensions from running alongside Cursor Agent",
         "reward": 0.6
       }
     ],
