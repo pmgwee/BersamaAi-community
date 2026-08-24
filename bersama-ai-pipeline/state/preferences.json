@@ -1,31 +1,30 @@
 {
-  "updated_at": "2026-08-24T15:57:43Z",
+  "updated_at": "2026-08-24T19:01:15Z",
   "half_life_days": 14,
-  "n_events": 25182,
+  "n_events": 24883,
   "topic": {
-    "coding": 0.014,
-    "creative_video": 0.0,
-    "company_investment": 0.102,
-    "research_study": 0.02,
     "cybersecurity": 0.0,
+    "company_investment": 0.093,
+    "creative_video": 0.0,
+    "research_study": 0.021,
+    "coding": 0.014,
     "creative_voice": 0.0,
     "creative_image": 0.048,
     "finance": 0.0,
     "research_productivity": 0.0
   },
   "source": {
-    "github": 0.0,
-    "r/comfyui": 0.0,
-    "r/technology": 0.072,
-    "HN": 0.016,
-    "official": 0.051,
     "r/singularity": 0.07,
     "r/artificial": 0.089,
+    "github": 0.0,
+    "HN": 0.016,
     "r/MachineLearning": 0.0,
-    "r/SunoAI": 0.093,
+    "official": 0.051,
+    "r/SunoAI": 0.092,
     "r/stocks": 0.336,
     "r/ClaudeAI": 0.0,
     "r/StableDiffusion": 0.0,
+    "r/comfyui": 0.0,
     "r/wallstreetbets": 0.301,
     "r/cursor": 0.104,
     "r/deeplearning": 0.0,
@@ -38,7 +37,7 @@
     "r/ChatGPTCoding": 0.273,
     "r/quant": 0.0,
     "huggingface": 0.0,
-    "r/business": 0.181,
+    "r/business": 0.18,
     "r/perplexity_ai": 0.0,
     "r/investing": 0.0,
     "r/netsec": 0.0,
@@ -47,6 +46,7 @@
     "r/runwayml": 0.0,
     "r/StartupSoloFounder": 0.0,
     "r/ClaudeCode": 0.0,
+    "r/technology": 0.037,
     "r/midjourney": 0.0,
     "r/ElevenLabs": 0.0,
     "r/OpenAI": 0.0,
@@ -57,22 +57,18 @@
     "r/aiArt": 0.0
   },
   "category": {
+    "UPDATE": 0.041,
     "OPEN_SOURCE": 0.0,
     "RELEASE": 0.014,
-    "DEAL": 0.144,
-    "UPDATE": 0.044,
     "LAUNCH": 0.023,
-    "BENCHMARK": 0.034,
-    "PRICING": 0.007
+    "BENCHMARK": 0.033,
+    "PRICING": 0.007,
+    "DEAL": 0.126
   },
   "exemplars": {
     "top": [
       {
-        "headline": "Intel announces $15B public stock offering, citing unprecedented AI compute demand",
-        "reward": 0.6
-      },
-      {
-        "headline": "Top economist warns AI profits are 'funded by investors rather than earned from customers'",
+        "headline": "Senator Sanders demands Altman, Amodei, and Zuckerberg pause all AI development",
         "reward": 0.6
       },
       {
@@ -80,11 +76,15 @@
         "reward": 0.6
       },
       {
-        "headline": "Intel announces $15B public stock offering, citing unprecedented AI compute demand",
+        "headline": "Senator Sanders demands Altman, Amodei, and Zuckerberg pause all AI development",
         "reward": 0.6
       },
       {
-        "headline": "Top economist warns AI profits are 'funded by investors rather than earned from customers'",
+        "headline": "Senator Sanders demands Altman, Amodei, and Zuckerberg pause all AI development",
+        "reward": 0.6
+      },
+      {
+        "headline": "Senator Sanders demands Altman, Amodei, and Zuckerberg pause all AI development",
         "reward": 0.6
       }
     ],
