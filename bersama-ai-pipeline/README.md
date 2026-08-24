@@ -172,6 +172,7 @@ GitHub Actions **secret** AND in the VM's `.env` (never in the repo).
 | `YT_AUDIO_MIRRORS` | `[VM]` opt | Invidious/Piped hosts for the ASR audio fallback, tried in order. Unset = built-in list. Find live ones with `python check_audio_sources.py <url>` |
 | `YTDLP_PROXY` | `[VM]` opt | residential proxy for yt-dlp — the only reliable beat for YouTube's datacenter-IP block. May contain credentials; never commit |
 | `YTDLP_COOKIES_FILE` | `[VM]` opt | Netscape `cookies.txt` path. YouTube cookies are IP-bound now, so this rarely helps from a VM |
+| `YT_AUDIO_DISCOVER` / `YT_AUDIO_MAX_HOSTS` | `[VM]` opt | `0` disables runtime instance discovery; how many hosts to try (14) |
 | `YT_AUDIO_MIRROR_TIMEOUT` / `YT_AUDIO_MAX_MB` | `[VM]` opt | mirror request timeout (20 s) and download cap (220 MB) |
 
 **Gathering (news / engagement, mostly `[GH]`)**
@@ -339,9 +340,14 @@ final line — telemetry never halts the run.
      220 MB cap, per-request timeout.
 
   All rungs failing = today's behaviour (clean skip + staff alert), so nothing regresses when
-  the mirrors are down. Public instances churn constantly — when the built-in list rots, run
-  `python check_audio_sources.py <youtube-url>` on the VM and paste the survivors into
-  `YT_AUDIO_MIRRORS`. That script tries every rung and prints what actually delivered bytes.
+  the mirrors are down. Public instances churn constantly (measured 2026-08-24: all six
+  original seeds 403/401'd from the VM, one had moved, one was alive but YouTube-blocked), so
+  unless `YT_AUDIO_MIRRORS` pins a list, the seeds are extended at runtime from the public
+  Piped/Invidious **instance directories**. `python check_audio_sources.py <youtube-url>` on
+  the VM tries every rung and prints what actually delivered bytes; pin the survivors.
+- **Known limit:** when yt-dlp AND every mirror is blocked, there is no free fix — a
+  residential `YTDLP_PROXY` is the only reliable lever. Caption-less videos skip until then.
+  Captioned videos are unaffected: they never download media.
 - **Creator-watch recency:** channel uploads are read from the dated YouTube RSS feed (last
   `RECENCY_DAYS=3`) and Shorts are stripped, so adding creators can't flood the run.
   `MAX_PER_RUN=5`/scheduled · `MAX_DURATION_MIN=60`.
