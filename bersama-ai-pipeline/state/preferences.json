@@ -1,38 +1,36 @@
 {
-  "updated_at": "2026-08-24T01:59:04Z",
+  "updated_at": "2026-08-24T04:07:37Z",
   "half_life_days": 14,
-  "n_events": 26286,
+  "n_events": 26099,
   "topic": {
-    "coding": 0.016,
-    "cybersecurity": 0.0,
-    "research_study": 0.02,
-    "finance": 0.0,
     "research_productivity": 0.0,
     "creative_voice": 0.0,
     "company_investment": 0.1,
+    "cybersecurity": 0.0,
     "creative_video": 0.0,
-    "creative_image": 0.049
+    "coding": 0.014,
+    "research_study": 0.02,
+    "creative_image": 0.049,
+    "finance": 0.0
   },
   "source": {
     "huggingface": 0.0,
-    "r/cursor": 0.167,
-    "r/hacking": 0.0,
+    "official": 0.049,
     "github": 0.0,
-    "r/MachineLearning": 0.0,
-    "r/algotrading": 0.0,
-    "official": 0.05,
     "r/runwayml": 0.0,
     "HN": 0.015,
     "r/ClaudeAI": 0.0,
     "r/artificial": 0.077,
     "r/cybersecurity": 0.0,
     "r/comfyui": 0.0,
-    "r/technology": 0.076,
+    "r/MachineLearning": 0.0,
+    "r/technology": 0.075,
     "r/singularity": 0.071,
-    "r/SunoAI": 0.096,
+    "r/SunoAI": 0.095,
     "r/stocks": 0.336,
     "r/StableDiffusion": 0.0,
-    "r/wallstreetbets": 0.305,
+    "r/wallstreetbets": 0.304,
+    "r/cursor": 0.106,
     "r/deeplearning": 0.0,
     "r/LocalLLaMA": 0.0,
     "r/ChatGPT": 0.0,
@@ -42,7 +40,7 @@
     "r/notebooklm": 0.0,
     "r/ChatGPTCoding": 0.273,
     "r/quant": 0.0,
-    "r/business": 0.189,
+    "r/business": 0.187,
     "r/perplexity_ai": 0.0,
     "r/investing": 0.0,
     "r/netsec": 0.0,
@@ -52,6 +50,7 @@
     "r/midjourney": 0.0,
     "r/ElevenLabs": 0.0,
     "r/OpenAI": 0.0,
+    "r/algotrading": 0.0,
     "r/udiomusic": 0.0,
     "r/SideProject": 0.0,
     "r/learnmachinelearning": 0.0,
@@ -59,33 +58,33 @@
   },
   "category": {
     "RELEASE": 0.014,
-    "UPDATE": 0.046,
     "OPEN_SOURCE": 0.0,
-    "BENCHMARK": 0.03,
-    "DEAL": 0.14,
-    "PRICING": 0.007,
-    "LAUNCH": 0.023
+    "DEAL": 0.139,
+    "UPDATE": 0.043,
+    "PRICING": 0.006,
+    "LAUNCH": 0.023,
+    "BENCHMARK": 0.031
   },
   "exemplars": {
     "top": [
       {
-        "headline": "Cursor now blocks Codex and Claude Code extensions from running alongside Cursor Agent",
+        "headline": "Intel announces $15B public stock offering, citing unprecedented AI compute demand",
         "reward": 0.6
       },
       {
-        "headline": "Cursor now blocks Codex and Claude Code extensions from running alongside Cursor Agent",
+        "headline": "Top economist warns AI profits are 'funded by investors rather than earned from customers'",
         "reward": 0.6
       },
       {
-        "headline": "Cursor now blocks Codex and Claude Code extensions from running alongside Cursor Agent",
+        "headline": "Senator Sanders demands Altman, Amodei, and Zuckerberg pause all AI development",
         "reward": 0.6
       },
       {
-        "headline": "Cursor now blocks Codex and Claude Code extensions from running alongside Cursor Agent",
+        "headline": "Intel announces $15B public stock offering, citing unprecedented AI compute demand",
         "reward": 0.6
       },
       {
-        "headline": "Cursor now blocks Codex and Claude Code extensions from running alongside Cursor Agent",
+        "headline": "Top economist warns AI profits are 'funded by investors rather than earned from customers'",
         "reward": 0.6
       }
     ],
