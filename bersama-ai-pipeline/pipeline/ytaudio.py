@@ -21,17 +21,26 @@ Everything here is best-effort: any failure returns None and the caller falls
 back to today's clean skip + staff alert. Nothing regresses if every mirror is
 down; the worst case is exactly the current behaviour.
 
+A hardcoded host list rots fast (measured 2026-08-24: all six seeds 403/401'd or
+had moved), so unless YT_AUDIO_MIRRORS pins specific hosts we ALSO pull the
+public instance directories at runtime and try those — more hosts means a better
+chance one of them isn't blocked from here.
+
 Config:
-  YT_AUDIO_MIRRORS  comma-separated, overrides the built-in list entirely, e.g.
+  YT_AUDIO_MIRRORS  comma-separated, overrides the list entirely AND disables
+                    discovery, e.g.
                     "piped:https://pipedapi.example,invidious:https://inv.example"
                     The "piped:"/"invidious:" prefix is optional — a host
                     containing "piped" is treated as Piped, otherwise Invidious.
+  YT_AUDIO_DISCOVER         "0" to skip the instance-directory lookup
+  YT_AUDIO_MAX_HOSTS        how many hosts to try per run (default 14)
   YT_AUDIO_MIRROR_TIMEOUT   per-request seconds (default 20)
   YT_AUDIO_MAX_MB           hard cap on downloaded bytes (default 220)
 """
 from __future__ import annotations
 
 import os
+import re
 from pathlib import Path
 from typing import Optional
 
@@ -71,12 +80,10 @@ def _max_bytes() -> int:
         return 220 * 1024 * 1024
 
 
-def mirrors() -> list[tuple[str, str]]:
-    """[(kind, base_url)] from YT_AUDIO_MIRRORS or the built-in seed list."""
-    raw = (os.environ.get("YT_AUDIO_MIRRORS") or "").strip()
-    entries = [e.strip() for e in (raw.split(",") if raw else DEFAULT_MIRRORS) if e.strip()]
+def _parse_entries(entries: list[str]) -> list[tuple[str, str]]:
     out: list[tuple[str, str]] = []
     for e in entries:
+        e = e.strip()
         kind, sep, url = e.partition(":")
         if sep and kind in ("piped", "invidious"):
             base = url.strip()
@@ -85,6 +92,104 @@ def mirrors() -> list[tuple[str, str]]:
         base = base.strip().rstrip("/")
         if base.startswith("http"):
             out.append((kind, base))
+    return out
+
+
+def _max_hosts() -> int:
+    try:
+        return max(1, int(os.environ.get("YT_AUDIO_MAX_HOSTS") or 14))
+    except ValueError:
+        return 14
+
+
+def mirrors() -> list[tuple[str, str]]:
+    """[(kind, base_url)] to try, in order.
+
+    YT_AUDIO_MIRRORS pins the list exactly (and skips discovery) — that is the
+    lever to use once `check_audio_sources.py` has told you what works from this
+    machine. Otherwise: seeds first (fast, no extra request), then whatever the
+    public instance directories list, deduped and capped.
+    """
+    raw = (os.environ.get("YT_AUDIO_MIRRORS") or "").strip()
+    if raw:
+        return _parse_entries(raw.split(","))
+
+    out = _parse_entries(DEFAULT_MIRRORS)
+    if (os.environ.get("YT_AUDIO_DISCOVER") or "").strip() != "0":
+        seen = {u for _, u in out}
+        for kind, base in discover_mirrors():
+            if base not in seen:
+                seen.add(base)
+                out.append((kind, base))
+    return out[:_max_hosts()]
+
+
+# ── instance discovery ───────────────────────────────────────────────────────
+# Both directories are themselves third-party and may be down or gone; each is
+# wrapped so a failure just means "no extra hosts", never a broken run.
+
+PIPED_DIRECTORIES = [
+    "https://piped-instances.kavin.rocks/",
+    "https://raw.githubusercontent.com/TeamPiped/documentation/main/content/docs/public-instances/index.md",
+]
+INVIDIOUS_DIRECTORY = "https://api.invidious.io/instances.json?sort_by=type,users"
+
+
+def discover_mirrors() -> list[tuple[str, str]]:
+    """Live instance lists from the public directories. [] on any failure."""
+    found: list[tuple[str, str]] = []
+    try:
+        found += _discover_piped()
+    except Exception as e:  # noqa: BLE001
+        print(f"[ytaudio] piped directory unavailable ({str(e)[:80]})")
+    try:
+        found += _discover_invidious()
+    except Exception as e:  # noqa: BLE001
+        print(f"[ytaudio] invidious directory unavailable ({str(e)[:80]})")
+    if found:
+        print(f"[ytaudio] discovered {len(found)} instance(s) from the public directories")
+    return found
+
+
+def _discover_piped() -> list[tuple[str, str]]:
+    for url in PIPED_DIRECTORIES:
+        try:
+            r = requests.get(url, headers={"User-Agent": UA}, timeout=_timeout())
+            r.raise_for_status()
+        except Exception:  # noqa: BLE001 — try the next directory
+            continue
+        if url.endswith(".md"):
+            # The docs table lists api urls in a markdown column.
+            hits = re.findall(r"https://[\w.-]*piped[\w.-]*\.[a-z]{2,}", r.text)
+            return [("piped", u.rstrip("/")) for u in dict.fromkeys(hits)]
+        try:
+            data = r.json()
+        except ValueError:
+            continue
+        out = []
+        for inst in data if isinstance(data, list) else []:
+            api = str((inst or {}).get("api_url") or "").strip().rstrip("/")
+            if api.startswith("http"):
+                out.append(("piped", api))
+        if out:
+            return out
+    return []
+
+
+def _discover_invidious() -> list[tuple[str, str]]:
+    r = requests.get(INVIDIOUS_DIRECTORY, headers={"User-Agent": UA}, timeout=_timeout())
+    r.raise_for_status()
+    out = []
+    for row in r.json():
+        # rows look like ["host.tld", {"uri": "...", "type": "https", "api": true}]
+        if not (isinstance(row, list) and len(row) == 2 and isinstance(row[1], dict)):
+            continue
+        info = row[1]
+        if info.get("type") != "https" or info.get("api") is False:
+            continue
+        uri = str(info.get("uri") or "").strip().rstrip("/")
+        if uri.startswith("https://"):
+            out.append(("invidious", uri))
     return out
 
 

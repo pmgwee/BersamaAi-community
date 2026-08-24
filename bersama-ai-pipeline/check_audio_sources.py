@@ -75,7 +75,8 @@ def main(argv: list[str]) -> int:
 
     print("\n── rung 3: public mirrors ─────────────────────────────────────")
     hosts = ytaudio.mirrors()
-    src = "YT_AUDIO_MIRRORS" if os.environ.get("YT_AUDIO_MIRRORS") else "built-in list"
+    src = ("YT_AUDIO_MIRRORS (pinned)" if os.environ.get("YT_AUDIO_MIRRORS")
+           else "built-in seeds + live instance directories")
     print(f"{len(hosts)} host(s) from {src}\n")
     alive: list[str] = []
     for kind, base in hosts:

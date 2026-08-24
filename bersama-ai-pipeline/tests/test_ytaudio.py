@@ -110,7 +110,8 @@ INVIDIOUS_PAYLOAD = {"adaptiveFormats": [
 
 class TestMirrorList(unittest.TestCase):
     def test_defaults_parse_into_kind_and_host(self):
-        with _env(YT_AUDIO_MIRRORS=None):
+        # YT_AUDIO_DISCOVER=0 keeps this offline — discovery is covered below.
+        with _env(YT_AUDIO_MIRRORS=None, YT_AUDIO_DISCOVER="0"):
             hosts = ytaudio.mirrors()
         self.assertTrue(hosts)
         self.assertTrue(all(k in ("piped", "invidious") for k, _ in hosts))
@@ -130,6 +131,71 @@ class TestMirrorList(unittest.TestCase):
     def test_junk_entries_are_dropped(self):
         with _env(YT_AUDIO_MIRRORS="not-a-url,,piped:https://ok.test"):
             self.assertEqual(ytaudio.mirrors(), [("piped", "https://ok.test")])
+
+    def test_pinned_list_skips_discovery_entirely(self):
+        def boom():
+            raise AssertionError("discovery must not run when YT_AUDIO_MIRRORS is set")
+        with _env(YT_AUDIO_MIRRORS="piped:https://a.test"), \
+                _patched(ytaudio, "discover_mirrors", boom):
+            self.assertEqual(ytaudio.mirrors(), [("piped", "https://a.test")])
+
+
+PIPED_DIR_PAYLOAD = [
+    {"name": "one", "api_url": "https://pipedapi.one.test/"},
+    {"name": "two", "api_url": "https://pipedapi.two.test"},
+    {"name": "broken"},                                   # no api_url -> dropped
+]
+
+INVIDIOUS_DIR_PAYLOAD = [
+    ["a.test", {"uri": "https://a.test", "type": "https", "api": True}],
+    ["b.test", {"uri": "http://b.test", "type": "http", "api": True}],   # not https
+    ["c.test", {"uri": "https://c.test", "type": "https", "api": False}],  # no API
+    "malformed-row",
+]
+
+
+class TestDiscovery(unittest.TestCase):
+    def test_directories_are_parsed_into_hosts(self):
+        fake = _FakeRequests({
+            "piped-instances": _Resp(payload=PIPED_DIR_PAYLOAD),
+            "api.invidious.io": _Resp(payload=INVIDIOUS_DIR_PAYLOAD),
+        })
+        with _patched(ytaudio, "requests", fake):
+            found = ytaudio.discover_mirrors()
+        self.assertEqual(found, [
+            ("piped", "https://pipedapi.one.test"),
+            ("piped", "https://pipedapi.two.test"),
+            ("invidious", "https://a.test"),      # only the https + api:true row
+        ])
+
+    def test_a_dead_directory_is_not_fatal(self):
+        fake = _FakeRequests({
+            "piped-instances": RuntimeError("dns failure"),
+            "raw.githubusercontent.com": RuntimeError("dns failure"),
+            "api.invidious.io": _Resp(payload=INVIDIOUS_DIR_PAYLOAD),
+        })
+        with _patched(ytaudio, "requests", fake):
+            self.assertEqual(ytaudio.discover_mirrors(), [("invidious", "https://a.test")])
+
+    def test_both_directories_dead_returns_empty(self):
+        fake = _FakeRequests({"": RuntimeError("offline")})
+        with _patched(ytaudio, "requests", fake):
+            self.assertEqual(ytaudio.discover_mirrors(), [])
+
+    def test_discovered_hosts_extend_the_seeds_without_duplicates(self):
+        seeded = ytaudio.DEFAULT_MIRRORS[0].split(":", 1)[1]
+        with _env(YT_AUDIO_MIRRORS=None, YT_AUDIO_DISCOVER=None, YT_AUDIO_MAX_HOSTS="20"), \
+                _patched(ytaudio, "discover_mirrors",
+                         lambda: [("piped", seeded), ("piped", "https://new.test")]):
+            hosts = ytaudio.mirrors()
+        self.assertEqual(len([u for _, u in hosts if u == seeded]), 1)   # not duplicated
+        self.assertIn(("piped", "https://new.test"), hosts)
+
+    def test_host_count_is_capped(self):
+        with _env(YT_AUDIO_MIRRORS=None, YT_AUDIO_DISCOVER=None, YT_AUDIO_MAX_HOSTS="3"), \
+                _patched(ytaudio, "discover_mirrors",
+                         lambda: [("piped", f"https://h{i}.test") for i in range(50)]):
+            self.assertEqual(len(ytaudio.mirrors()), 3)
 
 
 class TestStreamSelection(unittest.TestCase):
