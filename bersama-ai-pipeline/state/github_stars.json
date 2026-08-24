@@ -8,8 +8,8 @@
     "ts": "2026-08-06T14:37:33+00:00"
   },
   "s1dashu/ip-as-logo-skill": {
-    "stars": 3955,
-    "ts": "2026-08-24T04:08:25+00:00"
+    "stars": 3990,
+    "ts": "2026-08-24T07:30:48+00:00"
   },
   "FareedKhan-dev/kimi-k3-in-c": {
     "stars": 3245,
@@ -47,13 +47,13 @@
     "stars": 1712,
     "ts": "2026-08-13T22:05:38+00:00"
   },
+  "wang2122/sprix-sage-router": {
+    "stars": 1635,
+    "ts": "2026-08-24T07:30:48+00:00"
+  },
   "Binaryify/open-kimi-ppt-skill": {
     "stars": 1603,
     "ts": "2026-08-11T22:07:17+00:00"
-  },
-  "wang2122/sprix-sage-router": {
-    "stars": 1463,
-    "ts": "2026-08-24T04:08:25+00:00"
   },
   "cinderline/northcinder": {
     "stars": 1206,
@@ -91,6 +91,10 @@
     "stars": 1026,
     "ts": "2026-07-31T22:18:00+00:00"
   },
+  "duty1g/x64dbg-mcp-server": {
+    "stars": 1025,
+    "ts": "2026-08-24T07:30:48+00:00"
+  },
   "Accio-Lab/RealReplicaBench": {
     "stars": 1020,
     "ts": "2026-08-06T03:42:30+00:00"
@@ -102,10 +106,6 @@
   "makecindy/cindy": {
     "stars": 989,
     "ts": "2026-07-28T22:18:53+00:00"
-  },
-  "duty1g/x64dbg-mcp-server": {
-    "stars": 967,
-    "ts": "2026-08-24T04:08:25+00:00"
   },
   "vercel-labs/eve-software-factory-template": {
     "stars": 908,
@@ -168,8 +168,8 @@
     "ts": "2026-08-11T22:07:44+00:00"
   },
   "missuo/herdrm": {
-    "stars": 613,
-    "ts": "2026-08-24T04:08:25+00:00"
+    "stars": 616,
+    "ts": "2026-08-24T07:30:48+00:00"
   },
   "hahhforest/pi-textbook": {
     "stars": 588,
@@ -195,13 +195,13 @@
     "stars": 565,
     "ts": "2026-08-01T22:13:32+00:00"
   },
+  "iAmCorey/Wake": {
+    "stars": 564,
+    "ts": "2026-08-24T07:30:48+00:00"
+  },
   "sv-number/mcp-server": {
     "stars": 561,
     "ts": "2026-08-13T22:05:38+00:00"
-  },
-  "iAmCorey/Wake": {
-    "stars": 553,
-    "ts": "2026-08-24T04:08:25+00:00"
   },
   "DrHazemAli/enterprise-system-design": {
     "stars": 552,
@@ -228,8 +228,8 @@
     "ts": "2026-08-19T21:43:56+00:00"
   },
   "nateherkai/scroll-craft": {
-    "stars": 516,
-    "ts": "2026-08-24T04:08:25+00:00"
+    "stars": 533,
+    "ts": "2026-08-24T07:30:48+00:00"
   },
   "disler/super-simple-software-factory": {
     "stars": 513,
@@ -238,6 +238,10 @@
   "NikoDemon80/ComfyUI-H3-Motion-Context": {
     "stars": 513,
     "ts": "2026-08-13T22:06:04+00:00"
+  },
+  "Forsy-AI/biosecurity-agent": {
+    "stars": 511,
+    "ts": "2026-08-24T07:30:48+00:00"
   },
   "s1dashu/animated-voiceover": {
     "stars": 507,
@@ -262,10 +266,6 @@
   "huangserva/ComfyUI_MiniMaxH3_Director": {
     "stars": 468,
     "ts": "2026-08-10T22:01:27+00:00"
-  },
-  "Forsy-AI/biosecurity-agent": {
-    "stars": 463,
-    "ts": "2026-08-24T04:08:25+00:00"
   },
   "0xnyn/airship": {
     "stars": 460,
@@ -367,6 +367,10 @@
     "stars": 312,
     "ts": "2026-08-04T22:31:22+00:00"
   },
+  "Zyrexnn/Cybermes": {
+    "stars": 306,
+    "ts": "2026-08-24T07:35:03+00:00"
+  },
   "0xwilliamortiz/andrej-karpathy-skills": {
     "stars": 305,
     "ts": "2026-07-27T22:20:34+00:00"
@@ -399,10 +403,6 @@
     "stars": 286,
     "ts": "2026-08-11T22:07:17+00:00"
   },
-  "Zyrexnn/Cybermes": {
-    "stars": 284,
-    "ts": "2026-08-24T04:12:37+00:00"
-  },
   "nkxx188/ComfyUI-MiniMaxH3-Easy": {
     "stars": 276,
     "ts": "2026-08-11T22:08:22+00:00"
@@ -422,6 +422,10 @@
   "alikon-art/DeterminFlow": {
     "stars": 271,
     "ts": "2026-08-08T21:48:08+00:00"
+  },
+  "furkankly/zoetrope": {
+    "stars": 267,
+    "ts": "2026-08-24T07:30:48+00:00"
   },
   "crawfordxx/xiaoma-durex-copywriter": {
     "stars": 266,
@@ -463,6 +467,10 @@
     "stars": 246,
     "ts": "2026-08-19T21:46:18+00:00"
   },
+  "only-cli/oc": {
+    "stars": 245,
+    "ts": "2026-08-24T07:30:48+00:00"
+  },
   "Carasibana/ComfyUI-H3-FaceRefine": {
     "stars": 244,
     "ts": "2026-08-18T21:41:55+00:00"
@@ -483,10 +491,6 @@
     "stars": 236,
     "ts": "2026-08-10T22:00:46+00:00"
   },
-  "only-cli/oc": {
-    "stars": 236,
-    "ts": "2026-08-24T04:08:25+00:00"
-  },
   "apiframe-ai/seedance-2.0-api": {
     "stars": 232,
     "ts": "2026-08-20T21:47:08+00:00"
@@ -504,8 +508,8 @@
     "ts": "2026-08-09T21:50:37+00:00"
   },
   "ZSeven-W/dsh-ios": {
-    "stars": 227,
-    "ts": "2026-08-24T04:08:25+00:00"
+    "stars": 230,
+    "ts": "2026-08-24T07:30:48+00:00"
   },
   "OpenLabs-so/openanalytics": {
     "stars": 225,
@@ -523,13 +527,17 @@
     "stars": 223,
     "ts": "2026-08-22T21:38:43+00:00"
   },
+  "GamePhanes/GamePhanes": {
+    "stars": 223,
+    "ts": "2026-08-24T07:30:48+00:00"
+  },
+  "amitshekhariitbhu/llm-inference-engineering": {
+    "stars": 217,
+    "ts": "2026-08-24T07:30:48+00:00"
+  },
   "surya-koritala/loomfeed": {
     "stars": 216,
     "ts": "2026-08-15T21:37:02+00:00"
-  },
-  "amitshekhariitbhu/llm-inference-engineering": {
-    "stars": 216,
-    "ts": "2026-08-24T04:08:25+00:00"
   },
   "N-allpass/modex-mh-agent": {
     "stars": 215,
@@ -539,13 +547,13 @@
     "stars": 214,
     "ts": "2026-08-15T21:37:29+00:00"
   },
+  "kgoedecke/doop": {
+    "stars": 214,
+    "ts": "2026-08-24T07:30:48+00:00"
+  },
   "paxlabs-inc/machine-genome": {
     "stars": 213,
     "ts": "2026-07-26T22:15:29+00:00"
-  },
-  "GamePhanes/GamePhanes": {
-    "stars": 212,
-    "ts": "2026-08-24T04:08:25+00:00"
   },
   "TaiT-tt/tait-crt-interface-skill": {
     "stars": 211,
@@ -595,13 +603,13 @@
     "stars": 204,
     "ts": "2026-08-12T22:05:35+00:00"
   },
+  "ChenShuo2004/cs-board": {
+    "stars": 204,
+    "ts": "2026-08-24T07:32:34+00:00"
+  },
   "icebird1998/scientific-illustrator": {
     "stars": 203,
     "ts": "2026-07-30T22:29:27+00:00"
-  },
-  "furkankly/zoetrope": {
-    "stars": 202,
-    "ts": "2026-08-24T04:08:25+00:00"
   },
   "ccch1mneyyy/dsh-cc-tui": {
     "stars": 201,
@@ -627,6 +635,10 @@
     "stars": 198,
     "ts": "2026-08-17T21:43:43+00:00"
   },
+  "adnanakil/nobuzz": {
+    "stars": 196,
+    "ts": "2026-08-24T07:30:48+00:00"
+  },
   "miqdadbadjuber/anti-slop": {
     "stars": 195,
     "ts": "2026-08-13T22:05:38+00:00"
@@ -635,17 +647,9 @@
     "stars": 195,
     "ts": "2026-08-14T21:45:13+00:00"
   },
-  "adnanakil/nobuzz": {
-    "stars": 195,
-    "ts": "2026-08-24T04:08:25+00:00"
-  },
   "0xwilliamortiz/agents-council": {
     "stars": 193,
     "ts": "2026-07-26T22:15:29+00:00"
-  },
-  "ChenShuo2004/cs-board": {
-    "stars": 192,
-    "ts": "2026-08-24T04:10:09+00:00"
   },
   "Mr-funny/hbg-classical-poem-silk-video": {
     "stars": 191,
@@ -666,10 +670,6 @@
   "fellowgeek/mcp-memory": {
     "stars": 189,
     "ts": "2026-08-19T21:43:56+00:00"
-  },
-  "kgoedecke/doop": {
-    "stars": 187,
-    "ts": "2026-08-24T04:08:25+00:00"
   },
   "Kronop/vibe-aso": {
     "stars": 186,
