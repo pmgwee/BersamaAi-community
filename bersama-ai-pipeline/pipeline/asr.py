@@ -11,9 +11,18 @@ Without it, caption-less videos keep skipping as before — no behaviour change.
 Size: Groq caps a single audio file at 25 MB. We transcode to 16 kHz mono
 ~32 kbps mp3 (~0.24 MB/min), so a 60-min video (~14 MB) fits in one call — no
 chunking needed.
+
+Getting the audio at all is the hard part on a datacenter IP (YouTube 403s the
+media bytes even when metadata works). `_download_audio` walks three rungs:
+  1. yt-dlp across PLAYER_CLIENT_ORDERINGS            — free, works on residential IPs
+  2. yt-dlp again via YTDLP_PROXY / YTDLP_COOKIES_FILE — only if the owner set one
+  3. public Invidious/Piped mirrors (`ytaudio`)        — keyless, fetches on THEIR IP
+Each rung logs why it failed; if all three fail the caller skips the video and
+alerts staff exactly as before.
 """
 from __future__ import annotations
 
+import os
 import subprocess
 import tempfile
 from pathlib import Path
@@ -21,7 +30,8 @@ from typing import Optional
 
 import yt_dlp
 
-from .fetch import PLAYER_CLIENT_ORDERINGS
+from . import ytaudio
+from .fetch import PLAYER_CLIENT_ORDERINGS, ydl_network_opts, video_id_from_url
 
 GROQ_DEFAULT_MODEL = "whisper-large-v3"
 
@@ -81,13 +91,37 @@ def transcribe(
 def _download_audio(url: str, td: str) -> Optional[Path]:
     """Download the best audio track into td; return its path.
 
-    YouTube bot-blocks datacenter IPs (the VM): the default ``web`` client's audio
-    formats are PO-token-gated, so a bare ``bestaudio`` download fails there even
-    though the hardened caption path (``fetch._rotate_extract``) succeeds. Reuse
-    that same ``player_client`` rotation here so the ASR fallback actually obtains
-    audio on the VM instead of silently skipping every caption-less video. The
-    first client that yields a file wins; returns None if every client failed.
+    Three rungs (see the module docstring). YouTube bot-blocks datacenter IPs:
+    the default ``web`` client's audio formats are PO-token-gated, so a bare
+    ``bestaudio`` download 403s on the VM even though the hardened caption path
+    (``fetch._rotate_extract``) succeeds. Rung 1 is the player_client rotation,
+    rung 2 re-runs it through a proxy/cookies if configured, and rung 3 asks a
+    public Invidious/Piped instance to fetch the media on its own IP.
+    Returns None only when every rung failed.
     """
+    # --- rung 1: yt-dlp direct (free; the only rung that works on a clean IP) ---
+    path = _ytdlp_audio(url, td)
+    if path:
+        return path
+
+    # --- rung 2: yt-dlp through a proxy / cookie jar, if the owner configured one ---
+    net = ydl_network_opts()
+    if net:
+        via = "+".join(sorted(net))   # names only — never the proxy URL or cookie path
+        print(f"[asr] retrying audio download via {via}")
+        path = _ytdlp_audio(url, td, extra=net)
+        if path:
+            return path
+        print(f"[asr] {via} audio download also failed")
+
+    # --- rung 3: public mirrors fetch the bytes on their IP, not ours ---
+    vid = video_id_from_url(url)
+    print("[asr] trying public YouTube mirrors for audio")
+    return ytaudio.download_via_mirror(vid, td)
+
+
+def _ytdlp_audio(url: str, td: str, *, extra: Optional[dict] = None) -> Optional[Path]:
+    """One full PLAYER_CLIENT_ORDERINGS sweep. `extra` merges in proxy/cookies."""
     tmpl = str(Path(td) / "audio.%(ext)s")
     last_err: Optional[Exception] = None
     for client in PLAYER_CLIENT_ORDERINGS:
@@ -109,6 +143,7 @@ def _download_audio(url: str, td: str) -> Optional[Path]:
         }
         if client:
             opts["extractor_args"] = {"youtube": {"player_client": client}}
+        opts.update(extra or {})
         try:
             with yt_dlp.YoutubeDL(opts) as ydl:
                 ydl.download([url])

@@ -52,7 +52,10 @@ RECENCY_DAYS = 3                # creator-watch: only summarize uploads from the
 _NOCAPTION_REASONS = {
     "nocaption_nokey": "no GROQ_API_KEY set → ASR disabled; set it (free key, console.groq.com) to transcribe caption-less videos",
     "nocaption_oembed": "yt-dlp fully IP-blocked this run (oEmbed-only metadata) → can't fetch captions OR audio from this IP",
-    "nocaption_asr_blocked": "ASR audio download blocked (YouTube bot-blocking this datacenter IP)",
+    "nocaption_asr_blocked": ("ASR could not obtain audio: yt-dlp 403 (datacenter-IP block) AND every public "
+                              "mirror failed. Levers: set YT_AUDIO_MIRRORS to a live Invidious/Piped host "
+                              "(`python check_audio_sources.py <url>` lists working ones), or set YTDLP_PROXY "
+                              "to a residential proxy"),
     "nocaption_transcode_failed": "ASR ran but the ffmpeg transcode failed — is ffmpeg installed on the VM?",
     "nocaption_asr_error": "ASR got audio but Groq transcription errored — check GROQ_API_KEY quota / run log",
     "nocaption_asr_empty": "ASR returned an empty transcript (silent / non-speech audio?)",

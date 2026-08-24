@@ -169,6 +169,10 @@ GitHub Actions **secret** AND in the VM's `.env` (never in the repo).
 | `GROQ_API_KEY` (alt `GROQ_KEY`) | `[VM]` | Whisper ASR — caption-less videos + social-video `/share`. Free key at console.groq.com |
 | `GROQ_WHISPER_MODEL` | `[VM]` opt | default `whisper-large-v3` |
 | `MAX_DURATION_MIN` | `[VM]` | `60` — skip videos longer than this |
+| `YT_AUDIO_MIRRORS` | `[VM]` opt | Invidious/Piped hosts for the ASR audio fallback, tried in order. Unset = built-in list. Find live ones with `python check_audio_sources.py <url>` |
+| `YTDLP_PROXY` | `[VM]` opt | residential proxy for yt-dlp — the only reliable beat for YouTube's datacenter-IP block. May contain credentials; never commit |
+| `YTDLP_COOKIES_FILE` | `[VM]` opt | Netscape `cookies.txt` path. YouTube cookies are IP-bound now, so this rarely helps from a VM |
+| `YT_AUDIO_MIRROR_TIMEOUT` / `YT_AUDIO_MAX_MB` | `[VM]` opt | mirror request timeout (20 s) and download cap (220 MB) |
 
 **Gathering (news / engagement, mostly `[GH]`)**
 
@@ -324,6 +328,20 @@ final line — telemetry never halts the run.
   transcodes to 16 kHz mono 32 kbps mp3 to fit Groq's 25 MB cap — a 60-min video ≈ 14 MB).
 - YouTube datacenter-IP bot-block is handled by rotating `player_client` orderings, with a
   YouTube oEmbed safety net so a fully-blocked video still logs a clean, titled skip.
+- **Getting the audio for ASR is the fragile part** — YouTube 403s *media* bytes from
+  datacenter IPs even when metadata works, which silently killed every caption-less video
+  on the VM. `asr._download_audio` now walks three rungs and logs each one:
+  1. yt-dlp across `PLAYER_CLIENT_ORDERINGS` (free; works on residential IPs)
+  2. yt-dlp again through `YTDLP_PROXY` / `YTDLP_COOKIES_FILE` — skipped unless set
+  3. public **Invidious / Piped** mirrors (`pipeline/ytaudio.py`), which fetch the media on
+     *their* IP and stream it back — keyless and cookieless, same doctrine as the stock
+     digest's Bluesky mirror. Guards: lowest-bitrate track only, HTML responses refused,
+     220 MB cap, per-request timeout.
+
+  All rungs failing = today's behaviour (clean skip + staff alert), so nothing regresses when
+  the mirrors are down. Public instances churn constantly — when the built-in list rots, run
+  `python check_audio_sources.py <youtube-url>` on the VM and paste the survivors into
+  `YT_AUDIO_MIRRORS`. That script tries every rung and prints what actually delivered bytes.
 - **Creator-watch recency:** channel uploads are read from the dated YouTube RSS feed (last
   `RECENCY_DAYS=3`) and Shorts are stripped, so adding creators can't flood the run.
   `MAX_PER_RUN=5`/scheduled · `MAX_DURATION_MIN=60`.

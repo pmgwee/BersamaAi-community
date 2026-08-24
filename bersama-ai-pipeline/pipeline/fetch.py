@@ -90,6 +90,7 @@ def _ydl_opts(*, player_client=None, playlist: bool = False) -> dict:
         opts["extract_flat"] = False
     if player_client:
         opts["extractor_args"] = {"youtube": {"player_client": player_client}}
+    opts.update(ydl_network_opts())   # no-op unless YTDLP_PROXY / YTDLP_COOKIES_FILE is set
     return opts
 
 
@@ -125,6 +126,33 @@ def _rotate_extract(url: str, *, playlist: bool = False) -> dict:
 def _video_id_from_url(url: str) -> str:
     m = re.search(r"(?:v=|youtu\.be/|shorts/|embed/|live/)([A-Za-z0-9_-]{6,})", url or "")
     return m.group(1) if m else ""
+
+
+# Public alias — asr.py needs the id to ask a mirror for the same video.
+video_id_from_url = _video_id_from_url
+
+
+def ydl_network_opts() -> dict:
+    """Optional yt-dlp network overrides from the environment, or {} when unset.
+
+    A residential proxy is the only thing that reliably beats YouTube's
+    datacenter-IP block, and a cookie jar helps on some age/region-gated videos.
+    Both are the owner's call (they cost money / carry account risk), so the
+    pipeline never assumes them — it just uses them when present. Callers log
+    the KEY NAMES only: a proxy URL usually embeds credentials.
+      YTDLP_PROXY         e.g. http://user:pass@host:port  (also socks5://)
+      YTDLP_COOKIES_FILE  path to a Netscape cookies.txt on the VM
+    """
+    opts: dict = {}
+    proxy = (os.environ.get("YTDLP_PROXY") or "").strip()
+    if proxy:
+        opts["proxy"] = proxy
+    cookies = (os.environ.get("YTDLP_COOKIES_FILE") or "").strip()
+    if cookies and os.path.exists(cookies):
+        opts["cookiefile"] = cookies
+    elif cookies:
+        print("[fetch] YTDLP_COOKIES_FILE is set but the file does not exist — ignoring")
+    return opts
 
 
 # YouTube channel sub-pages that already name an explicit tab. If a channel URL
