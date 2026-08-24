@@ -17,7 +17,7 @@ Three independent components that all reach the same Discord server (guild `1528
 | Community bot | **Bot VM** `bersama-ai-bot` (`~/BersamaAi-community/bersama-bot/`), systemd service `bersama`, 24/7 |
 | News digest + engagement loop | GitHub Actions (`.github/workflows/news-digest.yml` every 3h; `engagement-digest.yml` weekly) |
 | Stock digest (`@EconomyApp` → `#stock-financial-report`) | **Pipeline VM** cron (no LLM) — but the fetch is now **IP-agnostic**, so it could equally run on GitHub Actions. Reads `@EconomyApp`'s **Bluesky mirror** (`did:plc:kio5ffqovakoioxtxbuat6mr`) via the public AT Protocol API: free, keyless, cookieless. X blocks anonymous scraping from datacenter IPs; **RSSHub + `TWITTER_AUTH_TOKEN` was abandoned** because the cookie expires and the job rots silently. See [STOCK-DIGEST-CHALLENGES.md](STOCK-DIGEST-CHALLENGES.md). |
-| Serenity digest (`@aleabitoreddit` → `#serenity-x-posts`) | **Pipeline VM** cron **twice daily** — 01:07 + 13:07 UTC = 09:07/21:07 MYT (morning = US-close recap, evening = pre-bell; he posts around the clock, only 11% in US regular hours). Reads **trackserenity.com's public `signals.json`** (the same feed as the subscription-agent Stocks Page — his Bluesky account is stale since 2026-07-21), tags topics via GLM, pills every `$TICKER` (cashtags ∪ regex), and pulls post photos via fxtwitter's keyless API (optional, tolerant). |
+| Serenity digest (`@aleabitoreddit` → `#serenity-x-posts`) | **Pipeline VM** cron **twice daily** — 01:07 + 13:07 UTC = 09:07/21:07 MYT (morning = US-close recap, evening = pre-bell; he posts around the clock, only 11% in US regular hours). Reads **trackserenity.com's public `signals.json`** (the same feed as the subscription-agent Stocks Page — his Bluesky account is stale since 2026-07-21), tags topics via the LLM, pills every `$TICKER` (cashtags ∪ regex), and pulls post photos via fxtwitter's keyless API (optional, tolerant). |
 | discord-mcp admin jar | Local only, on-demand (`localhost:8085`) |
 
 > **TWO GCP VMs** (split 2026-08-07; was one VM with two directories):
@@ -31,7 +31,7 @@ Three independent components that all reach the same Discord server (guild `1528
 The bot and the MCP jar deliberately **share one Discord bot token** (Discord allows concurrent Gateway sessions). If the token is reset, update both `.env` files together.
 
 ## Key facts
-- **LLM = GLM `glm-5.2`** via Z.ai's OpenAI-compatible endpoint (`https://api.z.ai/api/coding/paas/v4`) — chosen for cost (~US$3/mo), **NOT Anthropic**. Don't re-litigate without a specific reason.
+- **LLM = `gpt-5.6-luna` via OpenCode Go**'s Responses API (`https://opencode.ai/zen/go/v1` — base URL only; the `openai` SDK appends `/responses`). Config is provider-NEUTRAL: `LLM_API_KEY` / `LLM_BASE_URL` / `LLM_MODEL`, and the provider lives behind ONE module, `bersama-ai-pipeline/pipeline/llm.py` (the bot has its own 3-var block in `bot.py`). Migrated off Z.ai/GLM on 2026-08-24 — swapping again = edit `llm.py` + the 3 env vars, not the feature code.
 - **English-only** server (bilingual was tried and retired 2026-07-20). Card *content* may keep a source's original language (relaxed 2026-07-22); channel names / UI / the small category badge stay English.
 - **Docker Desktop is broken on this machine** → `discord-mcp` runs as a native Java 19 JAR via `run.cmd`, not via Docker.
 - **All 9 news topics are `live=True`** in `pipeline/news.py` `TOPICS` (coding / creative_image / creative_video / creative_voice / research_study / research_productivity / finance / company_investment / cybersecurity). `company_investment` + `cybersecurity` were added 2026-08-07 to peel deals/strategy and security beats out of the old `coding` catch-all. Trust the `TOPICS` table.
@@ -45,7 +45,7 @@ python -m pipeline.main --mode scheduled              # daily creator-watch scan
 python -m pipeline.main --mode url --url "<YT>"       # summarize one video
 python -m pipeline.main --mode news                   # trending news digest
 python -m pipeline.main --mode x-digest               # @EconomyApp → #stock-financial-report (Bluesky mirror; no LLM, no auth)
-python -m pipeline.main --mode serenity               # @Serenity → #serenity-x-posts (trackserenity.com mirror + GLM topic tags + $ticker pills + images)
+python -m pipeline.main --mode serenity               # @Serenity → #serenity-x-posts (trackserenity.com mirror + LLM topic tags + $ticker pills + images)
 python -m pipeline.main --mode share --url "<URL>"    # share any URL as a news card
 python on_demand.py                                   # the phone portal (port 8080)
 
@@ -82,7 +82,7 @@ sudo systemctl restart bersama && tail -n 4 ~/BersamaAi-community/bersama-bot/be
 ```cron
 # @Serenity (@aleabitoreddit, the AI-semis stock-picker) → #serenity-x-posts, twice a
 # day. Reads trackserenity.com's PUBLIC /data/signals.json (same feed as the
-# subscription-agent Stocks Page), tags 1-4 topics via GLM (needs ZAI_API_KEY;
+# subscription-agent Stocks Page), tags 1-4 topics via the LLM (needs LLM_API_KEY;
 # keyword-rule fallback), pills every $TICKER (cashtags ∪ $-regex), and attaches the
 # post's photo via fxtwitter when it has one. Same load-bearing `cd` as the stock digest.
 #
@@ -97,7 +97,7 @@ sudo systemctl restart bersama && tail -n 4 ~/BersamaAi-community/bersama-bot/be
 ## Env & secrets
 Each component has a complete, tagged `.env.example` (copy → `.env`; never commit the real one):
 - `bersama-ai-pipeline/.env.example` — every key tagged `[VM]` / `[GH]` / `[both]`.
-- `bersama-bot/.env.example` — `DISCORD_TOKEN`, `ZAI_API_KEY`/`ZAI_BASE_URL`/`GLM_MODEL`, optional `JINA_API_KEY`.
+- `bersama-bot/.env.example` — `DISCORD_TOKEN`, `LLM_API_KEY`/`LLM_BASE_URL`/`LLM_MODEL`, optional `JINA_API_KEY`.
 
 Bot channels / roles / levels live in `bersama-bot/config.json`, not env.
 
@@ -114,7 +114,7 @@ Bot channels / roles / levels live in `bersama-bot/config.json`, not env.
 | `DISCORD_COMPANY_INVESTMENT_WEBHOOK_URL` | `#ai-company-investment` — AI INDUSTRY money / strategy / policy: M&A, funding, chips/compute, pricing, leadership, open-weight POLICY (broad scope) |
 | `DISCORD_CYBERSECURITY_BYPASS_WEBHOOK_URL` | `#ai-cybersecurity-bypass` — AI security as the subject: incidents, jailbreaks, eval escapes, AI-found vulns, cyber-purpose model/tool launches |
 | `DISCORD_STOCK_FINANCIAL_REPORT_WEBHOOK_URL` (was `STOCK_INVEST`) | `#stock-financial-report` (was `#stock-invest`) — `@EconomyApp` daily digest (VM cron, via the account's Bluesky mirror; no auth) |
-| `DISCORD_SERENITY_X_POSTS_WEBHOOK_URL` | `#serenity-x-posts` — `@aleabitoreddit` ("Serenity") post tracker: topic-tag + `$TICKER`-pill cards (VM cron `--mode serenity`, twice daily; GLM topics + keyword fallback, images via fxtwitter) |
+| `DISCORD_SERENITY_X_POSTS_WEBHOOK_URL` | `#serenity-x-posts` — `@aleabitoreddit` ("Serenity") post tracker: topic-tag + `$TICKER`-pill cards (VM cron `--mode serenity`, twice daily; LLM topics + keyword fallback, images via fxtwitter) |
 | `DISCORD_STAFF_CHAT_WEBHOOK_URL` | `🔒-staff-chat` — health warnings + weekly digest; **topic cards must never post here** (enforced by `_is_staff_webhook`) |
 
 The two renamed vars are read new-name-first with the legacy name as fallback, so a half-migrated `.env` keeps working.

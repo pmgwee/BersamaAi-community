@@ -18,7 +18,7 @@ PIPELINE 1 — talk summarizer (GCP VM)
   YouTube talk
      │  [fetch]    yt-dlp captions (json3) — fallback: youtube-transcript-api
      │  [asr]      no captions? → yt-dlp audio → ffmpeg → Groq Whisper
-     │  [summarize] GLM glm-5.2 · forced tool call → exactly 5 points
+     │  [summarize] gpt-5.6-luna · forced tool call → exactly 5 points
      │  [gate]     short/bad transcript? → content/_review/, do NOT publish
      │  [publish]  Discord webhook (embed) + Telegram  ── auto
      │  [stage]    content/<date>_<slug>_<id>/ (post.threads.txt, post.facebook.txt) ── manual paste
@@ -29,7 +29,7 @@ PIPELINE 2 — trending news digest (GitHub Actions, every ~3h)
   + HuggingFace trending (boombastic only) + official lab/newsroom RSS
      │  [gather]  AI-relevant candidates (keyword pre-filter, score-ranked);
      │            per-topic quotas so every channel's domain reaches the judge
-     │  [judge]   GLM tags TOPIC + HEAT, picks 0–N worth posting — sober, no hype
+     │  [judge]   the LLM tags TOPIC + HEAT, picks 0–N worth posting — sober, no hype
      │  [dedupe]  state/news_seen.json (before quotas + judge — no slot wasted on a repeat)
      ▼  [publish] Discord webhook for the topic's channel (coding → #ai-llm-tools, …)
      │  [health]  a real run that posts 0 cards warns 🔒-staff-chat (no silent failures)
@@ -38,7 +38,7 @@ PIPELINE 3 — on-demand portal + /share (GCP VM, manual)
   phone bookmark http://<VM_IP>:8080/?token=…
      │  /run     summarize a YouTube URL → #youtube-resources   (mode = url)
      ▼  /share   any URL (IG Reels / XHS / TikTok / Threads → yt-dlp + Groq Whisper)
-                  → GLM builds a topic card → that topic's channel webhook  (mode = share)
+                  → the LLM builds a topic card → that topic's channel webhook  (mode = share)
 
 PIPELINE 4 — @EconomyApp stock digest (VM cron, daily ~09:00 MYT)
   the X account's Bluesky mirror (public AT Protocol API — free, keyless, IP-agnostic)
@@ -59,8 +59,8 @@ python -m pip install -U yt-dlp
 
 ### 2. Provision secrets
 Copy [`.env.example`](.env.example) → `.env` and fill it in. Every key is tagged with where it's needed:
-- `[VM]` — the GCP pipeline VM (summarizer + on-demand portal + `/share`): `ZAI_API_KEY`, `GROQ_API_KEY`, `DISCORD_YOUTUBE_WEBHOOK_URL` (legacy `DISCORD_WEBHOOK_URL`), the creative/research webhook URLs, `ON_DEMAND_TOKEN`, Telegram trio.
-- `[GH]` — a GitHub Actions secret (news digest + engagement loop): `ZAI_API_KEY`, `GITHUB_TOKEN`, all the webhook URLs, `DISCORD_TOKEN` (⚠️ private repo only), `PREFS_ENABLED`.
+- `[VM]` — the GCP pipeline VM (summarizer + on-demand portal + `/share`): `LLM_API_KEY`, `GROQ_API_KEY`, `DISCORD_YOUTUBE_WEBHOOK_URL` (legacy `DISCORD_WEBHOOK_URL`), the creative/research webhook URLs, `ON_DEMAND_TOKEN`, Telegram trio.
+- `[GH]` — a GitHub Actions secret (news digest + engagement loop): `LLM_API_KEY`, `GITHUB_TOKEN`, all the webhook URLs, `DISCORD_TOKEN` (⚠️ private repo only), `PREFS_ENABLED`.
 - `[both]` — needed in both.
 
 In GitHub Actions, set each `[GH]`/`[both]` value as a repository secret (Settings → Secrets and variables → Actions). Locally and on the VM, keep them in `.env` (gitignored).
@@ -124,6 +124,18 @@ Then bookmark `http://<VM_IP>:8080/?token=<ON_DEMAND_TOKEN>` on a phone. Plain H
 - `--dry-run` — build everything, print the Discord/Telegram payloads, **don't post**.
 - `--stub-summary` / `--stub-news` — **local test only**: canned output, skip the LLM call (no API key needed).
 
+### Tests
+```bash
+python -m unittest discover -s tests -v      # from bersama-ai-pipeline/
+```
+`tests/test_llm_provider.py` covers the LLM adapter (`pipeline/llm.py`): provider
+config + validation, model selection, that the request really lands on
+`https://opencode.ai/zen/go/v1/responses` (never `/responses/responses`), forced
+tool call -> structured output, malformed/truncated output, auth failure,
+timeout/transport failure, and each feature's graceful-degradation path. Every
+provider reply is served by an in-process mock — **no network, no API key, no
+billable call**.
+
 ## Output (talk summarizer)
 Each processed video writes a folder under `content/<YYYY-MM-DD>_<slug>_<id>/`:
 - `summary.md` — the canonical 5-point summary
@@ -144,13 +156,16 @@ Quality-gate failures park in `content/_review/`; no-caption / too-long videos l
 Tags: **`[VM]`** = GCP pipeline VM (summarizer + portal + `/share` + stock digest) ·
 **`[GH]`** = GitHub Actions secret (news + engagement) · **`[both]`** = set in both.
 
-**LLM + transcription**
+**LLM + transcription** — the provider (currently **OpenCode Go**, model
+`gpt-5.6-luna`, Responses API) lives behind one module, `pipeline/llm.py`; feature
+code only ever sees these neutral variables. Production needs `LLM_API_KEY` set as a
+GitHub Actions **secret** AND in the VM's `.env` (never in the repo).
 
 | Key | Tag | Purpose |
 |---|---|---|
-| `ZAI_API_KEY` | `[both]` req | GLM API key (alt name `GLM_API_KEY` also works) |
-| `ZAI_BASE_URL` | `[both]` | `https://api.z.ai/api/coding/paas/v4` (the "coding" endpoint for glm-5.2 plans) |
-| `GLM_MODEL` | `[both]` | `glm-5.2` (default) |
+| `LLM_API_KEY` | `[both]` req | LLM provider API key (OpenCode Go today) — never commit it |
+| `LLM_BASE_URL` | `[both]` | `https://opencode.ai/zen/go/v1` (base only — the SDK appends `/responses`) |
+| `LLM_MODEL` | `[both]` | `gpt-5.6-luna` (default) |
 | `GROQ_API_KEY` (alt `GROQ_KEY`) | `[VM]` | Whisper ASR — caption-less videos + social-video `/share`. Free key at console.groq.com |
 | `GROQ_WHISPER_MODEL` | `[VM]` opt | default `whisper-large-v3` |
 | `MAX_DURATION_MIN` | `[VM]` | `60` — skip videos longer than this |
@@ -302,7 +317,7 @@ final line — telemetry never halts the run.
 ### Talk summarizer (PIPELINE 1)
 
 - Forced `emit_summary` tool call → **exactly 5 points**, written in the **source video's
-  language** (never translated). `MAX_SUMMARY_ATTEMPTS=3` — GLM doesn't strictly enforce
+  language** (never translated). `MAX_SUMMARY_ATTEMPTS=3` — the model doesn't strictly enforce
   the schema, so a malformed reply is retried, not fatal.
 - **Transcript path:** yt-dlp captions (json3 preferred) → `youtube-transcript-api` →
   **Groq Whisper ASR** (opt-in via `GROQ_API_KEY`/`GROQ_KEY`; `whisper-large-v3`; ffmpeg
@@ -317,9 +332,9 @@ final line — telemetry never halts the run.
   `content/_review/`, skips → `content/_skipped/`.
 
 ## Notes
-- **Why GLM, not Anthropic?** GLM (Z.ai) via its OpenAI-compatible endpoint; matches the project stack and has a cheap coding plan (~US$3/mo). To use Claude instead, swap the client in `summarize.py` / `news.py` to the Anthropic SDK and set `SUMMARY_MODEL`.
+- **Which LLM?** `gpt-5.6-luna` through **OpenCode Go**'s Responses API (`https://opencode.ai/zen/go/v1`), driven by the `openai` SDK. The provider lives behind ONE module — `pipeline/llm.py` — so switching vendors means editing that file and the three `LLM_*` env vars, not the feature code.
 - **Why not Twitter/X for the news digest?** X's API is paid ($200/mo Basic) and anonymous scraping is blocked from datacenter IPs. Reddit + HN + GitHub Trending + HuggingFace + official RSS catch the same AI news within hours for free. The **stock digest** (PIPELINE 4) does follow one curated X account — via its **Bluesky mirror**, not X directly (the cookie never expires, the API is keyless); see [STOCK-DIGEST-CHALLENGES.md](STOCK-DIGEST-CHALLENGES.md).
 - **Why not the `discord-mcp` connector?** That MCP is a local stdio process for *interactive* Claude Code use; it isn't reachable from cloud cron. This pipeline posts to Discord via webhooks directly.
 - **Engagement loop (dormant by default).** The news-digest workflow also sweeps reactions on posted cards (`engagement.py`) and computes per-topic/source taste (`preferences.py`, gated by `PREFS_ENABLED` + a minimum event count). With enough signal the owner can opt in to a bandit actuator that dynamically retunes per-topic quotas + post caps; until then the static quotas run byte-identical. The community bot seeds 👍🔥👎 on every news card every 15 min so members have something to click. A weekly digest (`engagement-digest.yml`, Sun 22:23 UTC) posts one analytics card to `🔒-staff-chat`.
-- **Cost:** GLM is fractions of a cent per run; GitHub Actions free tier covers the news + engagement schedules.
+- **Cost:** a digest run is a handful of model calls; GitHub Actions free tier covers the news + engagement schedules.
 - **Keep `main` unprotected** while relying on the news run's auto-commit (the `GITHUB_TOKEN` can't push to a protected branch). Decide on a bot PAT before enabling branch protection.

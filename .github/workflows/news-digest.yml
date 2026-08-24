@@ -59,14 +59,14 @@ jobs:
 
       - name: Run news digest
         env:
-          ZAI_API_KEY: ${{ secrets.ZAI_API_KEY }}
-          ZAI_BASE_URL: ${{ vars.ZAI_BASE_URL || 'https://api.z.ai/api/coding/paas/v4/' }}
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_BASE_URL: ${{ vars.LLM_BASE_URL || 'https://opencode.ai/zen/go/v1' }}
           DISCORD_LLM_TOOLS_WEBHOOK_URL: ${{ secrets.DISCORD_LLM_TOOLS_WEBHOOK_URL }}       # #ai-llm-tools (coding)
           DISCORD_YOUTUBE_WEBHOOK_URL: ${{ secrets.DISCORD_YOUTUBE_WEBHOOK_URL }}           # #youtube-ai-video (summarizer)
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}                           # legacy youtube fallback (rename)
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_DM_CHAT_ID: ${{ secrets.TELEGRAM_DM_CHAT_ID }}
-          GLM_MODEL: ${{ vars.GLM_MODEL || 'glm-5.2' }}
+          LLM_MODEL: ${{ vars.LLM_MODEL || 'gpt-5.6-luna' }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   # authenticated GitHub search -> no rate limit
           DISCORD_IMAGE_CREATION_WEBHOOK_URL: ${{ secrets.DISCORD_IMAGE_CREATION_WEBHOOK_URL }}
           DISCORD_VIDEO_CREATION_WEBHOOK_URL: ${{ secrets.DISCORD_VIDEO_CREATION_WEBHOOK_URL }}

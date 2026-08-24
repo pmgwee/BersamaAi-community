@@ -1,29 +1,24 @@
-"""LLM summarization via GLM (Zhipu / Z.ai) through its OpenAI-compatible endpoint,
+"""LLM summarization through the provider-neutral adapter (`pipeline.llm`),
 using a forced function call for strict structured output.
 
 The tool schema (prompts.EMIT_SUMMARY_TOOL.input_schema) requests exactly 5 English
-points. GLM does not strictly enforce schemas, so we treat the schema as a *request*
+points. Providers do not strictly enforce schemas, so we treat the schema as a *request*
 and validate the response ourselves in _coerce (this is also why a malformed response
 becomes a clean SummarizeError instead of a crash).
 
 Provider notes:
-  - base_url: open.bigmodel.cn (China) or api.z.ai (international) — same wire format.
-    Trailing slash is required by the OpenAI SDK or you get 404s.
+  - which provider/model/endpoint is in use lives in `pipeline/llm.py` only.
   - tool_choice="required" forces a function call; with only one tool, it's emit_summary.
 """
 from __future__ import annotations
 
-import json
 from dataclasses import dataclass, asdict
-from typing import Optional
 
-from openai import OpenAI
-
+from .llm import DEFAULT_BASE_URL, DEFAULT_MODEL, structured_call
 from .prompts import SYSTEM_PROMPT, EMIT_SUMMARY_TOOL, build_user_message
 
-GLM_DEFAULT_BASE_URL = "https://open.bigmodel.cn/api/paas/v4/"  # trailing slash matters
-GLM_DEFAULT_MODEL = "glm-4.6"
-MAX_SUMMARY_ATTEMPTS = 3   # GLM doesn't strictly enforce the tool schema; retry a malformed reply
+MAX_SUMMARY_ATTEMPTS = 3   # the model doesn't strictly enforce the tool schema; retry a malformed reply
+SUMMARY_MAX_OUTPUT_TOKENS = 4096  # Responses API counts reasoning tokens too
 
 
 @dataclass
@@ -46,48 +41,33 @@ def summarize(
     meta: dict,
     transcript: str,
     api_key: str,
-    model: str = GLM_DEFAULT_MODEL,
-    base_url: str = GLM_DEFAULT_BASE_URL,
+    model: str = DEFAULT_MODEL,
+    base_url: str = DEFAULT_BASE_URL,
     lang_hint: str = "other",
 ) -> Summary:
-    """Call GLM with a forced emit_summary function call; return a validated Summary.
+    """Call the model with a forced emit_summary function call; return a validated Summary.
 
     `lang_hint` ("en"/"zh"/"other", from fetch.get_transcript) is forwarded to the
     prompt so the summary is written in the source video's language, not translated."""
     if not api_key:
-        raise SummarizeError("ZAI_API_KEY is missing — cannot summarize.")
+        raise SummarizeError("LLM_API_KEY is missing — cannot summarize.")
 
-    client = OpenAI(api_key=api_key, base_url=base_url)
-    tool = {
-        "type": "function",
-        "function": {
-            "name": EMIT_SUMMARY_TOOL["name"],
-            "description": EMIT_SUMMARY_TOOL["description"],
-            "parameters": EMIT_SUMMARY_TOOL["input_schema"],
-        },
-    }
-    messages = [
-        {"role": "system", "content": SYSTEM_PROMPT},
-        {"role": "user", "content": build_user_message(meta, transcript, lang_hint)},
-    ]
+    user_msg = build_user_message(meta, transcript, lang_hint)
 
-    # GLM does not strictly enforce the emit_summary schema, so a call can
+    # The model does not strictly enforce the emit_summary schema, so a call can
     # occasionally return the wrong point count or malformed JSON. A fresh call
     # almost always succeeds — retry rather than fail the whole video on a
     # transient variance.
     last_err = None
     for attempt in range(1, MAX_SUMMARY_ATTEMPTS + 1):
         try:
-            resp = client.chat.completions.create(
-                model=model,
-                max_completion_tokens=2048,  # Z.ai GLM ignores max_tokens -> truncated tool JSON
-                messages=messages,
-                tools=[tool],
-                tool_choice="required",  # force a tool call; only one tool => emit_summary
+            data = structured_call(
+                system=SYSTEM_PROMPT,
+                user=user_msg,
+                tool=EMIT_SUMMARY_TOOL,
+                api_key=api_key, model=model, base_url=base_url,
+                max_output_tokens=SUMMARY_MAX_OUTPUT_TOKENS,
             )
-            data = _extract_function_args(resp)
-            if data is None:
-                raise SummarizeError("Model did not return the emit_summary function call.")
             return _coerce(data, meta)
         except SummarizeError as e:
             last_err = e
@@ -96,21 +76,6 @@ def summarize(
         if attempt < MAX_SUMMARY_ATTEMPTS:
             print(f"[summarize] attempt {attempt}/{MAX_SUMMARY_ATTEMPTS} rejected ({last_err}); retrying…")
     raise last_err or SummarizeError("summarize failed after retries")
-
-
-def _extract_function_args(resp) -> Optional[dict]:
-    """Pull the emit_summary arguments out of an OpenAI-format response."""
-    msg = resp.choices[0].message
-    tool_calls = getattr(msg, "tool_calls", None)
-    if not tool_calls:
-        return None
-    args = getattr(tool_calls[0].function, "arguments", None)
-    if not args:
-        return None
-    try:
-        return json.loads(args)
-    except (json.JSONDecodeError, TypeError) as e:
-        raise SummarizeError(f"emit_summary returned invalid JSON arguments: {e}") from e
 
 
 def _safe_int(v, default: int = 0) -> int:

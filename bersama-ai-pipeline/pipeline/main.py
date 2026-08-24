@@ -30,6 +30,7 @@ for _stream in (sys.stdout, sys.stderr):
         pass
 
 from . import fetch, publish, state, bundle
+from .llm import llm_config
 from .summarize import summarize, stub_summary, SummarizeError, Summary
 from .news import run_news, post_url_as_news
 from .x_digest import run_x_digest
@@ -80,15 +81,11 @@ def youtube_webhook() -> str:
 
 
 def llm_creds() -> dict:
-    """Resolve LLM credentials, preferring the ZAI_* / GLM_MODEL names and
-    falling back to GLM_API_KEY / GLM_BASE_URL / SUMMARY_MODEL. Defaults match
-    the maintainer's Z.ai coding-plan setup (glm-5.2)."""
-    base = cfg("ZAI_BASE_URL") or cfg("GLM_BASE_URL", "https://api.z.ai/api/coding/paas/v4/")
-    return {
-        "api_key": cfg("ZAI_API_KEY") or cfg("GLM_API_KEY"),
-        "model": cfg("GLM_MODEL") or cfg("SUMMARY_MODEL", "glm-5.2"),
-        "base_url": base.rstrip("/") + "/",   # OpenAI SDK expects a trailing slash
-    }
+    """Resolve LLM settings from the provider-neutral env vars
+    (LLM_API_KEY / LLM_BASE_URL / LLM_MODEL). The provider itself — currently
+    OpenCode Go's Responses API with gpt-5.6-luna — is configured in
+    `pipeline/llm.py`; nothing outside that module knows the vendor."""
+    return llm_config()
 
 
 def alert(msg: str, dry_run: bool) -> None:

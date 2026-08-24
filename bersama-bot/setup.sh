@@ -47,12 +47,12 @@ fi
 if [ ! -f .env ]; then
   echo "DISCORD_TOKEN = the SAME bot token the discord-mcp jar uses."
   read -r -s -p "DISCORD_TOKEN: " TOKEN; echo
-  read -r -s -p "ZAI_API_KEY (blank = disable AI): " ZAI; echo
+  read -r -s -p "LLM_API_KEY (blank = disable AI): " LLM_KEY; echo
   cat > .env <<EOF
 DISCORD_TOKEN=$TOKEN
-GLM_MODEL=glm-5.2
-ZAI_BASE_URL=https://api.z.ai/api/coding/paas/v4
-ZAI_API_KEY=$ZAI
+LLM_MODEL=gpt-5.6-luna
+LLM_BASE_URL=https://opencode.ai/zen/go/v1
+LLM_API_KEY=$LLM_KEY
 EOF
   chmod 600 .env
   echo "Wrote .env (chmod 600)."

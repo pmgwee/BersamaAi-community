@@ -1,6 +1,6 @@
 # BersamaAi summarization pipeline — v1
 # Install with:  python -m pip install -r requirements.txt
-openai>=1.50            # GLM (Zhipu/Z.ai) is OpenAI-compatible; we point this at its endpoint
+openai>=1.66            # Responses API client; pointed at LLM_BASE_URL (OpenCode Go today)
 youtube-transcript-api>=1.2.4   # instance .fetch() API (v1.2.4, Jan 2026); legacy classmethod still works
 yt-dlp>=2026.7.1
 requests>=2.32

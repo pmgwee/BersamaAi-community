@@ -3,7 +3,7 @@
 Sources: Reddit (per-topic subs — OAuth JSON when REDDIT_CLIENT_ID/SECRET are set,
 else public .rss; reddit.com 403s unauthenticated .json since ~2026-07) + Hacker
 News + GitHub Trending (Search API) + HuggingFace trending + official blog RSS.
-A GLM judge tags each candidate with a TOPIC + HEAT + card; each item routes to
+An LLM judge tags each candidate with a TOPIC + HEAT + card; each item routes to
 its topic's channel webhook. Dedup (state/news_seen.json) drops already-posted
 stories BEFORE quotas + the judge, so every judged slot is a fresh story.
 
@@ -32,9 +32,9 @@ from pathlib import Path
 from urllib.parse import urljoin, unquote, quote, urlsplit, urlunsplit
 
 import requests
-from openai import OpenAI
 
 from .github_trending import fetch_trending
+from .llm import LLMError, MalformedOutput, NoToolCall, structured_call
 from .stateutil import append_jsonl, read_jsonl, read_posted_log, POSTED_LOG, POSTED_LOG_SHARE
 from .preferences import load_preferences, MIN_EVENTS
 
@@ -1158,32 +1158,32 @@ def _build_judge_user_message(candidates: list[dict], recent: list[dict] | None 
     return "\n".join(lines)
 
 
+# Output budgets for the Responses API. It counts REASONING tokens against the
+# cap, so these are 2x the old chat-completions numbers — a digest truncated
+# mid-tool-JSON would post nothing at all.
+JUDGE_MAX_OUTPUT_TOKENS = 4096
+SHARE_MAX_OUTPUT_TOKENS = 2048
+
+
 def judge(candidates: list[dict], *, api_key: str, model: str, base_url: str,
           prefs_section: str = "", recent: list[dict] | None = None) -> list[NewsItem]:
     if not api_key:
-        raise NewsError("ZAI_API_KEY is missing — cannot judge news.")
-    client = OpenAI(api_key=api_key, base_url=base_url)
-    tool = {"type": "function", "function": {
-        "name": EMIT_NEWS_TOOL["name"], "description": EMIT_NEWS_TOOL["description"],
-        "parameters": EMIT_NEWS_TOOL["input_schema"],
-    }}
+        raise NewsError("LLM_API_KEY is missing — cannot judge news.")
     try:
-        resp = client.chat.completions.create(
-            model=model, max_completion_tokens=2048,  # Z.ai GLM ignores max_tokens
-            messages=[{"role": "system", "content": SYSTEM_PROMPT + prefs_section},
-                      {"role": "user", "content": _build_judge_user_message(candidates, recent=recent)}],
-            tools=[tool], tool_choice="required",
+        data = structured_call(
+            system=SYSTEM_PROMPT + prefs_section,
+            user=_build_judge_user_message(candidates, recent=recent),
+            tool=EMIT_NEWS_TOOL,
+            api_key=api_key, model=model, base_url=base_url,
+            max_output_tokens=JUDGE_MAX_OUTPUT_TOKENS,
         )
-    except Exception as e:  # noqa: BLE001
-        raise NewsError(f"GLM API call failed: {e}") from e
-
-    tc = getattr(resp.choices[0].message, "tool_calls", None)
-    if not tc:
+    except NoToolCall:
+        # "no tool call" always meant "the judge picked nothing" — keep that
+        # product behaviour (empty digest, not a failed run); everything else
+        # (transport, auth, malformed JSON) stays a hard NewsError.
         return []
-    try:
-        data = json.loads(tc[0].function.arguments or "{}")
-    except (json.JSONDecodeError, TypeError) as e:
-        raise NewsError(f"emit_news returned invalid JSON: {e}") from e
+    except LLMError as e:
+        raise NewsError(str(e)) from e
 
     out = []
     for raw in (data.get("items") or [])[:MAX_POST_PER_RUN]:
@@ -1420,7 +1420,7 @@ def _clean_url_for_discord(url: str) -> str:
     Discord rejects the WHOLE embed (HTTP 400 `{"embeds":["0"]}`) for any malformed
     URL field, and that terse error names NO field — so a single bad scraped
     og:image or a model-mangled source_url silently kills the entire card. We:
-      • encode ALL internal whitespace (spaces, \\n, \\r, \\t — GLM sometimes
+      • encode ALL internal whitespace (spaces, \\n, \\r, \\t — the model sometimes
         line-wraps a URL) as %20; raw control chars make Discord reject the URL;
       • require an http(s) scheme + a host;
       • percent-encode non-ASCII path/query (and punycode the host) instead of
@@ -1763,7 +1763,7 @@ def _push_share_shard() -> None:
 # ── share (Threads / link human-in-the-loop) ─────────────────────────────────
 # The owner is the taste algorithm for social sources (Threads/X) the engine
 # can't/shouldn't auto-scrape. This turns ONE chosen public URL into a posted card:
-# fetch og: meta -> GLM writes a topic-tagged card -> post to that topic's channel.
+# fetch og: meta -> the LLM writes a topic-tagged card -> post to that topic's channel.
 
 URL_FETCH_HEADERS = {"User-Agent": "Mozilla/5.0 (BersamaAi-news/1.0; +share)"}
 
@@ -1873,7 +1873,7 @@ EMIT_ONE_TOOL = {
 
 def post_url_as_news(url: str, *, api_key: str, model: str, base_url: str,
                      dry_run: bool = False, alert_fn=None, force: bool = False) -> str:
-    """Threads/link HITL: fetch a public URL -> GLM writes a topic-tagged card -> post.
+    """Threads/link HITL: fetch a public URL -> the LLM writes a topic-tagged card -> post.
     `force` overrides the same-link guard (owner prefixing the URL with '!')."""
     if not api_key:
         return "SHARE_NO_API_KEY"
@@ -1888,11 +1888,6 @@ def post_url_as_news(url: str, *, api_key: str, model: str, base_url: str,
     if not meta.get("title") and not meta.get("transcript"):
         print(f"[share] could not fetch content for {url}")
         return "SHARE_FETCH_FAILED"
-    client = OpenAI(api_key=api_key, base_url=base_url)
-    tool = {"type": "function", "function": {
-        "name": EMIT_ONE_TOOL["name"], "description": EMIT_ONE_TOOL["description"],
-        "parameters": EMIT_ONE_TOOL["input_schema"],
-    }}
     parts = [f"title: {meta.get('title', '')}", f"description: {meta.get('description', '')}"]
     if meta.get("transcript"):
         # Prefer what the video actually says over the (often promotional) caption.
@@ -1903,26 +1898,24 @@ def post_url_as_news(url: str, *, api_key: str, model: str, base_url: str,
     parts.append(f"url: {url}")
     user_msg = "\n".join(parts)
     try:
-        resp = client.chat.completions.create(
-            model=model, max_completion_tokens=1024,
-            messages=[{"role": "system", "content": SINGLE_CARD_PROMPT},
-                      {"role": "user", "content": user_msg}],
-            tools=[tool], tool_choice="required",
+        data = structured_call(
+            system=SINGLE_CARD_PROMPT, user=user_msg, tool=EMIT_ONE_TOOL,
+            api_key=api_key, model=model, base_url=base_url,
+            max_output_tokens=SHARE_MAX_OUTPUT_TOKENS,
         )
-    except Exception as e:  # noqa: BLE001
-        return f"SHARE_LLM_FAILED {e}"
-    tc = getattr(resp.choices[0].message, "tool_calls", None)
-    if not tc:
+    except NoToolCall:
         return "SHARE_LLM_EMPTY"
-    try:
-        data = json.loads(tc[0].function.arguments or "{}")
-    except (json.JSONDecodeError, TypeError):
+    except MalformedOutput:
         return "SHARE_LLM_BADJSON"
+    except LLMError as e:
+        # Same three failure buckets as before, so the portal's status strings
+        # (and the owner's muscle memory) are unchanged.
+        return f"SHARE_LLM_FAILED {e}"
     topic = str(data.get("topic", "")).strip()
     if topic not in TOPIC_BY_KEY:
         return f"SHARE_BAD_TOPIC {topic}"
     # source_url: the owner vouches for the URL they pasted, so trust it over the
-    # model's value. The prompt tells the model to "pass through unchanged" but GLM
+    # model's value. The prompt tells the model to "pass through unchanged" but models
     # sometimes alters it — and a *valid-but-wrong* model URL would silently link the
     # card to a different story. Clean it; fall back to the raw url only if cleaning
     # ever empties it.

@@ -41,7 +41,7 @@ because the MCP only acts on demand and never "sees" events happen:
 | Self-assign reaction roles (5 emoji: 🎓 / 🎨 / 💼 / 💻 / 📈) | **this bot** (`on_raw_reaction_add/remove`) |
 | Leveling / XP / `/rank` / `/leaderboard` (rewards Lv 5/10/20/35) | **this bot** (`on_message` + SQLite) |
 | Prefix commands (`!rules`, `!resources`, `!ai`) + slash `/help` | **this bot** |
-| @BersamaAi / `!ai` → GLM AI (context-aware: recent msgs + Jina link fetch) | **this bot** (Z.ai, OpenAI-compatible) |
+| @BersamaAi / `!ai` → LLM replies (context-aware: recent msgs + Jina link fetch) | **this bot** (OpenCode Go, Responses API) |
 | Seed 👍🔥👎 on news cards every 15 min (engagement-loop bridge) | **this bot** (`seed_reactions` task) |
 | Auto-moderation (spam/links/profanity) | **Discord's native AutoMod** — not yet enabled (see Step 6) |
 | Timers / scheduled messages | SaseQ MCP (cron → `http://localhost:8085/mcp`) |
@@ -89,14 +89,14 @@ cp .env.example .env
 
 Open `.env` and set:
 - `DISCORD_TOKEN` = the **same** bot token the MCP jar uses (from your main `.env`).
-- `ZAI_API_KEY` = your **Z.ai** API key. Enables member-facing AI (GLM-5.2). Leave blank to disable; everything else still works.
-- `ZAI_BASE_URL` = `https://api.z.ai/api/coding/paas/v4` (default — Z.ai's OpenAI-compatible endpoint).
-- `GLM_MODEL` = `glm-5.2` (default).
+- `LLM_API_KEY` = your **OpenCode Go** API key. Enables member-facing AI (`gpt-5.6-luna`). Leave blank to disable; everything else still works. Never commit it.
+- `LLM_BASE_URL` = `https://opencode.ai/zen/go/v1` (default — base URL only; the SDK appends `/responses`).
+- `LLM_MODEL` = `gpt-5.6-luna` (default).
 - `JINA_API_KEY` = *(optional)* a [Jina Reader](https://jina.ai/reader) key. When a member shares a link and @mentions the bot, it fetches the page content (JS-rendered pages too) so it can answer questions about it. Works without a key (rate-limited); leave blank to skip link fetch.
 
 > Channels, roles, reaction-role menus, level rewards, and the AI system prompt live in
 > [`config.json`](config.json) — **not** `.env`. `setup.sh` writes the four core env vars
-> above for you (hardcoding `glm-5.2` + the Z.ai URL); `JINA_API_KEY` you add by hand.
+> above for you (hardcoding `gpt-5.6-luna` + the OpenCode Go URL); `JINA_API_KEY` you add by hand.
 
 ## Step 4 — Test it locally
 
@@ -112,7 +112,7 @@ You should see:
 [2026-07-21 01:47:53] [INFO    ] discord.client: logging in using static token
 [2026-07-21 01:47:57] [INFO    ] bersama: Logged in as BersamaAi#2383 (1528479915635245258)
 [2026-07-21 01:47:57] [INFO    ] bersama: Reaction-role menus: ['1528687776801886249']
-[2026-07-21 01:47:57] [INFO    ] bersama: AI (GLM via Z.ai): ON (glm-5.2)
+[2026-07-21 01:47:57] [INFO    ] bersama: AI (https://opencode.ai/zen/go/v1): ON (gpt-5.6-luna)
 [2026-07-21 01:47:58] [INFO    ] bersama: Synced 3 slash commands.
 ```
 
@@ -133,7 +133,7 @@ Use **NSSM** to run it as a Windows service that restarts on crash/reboot:
 # Install NSSM: https://nssm.cc/download
 nssm install BersamaAiBot "C:\path\to\.venv\Scripts\python.exe" "-u C:\path\to\bersama-bot\bot.py"
 nssm set BersamaAiBot AppDirectory "C:\path\to\bersama-bot"
-nssm set BersamaAiBot AppEnvironmentExtra "DISCORD_TOKEN=..." "ZAI_API_KEY=..."
+nssm set BersamaAiBot AppEnvironmentExtra "DISCORD_TOKEN=..." "LLM_API_KEY=..."
 # Capture timestamped logs to a rotating file:
 nssm set BersamaAiBot AppStdout "C:\path\to\bersama-bot\bersama.log"
 nssm set BersamaAiBot AppStderr "C:\path\to\bersama-bot\bersama.log"
@@ -201,7 +201,7 @@ For anything native AutoMod can't express, ask Claude (via the MCP) to handle it
 
 ## Cost & safety notes
 
-- **AI cost:** the bot uses **GLM-5.2 via Z.ai** (set `ZAI_API_KEY`). The Z.ai GLM Coding Plan is ~US$3/month — far cheaper than Anthropic. The bot also bounds usage four ways — a **30 s per-user cooldown** (`AI_COOLDOWN`), a **server-wide cap of 20 calls/min** (`AI_GLOBAL_MAX`), at most **3 concurrent calls** (`AI_CONCURRENCY`), **input truncated to 1 500 chars** (`AI_INPUT_MAX`), plus an 800-token reply cap. Tune any of these constants at the top of `bot.py`. To disable AI entirely, clear `ZAI_API_KEY`.
+- **AI cost:** the bot uses **`gpt-5.6-luna` via OpenCode Go** (set `LLM_API_KEY`). The bot bounds usage four ways — a **30 s per-user cooldown** (`AI_COOLDOWN`), a **server-wide cap of 20 calls/min** (`AI_GLOBAL_MAX`), at most **3 concurrent calls** (`AI_CONCURRENCY`), **input truncated to 1 500 chars** (`AI_INPUT_MAX`), plus a 1 600-token reply cap (the Responses API counts reasoning tokens against it, so it is 2× the old visible-text budget). Tune any of these constants at the top of `bot.py`. To disable AI entirely, clear `LLM_API_KEY`.
 - **Token safety:** `DISCORD_TOKEN` is a full-admin credential. Never commit `.env` to git, never paste it in public. This folder's `.gitignore` already excludes it.
 - **Shared token:** because the bot and the MCP share one token, if you ever **reset/regenerate** the token in the Developer Portal, update it in **both** the MCP `.env` and this bot's `.env`.
 
@@ -212,15 +212,15 @@ baked in (see `bot.py`):
 
 - **Single-guild allowlist.** `on_message`, a global `@bot.check`, and an `on_guild_join`
   auto-leave ensure the bot only ever serves *this* guild. Without it, anyone who copies
-  the bot's client ID could add it to a private server and drain the Z.ai budget / farm the
+  the bot's client ID could add it to a private server and drain the LLM budget / farm the
   leaderboard. (Still: set the bot to **Private** in the Developer Portal for defense-in-depth.)
 - **No pings from AI replies.** `allowed_mentions=AllowedMentions.none()` + a mention-stripping
-  regex mean prompt-injected GLM output can never mass-ping roles or `@everyone`.
+  regex mean prompt-injected model output can never mass-ping roles or `@everyone`.
 - **SSRF guard on link fetch.** When the AI enriches its context by pulling a page a member
   shared (Jina Reader, up to 2 most-recent links), `_is_safe_fetch_url` blocks non-http(s),
   localhost, private/loopback/link-local IPs, and cloud-metadata hosts — a malicious link
   can't prod the VM's internals through the bot.
-- **Z.ai call timeout (30 s).** A hung provider request can no longer pin one of the 3 AI
+- **Provider call timeout (30 s).** A hung provider request can no longer pin one of the 3 AI
   slots for up to 30 minutes; it times out, refunds its global-quota slot, and replies gracefully.
 - **Fair cooldowns.** The per-user 30 s lockout and the global 20/min slot are only consumed
   by *real* attempts — empty pings, "AI disabled", and "busy" replies no longer penalise the user.
@@ -263,7 +263,7 @@ writing without corruption or locking.
 | Symptom | Fix |
 |---|---|
 | Bot online but reacts/levels don't work | You forgot **Message Content** / **Server Members** intent in Step 1. |
-| `[BersamaAi] AI (GLM via Z.ai): OFF` | `openai` not installed, or `ZAI_API_KEY` empty. Re-run `pip install -r requirements.txt`. |
+| `[BersamaAi] AI (…): OFF` | `openai` not installed, or `LLM_API_KEY` empty. Re-run `pip install -r requirements.txt`. |
 | `Missing permissions to manage role` | The bot's role (**BersamaAi**) must sit **above** the roles it assigns. Drag it up in **Server Settings → Roles**. (Its Administrator permission usually covers this already.) |
 | Reaction roles work on add but not remove | Normal — the `on_raw_reaction_remove` event needs the Members intent, which Step 1 enables. |
 | Slash commands don't appear | Slash commands sync to one guild on startup. Restart the bot; can take up to a minute to show in the client. |

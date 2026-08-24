@@ -21,14 +21,14 @@ is too old raises a staff alert instead of failing silently, and a fxtwitter
 failure just posts the card from the mirror's truncated text (with a
 read-more link) instead of failing.
 
-Tagging: GLM (the pipeline's own Z.ai creds) picks 1-3 topics from the
+Tagging: the LLM (the pipeline's own neutral LLM_* config) picks 1-3 topics from the
 19-area taxonomy ported from subscription-agent's `lib/serenity/topics.ts`,
 unioned with the deterministic keyword rules (the same fallback the Stocks
 Page uses when no LLM key is present — here it also covers an LLM outage, and
 the card still posts). No stance signal — deliberately dropped per owner.
 
 Runtime: pipeline VM cron (01:07 UTC, staggered after the 01:00 EconomyApp
-x-digest; needs the VM's ZAI_API_KEY). No LLM ⇒ keyword topics only. The
+x-digest; needs the VM's LLM_API_KEY). No LLM ⇒ keyword topics only. The
 on-demand `/share` path never imports this module.
 """
 from __future__ import annotations
@@ -38,7 +38,7 @@ import os
 import re
 from datetime import datetime, timedelta, timezone
 
-from openai import OpenAI
+from .llm import structured_call
 
 # Generic posting / safety / health guards shared with the news engine, plus
 # the x-digest plumbing this module deliberately reuses (HTTP, state, dates).
@@ -62,8 +62,10 @@ FIRST_RUN_MAX = 3      # bound day-1 volume so the first run isn't a wall of old
 # Largest observed gap between posts is 2.0 days → alert at 2×, well inside
 # MAX_AGE_DAYS=7 (where posts start being dropped silently instead).
 STALE_AFTER_DAYS = 4
-LLM_TIMEOUT_S = 30     # per GLM tagging call; the SDK default (600s ×3) could
+LLM_TIMEOUT_S = 30     # per tagging call; the SDK default (600s ×3) could
 LLM_MAX_RETRIES = 1    # stall a 12-post run for hours on a hung endpoint
+# The Responses API counts reasoning tokens against the cap -> 2x the old 512.
+TAG_MAX_OUTPUT_TOKENS = 1024
 
 # ── topic taxonomy (ported 1:1 from subscription-agent lib/serenity/topics.ts) ─
 # Canonical display order; the LLM is told to use these EXACT strings.
@@ -169,7 +171,7 @@ def _order_topics(hits: set) -> list[str]:
     return sorted((t for t in hits if t in TOPIC_ORDER), key=TOPIC_ORDER.get)[:MAX_TOPICS]
 
 
-# ── LLM topic tagger (GLM via the pipeline's Z.ai creds) ─────────────────────
+# ── LLM topic tagger (via the pipeline's provider-neutral adapter) ─────────────────────
 
 _SYSTEM_PROMPT = (
     "You tag investing posts by Serenity (@aleabitoreddit), an AI-hardware / semiconductor "
@@ -201,25 +203,17 @@ EMIT_TOPICS_TOOL = {
 
 
 def _llm_topics(text: str, *, api_key: str, model: str, base_url: str) -> list[str]:
-    """Ask GLM for 1-3 topics. Tool-call-forced JSON (the news judge's proven
-    idiom on this endpoint). Raises on any failure — the caller falls back to
+    """Ask the model for 1-3 topics. Tool-call-forced JSON (the news judge's
+    proven idiom). Raises on any failure — the caller falls back to
     `_keyword_topics` and still posts the card."""
-    client = OpenAI(api_key=api_key, base_url=base_url,
-                    timeout=LLM_TIMEOUT_S, max_retries=LLM_MAX_RETRIES)
-    tool = {"type": "function", "function": {
-        "name": EMIT_TOPICS_TOOL["name"], "description": EMIT_TOPICS_TOOL["description"],
-        "parameters": EMIT_TOPICS_TOOL["input_schema"],
-    }}
-    resp = client.chat.completions.create(
-        model=model, max_completion_tokens=512,  # Z.ai GLM ignores max_tokens
-        messages=[{"role": "system", "content": _SYSTEM_PROMPT},
-                  {"role": "user", "content": f'Post:\n"""{text}"""'}],
-        tools=[tool], tool_choice="required",
+    data = structured_call(
+        system=_SYSTEM_PROMPT,
+        user=f'Post:\n"""{text}"""',
+        tool=EMIT_TOPICS_TOOL,
+        api_key=api_key, model=model, base_url=base_url,
+        max_output_tokens=TAG_MAX_OUTPUT_TOKENS,
+        timeout=LLM_TIMEOUT_S, max_retries=LLM_MAX_RETRIES,
     )
-    tc = getattr(resp.choices[0].message, "tool_calls", None)
-    if not tc:
-        raise ValueError("emit_topics: no tool call in response")
-    data = json.loads(tc[0].function.arguments or "{}")
     return _order_topics({str(t) for t in (data.get("topics") or [])})
 
 
@@ -328,7 +322,7 @@ def build_serenity_card(post: dict, topics: list[str], tickers: list[str]) -> di
 def run_serenity_digest(*, dry_run: bool = False, alert_fn=None,
                         api_key: str = "", model: str = "", base_url: str = "") -> list[str]:
     """Daily Serenity digest. Fetch the mirror, drop already-posted/old posts,
-    tag each new one (topics via GLM∪keywords, tickers via cashtags∪regex),
+    tag each new one (topics via LLM∪keywords, tickers via cashtags∪regex),
     attach its photo when it has one, and post the card. Returns one-line
     status strings. In dry-run, cards are printed (not posted) and no state is
     written — so a dry run is reproducible and needs no webhook."""
@@ -402,7 +396,7 @@ def run_serenity_digest(*, dry_run: bool = False, alert_fn=None,
 
     posted = 0
     # Seen ids are committed AFTER EACH successful post, not once at the end:
-    # this loop is slow (full-text/image fetch + GLM tag per card), and a
+    # this loop is slow (full-text/image fetch + LLM tag per card), and a
     # mid-run kill (VM reboot, Ctrl-C on a hung call) must not re-post cards
     # already sent.
     saved: list[str] = list(seen)

@@ -10,7 +10,7 @@ Handles the 5 event-driven features the imperative MCP cannot:
   - Self-assign reaction roles
   - Leveling (XP per message + rank roles + /rank, /leaderboard)
   - Prefix commands (!rules, !resources, !ai)
-  - @mention / !ai -> GLM AI via Z.ai (async, rate-limited, cost-bounded)
+  - @mention / !ai -> LLM replies via the configured provider (async, rate-limited, cost-bounded)
 
 Auto-moderation is left to Discord's free native AutoMod (see README.md).
 
@@ -41,7 +41,8 @@ from dotenv import load_dotenv
 log = logging.getLogger("bersama")
 
 # OpenAI SDK is optional — the bot runs without it (AI just disabled).
-# Z.ai exposes an OpenAI-compatible endpoint, so we drive it with this SDK.
+# The provider (OpenCode Go) speaks the OpenAI Responses API, so we drive it
+# with this SDK pointed at LLM_BASE_URL. Swapping providers = 3 env vars.
 try:
     from openai import AsyncOpenAI  # type: ignore
     HAS_OPENAI = True
@@ -56,9 +57,11 @@ load_dotenv(BASE / ".env")          # auto-load .env when present (local runs)
 CONFIG = json.loads((BASE / "config.json").read_text(encoding="utf-8"))
 
 TOKEN = os.environ.get("DISCORD_TOKEN")        # same token as the MCP jar; validated in main()
-ZAI_API_KEY = os.environ.get("ZAI_API_KEY", "")
-ZAI_BASE_URL = os.environ.get("ZAI_BASE_URL", "https://api.z.ai/api/coding/paas/v4")
-GLM_MODEL = os.environ.get("GLM_MODEL", "glm-5.2")
+# Provider-neutral LLM config. Defaults = OpenCode Go / gpt-5.6-luna; the SDK
+# appends "/responses" to the base URL (do NOT include it here).
+LLM_API_KEY = os.environ.get("LLM_API_KEY", "").strip()
+LLM_BASE_URL = (os.environ.get("LLM_BASE_URL") or "https://opencode.ai/zen/go/v1").strip().rstrip("/")
+LLM_MODEL = (os.environ.get("LLM_MODEL") or "gpt-5.6-luna").strip()
 
 GUILD_ID = int(CONFIG["guild_id"])
 CHANNELS = {k: int(v) for k, v in CONFIG["channels"].items()}
@@ -93,7 +96,7 @@ AI_INPUT_MAX = 1500       # truncate user input to bound cost
 AI_GLOBAL_MAX = 20        # max AI calls per rolling window (server-wide)
 AI_GLOBAL_WINDOW = 60     # ...seconds
 AI_CONCURRENCY = 3        # max simultaneous in-flight AI calls
-AI_TIMEOUT = 30           # seconds to wait for one Z.ai response (bounds hung calls)
+AI_TIMEOUT = 30           # seconds to wait for one LLM response (bounds hung calls)
 AI_CONTEXT_MSGS = 50      # recent channel messages fed as conversation context (raise for longer "memory"; cost scales linearly)
 AI_CONTEXT_PER_MSG = 500  # cap each context message (text + link-preview embed) length
 AI_LINK_FETCH = True       # fetch full page content for recent links via Jina Reader (JS pages too)
@@ -102,9 +105,9 @@ AI_LINK_FETCH_CHARS = 4000  # truncate each fetched page (bounds token cost; ~1k
 AI_LINK_FETCH_TIMEOUT = 8  # seconds per fetch — best-effort, never blocks the bot
 
 # Replies never need to ping anyone — suppress all mentions on every AI send so
-# prompt-injected GLM output can't mass-ping roles / @everyone.
+# prompt-injected model output can't mass-ping roles / @everyone.
 AI_ALLOWED = discord.AllowedMentions.none()
-# Belt-and-suspenders: strip mention syntax from GLM output before sending.
+# Belt-and-suspenders: strip mention syntax from model output before sending.
 _MENTION_RE = re.compile(r"<@!?\d+>|<@&\d+>|@(?:everyone|here)\b")
 # Bare http(s) URLs in message text — used to optionally fetch full page content.
 _URL_RE = re.compile(r"https?://[^\s<>\"'\])]+", re.IGNORECASE)
@@ -211,10 +214,10 @@ _ai_calls: deque[float] = deque()              # global rolling-window gate
 _ai_sem: asyncio.Semaphore | None = None       # created in main() once a loop exists
 _synced = False
 
-# Single shared async OpenAI-compatible client pointed at Z.ai (None when AI disabled).
+# Single shared async client pointed at LLM_BASE_URL (None when AI disabled).
 ai_client = (
-    AsyncOpenAI(api_key=ZAI_API_KEY, base_url=ZAI_BASE_URL)
-    if (HAS_OPENAI and ZAI_API_KEY)
+    AsyncOpenAI(api_key=LLM_API_KEY, base_url=LLM_BASE_URL)
+    if (HAS_OPENAI and LLM_API_KEY)
     else None
 )
 
@@ -224,7 +227,7 @@ async def on_ready():
     global _synced, _hb_started, _seed_started
     log.info("Logged in as %s (%s)", bot.user, getattr(bot.user, "id", "?"))
     log.info("Reaction-role menus: %s", list(REACTION_ROLES))
-    log.info("AI (GLM via Z.ai): %s", f"ON ({GLM_MODEL})" if ai_client else "OFF")
+    log.info("AI (%s): %s", LLM_BASE_URL, f"ON ({LLM_MODEL})" if ai_client else "OFF")
     log.info("Seed reactions: %s",
              f"{len(NEWS_CHANNELS)} news channel(s)" if NEWS_CHANNELS else "OFF (no news_channels in config)")
 
@@ -411,7 +414,7 @@ async def on_level_up(member: discord.Member, guild: discord.Guild, level: int):
                 log.error("level-up role error: %s", exc)
 
 
-# ---- AI (@mention and !ai) — GLM via Z.ai (OpenAI-compatible) ------------ #
+# ---- AI (@mention and !ai) — via the configured LLM provider ------------- #
 def _ai_global_reserve() -> float | None:
     """Rolling-window gate. If a call is allowed, reserve+return its timestamp (to be
     refunded on failure via _refund_slot); if the window is full, return None.
@@ -430,7 +433,7 @@ def _ai_global_reserve() -> float | None:
 
 
 def _refund_slot(slot: float) -> None:
-    """Release a global slot that never reached Z.ai successfully (timeout/error)."""
+    """Release a global slot that never reached the provider successfully (timeout/error)."""
     try:
         _ai_calls.remove(slot)
     except ValueError:
@@ -592,14 +595,17 @@ async def handle_ai(message: discord.Message, override_text: str | None = None):
         async with message.channel.typing():   # typing only while actually generating
             try:
                 resp = await asyncio.wait_for(
-                    ai_client.chat.completions.create(
-                        model=GLM_MODEL,
-                        max_completion_tokens=800,  # Z.ai GLM-5.2 ignores max_tokens; this is the honored param
-                        messages=messages_for_llm,
+                    # Responses API: `input` takes the same role/content list the
+                    # chat endpoint took, and max_output_tokens ALSO covers the
+                    # model's reasoning tokens -> 2x the old visible-text budget.
+                    ai_client.responses.create(
+                        model=LLM_MODEL,
+                        max_output_tokens=1600,
+                        input=messages_for_llm,
                     ),
                     timeout=AI_TIMEOUT,
                 )
-                answer = (resp.choices[0].message.content or "").strip() or "…"
+                answer = (resp.output_text or "").strip() or "…"
             except asyncio.TimeoutError:
                 _refund_slot(slot)
                 log.warning("AI timeout (%ss) for uid=%s", AI_TIMEOUT, uid)
@@ -609,7 +615,7 @@ async def handle_ai(message: discord.Message, override_text: str | None = None):
                 log.error("AI error for uid=%s: %s", uid, exc)
                 answer = "⚠️ The AI hit an error. Please try again in a moment."
 
-    # Defense-in-depth: strip any mention syntax GLM might emit (allowed_mentions is the real fix).
+    # Defense-in-depth: strip any mention syntax the model might emit (allowed_mentions is the real fix).
     answer = _MENTION_RE.sub("", answer).strip() or "…"
 
     for i in range(0, len(answer), AI_MAX_CHARS):
@@ -820,7 +826,7 @@ def _configure_logging() -> None:
     if not root.handlers:
         root.addHandler(handler)
     # Silence chatty per-request loggers so bersama.log isn't flooded with an httpx INFO
-    # line on every GLM call. Warnings/errors still come through.
+    # line on every LLM call. Warnings/errors still come through.
     for noisy in ("httpx", "openai", "discord.http"):
         logging.getLogger(noisy).setLevel(logging.WARNING)
 
