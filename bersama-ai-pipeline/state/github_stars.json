@@ -55,6 +55,10 @@
     "stars": 1603,
     "ts": "2026-08-11T22:07:17+00:00"
   },
+  "duty1g/x64dbg-mcp-server": {
+    "stars": 1237,
+    "ts": "2026-08-25T01:54:28+00:00"
+  },
   "cinderline/northcinder": {
     "stars": 1206,
     "ts": "2026-08-23T21:38:08+00:00"
@@ -62,10 +66,6 @@
   "Leutenegger/book-to-skill": {
     "stars": 1202,
     "ts": "2026-08-19T21:43:56+00:00"
-  },
-  "duty1g/x64dbg-mcp-server": {
-    "stars": 1196,
-    "ts": "2026-08-24T21:46:05+00:00"
   },
   "Jakubantalik/thinking-orbs": {
     "stars": 1164,
@@ -159,21 +159,21 @@
     "stars": 656,
     "ts": "2026-08-03T22:19:43+00:00"
   },
+  "nateherkai/scroll-craft": {
+    "stars": 642,
+    "ts": "2026-08-25T01:54:28+00:00"
+  },
   "NousResearch/Hermes-Bot-Mode": {
     "stars": 630,
     "ts": "2026-08-19T21:43:56+00:00"
   },
   "missuo/herdrm": {
-    "stars": 620,
-    "ts": "2026-08-24T21:46:05+00:00"
+    "stars": 622,
+    "ts": "2026-08-25T01:54:28+00:00"
   },
   "T8mars/comfyui-minimax-h3-audio-T8": {
     "stars": 617,
     "ts": "2026-08-11T22:07:44+00:00"
-  },
-  "nateherkai/scroll-craft": {
-    "stars": 616,
-    "ts": "2026-08-24T21:46:05+00:00"
   },
   "hahhforest/pi-textbook": {
     "stars": 588,
@@ -241,7 +241,7 @@
   },
   "Forsy-AI/biosecurity-agent": {
     "stars": 513,
-    "ts": "2026-08-24T21:46:05+00:00"
+    "ts": "2026-08-25T01:54:28+00:00"
   },
   "s1dashu/animated-voiceover": {
     "stars": 507,
@@ -271,6 +271,10 @@
     "stars": 460,
     "ts": "2026-08-16T21:36:27+00:00"
   },
+  "Zyrexnn/Cybermes": {
+    "stars": 458,
+    "ts": "2026-08-25T01:58:23+00:00"
+  },
   "SandAI-org/MAGI-2-preview": {
     "stars": 438,
     "ts": "2026-08-10T22:02:04+00:00"
@@ -286,10 +290,6 @@
   "xmarre/ComfyUI-Spectrum-MiniMax-H3": {
     "stars": 431,
     "ts": "2026-08-09T21:51:14+00:00"
-  },
-  "Zyrexnn/Cybermes": {
-    "stars": 430,
-    "ts": "2026-08-24T21:49:56+00:00"
   },
   "criptogus/HermesOffice": {
     "stars": 426,
@@ -367,6 +367,10 @@
     "stars": 329,
     "ts": "2026-07-30T22:29:27+00:00"
   },
+  "kgoedecke/doop": {
+    "stars": 323,
+    "ts": "2026-08-25T01:54:28+00:00"
+  },
   "lingbol088-spec/5.6-JAILBREAK-NERV-codex-instruct-5.6": {
     "stars": 315,
     "ts": "2026-07-31T22:18:00+00:00"
@@ -374,10 +378,6 @@
   "aigclink/geolook": {
     "stars": 312,
     "ts": "2026-08-04T22:31:22+00:00"
-  },
-  "kgoedecke/doop": {
-    "stars": 312,
-    "ts": "2026-08-24T21:46:05+00:00"
   },
   "0xwilliamortiz/andrej-karpathy-skills": {
     "stars": 305,
@@ -399,6 +399,10 @@
     "stars": 296,
     "ts": "2026-07-28T22:18:53+00:00"
   },
+  "rome-os/rome": {
+    "stars": 295,
+    "ts": "2026-08-25T01:54:28+00:00"
+  },
   "LBH-123-AI/Comfyui_Minimax_h3_latent_Upscaler": {
     "stars": 294,
     "ts": "2026-08-23T21:38:35+00:00"
@@ -418,10 +422,6 @@
   "nkxx188/ComfyUI-MiniMaxH3-Easy": {
     "stars": 276,
     "ts": "2026-08-11T22:08:22+00:00"
-  },
-  "rome-os/rome": {
-    "stars": 276,
-    "ts": "2026-08-24T21:46:05+00:00"
   },
   "Anionex/codex-vision-proxy": {
     "stars": 275,
@@ -467,6 +467,10 @@
     "stars": 254,
     "ts": "2026-07-24T22:21:15+00:00"
   },
+  "inkboard/system-atlas": {
+    "stars": 253,
+    "ts": "2026-08-25T01:54:28+00:00"
+  },
   "LeonQ8/ComfyUI-ALLinONE-MinimaxH3": {
     "stars": 250,
     "ts": "2026-08-21T21:42:40+00:00"
@@ -479,6 +483,10 @@
     "stars": 246,
     "ts": "2026-08-19T21:46:18+00:00"
   },
+  "ZSeven-W/dsh-ios": {
+    "stars": 245,
+    "ts": "2026-08-25T01:54:28+00:00"
+  },
   "Carasibana/ComfyUI-H3-FaceRefine": {
     "stars": 244,
     "ts": "2026-08-18T21:41:55+00:00"
@@ -486,10 +494,6 @@
   "JetBrains/benjamin-plus-skill": {
     "stars": 242,
     "ts": "2026-08-23T21:38:08+00:00"
-  },
-  "ZSeven-W/dsh-ios": {
-    "stars": 242,
-    "ts": "2026-08-24T21:46:05+00:00"
   },
   "AmazingAng/old-coder": {
     "stars": 241,
@@ -499,21 +503,17 @@
     "stars": 240,
     "ts": "2026-08-04T22:31:22+00:00"
   },
-  "inkboard/system-atlas": {
-    "stars": 237,
-    "ts": "2026-08-24T21:46:05+00:00"
+  "ChenShuo2004/cs-board": {
+    "stars": 238,
+    "ts": "2026-08-25T01:56:12+00:00"
   },
   "cristicretu/diri": {
     "stars": 236,
     "ts": "2026-08-10T22:00:46+00:00"
   },
-  "ChenShuo2004/cs-board": {
-    "stars": 235,
-    "ts": "2026-08-24T21:47:32+00:00"
-  },
   "GamePhanes/GamePhanes": {
     "stars": 234,
-    "ts": "2026-08-24T21:46:05+00:00"
+    "ts": "2026-08-25T01:54:28+00:00"
   },
   "apiframe-ai/seedance-2.0-api": {
     "stars": 232,
@@ -591,6 +591,10 @@
     "stars": 209,
     "ts": "2026-08-10T22:00:46+00:00"
   },
+  "adnanakil/nobuzz": {
+    "stars": 209,
+    "ts": "2026-08-25T01:54:28+00:00"
+  },
   "nuyoah-ai-works/nuyoah-xiezhen-prompt": {
     "stars": 207,
     "ts": "2026-08-04T22:31:22+00:00"
@@ -610,10 +614,6 @@
   "V1ki/dsh-plugin-subscriptions": {
     "stars": 205,
     "ts": "2026-08-20T21:46:04+00:00"
-  },
-  "adnanakil/nobuzz": {
-    "stars": 205,
-    "ts": "2026-08-24T21:46:05+00:00"
   },
   "oliverb-io1902e8/agent-skills-collection": {
     "stars": 204,
@@ -695,6 +695,10 @@
     "stars": 178,
     "ts": "2026-08-23T21:38:08+00:00"
   },
+  "sodiumsun/agenttrail": {
+    "stars": 178,
+    "ts": "2026-08-25T01:54:28+00:00"
+  },
   "huiliyi37/dsh-tianshu-tui": {
     "stars": 175,
     "ts": "2026-08-16T04:01:39+00:00"
@@ -743,6 +747,10 @@
     "stars": 168,
     "ts": "2026-08-23T21:42:05+00:00"
   },
+  "ApodexAI/FrontierAgent": {
+    "stars": 167,
+    "ts": "2026-08-25T01:54:28+00:00"
+  },
   "Prism-Shadow/penguin-harness": {
     "stars": 166,
     "ts": "2026-07-25T22:12:59+00:00"
@@ -775,6 +783,10 @@
     "stars": 159,
     "ts": "2026-08-19T21:46:42+00:00"
   },
+  "truespar/sentio": {
+    "stars": 159,
+    "ts": "2026-08-25T01:54:28+00:00"
+  },
   "hsusul/lore": {
     "stars": 158,
     "ts": "2026-08-16T21:36:27+00:00"
@@ -782,6 +794,10 @@
   "chengyi-ai/native-subtitle-quote-image": {
     "stars": 158,
     "ts": "2026-08-22T21:38:43+00:00"
+  },
+  "alchaincyf/huashu-excel": {
+    "stars": 157,
+    "ts": "2026-08-25T01:54:28+00:00"
   },
   "hewzhew/dsh-agent-rp": {
     "stars": 155,
@@ -794,10 +810,6 @@
   "YINGLINGH/limioryn": {
     "stars": 153,
     "ts": "2026-08-13T22:05:38+00:00"
-  },
-  "sodiumsun/agenttrail": {
-    "stars": 153,
-    "ts": "2026-08-24T21:46:05+00:00"
   },
   "arcships/aimux": {
     "stars": 152,
