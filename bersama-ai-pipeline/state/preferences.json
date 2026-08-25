@@ -1,25 +1,23 @@
 {
-  "updated_at": "2026-08-25T16:02:15Z",
+  "updated_at": "2026-08-25T18:59:04Z",
   "half_life_days": 14,
-  "n_events": 22409,
+  "n_events": 22020,
   "topic": {
-    "coding": 0.015,
-    "cybersecurity": 0.0,
+    "coding": 0.016,
+    "company_investment": 0.092,
     "creative_video": 0.0,
-    "company_investment": 0.091,
-    "finance": 0.0,
     "research_study": 0.022,
-    "creative_image": 0.051,
+    "cybersecurity": 0.0,
+    "creative_image": 0.05,
+    "finance": 0.0,
     "research_productivity": 0.0,
     "creative_voice": 0.0
   },
   "source": {
-    "HN": 0.018,
-    "official": 0.046,
-    "r/comfyui": 0.0,
-    "r/quant": 0.0,
     "r/LocalLLaMA": 0.0,
     "huggingface": 0.0,
+    "HN": 0.019,
+    "official": 0.046,
     "r/StableDiffusion": 0.0,
     "r/SunoAI": 0.107,
     "r/singularity": 0.076,
@@ -30,6 +28,7 @@
     "r/FluxAI": 0.0,
     "r/perplexity_ai": 0.0,
     "r/wallstreetbets": 0.351,
+    "r/comfyui": 0.0,
     "r/investing": 0.0,
     "r/ClaudeAI": 0.0,
     "r/netsec": 0.0,
@@ -50,19 +49,20 @@
     "r/udiomusic": 0.0,
     "r/ChatGPTCoding": 0.5,
     "r/stocks": 0.6,
+    "r/quant": 0.0,
     "r/notebooklm": 0.0,
     "r/SideProject": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/aiArt": 0.0
   },
   "category": {
-    "UPDATE": 0.041,
-    "RELEASE": 0.015,
-    "LAUNCH": 0.025,
+    "LAUNCH": 0.026,
     "OPEN_SOURCE": 0.0,
+    "RELEASE": 0.015,
+    "UPDATE": 0.042,
     "BENCHMARK": 0.036,
     "PRICING": 0.007,
-    "DEAL": 0.113
+    "DEAL": 0.112
   },
   "exemplars": {
     "top": [
@@ -89,15 +89,15 @@
     ],
     "bottom": [
       {
-        "headline": "MiniMax-H3 Fun Controlnet Union model file appears on Hugging Face",
+        "headline": "scroll-craft turns Claude Code into a self-checking scroll-driven web workflow",
         "reward": 0.0
       },
       {
-        "headline": "A model-search agent is evaluated without letting it rewrite the evaluator",
+        "headline": "A 270M-parameter local model translates natural language into Nmap commands",
         "reward": 0.0
       },
       {
-        "headline": "CrystalPotato ports GodPotato techniques to Crystal",
+        "headline": "Tata Nexarc platform reportedly exposed OTPs in API responses",
         "reward": 0.0
       }
     ]
