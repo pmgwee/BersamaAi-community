@@ -1,24 +1,21 @@
 {
-  "updated_at": "2026-08-25T13:13:17Z",
+  "updated_at": "2026-08-25T16:02:15Z",
   "half_life_days": 14,
-  "n_events": 22694,
+  "n_events": 22409,
   "topic": {
-    "research_study": 0.022,
-    "company_investment": 0.096,
     "coding": 0.015,
     "cybersecurity": 0.0,
     "creative_video": 0.0,
+    "company_investment": 0.091,
     "finance": 0.0,
+    "research_study": 0.022,
     "creative_image": 0.051,
     "research_productivity": 0.0,
     "creative_voice": 0.0
   },
   "source": {
     "HN": 0.018,
-    "official": 0.052,
-    "r/ChatGPTCoding": 0.273,
-    "r/ClaudeAI": 0.0,
-    "r/deeplearning": 0.0,
+    "official": 0.046,
     "r/comfyui": 0.0,
     "r/quant": 0.0,
     "r/LocalLLaMA": 0.0,
@@ -27,12 +24,14 @@
     "r/SunoAI": 0.107,
     "r/singularity": 0.076,
     "github": 0.0,
+    "r/deeplearning": 0.0,
     "r/business": 0.173,
     "r/AI_Agents": 0.0,
     "r/FluxAI": 0.0,
     "r/perplexity_ai": 0.0,
     "r/wallstreetbets": 0.351,
     "r/investing": 0.0,
+    "r/ClaudeAI": 0.0,
     "r/netsec": 0.0,
     "r/redteamsec": 0.0,
     "r/cybersecurity": 0.0,
@@ -49,6 +48,7 @@
     "r/algotrading": 0.0,
     "r/Economics": 0.0,
     "r/udiomusic": 0.0,
+    "r/ChatGPTCoding": 0.5,
     "r/stocks": 0.6,
     "r/notebooklm": 0.0,
     "r/SideProject": 0.0,
@@ -56,30 +56,30 @@
     "r/aiArt": 0.0
   },
   "category": {
-    "UPDATE": 0.04,
-    "DEAL": 0.132,
-    "OPEN_SOURCE": 0.0,
+    "UPDATE": 0.041,
     "RELEASE": 0.015,
     "LAUNCH": 0.025,
+    "OPEN_SOURCE": 0.0,
     "BENCHMARK": 0.036,
-    "PRICING": 0.007
+    "PRICING": 0.007,
+    "DEAL": 0.113
   },
   "exemplars": {
     "top": [
       {
-        "headline": "Anthropic's planned mega-IPO faces investor skepticism over Chinese rivals and political headwinds",
+        "headline": "OpenAI Chief Operating Officer Brad Lightcap resigns",
         "reward": 0.6
       },
       {
-        "headline": "Anthropic's planned mega-IPO faces investor skepticism over Chinese rivals and political headwinds",
+        "headline": "OpenAI Chief Operating Officer Brad Lightcap resigns",
         "reward": 0.6
       },
       {
-        "headline": "Anthropic's planned mega-IPO faces investor skepticism over Chinese rivals and political headwinds",
+        "headline": "Nvidia secures $500B from Wall Street giants to fund AI infrastructure projects",
         "reward": 0.6
       },
       {
-        "headline": "Anthropic's planned mega-IPO faces investor skepticism over Chinese rivals and political headwinds",
+        "headline": "CoreWeave stock jumps 12% as Q2 revenue doubles on AI infrastructure demand",
         "reward": 0.6
       },
       {
@@ -89,15 +89,15 @@
     ],
     "bottom": [
       {
-        "headline": "A local InvokeAI workflow produces a luxury cosmetics advertisement",
+        "headline": "MiniMax-H3 Fun Controlnet Union model file appears on Hugging Face",
         "reward": 0.0
       },
       {
-        "headline": "Hugging Face examines how benchmark optimization affects speech recognition results",
+        "headline": "A model-search agent is evaluated without letting it rewrite the evaluator",
         "reward": 0.0
       },
       {
-        "headline": "OpenAI launches AI Futures, a blog on power, governance and the economy",
+        "headline": "CrystalPotato ports GodPotato techniques to Crystal",
         "reward": 0.0
       }
     ]
