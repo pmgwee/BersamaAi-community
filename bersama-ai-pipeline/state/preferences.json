@@ -1,39 +1,39 @@
 {
-  "updated_at": "2026-08-25T18:59:04Z",
+  "updated_at": "2026-08-25T21:45:38Z",
   "half_life_days": 14,
-  "n_events": 22020,
+  "n_events": 21628,
   "topic": {
+    "company_investment": 0.094,
     "coding": 0.016,
-    "company_investment": 0.092,
-    "creative_video": 0.0,
-    "research_study": 0.022,
     "cybersecurity": 0.0,
+    "research_study": 0.022,
+    "creative_video": 0.0,
     "creative_image": 0.05,
     "finance": 0.0,
     "research_productivity": 0.0,
     "creative_voice": 0.0
   },
   "source": {
-    "r/LocalLLaMA": 0.0,
-    "huggingface": 0.0,
     "HN": 0.019,
-    "official": 0.046,
-    "r/StableDiffusion": 0.0,
-    "r/SunoAI": 0.107,
     "r/singularity": 0.076,
+    "huggingface": 0.0,
     "github": 0.0,
+    "official": 0.047,
     "r/deeplearning": 0.0,
     "r/business": 0.173,
     "r/AI_Agents": 0.0,
     "r/FluxAI": 0.0,
     "r/perplexity_ai": 0.0,
     "r/wallstreetbets": 0.351,
+    "r/SunoAI": 0.13,
     "r/comfyui": 0.0,
     "r/investing": 0.0,
+    "r/LocalLLaMA": 0.0,
     "r/ClaudeAI": 0.0,
     "r/netsec": 0.0,
     "r/redteamsec": 0.0,
     "r/cybersecurity": 0.0,
+    "r/StableDiffusion": 0.0,
     "r/cursor": 0.119,
     "r/runwayml": 0.0,
     "r/artificial": 0.058,
@@ -56,13 +56,13 @@
     "r/aiArt": 0.0
   },
   "category": {
-    "LAUNCH": 0.026,
-    "OPEN_SOURCE": 0.0,
-    "RELEASE": 0.015,
     "UPDATE": 0.042,
-    "BENCHMARK": 0.036,
-    "PRICING": 0.007,
-    "DEAL": 0.112
+    "OPEN_SOURCE": 0.0,
+    "LAUNCH": 0.026,
+    "DEAL": 0.116,
+    "BENCHMARK": 0.038,
+    "RELEASE": 0.015,
+    "PRICING": 0.007
   },
   "exemplars": {
     "top": [
@@ -89,15 +89,15 @@
     ],
     "bottom": [
       {
-        "headline": "scroll-craft turns Claude Code into a self-checking scroll-driven web workflow",
+        "headline": "Mistral announces a partnership with HUMAIN",
         "reward": 0.0
       },
       {
-        "headline": "A 270M-parameter local model translates natural language into Nmap commands",
+        "headline": "Researchers reverse-engineer invisible GUID watermarks in Paint and Photos",
         "reward": 0.0
       },
       {
-        "headline": "Tata Nexarc platform reportedly exposed OTPs in API responses",
+        "headline": "An HR chatbot bypassed clearly defined restrictions after launch",
         "reward": 0.0
       }
     ]
