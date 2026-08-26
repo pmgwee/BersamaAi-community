@@ -1,30 +1,30 @@
 {
-  "updated_at": "2026-08-26T07:10:18Z",
+  "updated_at": "2026-08-26T09:59:00Z",
   "half_life_days": 14,
-  "n_events": 20473,
+  "n_events": 20047,
   "topic": {
-    "coding": 0.016,
-    "creative_video": 0.0,
+    "coding": 0.013,
     "cybersecurity": 0.0,
-    "company_investment": 0.074,
-    "research_study": 0.011,
-    "finance": 0.0,
-    "creative_image": 0.053,
+    "creative_image": 0.052,
+    "research_study": 0.012,
+    "company_investment": 0.075,
     "research_productivity": 0.0,
+    "creative_video": 0.0,
+    "finance": 0.0,
     "creative_voice": 0.0
   },
   "source": {
     "HN": 0.012,
-    "official": 0.049,
     "r/LocalLLaMA": 0.0,
-    "r/ClaudeAI": 0.0,
-    "github": 0.0,
+    "official": 0.045,
     "r/netsec": 0.0,
     "r/redteamsec": 0.0,
     "huggingface": 0.0,
     "r/cybersecurity": 0.0,
+    "github": 0.0,
     "r/StableDiffusion": 0.0,
-    "r/cursor": 0.122,
+    "r/cursor": 0.124,
+    "r/ClaudeAI": 0.0,
     "r/runwayml": 0.0,
     "r/artificial": 0.057,
     "r/StartupSoloFounder": 0.0,
@@ -55,13 +55,13 @@
     "r/aiArt": 0.0
   },
   "category": {
-    "LAUNCH": 0.027,
-    "RELEASE": 0.016,
-    "UPDATE": 0.03,
-    "PRICING": 0.009,
+    "LAUNCH": 0.018,
     "OPEN_SOURCE": 0.0,
+    "RELEASE": 0.016,
+    "UPDATE": 0.031,
     "BENCHMARK": 0.02,
-    "DEAL": 0.106
+    "DEAL": 0.105,
+    "PRICING": 0.011
   },
   "exemplars": {
     "top": [
@@ -88,15 +88,15 @@
     ],
     "bottom": [
       {
-        "headline": "AI hedge fund Situational Awareness reportedly faces an SEC probe",
+        "headline": "Headlong introduces a microharness for persistent agents",
         "reward": 0.0
       },
       {
-        "headline": "Report says an AI-guided drone killed three people in Ukraine",
+        "headline": "GamePhanes open-sources a Godot coding-agent benchmark",
         "reward": 0.0
       },
       {
-        "headline": "Analysis examines agentic hacking tools linked to government compromises",
+        "headline": "Training AI to paint with code explores programmatic image generation",
         "reward": 0.0
       }
     ]
