@@ -1,7 +1,7 @@
 {
-  "updated_at": "2026-08-26T09:59:00Z",
+  "updated_at": "2026-08-26T13:17:58Z",
   "half_life_days": 14,
-  "n_events": 20047,
+  "n_events": 19845,
   "topic": {
     "coding": 0.013,
     "cybersecurity": 0.0,
@@ -14,16 +14,13 @@
     "creative_voice": 0.0
   },
   "source": {
-    "HN": 0.012,
-    "r/LocalLLaMA": 0.0,
-    "official": 0.045,
-    "r/netsec": 0.0,
-    "r/redteamsec": 0.0,
     "huggingface": 0.0,
     "r/cybersecurity": 0.0,
     "github": 0.0,
     "r/StableDiffusion": 0.0,
-    "r/cursor": 0.124,
+    "r/cursor": 0.127,
+    "HN": 0.012,
+    "official": 0.045,
     "r/ClaudeAI": 0.0,
     "r/runwayml": 0.0,
     "r/artificial": 0.057,
@@ -32,10 +29,12 @@
     "r/deeplearning": 0.0,
     "r/ClaudeCode": 0.0,
     "r/technology": 0.036,
+    "r/LocalLLaMA": 0.0,
     "r/singularity": 0.013,
     "r/FluxAI": 0.0,
     "r/MachineLearning": 0.0,
     "r/midjourney": 0.0,
+    "r/netsec": 0.0,
     "r/ElevenLabs": 0.0,
     "r/SunoAI": 0.0,
     "r/OpenAI": 0.0,
@@ -43,6 +42,7 @@
     "r/AI_Agents": 0.0,
     "r/Economics": 0.0,
     "r/business": 0.0,
+    "r/redteamsec": 0.0,
     "r/wallstreetbets": 0.299,
     "r/udiomusic": 0.0,
     "r/ChatGPTCoding": 0.5,
@@ -55,13 +55,13 @@
     "r/aiArt": 0.0
   },
   "category": {
-    "LAUNCH": 0.018,
-    "OPEN_SOURCE": 0.0,
     "RELEASE": 0.016,
-    "UPDATE": 0.031,
+    "UPDATE": 0.03,
+    "OPEN_SOURCE": 0.0,
     "BENCHMARK": 0.02,
     "DEAL": 0.105,
-    "PRICING": 0.011
+    "LAUNCH": 0.019,
+    "PRICING": 0.012
   },
   "exemplars": {
     "top": [
