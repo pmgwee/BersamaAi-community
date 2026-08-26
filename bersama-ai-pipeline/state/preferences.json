@@ -1,35 +1,34 @@
 {
-  "updated_at": "2026-08-26T16:34:51Z",
+  "updated_at": "2026-08-26T20:05:30Z",
   "half_life_days": 14,
-  "n_events": 19245,
+  "n_events": 18933,
   "topic": {
     "coding": 0.012,
-    "company_investment": 0.078,
     "creative_video": 0.0,
-    "cybersecurity": 0.0,
+    "company_investment": 0.079,
     "finance": 0.0,
     "creative_image": 0.056,
     "research_study": 0.012,
+    "cybersecurity": 0.0,
     "creative_voice": 0.0,
     "research_productivity": 0.0
   },
   "source": {
-    "HN": 0.008,
+    "HN": 0.009,
     "official": 0.047,
     "github": 0.0,
-    "r/ClaudeAI": 0.0,
-    "r/runwayml": 0.0,
     "huggingface": 0.0,
     "r/artificial": 0.057,
     "r/StartupSoloFounder": 0.0,
     "r/comfyui": 0.0,
-    "r/cursor": 0.157,
+    "r/cursor": 0.16,
     "r/deeplearning": 0.0,
     "r/ClaudeCode": 0.0,
     "r/technology": 0.036,
     "r/StableDiffusion": 0.0,
     "r/LocalLLaMA": 0.0,
     "r/singularity": 0.013,
+    "r/ClaudeAI": 0.0,
     "r/FluxAI": 0.0,
     "r/MachineLearning": 0.0,
     "r/midjourney": 0.0,
@@ -42,9 +41,10 @@
     "r/Economics": 0.0,
     "r/business": 0.0,
     "r/redteamsec": 0.0,
-    "r/wallstreetbets": 0.299,
+    "r/wallstreetbets": 0.297,
     "r/udiomusic": 0.0,
     "r/ChatGPTCoding": 0.5,
+    "r/runwayml": 0.0,
     "r/perplexity_ai": 0.0,
     "r/stocks": 0.6,
     "r/cybersecurity": 0.0,
@@ -55,13 +55,13 @@
     "r/aiArt": 0.0
   },
   "category": {
-    "UPDATE": 0.031,
+    "BENCHMARK": 0.022,
     "LAUNCH": 0.013,
-    "DEAL": 0.116,
     "OPEN_SOURCE": 0.0,
-    "BENCHMARK": 0.02,
     "RELEASE": 0.017,
-    "PRICING": 0.014
+    "UPDATE": 0.031,
+    "PRICING": 0.015,
+    "DEAL": 0.123
   },
   "exemplars": {
     "top": [
@@ -88,15 +88,15 @@
     ],
     "bottom": [
       {
-        "headline": "A Reddit demo shows an AI firewall allowing a rephrased database request",
+        "headline": "Anthropic reportedly sees more than $30 trillion in potential revenue",
         "reward": 0.0
       },
       {
-        "headline": "NVIDIA publishes Super Acceleration for MiniMax H3 video generation",
+        "headline": "A GitHub project offers a Polymarket TWAP trading bot",
         "reward": 0.0
       },
       {
-        "headline": "Australia’s music industry bars AI-generated tracks from official charts",
+        "headline": "Gemini for macOS adds intelligent dictation",
         "reward": 0.0
       }
     ]
