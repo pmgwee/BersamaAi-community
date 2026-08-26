@@ -1,34 +1,33 @@
 {
-  "updated_at": "2026-08-26T13:17:58Z",
+  "updated_at": "2026-08-26T16:34:51Z",
   "half_life_days": 14,
-  "n_events": 19845,
+  "n_events": 19245,
   "topic": {
-    "coding": 0.013,
-    "cybersecurity": 0.0,
-    "creative_image": 0.052,
-    "research_study": 0.012,
-    "company_investment": 0.075,
-    "research_productivity": 0.0,
+    "coding": 0.012,
+    "company_investment": 0.078,
     "creative_video": 0.0,
+    "cybersecurity": 0.0,
     "finance": 0.0,
-    "creative_voice": 0.0
+    "creative_image": 0.056,
+    "research_study": 0.012,
+    "creative_voice": 0.0,
+    "research_productivity": 0.0
   },
   "source": {
-    "huggingface": 0.0,
-    "r/cybersecurity": 0.0,
+    "HN": 0.008,
+    "official": 0.047,
     "github": 0.0,
-    "r/StableDiffusion": 0.0,
-    "r/cursor": 0.127,
-    "HN": 0.012,
-    "official": 0.045,
     "r/ClaudeAI": 0.0,
     "r/runwayml": 0.0,
+    "huggingface": 0.0,
     "r/artificial": 0.057,
     "r/StartupSoloFounder": 0.0,
     "r/comfyui": 0.0,
+    "r/cursor": 0.157,
     "r/deeplearning": 0.0,
     "r/ClaudeCode": 0.0,
     "r/technology": 0.036,
+    "r/StableDiffusion": 0.0,
     "r/LocalLLaMA": 0.0,
     "r/singularity": 0.013,
     "r/FluxAI": 0.0,
@@ -48,6 +47,7 @@
     "r/ChatGPTCoding": 0.5,
     "r/perplexity_ai": 0.0,
     "r/stocks": 0.6,
+    "r/cybersecurity": 0.0,
     "r/quant": 0.0,
     "r/notebooklm": 0.0,
     "r/SideProject": 0.0,
@@ -55,13 +55,13 @@
     "r/aiArt": 0.0
   },
   "category": {
-    "RELEASE": 0.016,
-    "UPDATE": 0.03,
+    "UPDATE": 0.031,
+    "LAUNCH": 0.013,
+    "DEAL": 0.116,
     "OPEN_SOURCE": 0.0,
     "BENCHMARK": 0.02,
-    "DEAL": 0.105,
-    "LAUNCH": 0.019,
-    "PRICING": 0.012
+    "RELEASE": 0.017,
+    "PRICING": 0.014
   },
   "exemplars": {
     "top": [
@@ -88,15 +88,15 @@
     ],
     "bottom": [
       {
-        "headline": "Headlong introduces a microharness for persistent agents",
+        "headline": "A Reddit demo shows an AI firewall allowing a rephrased database request",
         "reward": 0.0
       },
       {
-        "headline": "GamePhanes open-sources a Godot coding-agent benchmark",
+        "headline": "NVIDIA publishes Super Acceleration for MiniMax H3 video generation",
         "reward": 0.0
       },
       {
-        "headline": "Training AI to paint with code explores programmatic image generation",
+        "headline": "Australia’s music industry bars AI-generated tracks from official charts",
         "reward": 0.0
       }
     ]
