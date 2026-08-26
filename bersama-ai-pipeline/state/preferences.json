@@ -1,32 +1,30 @@
 {
-  "updated_at": "2026-08-25T21:45:38Z",
+  "updated_at": "2026-08-26T01:59:53Z",
   "half_life_days": 14,
-  "n_events": 21628,
+  "n_events": 21184,
   "topic": {
-    "company_investment": 0.094,
     "coding": 0.016,
-    "cybersecurity": 0.0,
-    "research_study": 0.022,
+    "company_investment": 0.09,
     "creative_video": 0.0,
     "creative_image": 0.05,
+    "research_study": 0.023,
+    "cybersecurity": 0.0,
     "finance": 0.0,
     "research_productivity": 0.0,
     "creative_voice": 0.0
   },
   "source": {
-    "HN": 0.019,
-    "r/singularity": 0.076,
-    "huggingface": 0.0,
-    "github": 0.0,
-    "official": 0.047,
-    "r/deeplearning": 0.0,
+    "HN": 0.02,
     "r/business": 0.173,
     "r/AI_Agents": 0.0,
     "r/FluxAI": 0.0,
     "r/perplexity_ai": 0.0,
     "r/wallstreetbets": 0.351,
+    "github": 0.0,
+    "huggingface": 0.0,
     "r/SunoAI": 0.13,
     "r/comfyui": 0.0,
+    "official": 0.048,
     "r/investing": 0.0,
     "r/LocalLLaMA": 0.0,
     "r/ClaudeAI": 0.0,
@@ -38,8 +36,10 @@
     "r/runwayml": 0.0,
     "r/artificial": 0.058,
     "r/StartupSoloFounder": 0.0,
+    "r/deeplearning": 0.0,
     "r/ClaudeCode": 0.0,
     "r/technology": 0.036,
+    "r/singularity": 0.013,
     "r/MachineLearning": 0.0,
     "r/midjourney": 0.0,
     "r/ElevenLabs": 0.0,
@@ -56,22 +56,22 @@
     "r/aiArt": 0.0
   },
   "category": {
-    "UPDATE": 0.042,
-    "OPEN_SOURCE": 0.0,
-    "LAUNCH": 0.026,
-    "DEAL": 0.116,
-    "BENCHMARK": 0.038,
+    "UPDATE": 0.038,
+    "DEAL": 0.12,
     "RELEASE": 0.015,
-    "PRICING": 0.007
+    "PRICING": 0.007,
+    "BENCHMARK": 0.039,
+    "OPEN_SOURCE": 0.0,
+    "LAUNCH": 0.026
   },
   "exemplars": {
     "top": [
       {
-        "headline": "OpenAI Chief Operating Officer Brad Lightcap resigns",
+        "headline": "Nvidia secures $500B from Wall Street giants to fund AI infrastructure projects",
         "reward": 0.6
       },
       {
-        "headline": "OpenAI Chief Operating Officer Brad Lightcap resigns",
+        "headline": "CoreWeave stock jumps 12% as Q2 revenue doubles on AI infrastructure demand",
         "reward": 0.6
       },
       {
@@ -83,21 +83,21 @@
         "reward": 0.6
       },
       {
-        "headline": "OpenAI Chief Operating Officer Brad Lightcap resigns",
+        "headline": "Spotify removes AI-generated songs from its recommendation algorithm",
         "reward": 0.6
       }
     ],
     "bottom": [
       {
-        "headline": "Mistral announces a partnership with HUMAIN",
+        "headline": "Microsoft releases Agent Lightning v1.0.1",
         "reward": 0.0
       },
       {
-        "headline": "Researchers reverse-engineer invisible GUID watermarks in Paint and Photos",
+        "headline": "cs-board generates local whiteboard-animation videos from voice and Chinese text",
         "reward": 0.0
       },
       {
-        "headline": "An HR chatbot bypassed clearly defined restrictions after launch",
+        "headline": "SliverMirage adds Crystal-based AMSI and ETW bypass techniques to Sliver C2",
         "reward": 0.0
       }
     ]
