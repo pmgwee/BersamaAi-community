@@ -1,47 +1,43 @@
 {
-  "updated_at": "2026-08-27T00:49:43Z",
+  "updated_at": "2026-08-27T14:15:37Z",
   "half_life_days": 14,
-  "n_events": 18851,
+  "n_events": 17011,
   "topic": {
-    "creative_video": 0.0,
-    "coding": 0.012,
-    "company_investment": 0.079,
-    "finance": 0.0,
-    "creative_image": 0.056,
-    "research_study": 0.012,
+    "coding": 0.013,
     "cybersecurity": 0.0,
     "creative_voice": 0.0,
-    "research_productivity": 0.0
+    "creative_video": 0.0,
+    "research_productivity": 0.0,
+    "finance": 0.0,
+    "research_study": 0.012,
+    "company_investment": 0.079,
+    "creative_image": 0.074
   },
   "source": {
+    "HN": 0.01,
     "huggingface": 0.0,
-    "github": 0.0,
-    "HN": 0.009,
-    "official": 0.048,
-    "r/artificial": 0.057,
-    "r/StartupSoloFounder": 0.0,
-    "r/comfyui": 0.0,
-    "r/cursor": 0.163,
-    "r/deeplearning": 0.0,
-    "r/ClaudeCode": 0.0,
-    "r/technology": 0.036,
-    "r/StableDiffusion": 0.0,
-    "r/LocalLLaMA": 0.0,
-    "r/singularity": 0.013,
-    "r/ClaudeAI": 0.0,
-    "r/FluxAI": 0.0,
-    "r/MachineLearning": 0.0,
-    "r/midjourney": 0.0,
-    "r/netsec": 0.0,
+    "r/technology": 0.0,
     "r/ElevenLabs": 0.0,
+    "r/comfyui": 0.0,
+    "r/StableDiffusion": 0.0,
+    "official": 0.049,
     "r/SunoAI": 0.0,
+    "github": 0.0,
     "r/OpenAI": 0.0,
     "r/algotrading": 0.0,
+    "r/artificial": 0.061,
+    "r/LocalLLaMA": 0.0,
+    "r/deeplearning": 0.0,
+    "r/ClaudeAI": 0.0,
     "r/AI_Agents": 0.0,
+    "r/ClaudeCode": 0.0,
     "r/Economics": 0.0,
+    "r/cursor": 0.21,
+    "r/singularity": 0.0,
     "r/business": 0.0,
+    "r/MachineLearning": 0.0,
     "r/redteamsec": 0.0,
-    "r/wallstreetbets": 0.295,
+    "r/wallstreetbets": 0.293,
     "r/udiomusic": 0.0,
     "r/ChatGPTCoding": 0.5,
     "r/runwayml": 0.0,
@@ -49,19 +45,21 @@
     "r/stocks": 0.6,
     "r/cybersecurity": 0.0,
     "r/quant": 0.0,
+    "r/netsec": 0.0,
     "r/notebooklm": 0.0,
     "r/SideProject": 0.0,
     "r/learnmachinelearning": 0.0,
-    "r/aiArt": 0.0
+    "r/aiArt": 0.0,
+    "r/hacking": 0.0
   },
   "category": {
-    "RELEASE": 0.017,
+    "BENCHMARK": 0.026,
     "OPEN_SOURCE": 0.0,
-    "LAUNCH": 0.013,
-    "UPDATE": 0.031,
-    "BENCHMARK": 0.023,
-    "PRICING": 0.017,
-    "DEAL": 0.123
+    "RELEASE": 0.018,
+    "UPDATE": 0.028,
+    "LAUNCH": 0.014,
+    "PRICING": 0.015,
+    "DEAL": 0.131
   },
   "exemplars": {
     "top": [
@@ -88,15 +86,15 @@
     ],
     "bottom": [
       {
-        "headline": "Quantization-aware healing claims a 4-bit model can beat its full-precision original",
+        "headline": "Fake think tank reportedly sought to manipulate AI systems for propaganda",
         "reward": 0.0
       },
       {
-        "headline": "AAAI reviewers debate rejecting papers whose code and data are unavailable",
+        "headline": "LiveStream-Agent-Studio combines AI workflows for Douyin livestream commerce",
         "reward": 0.0
       },
       {
-        "headline": "Researcher reports finding a 20-year-old Call of Duty RCE with AI assistance",
+        "headline": "Laid-off developers build an open-source AI executive tool",
         "reward": 0.0
       }
     ]
