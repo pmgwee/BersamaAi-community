@@ -1,10 +1,10 @@
 {
-  "updated_at": "2026-08-26T20:05:30Z",
+  "updated_at": "2026-08-27T00:49:43Z",
   "half_life_days": 14,
-  "n_events": 18933,
+  "n_events": 18851,
   "topic": {
-    "coding": 0.012,
     "creative_video": 0.0,
+    "coding": 0.012,
     "company_investment": 0.079,
     "finance": 0.0,
     "creative_image": 0.056,
@@ -14,14 +14,14 @@
     "research_productivity": 0.0
   },
   "source": {
-    "HN": 0.009,
-    "official": 0.047,
-    "github": 0.0,
     "huggingface": 0.0,
+    "github": 0.0,
+    "HN": 0.009,
+    "official": 0.048,
     "r/artificial": 0.057,
     "r/StartupSoloFounder": 0.0,
     "r/comfyui": 0.0,
-    "r/cursor": 0.16,
+    "r/cursor": 0.163,
     "r/deeplearning": 0.0,
     "r/ClaudeCode": 0.0,
     "r/technology": 0.036,
@@ -41,7 +41,7 @@
     "r/Economics": 0.0,
     "r/business": 0.0,
     "r/redteamsec": 0.0,
-    "r/wallstreetbets": 0.297,
+    "r/wallstreetbets": 0.295,
     "r/udiomusic": 0.0,
     "r/ChatGPTCoding": 0.5,
     "r/runwayml": 0.0,
@@ -55,12 +55,12 @@
     "r/aiArt": 0.0
   },
   "category": {
-    "BENCHMARK": 0.022,
-    "LAUNCH": 0.013,
-    "OPEN_SOURCE": 0.0,
     "RELEASE": 0.017,
+    "OPEN_SOURCE": 0.0,
+    "LAUNCH": 0.013,
     "UPDATE": 0.031,
-    "PRICING": 0.015,
+    "BENCHMARK": 0.023,
+    "PRICING": 0.017,
     "DEAL": 0.123
   },
   "exemplars": {
@@ -88,15 +88,15 @@
     ],
     "bottom": [
       {
-        "headline": "Anthropic reportedly sees more than $30 trillion in potential revenue",
+        "headline": "Quantization-aware healing claims a 4-bit model can beat its full-precision original",
         "reward": 0.0
       },
       {
-        "headline": "A GitHub project offers a Polymarket TWAP trading bot",
+        "headline": "AAAI reviewers debate rejecting papers whose code and data are unavailable",
         "reward": 0.0
       },
       {
-        "headline": "Gemini for macOS adds intelligent dictation",
+        "headline": "Researcher reports finding a 20-year-old Call of Duty RCE with AI assistance",
         "reward": 0.0
       }
     ]
