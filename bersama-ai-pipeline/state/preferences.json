@@ -1,46 +1,45 @@
 {
-  "updated_at": "2026-08-28T00:25:57Z",
+  "updated_at": "2026-08-28T15:25:54Z",
   "half_life_days": 14,
-  "n_events": 16137,
+  "n_events": 14603,
   "topic": {
-    "coding": 0.014,
-    "research_study": 0.013,
-    "finance": 0.0,
-    "cybersecurity": 0.0,
-    "creative_voice": 0.0,
+    "coding": 0.011,
+    "company_investment": 0.084,
+    "cybersecurity": 0.001,
+    "research_study": 0.014,
     "creative_video": 0.0,
-    "company_investment": 0.08,
-    "creative_image": 0.073,
-    "research_productivity": 0.0
+    "finance": 0.0,
+    "creative_image": 0.082,
+    "research_productivity": 0.0,
+    "creative_voice": 0.0
   },
   "source": {
-    "r/LocalLLaMA": 0.0,
-    "official": 0.05,
-    "github": 0.0,
-    "HN": 0.012,
-    "r/deeplearning": 0.0,
-    "r/ClaudeAI": 0.0,
-    "r/AI_Agents": 0.0,
     "huggingface": 0.0,
-    "r/ClaudeCode": 0.0,
-    "r/Economics": 0.0,
-    "r/artificial": 0.067,
-    "r/StableDiffusion": 0.0,
+    "official": 0.051,
     "r/cursor": 0.209,
-    "r/singularity": 0.004,
+    "r/singularity": 0.007,
+    "HN": 0.003,
     "r/comfyui": 0.0,
     "r/business": 0.0,
+    "r/ClaudeAI": 0.0,
     "r/MachineLearning": 0.0,
+    "r/AI_Agents": 0.0,
+    "github": 0.0,
     "r/redteamsec": 0.0,
     "r/technology": 0.0,
-    "r/wallstreetbets": 0.291,
+    "r/wallstreetbets": 0.288,
     "r/udiomusic": 0.0,
     "r/OpenAI": 0.0,
     "r/ChatGPTCoding": 0.5,
+    "r/artificial": 0.075,
     "r/runwayml": 0.0,
+    "r/LocalLLaMA": 0.0,
+    "r/StableDiffusion": 0.0,
     "r/perplexity_ai": 0.0,
+    "r/deeplearning": 0.0,
     "r/stocks": 0.6,
-    "r/cybersecurity": 0.0,
+    "r/cybersecurity": 0.016,
+    "r/ClaudeCode": 0.0,
     "r/SunoAI": 0.0,
     "r/quant": 0.0,
     "r/netsec": 0.0,
@@ -53,13 +52,13 @@
     "r/SaaS": 0.0
   },
   "category": {
+    "RELEASE": 0.02,
+    "LAUNCH": 0.0,
+    "DEAL": 0.132,
+    "BENCHMARK": 0.037,
+    "UPDATE": 0.031,
     "OPEN_SOURCE": 0.0,
-    "LAUNCH": 0.018,
-    "UPDATE": 0.029,
-    "RELEASE": 0.019,
-    "BENCHMARK": 0.029,
-    "PRICING": 0.017,
-    "DEAL": 0.131
+    "PRICING": 0.021
   },
   "exemplars": {
     "top": [
@@ -86,15 +85,15 @@
     ],
     "bottom": [
       {
-        "headline": "ChatGPT for Teachers expands to 55 U.S. school systems",
+        "headline": "AI startup Instinct reportedly raises $350 million at a $2.5 billion valuation",
         "reward": 0.0
       },
       {
-        "headline": "Gemma models reportedly solve Google reCAPTCHA v2 challenges",
+        "headline": "Testbed examines how LLM agents leak sensitive data through tool calls",
         "reward": 0.0
       },
       {
-        "headline": "Archive recovers 575,000 crop labels from manual book digitization",
+        "headline": "Google DeepMind pilots double-blind evaluations for AI systems",
         "reward": 0.0
       }
     ]
