@@ -1,12 +1,12 @@
 {
-  "updated_at": "2026-08-29T20:57:24Z",
+  "updated_at": "2026-08-29T23:22:20Z",
   "half_life_days": 14,
-  "n_events": 10979,
+  "n_events": 10746,
   "topic": {
+    "coding": 0.002,
     "creative_video": 0.0,
-    "coding": 0.001,
-    "cybersecurity": 0.006,
-    "company_investment": 0.066,
+    "cybersecurity": 0.008,
+    "company_investment": 0.042,
     "research_study": 0.0,
     "research_productivity": 0.0,
     "creative_image": 0.0,
@@ -14,23 +14,23 @@
     "finance": 0.0
   },
   "source": {
+    "official": 0.008,
     "huggingface": 0.0,
-    "github": 0.0,
-    "official": 0.02,
-    "r/wallstreetbets": 0.261,
     "r/comfyui": 0.0,
-    "r/cybersecurity": 0.057,
-    "r/artificial": 0.105,
-    "HN": 0.01,
+    "r/cybersecurity": 0.064,
+    "r/artificial": 0.107,
+    "HN": 0.012,
     "r/LocalLLaMA": 0.0,
     "r/deeplearning": 0.0,
     "r/StableDiffusion": 0.0,
     "r/perplexity_ai": 0.0,
     "r/technology": 0.0,
-    "r/singularity": 0.048,
+    "github": 0.0,
+    "r/singularity": 0.055,
     "r/ClaudeCode": 0.0,
     "r/ClaudeAI": 0.0,
     "r/MachineLearning": 0.0,
+    "r/wallstreetbets": 0.0,
     "r/SunoAI": 0.0,
     "r/redteamsec": 0.0,
     "r/quant": 0.0,
@@ -39,45 +39,45 @@
     "r/udiomusic": 0.0,
     "r/SideProject": 0.0,
     "r/business": 0.0,
-    "r/cursor": 0.118,
+    "r/cursor": 0.122,
     "r/runwayml": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/OpenAI": 0.0,
     "r/ElevenLabs": 0.0,
     "r/aiArt": 0.0,
     "r/AI_Agents": 0.0,
-    "r/hacking": 0.232,
+    "r/hacking": 0.245,
     "r/SaaS": 0.0
   },
   "category": {
-    "RELEASE": 0.002,
+    "RELEASE": 0.003,
     "OPEN_SOURCE": 0.0,
-    "UPDATE": 0.029,
-    "BENCHMARK": 0.013,
+    "UPDATE": 0.015,
+    "BENCHMARK": 0.014,
     "LAUNCH": 0.0,
-    "DEAL": 0.033,
-    "PRICING": 0.034
+    "DEAL": 0.036,
+    "PRICING": 0.036
   },
   "exemplars": {
     "top": [
       {
-        "headline": "OpenAI appoints Dali Rajic as Chief Revenue Officer",
+        "headline": "US moves to block new foreign-made humanoid robots via FCC Covered List",
         "reward": 0.6
       },
       {
-        "headline": "Anthropic Q2 revenue surged more than 14-fold YoY, Bloomberg reports",
+        "headline": "US moves to block new foreign-made humanoid robots via FCC Covered List",
         "reward": 0.6
       },
       {
-        "headline": "OpenAI appoints Dali Rajic as Chief Revenue Officer",
+        "headline": "US moves to block new foreign-made humanoid robots via FCC Covered List",
         "reward": 0.6
       },
       {
-        "headline": "Anthropic Q2 revenue surged more than 14-fold YoY, Bloomberg reports",
+        "headline": "US moves to block new foreign-made humanoid robots via FCC Covered List",
         "reward": 0.6
       },
       {
-        "headline": "OpenAI appoints Dali Rajic as Chief Revenue Officer",
+        "headline": "US moves to block new foreign-made humanoid robots via FCC Covered List",
         "reward": 0.6
       }
     ],
