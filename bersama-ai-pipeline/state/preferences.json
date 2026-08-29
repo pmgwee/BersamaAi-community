@@ -1,99 +1,99 @@
 {
-  "updated_at": "2026-08-28T15:25:54Z",
+  "updated_at": "2026-08-29T01:46:02Z",
   "half_life_days": 14,
-  "n_events": 14603,
+  "n_events": 13636,
   "topic": {
-    "coding": 0.011,
-    "company_investment": 0.084,
-    "cybersecurity": 0.001,
-    "research_study": 0.014,
-    "creative_video": 0.0,
-    "finance": 0.0,
-    "creative_image": 0.082,
+    "coding": 0.012,
+    "company_investment": 0.079,
+    "creative_image": 0.0,
+    "research_study": 0.015,
     "research_productivity": 0.0,
-    "creative_voice": 0.0
+    "creative_video": 0.0,
+    "creative_voice": 0.0,
+    "cybersecurity": 0.002,
+    "finance": 0.0
   },
   "source": {
+    "official": 0.044,
     "huggingface": 0.0,
-    "official": 0.051,
-    "r/cursor": 0.209,
-    "r/singularity": 0.007,
-    "HN": 0.003,
-    "r/comfyui": 0.0,
-    "r/business": 0.0,
-    "r/ClaudeAI": 0.0,
-    "r/MachineLearning": 0.0,
-    "r/AI_Agents": 0.0,
-    "github": 0.0,
-    "r/redteamsec": 0.0,
     "r/technology": 0.0,
-    "r/wallstreetbets": 0.288,
+    "r/wallstreetbets": 0.286,
+    "r/comfyui": 0.0,
+    "HN": 0.005,
     "r/udiomusic": 0.0,
+    "r/singularity": 0.013,
     "r/OpenAI": 0.0,
+    "github": 0.0,
     "r/ChatGPTCoding": 0.5,
-    "r/artificial": 0.075,
+    "r/AI_Agents": 0.0,
+    "r/artificial": 0.077,
     "r/runwayml": 0.0,
     "r/LocalLLaMA": 0.0,
     "r/StableDiffusion": 0.0,
     "r/perplexity_ai": 0.0,
+    "r/cursor": 0.066,
     "r/deeplearning": 0.0,
     "r/stocks": 0.6,
-    "r/cybersecurity": 0.016,
+    "r/cybersecurity": 0.03,
     "r/ClaudeCode": 0.0,
+    "r/ClaudeAI": 0.0,
+    "r/MachineLearning": 0.0,
     "r/SunoAI": 0.0,
+    "r/redteamsec": 0.0,
     "r/quant": 0.0,
     "r/netsec": 0.0,
     "r/notebooklm": 0.0,
     "r/SideProject": 0.0,
+    "r/business": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/ElevenLabs": 0.0,
     "r/aiArt": 0.0,
-    "r/hacking": 0.0,
+    "r/hacking": 0.129,
     "r/SaaS": 0.0
   },
   "category": {
-    "RELEASE": 0.02,
     "LAUNCH": 0.0,
-    "DEAL": 0.132,
-    "BENCHMARK": 0.037,
-    "UPDATE": 0.031,
+    "RELEASE": 0.021,
     "OPEN_SOURCE": 0.0,
-    "PRICING": 0.021
+    "UPDATE": 0.027,
+    "DEAL": 0.102,
+    "BENCHMARK": 0.042,
+    "PRICING": 0.023
   },
   "exemplars": {
     "top": [
       {
-        "headline": "Cursor's acquisition by SpaceX closes; team joins SpaceXAI to build Grok products",
+        "headline": "Z.ai ships GLM-5.3 on the unchanged GLM-5.2 base: Terminal-Bench jumps 4.6 to 28.3",
         "reward": 0.6
       },
       {
-        "headline": "Cursor's acquisition by SpaceX closes; team joins SpaceXAI to build Grok products",
+        "headline": "Z.ai ships GLM-5.3 on the unchanged GLM-5.2 base: Terminal-Bench jumps 4.6 to 28.3",
         "reward": 0.6
       },
       {
-        "headline": "Cursor's acquisition by SpaceX closes; team joins SpaceXAI to build Grok products",
+        "headline": "Jane Street took a $15B hit in July tied to 'Situational Awareness' and the AI selloff",
         "reward": 0.6
       },
       {
-        "headline": "Google will let users remove the visible watermark from its AI generations",
+        "headline": "Z.ai ships GLM-5.3 on the unchanged GLM-5.2 base: Terminal-Bench jumps 4.6 to 28.3",
         "reward": 0.6
       },
       {
-        "headline": "Cursor's acquisition by SpaceX closes; team joins SpaceXAI to build Grok products",
+        "headline": "Jane Street took a $15B hit in July tied to 'Situational Awareness' and the AI selloff",
         "reward": 0.6
       }
     ],
     "bottom": [
       {
-        "headline": "AI startup Instinct reportedly raises $350 million at a $2.5 billion valuation",
+        "headline": "Small models are becoming a serious part of the AI stack",
         "reward": 0.0
       },
       {
-        "headline": "Testbed examines how LLM agents leak sensitive data through tool calls",
+        "headline": "Claude, Codex and Hermes reportedly installed unowned code in corporate networks",
         "reward": 0.0
       },
       {
-        "headline": "Google DeepMind pilots double-blind evaluations for AI systems",
+        "headline": "OpenAI study examines ChatGPT use, critical thinking and student performance",
         "reward": 0.0
       }
     ]
