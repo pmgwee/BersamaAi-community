@@ -1,40 +1,35 @@
 {
-  "updated_at": "2026-08-29T01:46:02Z",
+  "updated_at": "2026-08-29T10:08:30Z",
   "half_life_days": 14,
-  "n_events": 13636,
+  "n_events": 12005,
   "topic": {
-    "coding": 0.012,
-    "company_investment": 0.079,
+    "coding": 0.001,
+    "company_investment": 0.08,
     "creative_image": 0.0,
-    "research_study": 0.015,
-    "research_productivity": 0.0,
     "creative_video": 0.0,
+    "research_productivity": 0.0,
+    "research_study": 0.0,
+    "cybersecurity": 0.004,
     "creative_voice": 0.0,
-    "cybersecurity": 0.002,
     "finance": 0.0
   },
   "source": {
-    "official": 0.044,
-    "huggingface": 0.0,
-    "r/technology": 0.0,
-    "r/wallstreetbets": 0.286,
-    "r/comfyui": 0.0,
-    "HN": 0.005,
-    "r/udiomusic": 0.0,
-    "r/singularity": 0.013,
-    "r/OpenAI": 0.0,
     "github": 0.0,
-    "r/ChatGPTCoding": 0.5,
-    "r/AI_Agents": 0.0,
-    "r/artificial": 0.077,
-    "r/runwayml": 0.0,
-    "r/LocalLLaMA": 0.0,
+    "HN": 0.007,
+    "r/comfyui": 0.0,
     "r/StableDiffusion": 0.0,
     "r/perplexity_ai": 0.0,
-    "r/cursor": 0.066,
+    "r/technology": 0.0,
+    "official": 0.03,
+    "r/cursor": 0.07,
     "r/deeplearning": 0.0,
+    "r/artificial": 0.089,
     "r/stocks": 0.6,
-    "r/cybersecurity": 0.03,
+    "r/singularity": 0.023,
+    "huggingface": 0.0,
+    "r/wallstreetbets": 0.268,
+    "r/cybersecurity": 0.04,
+    "r/LocalLLaMA": 0.0,
     "r/ClaudeCode": 0.0,
     "r/ClaudeAI": 0.0,
     "r/MachineLearning": 0.0,
@@ -43,43 +38,47 @@
     "r/quant": 0.0,
     "r/netsec": 0.0,
     "r/notebooklm": 0.0,
+    "r/udiomusic": 0.0,
     "r/SideProject": 0.0,
     "r/business": 0.0,
+    "r/runwayml": 0.0,
     "r/learnmachinelearning": 0.0,
+    "r/OpenAI": 0.0,
     "r/ElevenLabs": 0.0,
     "r/aiArt": 0.0,
-    "r/hacking": 0.129,
+    "r/AI_Agents": 0.0,
+    "r/hacking": 0.183,
     "r/SaaS": 0.0
   },
   "category": {
-    "LAUNCH": 0.0,
-    "RELEASE": 0.021,
     "OPEN_SOURCE": 0.0,
-    "UPDATE": 0.027,
-    "DEAL": 0.102,
-    "BENCHMARK": 0.042,
-    "PRICING": 0.023
+    "BENCHMARK": 0.01,
+    "LAUNCH": 0.0,
+    "UPDATE": 0.024,
+    "DEAL": 0.11,
+    "RELEASE": 0.002,
+    "PRICING": 0.029
   },
   "exemplars": {
     "top": [
       {
-        "headline": "Z.ai ships GLM-5.3 on the unchanged GLM-5.2 base: Terminal-Bench jumps 4.6 to 28.3",
+        "headline": "SpaceX officially closes its Cursor acquisition",
         "reward": 0.6
       },
       {
-        "headline": "Z.ai ships GLM-5.3 on the unchanged GLM-5.2 base: Terminal-Bench jumps 4.6 to 28.3",
+        "headline": "Anthropic pitches $190B–$200B 2028 revenue in its IPO case",
         "reward": 0.6
       },
       {
-        "headline": "Jane Street took a $15B hit in July tied to 'Situational Awareness' and the AI selloff",
+        "headline": "SpaceX officially closes its Cursor acquisition",
         "reward": 0.6
       },
       {
-        "headline": "Z.ai ships GLM-5.3 on the unchanged GLM-5.2 base: Terminal-Bench jumps 4.6 to 28.3",
+        "headline": "Anthropic pitches $190B–$200B 2028 revenue in its IPO case",
         "reward": 0.6
       },
       {
-        "headline": "Jane Street took a $15B hit in July tied to 'Situational Awareness' and the AI selloff",
+        "headline": "OpenAI appoints Dali Rajic as Chief Revenue Officer",
         "reward": 0.6
       }
     ],
