@@ -1,62 +1,62 @@
 {
-  "updated_at": "2026-08-29T23:22:20Z",
+  "updated_at": "2026-08-30T05:27:43Z",
   "half_life_days": 14,
-  "n_events": 10746,
+  "n_events": 9848,
   "topic": {
     "coding": 0.002,
-    "creative_video": 0.0,
-    "cybersecurity": 0.008,
-    "company_investment": 0.042,
     "research_study": 0.0,
+    "creative_video": 0.0,
     "research_productivity": 0.0,
+    "company_investment": 0.047,
+    "cybersecurity": 0.01,
     "creative_image": 0.0,
     "creative_voice": 0.0,
     "finance": 0.0
   },
   "source": {
-    "official": 0.008,
     "huggingface": 0.0,
-    "r/comfyui": 0.0,
-    "r/cybersecurity": 0.064,
-    "r/artificial": 0.107,
-    "HN": 0.012,
-    "r/LocalLLaMA": 0.0,
-    "r/deeplearning": 0.0,
+    "official": 0.01,
     "r/StableDiffusion": 0.0,
     "r/perplexity_ai": 0.0,
     "r/technology": 0.0,
     "github": 0.0,
-    "r/singularity": 0.055,
+    "r/singularity": 0.062,
     "r/ClaudeCode": 0.0,
     "r/ClaudeAI": 0.0,
+    "r/comfyui": 0.0,
+    "HN": 0.014,
     "r/MachineLearning": 0.0,
     "r/wallstreetbets": 0.0,
     "r/SunoAI": 0.0,
+    "r/LocalLLaMA": 0.0,
+    "r/artificial": 0.153,
     "r/redteamsec": 0.0,
+    "r/deeplearning": 0.0,
     "r/quant": 0.0,
     "r/netsec": 0.0,
     "r/notebooklm": 0.0,
     "r/udiomusic": 0.0,
     "r/SideProject": 0.0,
     "r/business": 0.0,
-    "r/cursor": 0.122,
+    "r/cursor": 0.125,
     "r/runwayml": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/OpenAI": 0.0,
     "r/ElevenLabs": 0.0,
     "r/aiArt": 0.0,
     "r/AI_Agents": 0.0,
-    "r/hacking": 0.245,
+    "r/hacking": 0.254,
+    "r/cybersecurity": 0.146,
     "r/SaaS": 0.0
   },
   "category": {
-    "RELEASE": 0.003,
-    "OPEN_SOURCE": 0.0,
-    "UPDATE": 0.015,
-    "BENCHMARK": 0.014,
+    "RELEASE": 0.004,
     "LAUNCH": 0.0,
-    "DEAL": 0.036,
-    "PRICING": 0.036
+    "UPDATE": 0.017,
+    "OPEN_SOURCE": 0.0,
+    "BENCHMARK": 0.017,
+    "DEAL": 0.039,
+    "PRICING": 0.038
   },
   "exemplars": {
     "top": [
@@ -83,15 +83,15 @@
     ],
     "bottom": [
       {
-        "headline": "Red Clippy brings AI assistance to authorized penetration testing",
+        "headline": "Pentest Harness offers a self-hosted AI agent for authorized security testing",
         "reward": 0.0
       },
       {
-        "headline": "OpenAI and Thailand launch an accelerator for 10 AI startups",
+        "headline": "Qwen-Fixed-Chat-Templates patches chat templates for Qwen models",
         "reward": 0.0
       },
       {
-        "headline": "Google adds AI travel planning and booking features to Search",
+        "headline": "Lambda secures $1 billion in debt to buy more Nvidia AI chips",
         "reward": 0.0
       }
     ]
