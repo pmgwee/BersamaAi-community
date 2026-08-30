@@ -1,97 +1,97 @@
 {
-  "updated_at": "2026-08-30T21:09:19Z",
+  "updated_at": "2026-08-30T23:32:03Z",
   "half_life_days": 14,
-  "n_events": 7796,
+  "n_events": 7433,
   "topic": {
-    "coding": 0.003,
-    "company_investment": 0.066,
+    "company_investment": 0.055,
+    "coding": 0.004,
     "creative_video": 0.0,
-    "research_study": 0.0,
-    "finance": 0.0,
-    "cybersecurity": 0.016,
     "research_productivity": 0.0,
+    "research_study": 0.0,
     "creative_voice": 0.0,
+    "finance": 0.0,
+    "cybersecurity": 0.017,
     "creative_image": 0.0
   },
   "source": {
-    "HN": 0.019,
+    "HN": 0.022,
+    "r/technology": 0.0,
     "github": 0.0,
     "r/comfyui": 0.0,
-    "r/deeplearning": 0.0,
-    "r/artificial": 0.198,
-    "official": 0.015,
-    "r/quant": 0.0,
-    "r/netsec": 0.0,
-    "r/technology": 0.0,
     "r/SunoAI": 0.0,
     "r/notebooklm": 0.0,
+    "official": 0.016,
     "r/udiomusic": 0.0,
     "huggingface": 0.0,
-    "r/singularity": 0.142,
+    "r/singularity": 0.152,
     "r/SideProject": 0.0,
+    "r/artificial": 0.064,
     "r/StableDiffusion": 0.0,
     "r/redteamsec": 0.0,
     "r/ClaudeCode": 0.0,
     "r/perplexity_ai": 0.0,
     "r/business": 0.0,
-    "r/cursor": 0.132,
+    "r/netsec": 0.0,
+    "r/cursor": 0.134,
     "r/runwayml": 0.0,
     "r/LocalLLaMA": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/OpenAI": 0.0,
     "r/ElevenLabs": 0.0,
     "r/aiArt": 0.0,
+    "r/deeplearning": 0.0,
     "r/AI_Agents": 0.0,
     "r/MachineLearning": 0.0,
     "r/wallstreetbets": 0.0,
-    "r/hacking": 0.257,
-    "r/cybersecurity": 0.14,
+    "r/hacking": 0.25,
+    "r/cybersecurity": 0.135,
     "r/SaaS": 0.0,
-    "r/indiehackers": 0.0
+    "r/indiehackers": 0.0,
+    "r/FluxAI": 0.0
   },
   "category": {
-    "UPDATE": 0.026,
-    "DEAL": 0.052,
+    "UPDATE": 0.017,
     "OPEN_SOURCE": 0.0,
-    "RELEASE": 0.007,
-    "BENCHMARK": 0.026,
-    "PRICING": 0.044,
-    "LAUNCH": 0.0
+    "BENCHMARK": 0.027,
+    "PRICING": 0.045,
+    "LAUNCH": 0.0,
+    "RELEASE": 0.008,
+    "DEAL": 0.059
   },
   "exemplars": {
     "top": [
       {
-        "headline": "US moves to block new foreign-made humanoid robots via FCC Covered List",
+        "headline": "Cursor Ultra reportedly raises monthly usage limits to $500 and $2,000",
         "reward": 0.6
       },
       {
-        "headline": "US moves to block new foreign-made humanoid robots via FCC Covered List",
+        "headline": "Cursor Ultra reportedly raises monthly usage limits to $500 and $2,000",
         "reward": 0.6
       },
       {
-        "headline": "US moves to block new foreign-made humanoid robots via FCC Covered List",
+        "headline": "Cursor Ultra reportedly raises monthly usage limits to $500 and $2,000",
         "reward": 0.6
       },
       {
-        "headline": "US moves to block new foreign-made humanoid robots via FCC Covered List",
+        "headline": "Cursor Ultra reportedly raises monthly usage limits to $500 and $2,000",
         "reward": 0.6
       },
       {
-        "headline": "US moves to block new foreign-made humanoid robots via FCC Covered List",
+        "headline": "Gamma acquires design startup Lica and brings its founders into a research team",
         "reward": 0.6
       }
     ],
     "bottom": [
       {
-        "headline": "vLLM 0.28.0 ships",
+        "headline": "Sepia adds a de-AI writing skill for coding agents",
         "reward": 0.0
       },
       {
-        "headline": "Mistral announces a partnership with HUMAIN",
+        "headline": "PeerPixel launches a community-powered FLUX image generator",
         "reward": 0.0
       },
       {
-        "headline": "Sony Music and Warner sue Anthropic over alleged copyright infringement",
+        "headline": "Claude users report a planned one-sixth usage reduction starting September 14",
         "reward": 0.0
       }
     ]
