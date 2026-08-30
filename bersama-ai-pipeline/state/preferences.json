@@ -1,40 +1,40 @@
 {
-  "updated_at": "2026-08-30T16:43:05Z",
+  "updated_at": "2026-08-30T21:09:19Z",
   "half_life_days": 14,
-  "n_events": 8004,
+  "n_events": 7796,
   "topic": {
     "coding": 0.003,
-    "research_study": 0.0,
-    "creative_image": 0.0,
-    "cybersecurity": 0.014,
+    "company_investment": 0.066,
     "creative_video": 0.0,
-    "company_investment": 0.063,
+    "research_study": 0.0,
     "finance": 0.0,
+    "cybersecurity": 0.016,
     "research_productivity": 0.0,
-    "creative_voice": 0.0
+    "creative_voice": 0.0,
+    "creative_image": 0.0
   },
   "source": {
-    "official": 0.013,
-    "huggingface": 0.0,
+    "HN": 0.019,
     "github": 0.0,
-    "r/technology": 0.0,
     "r/comfyui": 0.0,
-    "HN": 0.018,
     "r/deeplearning": 0.0,
-    "r/artificial": 0.196,
+    "r/artificial": 0.198,
+    "official": 0.015,
     "r/quant": 0.0,
     "r/netsec": 0.0,
+    "r/technology": 0.0,
     "r/SunoAI": 0.0,
     "r/notebooklm": 0.0,
     "r/udiomusic": 0.0,
-    "r/singularity": 0.132,
+    "huggingface": 0.0,
+    "r/singularity": 0.142,
     "r/SideProject": 0.0,
     "r/StableDiffusion": 0.0,
     "r/redteamsec": 0.0,
     "r/ClaudeCode": 0.0,
     "r/perplexity_ai": 0.0,
     "r/business": 0.0,
-    "r/cursor": 0.13,
+    "r/cursor": 0.132,
     "r/runwayml": 0.0,
     "r/LocalLLaMA": 0.0,
     "r/learnmachinelearning": 0.0,
@@ -44,19 +44,19 @@
     "r/AI_Agents": 0.0,
     "r/MachineLearning": 0.0,
     "r/wallstreetbets": 0.0,
-    "r/hacking": 0.267,
-    "r/cybersecurity": 0.147,
+    "r/hacking": 0.257,
+    "r/cybersecurity": 0.14,
     "r/SaaS": 0.0,
     "r/indiehackers": 0.0
   },
   "category": {
-    "LAUNCH": 0.0,
-    "RELEASE": 0.006,
+    "UPDATE": 0.026,
+    "DEAL": 0.052,
     "OPEN_SOURCE": 0.0,
-    "BENCHMARK": 0.023,
-    "UPDATE": 0.024,
-    "DEAL": 0.049,
-    "PRICING": 0.042
+    "RELEASE": 0.007,
+    "BENCHMARK": 0.026,
+    "PRICING": 0.044,
+    "LAUNCH": 0.0
   },
   "exemplars": {
     "top": [
@@ -83,15 +83,15 @@
     ],
     "bottom": [
       {
-        "headline": "Indie developer reports 1,000 users and more than $5,000 in revenue",
+        "headline": "vLLM 0.28.0 ships",
         "reward": 0.0
       },
       {
-        "headline": "Elastic compares LLM-driven reverse engineering with iterative obfuscation",
+        "headline": "Mistral announces a partnership with HUMAIN",
         "reward": 0.0
       },
       {
-        "headline": "Stratum C2 routes encrypted command traffic through cloud storage",
+        "headline": "Sony Music and Warner sue Anthropic over alleged copyright infringement",
         "reward": 0.0
       }
     ]
