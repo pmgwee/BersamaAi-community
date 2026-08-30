@@ -1,62 +1,63 @@
 {
-  "updated_at": "2026-08-30T05:27:43Z",
+  "updated_at": "2026-08-30T11:57:21Z",
   "half_life_days": 14,
-  "n_events": 9848,
+  "n_events": 8948,
   "topic": {
     "coding": 0.002,
-    "research_study": 0.0,
-    "creative_video": 0.0,
-    "research_productivity": 0.0,
-    "company_investment": 0.047,
-    "cybersecurity": 0.01,
+    "company_investment": 0.054,
     "creative_image": 0.0,
+    "creative_video": 0.0,
     "creative_voice": 0.0,
-    "finance": 0.0
+    "research_study": 0.0,
+    "cybersecurity": 0.012,
+    "finance": 0.0,
+    "research_productivity": 0.0
   },
   "source": {
-    "huggingface": 0.0,
-    "official": 0.01,
-    "r/StableDiffusion": 0.0,
-    "r/perplexity_ai": 0.0,
-    "r/technology": 0.0,
     "github": 0.0,
-    "r/singularity": 0.062,
-    "r/ClaudeCode": 0.0,
+    "huggingface": 0.0,
     "r/ClaudeAI": 0.0,
-    "r/comfyui": 0.0,
-    "HN": 0.014,
-    "r/MachineLearning": 0.0,
     "r/wallstreetbets": 0.0,
+    "r/comfyui": 0.0,
+    "r/StableDiffusion": 0.0,
     "r/SunoAI": 0.0,
+    "r/technology": 0.0,
+    "official": 0.012,
+    "HN": 0.015,
     "r/LocalLLaMA": 0.0,
-    "r/artificial": 0.153,
+    "r/artificial": 0.154,
     "r/redteamsec": 0.0,
     "r/deeplearning": 0.0,
     "r/quant": 0.0,
     "r/netsec": 0.0,
     "r/notebooklm": 0.0,
     "r/udiomusic": 0.0,
+    "r/singularity": 0.122,
     "r/SideProject": 0.0,
+    "r/ClaudeCode": 0.0,
+    "r/perplexity_ai": 0.0,
     "r/business": 0.0,
-    "r/cursor": 0.125,
+    "r/cursor": 0.127,
     "r/runwayml": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/OpenAI": 0.0,
     "r/ElevenLabs": 0.0,
     "r/aiArt": 0.0,
     "r/AI_Agents": 0.0,
-    "r/hacking": 0.254,
-    "r/cybersecurity": 0.146,
-    "r/SaaS": 0.0
+    "r/MachineLearning": 0.0,
+    "r/hacking": 0.261,
+    "r/cybersecurity": 0.147,
+    "r/SaaS": 0.0,
+    "r/indiehackers": 0.0
   },
   "category": {
-    "RELEASE": 0.004,
-    "LAUNCH": 0.0,
-    "UPDATE": 0.017,
     "OPEN_SOURCE": 0.0,
-    "BENCHMARK": 0.017,
-    "DEAL": 0.039,
-    "PRICING": 0.038
+    "BENCHMARK": 0.02,
+    "DEAL": 0.042,
+    "UPDATE": 0.02,
+    "RELEASE": 0.005,
+    "LAUNCH": 0.0,
+    "PRICING": 0.04
   },
   "exemplars": {
     "top": [
@@ -83,15 +84,15 @@
     ],
     "bottom": [
       {
-        "headline": "Pentest Harness offers a self-hosted AI agent for authorized security testing",
+        "headline": "Indie developer reports 1,000 users and more than $5,000 in revenue",
         "reward": 0.0
       },
       {
-        "headline": "Qwen-Fixed-Chat-Templates patches chat templates for Qwen models",
+        "headline": "Elastic compares LLM-driven reverse engineering with iterative obfuscation",
         "reward": 0.0
       },
       {
-        "headline": "Lambda secures $1 billion in debt to buy more Nvidia AI chips",
+        "headline": "Stratum C2 routes encrypted command traffic through cloud storage",
         "reward": 0.0
       }
     ]
