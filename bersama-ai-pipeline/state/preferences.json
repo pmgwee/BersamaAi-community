@@ -1,59 +1,57 @@
 {
-  "updated_at": "2026-08-31T05:40:00Z",
+  "updated_at": "2026-08-31T13:56:12Z",
   "half_life_days": 14,
-  "n_events": 6614,
+  "n_events": 5289,
   "topic": {
-    "coding": 0.004,
-    "cybersecurity": 0.018,
-    "company_investment": 0.067,
-    "creative_video": 0.0,
+    "coding": 0.005,
+    "cybersecurity": 0.024,
     "research_study": 0.0,
+    "company_investment": 0.092,
+    "creative_video": 0.0,
     "creative_voice": 0.0,
     "research_productivity": 0.0,
     "creative_image": 0.0,
     "finance": 0.0
   },
   "source": {
-    "huggingface": 0.0,
-    "official": 0.018,
-    "r/artificial": 0.068,
-    "r/StableDiffusion": 0.0,
-    "HN": 0.026,
-    "r/redteamsec": 0.0,
-    "r/ClaudeCode": 0.0,
-    "r/perplexity_ai": 0.0,
+    "HN": 0.03,
     "github": 0.0,
-    "r/business": 0.0,
-    "r/netsec": 0.0,
-    "r/cursor": 0.136,
-    "r/runwayml": 0.0,
+    "r/artificial": 0.107,
     "r/LocalLLaMA": 0.0,
     "r/technology": 0.0,
+    "official": 0.023,
     "r/learnmachinelearning": 0.0,
+    "huggingface": 0.0,
     "r/comfyui": 0.0,
+    "r/netsec": 0.0,
     "r/OpenAI": 0.0,
     "r/ElevenLabs": 0.0,
     "r/notebooklm": 0.0,
     "r/aiArt": 0.0,
+    "r/StableDiffusion": 0.0,
     "r/deeplearning": 0.0,
+    "r/redteamsec": 0.0,
     "r/AI_Agents": 0.0,
+    "r/perplexity_ai": 0.0,
     "r/MachineLearning": 0.0,
+    "r/cursor": 0.242,
     "r/wallstreetbets": 0.0,
-    "r/hacking": 0.245,
-    "r/cybersecurity": 0.13,
+    "r/hacking": 0.24,
+    "r/cybersecurity": 0.127,
     "r/SaaS": 0.0,
     "r/singularity": 0.6,
     "r/indiehackers": 0.0,
-    "r/FluxAI": 0.0
+    "r/FluxAI": 0.0,
+    "r/ClaudeCode": 0.0
   },
   "category": {
-    "RELEASE": 0.008,
-    "BENCHMARK": 0.031,
-    "UPDATE": 0.022,
-    "LAUNCH": 0.0,
+    "BENCHMARK": 0.036,
     "OPEN_SOURCE": 0.0,
-    "PRICING": 0.055,
-    "DEAL": 0.062
+    "UPDATE": 0.026,
+    "DEAL": 0.077,
+    "RELEASE": 0.012,
+    "LAUNCH": 0.0,
+    "PRICING": 0.12
   },
   "exemplars": {
     "top": [
@@ -80,15 +78,15 @@
     ],
     "bottom": [
       {
-        "headline": "AbyssBeacon aggregates LoRAs and checkpoints across model hubs",
+        "headline": "ComfyUI adds Gemini Omni 1.1 Flash workflows for video generation and editing",
         "reward": 0.0
       },
       {
-        "headline": "Nvidia financing could tie a quarter of next year's business to backed AI labs",
+        "headline": "Suno users report September download limits and encrypted streaming",
         "reward": 0.0
       },
       {
-        "headline": "OpenAI cuts off Cursor after SpaceX acquisition",
+        "headline": "Google appears to be preparing interactive reports for Gemini Notebook",
         "reward": 0.0
       }
     ]
