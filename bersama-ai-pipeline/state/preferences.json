@@ -1,57 +1,57 @@
 {
-  "updated_at": "2026-08-31T13:56:12Z",
+  "updated_at": "2026-08-31T20:51:31Z",
   "half_life_days": 14,
-  "n_events": 5289,
+  "n_events": 4491,
   "topic": {
-    "coding": 0.005,
-    "cybersecurity": 0.024,
-    "research_study": 0.0,
-    "company_investment": 0.092,
+    "coding": 0.006,
     "creative_video": 0.0,
+    "cybersecurity": 0.027,
+    "company_investment": 0.109,
     "creative_voice": 0.0,
+    "research_study": 0.0,
     "research_productivity": 0.0,
     "creative_image": 0.0,
     "finance": 0.0
   },
   "source": {
-    "HN": 0.03,
+    "official": 0.025,
+    "HN": 0.038,
     "github": 0.0,
-    "r/artificial": 0.107,
-    "r/LocalLLaMA": 0.0,
-    "r/technology": 0.0,
-    "official": 0.023,
-    "r/learnmachinelearning": 0.0,
-    "huggingface": 0.0,
-    "r/comfyui": 0.0,
-    "r/netsec": 0.0,
     "r/OpenAI": 0.0,
+    "huggingface": 0.0,
+    "r/LocalLLaMA": 0.0,
     "r/ElevenLabs": 0.0,
     "r/notebooklm": 0.0,
     "r/aiArt": 0.0,
+    "r/comfyui": 0.0,
     "r/StableDiffusion": 0.0,
     "r/deeplearning": 0.0,
     "r/redteamsec": 0.0,
+    "r/netsec": 0.0,
     "r/AI_Agents": 0.0,
     "r/perplexity_ai": 0.0,
     "r/MachineLearning": 0.0,
-    "r/cursor": 0.242,
+    "r/cursor": 0.24,
+    "r/artificial": 0.209,
+    "r/technology": 0.0,
     "r/wallstreetbets": 0.0,
-    "r/hacking": 0.24,
-    "r/cybersecurity": 0.127,
+    "r/hacking": 0.237,
+    "r/cybersecurity": 0.124,
     "r/SaaS": 0.0,
     "r/singularity": 0.6,
     "r/indiehackers": 0.0,
     "r/FluxAI": 0.0,
-    "r/ClaudeCode": 0.0
+    "r/ClaudeCode": 0.0,
+    "r/ChatGPT": 0.0
   },
   "category": {
-    "BENCHMARK": 0.036,
-    "OPEN_SOURCE": 0.0,
-    "UPDATE": 0.026,
-    "DEAL": 0.077,
-    "RELEASE": 0.012,
+    "RELEASE": 0.013,
     "LAUNCH": 0.0,
-    "PRICING": 0.12
+    "OPEN_SOURCE": 0.0,
+    "DEAL": 0.088,
+    "UPDATE": 0.031,
+    "PRICING": 0.121,
+    "BENCHMARK": 0.059
   },
   "exemplars": {
     "top": [
@@ -78,15 +78,15 @@
     ],
     "bottom": [
       {
-        "headline": "ComfyUI adds Gemini Omni 1.1 Flash workflows for video generation and editing",
+        "headline": "OpenGrok packages a one-command Grok Bot setup with provider routing",
         "reward": 0.0
       },
       {
-        "headline": "Suno users report September download limits and encrypted streaming",
+        "headline": "My Free Code adds an open-source gateway for coding agents",
         "reward": 0.0
       },
       {
-        "headline": "Google appears to be preparing interactive reports for Gemini Notebook",
+        "headline": "A Claude Code skill automates SEO, AEO, GEO, and LLMO audits",
         "reward": 0.0
       }
     ]
