@@ -1,62 +1,59 @@
 {
-  "updated_at": "2026-08-30T23:32:03Z",
+  "updated_at": "2026-08-31T05:40:00Z",
   "half_life_days": 14,
-  "n_events": 7433,
+  "n_events": 6614,
   "topic": {
-    "company_investment": 0.055,
     "coding": 0.004,
+    "cybersecurity": 0.018,
+    "company_investment": 0.067,
     "creative_video": 0.0,
-    "research_productivity": 0.0,
     "research_study": 0.0,
     "creative_voice": 0.0,
-    "finance": 0.0,
-    "cybersecurity": 0.017,
-    "creative_image": 0.0
+    "research_productivity": 0.0,
+    "creative_image": 0.0,
+    "finance": 0.0
   },
   "source": {
-    "HN": 0.022,
-    "r/technology": 0.0,
-    "github": 0.0,
-    "r/comfyui": 0.0,
-    "r/SunoAI": 0.0,
-    "r/notebooklm": 0.0,
-    "official": 0.016,
-    "r/udiomusic": 0.0,
     "huggingface": 0.0,
-    "r/singularity": 0.152,
-    "r/SideProject": 0.0,
-    "r/artificial": 0.064,
+    "official": 0.018,
+    "r/artificial": 0.068,
     "r/StableDiffusion": 0.0,
+    "HN": 0.026,
     "r/redteamsec": 0.0,
     "r/ClaudeCode": 0.0,
     "r/perplexity_ai": 0.0,
+    "github": 0.0,
     "r/business": 0.0,
     "r/netsec": 0.0,
-    "r/cursor": 0.134,
+    "r/cursor": 0.136,
     "r/runwayml": 0.0,
     "r/LocalLLaMA": 0.0,
+    "r/technology": 0.0,
     "r/learnmachinelearning": 0.0,
+    "r/comfyui": 0.0,
     "r/OpenAI": 0.0,
     "r/ElevenLabs": 0.0,
+    "r/notebooklm": 0.0,
     "r/aiArt": 0.0,
     "r/deeplearning": 0.0,
     "r/AI_Agents": 0.0,
     "r/MachineLearning": 0.0,
     "r/wallstreetbets": 0.0,
-    "r/hacking": 0.25,
-    "r/cybersecurity": 0.135,
+    "r/hacking": 0.245,
+    "r/cybersecurity": 0.13,
     "r/SaaS": 0.0,
+    "r/singularity": 0.6,
     "r/indiehackers": 0.0,
     "r/FluxAI": 0.0
   },
   "category": {
-    "UPDATE": 0.017,
-    "OPEN_SOURCE": 0.0,
-    "BENCHMARK": 0.027,
-    "PRICING": 0.045,
-    "LAUNCH": 0.0,
     "RELEASE": 0.008,
-    "DEAL": 0.059
+    "BENCHMARK": 0.031,
+    "UPDATE": 0.022,
+    "LAUNCH": 0.0,
+    "OPEN_SOURCE": 0.0,
+    "PRICING": 0.055,
+    "DEAL": 0.062
   },
   "exemplars": {
     "top": [
@@ -83,15 +80,15 @@
     ],
     "bottom": [
       {
-        "headline": "Sepia adds a de-AI writing skill for coding agents",
+        "headline": "AbyssBeacon aggregates LoRAs and checkpoints across model hubs",
         "reward": 0.0
       },
       {
-        "headline": "PeerPixel launches a community-powered FLUX image generator",
+        "headline": "Nvidia financing could tie a quarter of next year's business to backed AI labs",
         "reward": 0.0
       },
       {
-        "headline": "Claude users report a planned one-sixth usage reduction starting September 14",
+        "headline": "OpenAI cuts off Cursor after SpaceX acquisition",
         "reward": 0.0
       }
     ]
