@@ -1,7 +1,7 @@
 {
-  "updated_at": "2026-09-01T18:34:18Z",
+  "updated_at": "2026-09-01T23:20:34Z",
   "half_life_days": 14,
-  "n_events": 4236,
+  "n_events": 4440,
   "topic": {
     "company_investment": 0.15,
     "coding": 0.007,
@@ -27,15 +27,15 @@
     "r/AI_Agents": 0.0,
     "r/perplexity_ai": 0.0,
     "r/MachineLearning": 0.0,
-    "r/cursor": 0.231,
-    "r/artificial": 0.205,
+    "r/cursor": 0.229,
+    "r/artificial": 0.204,
     "r/technology": 0.0,
     "r/wallstreetbets": 0.0,
-    "r/hacking": 0.227,
+    "r/hacking": 0.22,
     "r/ElevenLabs": 0.0,
-    "r/cybersecurity": 0.117,
+    "r/cybersecurity": 0.116,
     "r/SaaS": 0.0,
-    "r/singularity": 0.502,
+    "r/singularity": 0.481,
     "r/indiehackers": 0.0,
     "r/FluxAI": 0.0,
     "r/ClaudeCode": 0.0,
@@ -45,10 +45,10 @@
     "UPDATE": 0.039,
     "OPEN_SOURCE": 0.0,
     "LAUNCH": 0.0,
-    "BENCHMARK": 0.056,
+    "BENCHMARK": 0.055,
     "RELEASE": 0.014,
-    "DEAL": 0.135,
-    "PRICING": 0.182
+    "DEAL": 0.137,
+    "PRICING": 0.179
   },
   "exemplars": {
     "top": [
@@ -75,15 +75,15 @@
     ],
     "bottom": [
       {
-        "headline": "A practical guide explains how to build a diffusion language model",
+        "headline": "MiniMax H3 workflow targets consistent face, body, and clothing identity",
         "reward": 0.0
       },
       {
-        "headline": "Agent Memory proposes a file format for persistent agent context",
+        "headline": "Report exposes Team PCP in Shai-Hulud and LiteLLM supply-chain attacks",
         "reward": 0.0
       },
       {
-        "headline": "OpenAI says ChatGPT Ads reaches a $1 billion annualized run rate",
+        "headline": "pwnproxy offers a local-first platform for security testing",
         "reward": 0.0
       }
     ]
