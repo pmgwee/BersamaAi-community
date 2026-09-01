@@ -1,27 +1,24 @@
 {
-  "updated_at": "2026-09-01T08:42:10Z",
+  "updated_at": "2026-09-01T14:10:21Z",
   "half_life_days": 14,
-  "n_events": 4553,
+  "n_events": 4028,
   "topic": {
-    "cybersecurity": 0.029,
-    "company_investment": 0.125,
-    "creative_video": 0.0,
-    "creative_voice": 0.0,
-    "coding": 0.006,
-    "research_study": 0.0,
-    "research_productivity": 0.0,
+    "company_investment": 0.15,
+    "coding": 0.007,
     "creative_image": 0.0,
+    "research_productivity": 0.0,
+    "cybersecurity": 0.031,
+    "creative_video": 0.0,
+    "research_study": 0.0,
+    "creative_voice": 0.0,
     "finance": 0.0
   },
   "source": {
-    "HN": 0.041,
-    "official": 0.029,
+    "HN": 0.047,
     "huggingface": 0.0,
-    "r/LocalLLaMA": 0.0,
     "github": 0.0,
-    "r/ElevenLabs": 0.0,
-    "r/notebooklm": 0.0,
-    "r/aiArt": 0.0,
+    "official": 0.033,
+    "r/LocalLLaMA": 0.0,
     "r/comfyui": 0.0,
     "r/StableDiffusion": 0.0,
     "r/deeplearning": 0.0,
@@ -30,27 +27,28 @@
     "r/AI_Agents": 0.0,
     "r/perplexity_ai": 0.0,
     "r/MachineLearning": 0.0,
-    "r/cursor": 0.235,
-    "r/artificial": 0.207,
+    "r/cursor": 0.232,
+    "r/artificial": 0.206,
     "r/technology": 0.0,
     "r/wallstreetbets": 0.0,
-    "r/hacking": 0.231,
-    "r/cybersecurity": 0.12,
+    "r/hacking": 0.229,
+    "r/ElevenLabs": 0.0,
+    "r/cybersecurity": 0.118,
     "r/SaaS": 0.0,
-    "r/singularity": 0.559,
+    "r/singularity": 0.527,
     "r/indiehackers": 0.0,
     "r/FluxAI": 0.0,
     "r/ClaudeCode": 0.0,
     "r/ChatGPT": 0.0
   },
   "category": {
-    "UPDATE": 0.032,
-    "PRICING": 0.122,
-    "DEAL": 0.116,
-    "RELEASE": 0.014,
-    "LAUNCH": 0.0,
+    "UPDATE": 0.038,
     "OPEN_SOURCE": 0.0,
-    "BENCHMARK": 0.056
+    "LAUNCH": 0.0,
+    "BENCHMARK": 0.056,
+    "RELEASE": 0.015,
+    "DEAL": 0.134,
+    "PRICING": 0.184
   },
   "exemplars": {
     "top": [
@@ -77,15 +75,15 @@
     ],
     "bottom": [
       {
-        "headline": "FastH3 is used to run an apparent infinite AI video livestream",
+        "headline": "A practical guide explains how to build a diffusion language model",
         "reward": 0.0
       },
       {
-        "headline": "OpenClaw 2.0 ships guided setup and a rebuilt control UI",
+        "headline": "Agent Memory proposes a file format for persistent agent context",
         "reward": 0.0
       },
       {
-        "headline": "Simon Willison examines how ChatGPT Work operates",
+        "headline": "OpenAI says ChatGPT Ads reaches a $1 billion annualized run rate",
         "reward": 0.0
       }
     ]
