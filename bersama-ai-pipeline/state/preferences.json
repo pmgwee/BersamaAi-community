@@ -1,10 +1,10 @@
 {
-  "updated_at": "2026-09-01T00:38:28Z",
+  "updated_at": "2026-09-01T08:42:10Z",
   "half_life_days": 14,
-  "n_events": 4320,
+  "n_events": 4553,
   "topic": {
     "cybersecurity": 0.029,
-    "company_investment": 0.124,
+    "company_investment": 0.125,
     "creative_video": 0.0,
     "creative_voice": 0.0,
     "coding": 0.006,
@@ -30,14 +30,14 @@
     "r/AI_Agents": 0.0,
     "r/perplexity_ai": 0.0,
     "r/MachineLearning": 0.0,
-    "r/cursor": 0.237,
-    "r/artificial": 0.208,
+    "r/cursor": 0.235,
+    "r/artificial": 0.207,
     "r/technology": 0.0,
     "r/wallstreetbets": 0.0,
-    "r/hacking": 0.234,
-    "r/cybersecurity": 0.122,
+    "r/hacking": 0.231,
+    "r/cybersecurity": 0.12,
     "r/SaaS": 0.0,
-    "r/singularity": 0.6,
+    "r/singularity": 0.559,
     "r/indiehackers": 0.0,
     "r/FluxAI": 0.0,
     "r/ClaudeCode": 0.0,
@@ -45,12 +45,12 @@
   },
   "category": {
     "UPDATE": 0.032,
-    "PRICING": 0.121,
-    "DEAL": 0.115,
+    "PRICING": 0.122,
+    "DEAL": 0.116,
     "RELEASE": 0.014,
     "LAUNCH": 0.0,
     "OPEN_SOURCE": 0.0,
-    "BENCHMARK": 0.057
+    "BENCHMARK": 0.056
   },
   "exemplars": {
     "top": [
@@ -77,15 +77,15 @@
     ],
     "bottom": [
       {
-        "headline": "Continuous Diffusion Language Models are proposed as an alternative model design",
+        "headline": "FastH3 is used to run an apparent infinite AI video livestream",
         "reward": 0.0
       },
       {
-        "headline": "Claude Code users share a way to reduce new-session token overhead",
+        "headline": "OpenClaw 2.0 ships guided setup and a rebuilt control UI",
         "reward": 0.0
       },
       {
-        "headline": "A Claude Code skill targets cyclomatic-complexity reduction",
+        "headline": "Simon Willison examines how ChatGPT Work operates",
         "reward": 0.0
       }
     ]
