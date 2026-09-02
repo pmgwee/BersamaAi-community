@@ -1,9 +1,9 @@
 {
-  "updated_at": "2026-09-02T21:05:36Z",
+  "updated_at": "2026-09-02T23:20:35Z",
   "half_life_days": 14,
-  "n_events": 5219,
+  "n_events": 5405,
   "topic": {
-    "company_investment": 0.147,
+    "company_investment": 0.145,
     "coding": 0.007,
     "creative_image": 0.0,
     "research_productivity": 0.0,
@@ -14,7 +14,7 @@
     "finance": 0.0
   },
   "source": {
-    "HN": 0.046,
+    "HN": 0.045,
     "huggingface": 0.0,
     "github": 0.0,
     "official": 0.033,
@@ -27,15 +27,15 @@
     "r/AI_Agents": 0.0,
     "r/perplexity_ai": 0.0,
     "r/MachineLearning": 0.0,
-    "r/cursor": 0.204,
-    "r/artificial": 0.214,
+    "r/cursor": 0.199,
+    "r/artificial": 0.216,
     "r/technology": 0.0,
     "r/wallstreetbets": 0.0,
-    "r/hacking": 0.2,
+    "r/hacking": 0.197,
     "r/ElevenLabs": 0.0,
-    "r/cybersecurity": 0.112,
+    "r/cybersecurity": 0.111,
     "r/SaaS": 0.0,
-    "r/singularity": 0.424,
+    "r/singularity": 0.414,
     "r/indiehackers": 0.0,
     "r/FluxAI": 0.0,
     "r/ClaudeCode": 0.0,
@@ -46,10 +46,10 @@
     "UPDATE": 0.039,
     "OPEN_SOURCE": 0.0,
     "LAUNCH": 0.0,
-    "BENCHMARK": 0.052,
+    "BENCHMARK": 0.05,
     "RELEASE": 0.014,
-    "DEAL": 0.141,
-    "PRICING": 0.154
+    "DEAL": 0.142,
+    "PRICING": 0.149
   },
   "exemplars": {
     "top": [
