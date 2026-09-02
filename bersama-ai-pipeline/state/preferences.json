@@ -1,9 +1,9 @@
 {
-  "updated_at": "2026-09-02T16:37:00Z",
+  "updated_at": "2026-09-02T21:05:36Z",
   "half_life_days": 14,
-  "n_events": 5027,
+  "n_events": 5219,
   "topic": {
-    "company_investment": 0.148,
+    "company_investment": 0.147,
     "coding": 0.007,
     "creative_image": 0.0,
     "research_productivity": 0.0,
@@ -14,10 +14,10 @@
     "finance": 0.0
   },
   "source": {
-    "HN": 0.047,
+    "HN": 0.046,
     "huggingface": 0.0,
     "github": 0.0,
-    "official": 0.034,
+    "official": 0.033,
     "r/LocalLLaMA": 0.0,
     "r/comfyui": 0.0,
     "r/StableDiffusion": 0.0,
@@ -27,15 +27,15 @@
     "r/AI_Agents": 0.0,
     "r/perplexity_ai": 0.0,
     "r/MachineLearning": 0.0,
-    "r/cursor": 0.21,
-    "r/artificial": 0.212,
+    "r/cursor": 0.204,
+    "r/artificial": 0.214,
     "r/technology": 0.0,
     "r/wallstreetbets": 0.0,
-    "r/hacking": 0.204,
+    "r/hacking": 0.2,
     "r/ElevenLabs": 0.0,
-    "r/cybersecurity": 0.113,
+    "r/cybersecurity": 0.112,
     "r/SaaS": 0.0,
-    "r/singularity": 0.435,
+    "r/singularity": 0.424,
     "r/indiehackers": 0.0,
     "r/FluxAI": 0.0,
     "r/ClaudeCode": 0.0,
@@ -46,10 +46,10 @@
     "UPDATE": 0.039,
     "OPEN_SOURCE": 0.0,
     "LAUNCH": 0.0,
-    "BENCHMARK": 0.054,
+    "BENCHMARK": 0.052,
     "RELEASE": 0.014,
     "DEAL": 0.141,
-    "PRICING": 0.16
+    "PRICING": 0.154
   },
   "exemplars": {
     "top": [
@@ -76,15 +76,15 @@
     ],
     "bottom": [
       {
-        "headline": "Anthropic reportedly releases free industry packs for Claude",
+        "headline": "Git-Agni open-sources a farm for automating real iPhones",
         "reward": 0.0
       },
       {
-        "headline": "Gradium AI releases a default TTS model focused on speed and hard cases",
+        "headline": "Lemmalog adds Datalog rules and provenance to LLM agent memory",
         "reward": 0.0
       },
       {
-        "headline": "AlgorithmWatch finds Google election AI Overviews opaque and inconsistent",
+        "headline": "Google introduces agentic video understanding in Gemini",
         "reward": 0.0
       }
     ]
