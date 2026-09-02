@@ -1,7 +1,7 @@
 {
-  "updated_at": "2026-09-01T23:20:34Z",
+  "updated_at": "2026-09-02T04:38:59Z",
   "half_life_days": 14,
-  "n_events": 4440,
+  "n_events": 4637,
   "topic": {
     "company_investment": 0.15,
     "coding": 0.007,
@@ -17,7 +17,7 @@
     "HN": 0.047,
     "huggingface": 0.0,
     "github": 0.0,
-    "official": 0.033,
+    "official": 0.034,
     "r/LocalLLaMA": 0.0,
     "r/comfyui": 0.0,
     "r/StableDiffusion": 0.0,
@@ -27,19 +27,20 @@
     "r/AI_Agents": 0.0,
     "r/perplexity_ai": 0.0,
     "r/MachineLearning": 0.0,
-    "r/cursor": 0.229,
-    "r/artificial": 0.204,
+    "r/cursor": 0.222,
+    "r/artificial": 0.207,
     "r/technology": 0.0,
     "r/wallstreetbets": 0.0,
-    "r/hacking": 0.22,
+    "r/hacking": 0.214,
     "r/ElevenLabs": 0.0,
-    "r/cybersecurity": 0.116,
+    "r/cybersecurity": 0.115,
     "r/SaaS": 0.0,
-    "r/singularity": 0.481,
+    "r/singularity": 0.463,
     "r/indiehackers": 0.0,
     "r/FluxAI": 0.0,
     "r/ClaudeCode": 0.0,
-    "r/ChatGPT": 0.0
+    "r/ChatGPT": 0.0,
+    "r/security": 0.0
   },
   "category": {
     "UPDATE": 0.039,
@@ -47,8 +48,8 @@
     "LAUNCH": 0.0,
     "BENCHMARK": 0.055,
     "RELEASE": 0.014,
-    "DEAL": 0.137,
-    "PRICING": 0.179
+    "DEAL": 0.139,
+    "PRICING": 0.172
   },
   "exemplars": {
     "top": [
@@ -75,15 +76,15 @@
     ],
     "bottom": [
       {
-        "headline": "MiniMax H3 workflow targets consistent face, body, and clothing identity",
+        "headline": "Almanac launches an AI assistant that knows a company’s context",
         "reward": 0.0
       },
       {
-        "headline": "Report exposes Team PCP in Shai-Hulud and LiteLLM supply-chain attacks",
+        "headline": "Cloudflare unveils adaptive intelligence for AI-driven bot attacks",
         "reward": 0.0
       },
       {
-        "headline": "pwnproxy offers a local-first platform for security testing",
+        "headline": "impostor builds an SMB1 authentication server from scratch",
         "reward": 0.0
       }
     ]
