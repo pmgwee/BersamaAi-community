@@ -1,9 +1,9 @@
 {
-  "updated_at": "2026-09-02T11:22:35Z",
+  "updated_at": "2026-09-02T16:37:00Z",
   "half_life_days": 14,
-  "n_events": 4832,
+  "n_events": 5027,
   "topic": {
-    "company_investment": 0.149,
+    "company_investment": 0.148,
     "coding": 0.007,
     "creative_image": 0.0,
     "research_productivity": 0.0,
@@ -27,15 +27,15 @@
     "r/AI_Agents": 0.0,
     "r/perplexity_ai": 0.0,
     "r/MachineLearning": 0.0,
-    "r/cursor": 0.216,
-    "r/artificial": 0.209,
+    "r/cursor": 0.21,
+    "r/artificial": 0.212,
     "r/technology": 0.0,
     "r/wallstreetbets": 0.0,
-    "r/hacking": 0.208,
+    "r/hacking": 0.204,
     "r/ElevenLabs": 0.0,
-    "r/cybersecurity": 0.114,
+    "r/cybersecurity": 0.113,
     "r/SaaS": 0.0,
-    "r/singularity": 0.448,
+    "r/singularity": 0.435,
     "r/indiehackers": 0.0,
     "r/FluxAI": 0.0,
     "r/ClaudeCode": 0.0,
@@ -46,10 +46,10 @@
     "UPDATE": 0.039,
     "OPEN_SOURCE": 0.0,
     "LAUNCH": 0.0,
-    "BENCHMARK": 0.055,
+    "BENCHMARK": 0.054,
     "RELEASE": 0.014,
     "DEAL": 0.141,
-    "PRICING": 0.166
+    "PRICING": 0.16
   },
   "exemplars": {
     "top": [
@@ -76,15 +76,15 @@
     ],
     "bottom": [
       {
-        "headline": "OpenAI backs California bill on youth AI safety",
+        "headline": "Anthropic reportedly releases free industry packs for Claude",
         "reward": 0.0
       },
       {
-        "headline": "Suno users warn of upcoming download limits and possible legacy-model removal",
+        "headline": "Gradium AI releases a default TTS model focused on speed and hard cases",
         "reward": 0.0
       },
       {
-        "headline": "Amazon’s AI spending is discussed alongside rising worker reliance on food assistance",
+        "headline": "AlgorithmWatch finds Google election AI Overviews opaque and inconsistent",
         "reward": 0.0
       }
     ]
