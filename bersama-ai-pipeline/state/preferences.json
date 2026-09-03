@@ -1,10 +1,10 @@
 {
-  "updated_at": "2026-09-03T21:04:42Z",
+  "updated_at": "2026-09-03T23:18:12Z",
   "half_life_days": 14,
-  "n_events": 6093,
+  "n_events": 6265,
   "topic": {
-    "company_investment": 0.136,
-    "coding": 0.007,
+    "company_investment": 0.133,
+    "coding": 0.006,
     "creative_image": 0.0,
     "research_productivity": 0.0,
     "cybersecurity": 0.033,
@@ -14,7 +14,7 @@
     "finance": 0.0
   },
   "source": {
-    "HN": 0.043,
+    "HN": 0.042,
     "huggingface": 0.0,
     "github": 0.0,
     "official": 0.031,
@@ -28,14 +28,14 @@
     "r/perplexity_ai": 0.0,
     "r/MachineLearning": 0.0,
     "r/cursor": 0.191,
-    "r/artificial": 0.197,
+    "r/artificial": 0.191,
     "r/technology": 0.0,
     "r/wallstreetbets": 0.0,
-    "r/hacking": 0.188,
+    "r/hacking": 0.185,
     "r/ElevenLabs": 0.0,
-    "r/cybersecurity": 0.107,
+    "r/cybersecurity": 0.106,
     "r/SaaS": 0.0,
-    "r/singularity": 0.38,
+    "r/singularity": 0.37,
     "r/indiehackers": 0.0,
     "r/FluxAI": 0.0,
     "r/ClaudeCode": 0.0,
@@ -47,10 +47,10 @@
     "UPDATE": 0.038,
     "OPEN_SOURCE": 0.0,
     "LAUNCH": 0.0,
-    "BENCHMARK": 0.043,
+    "BENCHMARK": 0.041,
     "RELEASE": 0.013,
-    "DEAL": 0.138,
-    "PRICING": 0.135
+    "DEAL": 0.137,
+    "PRICING": 0.133
   },
   "exemplars": {
     "top": [
@@ -77,15 +77,15 @@
     ],
     "bottom": [
       {
-        "headline": "BOZAGENTIC packages jailbreak taxonomies and prompt inversion tools",
+        "headline": "fal releases H3 Max, a speed-focused MiniMax H3 variant",
         "reward": 0.0
       },
       {
-        "headline": "NotebookLM users report new five-hour usage limits",
+        "headline": "Wonderful raises $550 million for its enterprise AI agent platform",
         "reward": 0.0
       },
       {
-        "headline": "Blind test compares five leading AI music models",
+        "headline": "FrontierHarness compares nine agent harnesses on cost per pass",
         "reward": 0.0
       }
     ]
