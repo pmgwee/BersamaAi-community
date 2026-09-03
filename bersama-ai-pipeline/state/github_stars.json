@@ -24,8 +24,8 @@
     "ts": "2026-08-23T21:38:08+00:00"
   },
   "XiaoDuoYa/codex-with-chatgpt": {
-    "stars": 2327,
-    "ts": "2026-09-03T11:19:26+00:00"
+    "stars": 2366,
+    "ts": "2026-09-03T16:29:02+00:00"
   },
   "lopopolo/harness-engineering": {
     "stars": 2320,
@@ -39,13 +39,13 @@
     "stars": 2050,
     "ts": "2026-07-29T22:15:45+00:00"
   },
+  "Nanako0129/sepia": {
+    "stars": 1831,
+    "ts": "2026-09-03T16:29:02+00:00"
+  },
   "wang2122/sprix-sage-router": {
     "stars": 1756,
     "ts": "2026-08-24T21:46:05+00:00"
-  },
-  "Nanako0129/sepia": {
-    "stars": 1753,
-    "ts": "2026-09-03T11:19:26+00:00"
   },
   "Vincentwei1021/video-shotcraft": {
     "stars": 1731,
@@ -66,6 +66,10 @@
   "Binaryify/open-kimi-ppt-skill": {
     "stars": 1603,
     "ts": "2026-08-11T22:07:17+00:00"
+  },
+  "anthropics/commerce-agents": {
+    "stars": 1368,
+    "ts": "2026-09-03T16:29:02+00:00"
   },
   "cinderline/northcinder": {
     "stars": 1206,
@@ -91,6 +95,10 @@
     "stars": 1161,
     "ts": "2026-08-12T22:05:35+00:00"
   },
+  "cbrock84/headcount": {
+    "stars": 1159,
+    "ts": "2026-09-03T16:29:02+00:00"
+  },
   "jdshfhds/northcinder": {
     "stars": 1158,
     "ts": "2026-08-19T04:01:38+00:00"
@@ -103,17 +111,9 @@
     "stars": 1144,
     "ts": "2026-09-02T23:21:24+00:00"
   },
-  "cbrock84/headcount": {
-    "stars": 1141,
-    "ts": "2026-09-03T11:19:26+00:00"
-  },
   "nateherkai/scroll-craft": {
     "stars": 1132,
     "ts": "2026-08-28T15:26:43+00:00"
-  },
-  "anthropics/commerce-agents": {
-    "stars": 1076,
-    "ts": "2026-09-03T11:19:26+00:00"
   },
   "Accio-org/RealReplicaBench": {
     "stars": 1042,
@@ -187,6 +187,10 @@
     "stars": 714,
     "ts": "2026-08-30T23:32:51+00:00"
   },
+  "2akouwu/reverify": {
+    "stars": 712,
+    "ts": "2026-09-03T16:29:02+00:00"
+  },
   "brayonpi/hexstellar": {
     "stars": 702,
     "ts": "2026-09-02T23:24:11+00:00"
@@ -203,13 +207,9 @@
     "stars": 667,
     "ts": "2026-07-27T22:21:23+00:00"
   },
-  "2akouwu/reverify": {
-    "stars": 667,
-    "ts": "2026-09-03T11:19:26+00:00"
-  },
   "Player-YN/PawWork_ZhuaZhua": {
-    "stars": 663,
-    "ts": "2026-09-03T11:19:26+00:00"
+    "stars": 667,
+    "ts": "2026-09-03T16:29:02+00:00"
   },
   "gavamedia/deltafin": {
     "stars": 656,
@@ -391,6 +391,10 @@
     "stars": 398,
     "ts": "2026-08-16T21:36:27+00:00"
   },
+  "Ryze-AI-Adgent/open-seo-mcp-skills": {
+    "stars": 393,
+    "ts": "2026-09-03T16:29:02+00:00"
+  },
   "DavidCarliez/trustmebro": {
     "stars": 389,
     "ts": "2026-09-01T23:21:23+00:00"
@@ -414,10 +418,6 @@
   "MirroS-Lab/Code-as-World": {
     "stars": 383,
     "ts": "2026-09-02T23:21:24+00:00"
-  },
-  "Ryze-AI-Adgent/open-seo-mcp-skills": {
-    "stars": 378,
-    "ts": "2026-09-03T11:19:26+00:00"
   },
   "perplexityai/numbat": {
     "stars": 374,
@@ -446,6 +446,10 @@
   "OpenSparX/MasterAgent": {
     "stars": 344,
     "ts": "2026-08-16T21:36:27+00:00"
+  },
+  "PhiloLabs/fable51-worlds": {
+    "stars": 344,
+    "ts": "2026-09-03T16:29:02+00:00"
   },
   "ChenShuo2004/cs-board": {
     "stars": 343,
@@ -515,6 +519,10 @@
     "stars": 302,
     "ts": "2026-08-12T22:08:29+00:00"
   },
+  "ZJU-REAL/Easel": {
+    "stars": 302,
+    "ts": "2026-09-03T16:31:10+00:00"
+  },
   "UditAkhourii/neuroarxiv": {
     "stars": 299,
     "ts": "2026-08-11T22:07:17+00:00"
@@ -539,10 +547,6 @@
     "stars": 286,
     "ts": "2026-08-11T22:07:17+00:00"
   },
-  "ZJU-REAL/Easel": {
-    "stars": 284,
-    "ts": "2026-09-03T11:21:32+00:00"
-  },
   "only-cli/oc": {
     "stars": 280,
     "ts": "2026-08-24T21:46:05+00:00"
@@ -552,8 +556,8 @@
     "ts": "2026-08-27T14:16:25+00:00"
   },
   "useagenthq/useagent": {
-    "stars": 277,
-    "ts": "2026-09-03T11:19:26+00:00"
+    "stars": 278,
+    "ts": "2026-09-03T16:29:02+00:00"
   },
   "nkxx188/ComfyUI-MiniMaxH3-Easy": {
     "stars": 276,
@@ -563,6 +567,10 @@
     "stars": 275,
     "ts": "2026-08-05T03:35:42+00:00"
   },
+  "TetreesEX/TetreesAgent_EX": {
+    "stars": 275,
+    "ts": "2026-09-03T16:29:02+00:00"
+  },
   "Sateezg/codex-bridge": {
     "stars": 272,
     "ts": "2026-08-15T21:37:29+00:00"
@@ -571,9 +579,17 @@
     "stars": 272,
     "ts": "2026-08-19T21:45:15+00:00"
   },
+  "carloslfu/slotstream": {
+    "stars": 272,
+    "ts": "2026-09-03T16:29:02+00:00"
+  },
   "alikon-art/DeterminFlow": {
     "stars": 271,
     "ts": "2026-08-08T21:48:08+00:00"
+  },
+  "Human-Agent-Society/reef": {
+    "stars": 268,
+    "ts": "2026-09-03T16:29:02+00:00"
   },
   "crawfordxx/xiaoma-durex-copywriter": {
     "stars": 266,
@@ -582,10 +598,6 @@
   "joeseesun/qiaomu-cut-skill": {
     "stars": 265,
     "ts": "2026-07-24T22:21:15+00:00"
-  },
-  "carloslfu/slotstream": {
-    "stars": 265,
-    "ts": "2026-09-03T11:19:26+00:00"
   },
   "NVIDIA-NeMo/labs-OO-Agents": {
     "stars": 263,
@@ -611,10 +623,6 @@
     "stars": 259,
     "ts": "2026-09-02T23:21:24+00:00"
   },
-  "PhiloLabs/fable51-worlds": {
-    "stars": 259,
-    "ts": "2026-09-03T11:19:26+00:00"
-  },
   "RinDig/icm-architect": {
     "stars": 254,
     "ts": "2026-07-24T22:21:15+00:00"
@@ -635,10 +643,6 @@
     "stars": 246,
     "ts": "2026-08-19T21:46:18+00:00"
   },
-  "TetreesEX/TetreesAgent_EX": {
-    "stars": 245,
-    "ts": "2026-09-03T11:19:26+00:00"
-  },
   "Carasibana/ComfyUI-H3-FaceRefine": {
     "stars": 244,
     "ts": "2026-08-18T21:41:55+00:00"
@@ -658,10 +662,6 @@
   "cristicretu/diri": {
     "stars": 236,
     "ts": "2026-08-10T22:00:46+00:00"
-  },
-  "Human-Agent-Society/reef": {
-    "stars": 234,
-    "ts": "2026-09-03T11:19:26+00:00"
   },
   "apiframe-ai/seedance-2.0-api": {
     "stars": 232,
@@ -827,6 +827,10 @@
     "stars": 195,
     "ts": "2026-08-14T21:45:13+00:00"
   },
+  "LunarXuan/image-prompt-reverse": {
+    "stars": 195,
+    "ts": "2026-09-03T16:29:02+00:00"
+  },
   "0xwilliamortiz/agents-council": {
     "stars": 193,
     "ts": "2026-07-26T22:15:29+00:00"
@@ -915,6 +919,10 @@
     "stars": 170,
     "ts": "2026-08-23T21:38:08+00:00"
   },
+  "kydlikebtc/awesome-grokbot": {
+    "stars": 170,
+    "ts": "2026-09-03T16:29:02+00:00"
+  },
   "worldwonderer/novel-to-game": {
     "stars": 169,
     "ts": "2026-07-24T22:21:15+00:00"
@@ -922,10 +930,6 @@
   "Vistyy/nopus": {
     "stars": 169,
     "ts": "2026-08-21T21:42:14+00:00"
-  },
-  "kydlikebtc/awesome-grokbot": {
-    "stars": 169,
-    "ts": "2026-09-03T11:19:26+00:00"
   },
   "seyedehsanhadi/sloptrim": {
     "stars": 168,
@@ -938,6 +942,10 @@
   "exachormocontheo1970/Python-Bot": {
     "stars": 167,
     "ts": "2026-08-25T21:49:35+00:00"
+  },
+  "sharptoolbox/ontology-driven-dev": {
+    "stars": 167,
+    "ts": "2026-09-03T16:29:02+00:00"
   },
   "Prism-Shadow/penguin-harness": {
     "stars": 166,
@@ -955,10 +963,6 @@
     "stars": 164,
     "ts": "2026-08-02T08:38:50+00:00"
   },
-  "sharptoolbox/ontology-driven-dev": {
-    "stars": 164,
-    "ts": "2026-09-03T11:19:26+00:00"
-  },
   "mrpulor-gh/nuphus-mcp": {
     "stars": 163,
     "ts": "2026-08-07T21:57:59+00:00"
@@ -971,10 +975,6 @@
     "stars": 163,
     "ts": "2026-08-26T20:06:18+00:00"
   },
-  "LunarXuan/image-prompt-reverse": {
-    "stars": 163,
-    "ts": "2026-09-03T11:19:26+00:00"
-  },
   "jundizhou/easy-stock": {
     "stars": 162,
     "ts": "2026-08-13T22:08:54+00:00"
@@ -985,7 +985,7 @@
   },
   "Vuk97/forward-implementation-first": {
     "stars": 161,
-    "ts": "2026-09-03T11:19:26+00:00"
+    "ts": "2026-09-03T16:29:02+00:00"
   },
   "2998980-hue/surreal-pop-collage": {
     "stars": 160,
@@ -1002,6 +1002,10 @@
   "chengyi-ai/native-subtitle-quote-image": {
     "stars": 158,
     "ts": "2026-08-22T21:38:43+00:00"
+  },
+  "gozen3ji/consulting-pptx-skill": {
+    "stars": 158,
+    "ts": "2026-09-03T16:29:02+00:00"
   },
   "GENEXIS-AI/gpt-image-skill": {
     "stars": 157,
@@ -1081,6 +1085,6 @@
   },
   "d4ncboz/jailbreak": {
     "stars": 102,
-    "ts": "2026-09-03T11:23:36+00:00"
+    "ts": "2026-09-03T16:33:01+00:00"
   }
 }

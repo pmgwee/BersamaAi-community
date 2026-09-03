@@ -1,9 +1,9 @@
 {
-  "updated_at": "2026-09-03T11:18:38Z",
+  "updated_at": "2026-09-03T16:28:13Z",
   "half_life_days": 14,
-  "n_events": 5755,
+  "n_events": 5926,
   "topic": {
-    "company_investment": 0.141,
+    "company_investment": 0.139,
     "coding": 0.007,
     "creative_image": 0.0,
     "research_productivity": 0.0,
@@ -27,15 +27,15 @@
     "r/AI_Agents": 0.0,
     "r/perplexity_ai": 0.0,
     "r/MachineLearning": 0.0,
-    "r/cursor": 0.194,
-    "r/artificial": 0.211,
+    "r/cursor": 0.191,
+    "r/artificial": 0.204,
     "r/technology": 0.0,
     "r/wallstreetbets": 0.0,
-    "r/hacking": 0.195,
+    "r/hacking": 0.192,
     "r/ElevenLabs": 0.0,
-    "r/cybersecurity": 0.108,
+    "r/cybersecurity": 0.107,
     "r/SaaS": 0.0,
-    "r/singularity": 0.398,
+    "r/singularity": 0.391,
     "r/indiehackers": 0.0,
     "r/FluxAI": 0.0,
     "r/ClaudeCode": 0.0,
@@ -47,10 +47,10 @@
     "UPDATE": 0.039,
     "OPEN_SOURCE": 0.0,
     "LAUNCH": 0.0,
-    "BENCHMARK": 0.046,
+    "BENCHMARK": 0.045,
     "RELEASE": 0.014,
-    "DEAL": 0.14,
-    "PRICING": 0.142
+    "DEAL": 0.139,
+    "PRICING": 0.139
   },
   "exemplars": {
     "top": [
@@ -77,15 +77,15 @@
     ],
     "bottom": [
       {
-        "headline": "Open SEO MCP skills connect Claude to search and analytics workflows",
+        "headline": "Creator builds an effectively continuous AI livestream with MiniMax H3",
         "reward": 0.0
       },
       {
-        "headline": "Dell shares rise after the company raises its fiscal 2027 outlook",
+        "headline": "Weedout browser extension hides YouTube videos labeled as AI-generated",
         "reward": 0.0
       },
       {
-        "headline": "Suno faces a class-action lawsuit filed by Jason Isbell",
+        "headline": "ComfyUI community adds a DLSS 5 enhancement workflow for video",
         "reward": 0.0
       }
     ]
