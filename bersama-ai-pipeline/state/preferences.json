@@ -1,23 +1,23 @@
 {
-  "updated_at": "2026-09-03T04:36:39Z",
+  "updated_at": "2026-09-03T11:18:38Z",
   "half_life_days": 14,
-  "n_events": 5583,
+  "n_events": 5755,
   "topic": {
-    "company_investment": 0.144,
+    "company_investment": 0.141,
     "coding": 0.007,
     "creative_image": 0.0,
     "research_productivity": 0.0,
-    "cybersecurity": 0.032,
+    "cybersecurity": 0.033,
     "creative_video": 0.0,
     "research_study": 0.0,
     "creative_voice": 0.0,
     "finance": 0.0
   },
   "source": {
-    "HN": 0.045,
+    "HN": 0.044,
     "huggingface": 0.0,
     "github": 0.0,
-    "official": 0.033,
+    "official": 0.032,
     "r/LocalLLaMA": 0.0,
     "r/comfyui": 0.0,
     "r/StableDiffusion": 0.0,
@@ -27,29 +27,30 @@
     "r/AI_Agents": 0.0,
     "r/perplexity_ai": 0.0,
     "r/MachineLearning": 0.0,
-    "r/cursor": 0.196,
-    "r/artificial": 0.213,
+    "r/cursor": 0.194,
+    "r/artificial": 0.211,
     "r/technology": 0.0,
     "r/wallstreetbets": 0.0,
-    "r/hacking": 0.196,
+    "r/hacking": 0.195,
     "r/ElevenLabs": 0.0,
-    "r/cybersecurity": 0.11,
+    "r/cybersecurity": 0.108,
     "r/SaaS": 0.0,
-    "r/singularity": 0.406,
+    "r/singularity": 0.398,
     "r/indiehackers": 0.0,
     "r/FluxAI": 0.0,
     "r/ClaudeCode": 0.0,
     "r/ChatGPT": 0.0,
-    "r/security": 0.0
+    "r/security": 0.0,
+    "r/SunoAI": 0.0
   },
   "category": {
     "UPDATE": 0.039,
     "OPEN_SOURCE": 0.0,
     "LAUNCH": 0.0,
-    "BENCHMARK": 0.048,
+    "BENCHMARK": 0.046,
     "RELEASE": 0.014,
-    "DEAL": 0.141,
-    "PRICING": 0.145
+    "DEAL": 0.14,
+    "PRICING": 0.142
   },
   "exemplars": {
     "top": [
@@ -76,15 +77,15 @@
     ],
     "bottom": [
       {
-        "headline": "Anthropic faces a multibillion-dollar lawsuit over alleged song-training practices",
+        "headline": "Open SEO MCP skills connect Claude to search and analytics workflows",
         "reward": 0.0
       },
       {
-        "headline": "China-linked campaign targets high-value networks and critical infrastructure",
+        "headline": "Dell shares rise after the company raises its fiscal 2027 outlook",
         "reward": 0.0
       },
       {
-        "headline": "Researchers use Claude Code to reverse-engineer a patched Papercut NG vulnerability",
+        "headline": "Suno faces a class-action lawsuit filed by Jason Isbell",
         "reward": 0.0
       }
     ]
