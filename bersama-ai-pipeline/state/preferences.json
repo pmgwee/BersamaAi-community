@@ -1,9 +1,9 @@
 {
-  "updated_at": "2026-09-03T16:28:13Z",
+  "updated_at": "2026-09-03T21:04:42Z",
   "half_life_days": 14,
-  "n_events": 5926,
+  "n_events": 6093,
   "topic": {
-    "company_investment": 0.139,
+    "company_investment": 0.136,
     "coding": 0.007,
     "creative_image": 0.0,
     "research_productivity": 0.0,
@@ -14,10 +14,10 @@
     "finance": 0.0
   },
   "source": {
-    "HN": 0.044,
+    "HN": 0.043,
     "huggingface": 0.0,
     "github": 0.0,
-    "official": 0.032,
+    "official": 0.031,
     "r/LocalLLaMA": 0.0,
     "r/comfyui": 0.0,
     "r/StableDiffusion": 0.0,
@@ -28,14 +28,14 @@
     "r/perplexity_ai": 0.0,
     "r/MachineLearning": 0.0,
     "r/cursor": 0.191,
-    "r/artificial": 0.204,
+    "r/artificial": 0.197,
     "r/technology": 0.0,
     "r/wallstreetbets": 0.0,
-    "r/hacking": 0.192,
+    "r/hacking": 0.188,
     "r/ElevenLabs": 0.0,
     "r/cybersecurity": 0.107,
     "r/SaaS": 0.0,
-    "r/singularity": 0.391,
+    "r/singularity": 0.38,
     "r/indiehackers": 0.0,
     "r/FluxAI": 0.0,
     "r/ClaudeCode": 0.0,
@@ -44,13 +44,13 @@
     "r/SunoAI": 0.0
   },
   "category": {
-    "UPDATE": 0.039,
+    "UPDATE": 0.038,
     "OPEN_SOURCE": 0.0,
     "LAUNCH": 0.0,
-    "BENCHMARK": 0.045,
-    "RELEASE": 0.014,
-    "DEAL": 0.139,
-    "PRICING": 0.139
+    "BENCHMARK": 0.043,
+    "RELEASE": 0.013,
+    "DEAL": 0.138,
+    "PRICING": 0.135
   },
   "exemplars": {
     "top": [
@@ -77,15 +77,15 @@
     ],
     "bottom": [
       {
-        "headline": "Creator builds an effectively continuous AI livestream with MiniMax H3",
+        "headline": "BOZAGENTIC packages jailbreak taxonomies and prompt inversion tools",
         "reward": 0.0
       },
       {
-        "headline": "Weedout browser extension hides YouTube videos labeled as AI-generated",
+        "headline": "NotebookLM users report new five-hour usage limits",
         "reward": 0.0
       },
       {
-        "headline": "ComfyUI community adds a DLSS 5 enhancement workflow for video",
+        "headline": "Blind test compares five leading AI music models",
         "reward": 0.0
       }
     ]
