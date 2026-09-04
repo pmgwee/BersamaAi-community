@@ -1,20 +1,20 @@
 {
-  "updated_at": "2026-09-04T11:21:53Z",
+  "updated_at": "2026-09-04T16:24:13Z",
   "half_life_days": 14,
-  "n_events": 6612,
+  "n_events": 6790,
   "topic": {
-    "company_investment": 0.128,
+    "company_investment": 0.125,
     "coding": 0.006,
     "creative_image": 0.0,
     "research_productivity": 0.0,
-    "cybersecurity": 0.033,
+    "cybersecurity": 0.032,
     "creative_video": 0.0,
     "research_study": 0.0,
     "creative_voice": 0.0,
     "finance": 0.0
   },
   "source": {
-    "HN": 0.039,
+    "HN": 0.038,
     "huggingface": 0.0,
     "github": 0.0,
     "official": 0.03,
@@ -28,29 +28,30 @@
     "r/perplexity_ai": 0.0,
     "r/MachineLearning": 0.0,
     "r/cursor": 0.191,
-    "r/artificial": 0.18,
+    "r/artificial": 0.175,
     "r/technology": 0.0,
     "r/wallstreetbets": 0.0,
-    "r/hacking": 0.18,
+    "r/hacking": 0.178,
     "r/ElevenLabs": 0.0,
-    "r/cybersecurity": 0.105,
+    "r/cybersecurity": 0.102,
     "r/SaaS": 0.0,
-    "r/singularity": 0.351,
+    "r/singularity": 0.342,
     "r/indiehackers": 0.0,
     "r/FluxAI": 0.0,
     "r/ClaudeCode": 0.0,
     "r/ChatGPT": 0.0,
     "r/security": 0.0,
-    "r/SunoAI": 0.0
+    "r/SunoAI": 0.0,
+    "r/SideProject": 0.0
   },
   "category": {
-    "UPDATE": 0.037,
+    "UPDATE": 0.036,
     "OPEN_SOURCE": 0.0,
     "LAUNCH": 0.0,
-    "BENCHMARK": 0.039,
+    "BENCHMARK": 0.038,
     "RELEASE": 0.012,
-    "DEAL": 0.136,
-    "PRICING": 0.127
+    "DEAL": 0.134,
+    "PRICING": 0.124
   },
   "exemplars": {
     "top": [
@@ -77,15 +78,15 @@
     ],
     "bottom": [
       {
-        "headline": "Study examines how LLMs may contribute to shrinking linguistic diversity",
+        "headline": "Anthropic signs a reported $35 billion infrastructure deal with Lambda",
         "reward": 0.0
       },
       {
-        "headline": "U.S. Justice Department backs fair use for AI training in copyright case",
+        "headline": "Hugging Face’s H3 Acceleration Arena publishes Turbo LoRA results",
         "reward": 0.0
       },
       {
-        "headline": "Deepity tests predictive-coding networks in a C++ implementation",
+        "headline": "Indie developer’s job-search competitor reaches 7,500 users",
         "reward": 0.0
       }
     ]
