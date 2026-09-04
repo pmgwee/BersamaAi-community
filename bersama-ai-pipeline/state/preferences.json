@@ -1,9 +1,9 @@
 {
-  "updated_at": "2026-09-03T23:18:12Z",
+  "updated_at": "2026-09-04T04:37:59Z",
   "half_life_days": 14,
-  "n_events": 6265,
+  "n_events": 6436,
   "topic": {
-    "company_investment": 0.133,
+    "company_investment": 0.131,
     "coding": 0.006,
     "creative_image": 0.0,
     "research_productivity": 0.0,
@@ -14,10 +14,10 @@
     "finance": 0.0
   },
   "source": {
-    "HN": 0.042,
+    "HN": 0.04,
     "huggingface": 0.0,
     "github": 0.0,
-    "official": 0.031,
+    "official": 0.03,
     "r/LocalLLaMA": 0.0,
     "r/comfyui": 0.0,
     "r/StableDiffusion": 0.0,
@@ -28,14 +28,14 @@
     "r/perplexity_ai": 0.0,
     "r/MachineLearning": 0.0,
     "r/cursor": 0.191,
-    "r/artificial": 0.191,
+    "r/artificial": 0.185,
     "r/technology": 0.0,
     "r/wallstreetbets": 0.0,
-    "r/hacking": 0.185,
+    "r/hacking": 0.183,
     "r/ElevenLabs": 0.0,
-    "r/cybersecurity": 0.106,
+    "r/cybersecurity": 0.105,
     "r/SaaS": 0.0,
-    "r/singularity": 0.37,
+    "r/singularity": 0.36,
     "r/indiehackers": 0.0,
     "r/FluxAI": 0.0,
     "r/ClaudeCode": 0.0,
@@ -44,13 +44,13 @@
     "r/SunoAI": 0.0
   },
   "category": {
-    "UPDATE": 0.038,
+    "UPDATE": 0.037,
     "OPEN_SOURCE": 0.0,
     "LAUNCH": 0.0,
-    "BENCHMARK": 0.041,
-    "RELEASE": 0.013,
+    "BENCHMARK": 0.04,
+    "RELEASE": 0.012,
     "DEAL": 0.137,
-    "PRICING": 0.133
+    "PRICING": 0.13
   },
   "exemplars": {
     "top": [
@@ -77,15 +77,15 @@
     ],
     "bottom": [
       {
-        "headline": "fal releases H3 Max, a speed-focused MiniMax H3 variant",
+        "headline": "METR publishes an investigation into the OpenAI–Hugging Face hacking incident",
         "reward": 0.0
       },
       {
-        "headline": "Wonderful raises $550 million for its enterprise AI agent platform",
+        "headline": "Fizgig documents a new Minimax H3 LoRA training combination",
         "reward": 0.0
       },
       {
-        "headline": "FrontierHarness compares nine agent harnesses on cost per pass",
+        "headline": "IBM time-series models target real-time intelligence in Confluent",
         "reward": 0.0
       }
     ]
