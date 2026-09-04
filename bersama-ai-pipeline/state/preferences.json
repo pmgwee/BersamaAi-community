@@ -1,20 +1,20 @@
 {
-  "updated_at": "2026-09-04T20:48:16Z",
+  "updated_at": "2026-09-04T23:03:54Z",
   "half_life_days": 14,
-  "n_events": 6971,
+  "n_events": 7159,
   "topic": {
-    "company_investment": 0.122,
+    "company_investment": 0.119,
     "coding": 0.006,
     "creative_image": 0.0,
     "research_productivity": 0.0,
-    "cybersecurity": 0.032,
+    "cybersecurity": 0.031,
     "creative_video": 0.0,
     "research_study": 0.0,
     "creative_voice": 0.0,
     "finance": 0.0
   },
   "source": {
-    "HN": 0.037,
+    "HN": 0.036,
     "huggingface": 0.0,
     "github": 0.0,
     "official": 0.029,
@@ -28,14 +28,14 @@
     "r/perplexity_ai": 0.0,
     "r/MachineLearning": 0.0,
     "r/cursor": 0.191,
-    "r/artificial": 0.17,
+    "r/artificial": 0.165,
     "r/technology": 0.0,
     "r/wallstreetbets": 0.0,
-    "r/hacking": 0.176,
+    "r/hacking": 0.174,
     "r/ElevenLabs": 0.0,
-    "r/cybersecurity": 0.1,
+    "r/cybersecurity": 0.097,
     "r/SaaS": 0.0,
-    "r/singularity": 0.333,
+    "r/singularity": 0.325,
     "r/indiehackers": 0.0,
     "r/FluxAI": 0.0,
     "r/ClaudeCode": 0.0,
@@ -48,10 +48,10 @@
     "UPDATE": 0.036,
     "OPEN_SOURCE": 0.0,
     "LAUNCH": 0.0,
-    "BENCHMARK": 0.037,
+    "BENCHMARK": 0.035,
     "RELEASE": 0.011,
-    "DEAL": 0.131,
-    "PRICING": 0.122
+    "DEAL": 0.128,
+    "PRICING": 0.12
   },
   "exemplars": {
     "top": [
@@ -78,15 +78,15 @@
     ],
     "bottom": [
       {
-        "headline": "Indie developer’s job-search competitor reaches 7,500 users",
+        "headline": "Unit 42 investigates an AI-assisted cyber attack",
         "reward": 0.0
       },
       {
-        "headline": "Z.ai publishes GLM-5.3-Flash on Hugging Face",
+        "headline": "OpenAI commits $1 billion to protect essential services",
         "reward": 0.0
       },
       {
-        "headline": "Nvidia announces agreement to acquire Hugging Face",
+        "headline": "Go grandmaster Shin defeats KataGo with a two-stone handicap",
         "reward": 0.0
       }
     ]
