@@ -1,9 +1,9 @@
 {
-  "updated_at": "2026-09-04T04:37:59Z",
+  "updated_at": "2026-09-04T11:21:53Z",
   "half_life_days": 14,
-  "n_events": 6436,
+  "n_events": 6612,
   "topic": {
-    "company_investment": 0.131,
+    "company_investment": 0.128,
     "coding": 0.006,
     "creative_image": 0.0,
     "research_productivity": 0.0,
@@ -14,7 +14,7 @@
     "finance": 0.0
   },
   "source": {
-    "HN": 0.04,
+    "HN": 0.039,
     "huggingface": 0.0,
     "github": 0.0,
     "official": 0.03,
@@ -28,14 +28,14 @@
     "r/perplexity_ai": 0.0,
     "r/MachineLearning": 0.0,
     "r/cursor": 0.191,
-    "r/artificial": 0.185,
+    "r/artificial": 0.18,
     "r/technology": 0.0,
     "r/wallstreetbets": 0.0,
-    "r/hacking": 0.183,
+    "r/hacking": 0.18,
     "r/ElevenLabs": 0.0,
     "r/cybersecurity": 0.105,
     "r/SaaS": 0.0,
-    "r/singularity": 0.36,
+    "r/singularity": 0.351,
     "r/indiehackers": 0.0,
     "r/FluxAI": 0.0,
     "r/ClaudeCode": 0.0,
@@ -47,10 +47,10 @@
     "UPDATE": 0.037,
     "OPEN_SOURCE": 0.0,
     "LAUNCH": 0.0,
-    "BENCHMARK": 0.04,
+    "BENCHMARK": 0.039,
     "RELEASE": 0.012,
-    "DEAL": 0.137,
-    "PRICING": 0.13
+    "DEAL": 0.136,
+    "PRICING": 0.127
   },
   "exemplars": {
     "top": [
@@ -77,15 +77,15 @@
     ],
     "bottom": [
       {
-        "headline": "METR publishes an investigation into the OpenAI–Hugging Face hacking incident",
+        "headline": "Study examines how LLMs may contribute to shrinking linguistic diversity",
         "reward": 0.0
       },
       {
-        "headline": "Fizgig documents a new Minimax H3 LoRA training combination",
+        "headline": "U.S. Justice Department backs fair use for AI training in copyright case",
         "reward": 0.0
       },
       {
-        "headline": "IBM time-series models target real-time intelligence in Confluent",
+        "headline": "Deepity tests predictive-coding networks in a C++ implementation",
         "reward": 0.0
       }
     ]
