@@ -1,13 +1,13 @@
 {
-  "updated_at": "2026-09-05T15:17:08Z",
+  "updated_at": "2026-09-05T17:23:55Z",
   "half_life_days": 14,
-  "n_events": 7748,
+  "n_events": 7952,
   "topic": {
-    "company_investment": 0.111,
+    "company_investment": 0.109,
     "coding": 0.007,
     "creative_image": 0.0,
     "research_productivity": 0.0,
-    "cybersecurity": 0.029,
+    "cybersecurity": 0.028,
     "creative_video": 0.0,
     "research_study": 0.0,
     "creative_voice": 0.0,
@@ -17,7 +17,7 @@
     "HN": 0.035,
     "huggingface": 0.0,
     "github": 0.0,
-    "official": 0.028,
+    "official": 0.027,
     "r/LocalLLaMA": 0.0,
     "r/comfyui": 0.0,
     "r/StableDiffusion": 0.0,
@@ -28,14 +28,14 @@
     "r/perplexity_ai": 0.0,
     "r/MachineLearning": 0.0,
     "r/cursor": 0.191,
-    "r/artificial": 0.153,
+    "r/artificial": 0.149,
     "r/technology": 0.0,
     "r/wallstreetbets": 0.0,
-    "r/hacking": 0.159,
+    "r/hacking": 0.155,
     "r/ElevenLabs": 0.0,
-    "r/cybersecurity": 0.09,
+    "r/cybersecurity": 0.088,
     "r/SaaS": 0.0,
-    "r/singularity": 0.304,
+    "r/singularity": 0.297,
     "r/indiehackers": 0.0,
     "r/FluxAI": 0.0,
     "r/ClaudeCode": 0.0,
@@ -47,13 +47,13 @@
     "r/StartupSoloFounder": 0.0
   },
   "category": {
-    "UPDATE": 0.035,
+    "UPDATE": 0.034,
     "OPEN_SOURCE": 0.0,
     "LAUNCH": 0.0,
-    "BENCHMARK": 0.032,
+    "BENCHMARK": 0.031,
     "RELEASE": 0.01,
-    "DEAL": 0.118,
-    "PRICING": 0.113
+    "DEAL": 0.114,
+    "PRICING": 0.111
   },
   "exemplars": {
     "top": [
@@ -80,15 +80,15 @@
     ],
     "bottom": [
       {
-        "headline": "NeoMME introduces a multimodal, multilingual encoder",
+        "headline": "Fable 5.1 Worlds repo reaches 419 GitHub stars",
         "reward": 0.0
       },
       {
-        "headline": "Reports detail how AI agents reached real systems after sandbox failures",
+        "headline": "Artist fine-tunes SDXL on childhood photos to explore memory recall",
         "reward": 0.0
       },
       {
-        "headline": "Solo builder reports $1,752 in monthly recurring revenue from an AI-built LinkedIn tool",
+        "headline": "OmniCam adds Blender-like 3D camera control to ComfyUI",
         "reward": 0.0
       }
     ]
