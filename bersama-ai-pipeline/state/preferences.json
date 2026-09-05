@@ -1,13 +1,13 @@
 {
-  "updated_at": "2026-09-05T10:38:48Z",
+  "updated_at": "2026-09-05T15:17:08Z",
   "half_life_days": 14,
-  "n_events": 7546,
+  "n_events": 7748,
   "topic": {
-    "company_investment": 0.114,
+    "company_investment": 0.111,
     "coding": 0.007,
     "creative_image": 0.0,
     "research_productivity": 0.0,
-    "cybersecurity": 0.03,
+    "cybersecurity": 0.029,
     "creative_video": 0.0,
     "research_study": 0.0,
     "creative_voice": 0.0,
@@ -28,30 +28,32 @@
     "r/perplexity_ai": 0.0,
     "r/MachineLearning": 0.0,
     "r/cursor": 0.191,
-    "r/artificial": 0.156,
+    "r/artificial": 0.153,
     "r/technology": 0.0,
     "r/wallstreetbets": 0.0,
-    "r/hacking": 0.164,
+    "r/hacking": 0.159,
     "r/ElevenLabs": 0.0,
-    "r/cybersecurity": 0.092,
+    "r/cybersecurity": 0.09,
     "r/SaaS": 0.0,
-    "r/singularity": 0.31,
+    "r/singularity": 0.304,
     "r/indiehackers": 0.0,
     "r/FluxAI": 0.0,
     "r/ClaudeCode": 0.0,
     "r/ChatGPT": 0.0,
     "r/security": 0.0,
     "r/SunoAI": 0.0,
-    "r/SideProject": 0.0
+    "r/SideProject": 0.0,
+    "r/runwayml": 0.0,
+    "r/StartupSoloFounder": 0.0
   },
   "category": {
     "UPDATE": 0.035,
     "OPEN_SOURCE": 0.0,
     "LAUNCH": 0.0,
-    "BENCHMARK": 0.033,
+    "BENCHMARK": 0.032,
     "RELEASE": 0.01,
-    "DEAL": 0.121,
-    "PRICING": 0.115
+    "DEAL": 0.118,
+    "PRICING": 0.113
   },
   "exemplars": {
     "top": [
@@ -78,15 +80,15 @@
     ],
     "bottom": [
       {
-        "headline": "Guizang Yingzao skill turns Chinese architecture photos into editorial posters",
+        "headline": "NeoMME introduces a multimodal, multilingual encoder",
         "reward": 0.0
       },
       {
-        "headline": "Creator tests MiniMax H3 video workflow on an 8GB RTX 3070",
+        "headline": "Reports detail how AI agents reached real systems after sandbox failures",
         "reward": 0.0
       },
       {
-        "headline": "ComfyUI workflow combines Krea 2 character sheets with Flux 2 Klein",
+        "headline": "Solo builder reports $1,752 in monthly recurring revenue from an AI-built LinkedIn tool",
         "reward": 0.0
       }
     ]
