@@ -1,13 +1,13 @@
 {
-  "updated_at": "2026-09-05T20:24:39Z",
+  "updated_at": "2026-09-05T22:56:18Z",
   "half_life_days": 14,
-  "n_events": 8156,
+  "n_events": 8366,
   "topic": {
-    "company_investment": 0.106,
+    "company_investment": 0.104,
     "coding": 0.008,
     "creative_image": 0.0,
     "research_productivity": 0.0,
-    "cybersecurity": 0.027,
+    "cybersecurity": 0.026,
     "creative_video": 0.0,
     "research_study": 0.0,
     "creative_voice": 0.0,
@@ -18,7 +18,7 @@
     "huggingface": 0.0,
     "github": 0.0,
     "official": 0.027,
-    "r/LocalLLaMA": 0.0,
+    "r/LocalLLaMA": 0.006,
     "r/comfyui": 0.0,
     "r/StableDiffusion": 0.0,
     "r/deeplearning": 0.0,
@@ -28,14 +28,14 @@
     "r/perplexity_ai": 0.0,
     "r/MachineLearning": 0.0,
     "r/cursor": 0.191,
-    "r/artificial": 0.145,
+    "r/artificial": 0.142,
     "r/technology": 0.0,
     "r/wallstreetbets": 0.0,
-    "r/hacking": 0.15,
+    "r/hacking": 0.146,
     "r/ElevenLabs": 0.0,
-    "r/cybersecurity": 0.086,
+    "r/cybersecurity": 0.084,
     "r/SaaS": 0.0,
-    "r/singularity": 0.29,
+    "r/singularity": 0.284,
     "r/indiehackers": 0.0,
     "r/FluxAI": 0.0,
     "r/ClaudeCode": 0.0,
@@ -50,10 +50,10 @@
     "UPDATE": 0.034,
     "OPEN_SOURCE": 0.0,
     "LAUNCH": 0.0,
-    "BENCHMARK": 0.029,
+    "BENCHMARK": 0.028,
     "RELEASE": 0.009,
-    "DEAL": 0.111,
-    "PRICING": 0.109
+    "DEAL": 0.11,
+    "PRICING": 0.107
   },
   "exemplars": {
     "top": [
@@ -80,15 +80,15 @@
     ],
     "bottom": [
       {
-        "headline": "Fable 5.1 Worlds repo reaches 419 GitHub stars",
+        "headline": "GitHub details HydraFusion multi-model orchestration for frontier-quality agents",
         "reward": 0.0
       },
       {
-        "headline": "Artist fine-tunes SDXL on childhood photos to explore memory recall",
+        "headline": "Corporate adoption of open-source AI accelerates",
         "reward": 0.0
       },
       {
-        "headline": "OmniCam adds Blender-like 3D camera control to ComfyUI",
+        "headline": "Consulting-pptx-skill gives Claude Code a structured presentation workflow",
         "reward": 0.0
       }
     ]
