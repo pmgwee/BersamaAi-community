@@ -40,8 +40,8 @@
     "ts": "2026-07-29T22:15:45+00:00"
   },
   "anthropics/commerce-agents": {
-    "stars": 1922,
-    "ts": "2026-09-04T23:04:42+00:00"
+    "stars": 1947,
+    "ts": "2026-09-05T04:34:35+00:00"
   },
   "Nanako0129/sepia": {
     "stars": 1862,
@@ -152,8 +152,8 @@
     "ts": "2026-08-19T21:43:56+00:00"
   },
   "2akouwu/reverify": {
-    "stars": 878,
-    "ts": "2026-09-04T23:04:42+00:00"
+    "stars": 890,
+    "ts": "2026-09-05T04:34:35+00:00"
   },
   "ysr666/dsh-vision-router": {
     "stars": 844,
@@ -355,6 +355,10 @@
     "stars": 438,
     "ts": "2026-08-10T22:02:04+00:00"
   },
+  "Human-Agent-Society/reef": {
+    "stars": 437,
+    "ts": "2026-09-05T04:34:35+00:00"
+  },
   "danilo-znamerovszkij/draw-your-font": {
     "stars": 435,
     "ts": "2026-07-28T22:18:53+00:00"
@@ -372,8 +376,8 @@
     "ts": "2026-08-10T22:00:46+00:00"
   },
   "PhiloLabs/fable51-worlds": {
-    "stars": 425,
-    "ts": "2026-09-04T23:04:42+00:00"
+    "stars": 426,
+    "ts": "2026-09-05T04:34:35+00:00"
   },
   "KinetiNode/claude-fable-5-system-prompt-clean": {
     "stars": 418,
@@ -382,10 +386,6 @@
   "OnlyTerp/opengrok": {
     "stars": 416,
     "ts": "2026-09-02T23:21:24+00:00"
-  },
-  "Human-Agent-Society/reef": {
-    "stars": 412,
-    "ts": "2026-09-04T23:04:42+00:00"
   },
   "Kritt-ai/open-kritt": {
     "stars": 411,
@@ -487,6 +487,10 @@
     "stars": 325,
     "ts": "2026-09-01T23:21:23+00:00"
   },
+  "op7418/guizang-yingzao-skill": {
+    "stars": 324,
+    "ts": "2026-09-05T04:34:35+00:00"
+  },
   "HanyuanWang/LiveStream-Agent-Studio": {
     "stars": 322,
     "ts": "2026-08-28T15:26:43+00:00"
@@ -507,17 +511,13 @@
     "stars": 315,
     "ts": "2026-07-31T22:18:00+00:00"
   },
-  "op7418/guizang-yingzao-skill": {
-    "stars": 313,
-    "ts": "2026-09-04T23:04:42+00:00"
-  },
   "aigclink/geolook": {
     "stars": 312,
     "ts": "2026-08-04T22:31:22+00:00"
   },
   "kydlikebtc/awesome-grokbot": {
-    "stars": 306,
-    "ts": "2026-09-04T23:04:42+00:00"
+    "stars": 307,
+    "ts": "2026-09-05T04:34:35+00:00"
   },
   "0xwilliamortiz/andrej-karpathy-skills": {
     "stars": 305,
@@ -559,6 +559,10 @@
     "stars": 286,
     "ts": "2026-08-11T22:07:17+00:00"
   },
+  "LunarXuan/image-prompt-reverse": {
+    "stars": 286,
+    "ts": "2026-09-05T04:34:35+00:00"
+  },
   "useagenthq/useagent": {
     "stars": 284,
     "ts": "2026-09-04T23:04:42+00:00"
@@ -574,10 +578,6 @@
   "carloslfu/slotstream": {
     "stars": 278,
     "ts": "2026-09-03T23:19:00+00:00"
-  },
-  "LunarXuan/image-prompt-reverse": {
-    "stars": 277,
-    "ts": "2026-09-04T23:04:42+00:00"
   },
   "nkxx188/ComfyUI-MiniMaxH3-Easy": {
     "stars": 276,
@@ -719,6 +719,10 @@
     "stars": 223,
     "ts": "2026-08-22T21:38:43+00:00"
   },
+  "gozen3ji/consulting-pptx-skill": {
+    "stars": 223,
+    "ts": "2026-09-05T04:34:35+00:00"
+  },
   "Merit-Systems/OpenInstinct": {
     "stars": 221,
     "ts": "2026-08-31T20:52:20+00:00"
@@ -746,10 +750,6 @@
   "paxlabs-inc/machine-genome": {
     "stars": 213,
     "ts": "2026-07-26T22:15:29+00:00"
-  },
-  "gozen3ji/consulting-pptx-skill": {
-    "stars": 212,
-    "ts": "2026-09-04T23:04:42+00:00"
   },
   "TaiT-tt/tait-crt-interface-skill": {
     "stars": 211,
@@ -884,8 +884,8 @@
     "ts": "2026-08-17T21:43:43+00:00"
   },
   "sharptoolbox/ontology-driven-dev": {
-    "stars": 179,
-    "ts": "2026-09-04T23:04:42+00:00"
+    "stars": 181,
+    "ts": "2026-09-05T04:34:35+00:00"
   },
   "iamlukethedev/Hermes3D": {
     "stars": 178,
@@ -935,6 +935,10 @@
     "stars": 170,
     "ts": "2026-08-23T21:38:08+00:00"
   },
+  "Agenta-AI/awesome-ai-agent-platforms": {
+    "stars": 170,
+    "ts": "2026-09-05T04:34:35+00:00"
+  },
   "worldwonderer/novel-to-game": {
     "stars": 169,
     "ts": "2026-07-24T22:21:15+00:00"
@@ -971,9 +975,9 @@
     "stars": 164,
     "ts": "2026-08-02T08:38:50+00:00"
   },
-  "Agenta-AI/awesome-ai-agent-platforms": {
+  "AMAP-ML/DreamX-Creator": {
     "stars": 164,
-    "ts": "2026-09-04T23:04:42+00:00"
+    "ts": "2026-09-05T04:36:06+00:00"
   },
   "mrpulor-gh/nuphus-mcp": {
     "stars": 163,
@@ -999,10 +1003,6 @@
     "stars": 161,
     "ts": "2026-08-30T23:32:51+00:00"
   },
-  "AMAP-ML/DreamX-Creator": {
-    "stars": 161,
-    "ts": "2026-09-04T23:06:13+00:00"
-  },
   "2998980-hue/surreal-pop-collage": {
     "stars": 160,
     "ts": "2026-08-14T21:43:42+00:00"
@@ -1023,6 +1023,10 @@
     "stars": 157,
     "ts": "2026-09-01T23:21:23+00:00"
   },
+  "jarrenrocks/bot-crossing": {
+    "stars": 156,
+    "ts": "2026-09-05T04:34:35+00:00"
+  },
   "hewzhew/dsh-agent-rp": {
     "stars": 155,
     "ts": "2026-08-18T15:49:06+00:00"
@@ -1038,10 +1042,6 @@
   "YINGLINGH/limioryn": {
     "stars": 153,
     "ts": "2026-08-13T22:05:38+00:00"
-  },
-  "jarrenrocks/bot-crossing": {
-    "stars": 153,
-    "ts": "2026-09-04T23:04:42+00:00"
   },
   "arcships/aimux": {
     "stars": 152,

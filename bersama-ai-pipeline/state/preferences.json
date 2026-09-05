@@ -1,13 +1,13 @@
 {
-  "updated_at": "2026-09-04T23:03:54Z",
+  "updated_at": "2026-09-05T04:33:47Z",
   "half_life_days": 14,
-  "n_events": 7159,
+  "n_events": 7349,
   "topic": {
-    "company_investment": 0.119,
+    "company_investment": 0.117,
     "coding": 0.006,
     "creative_image": 0.0,
     "research_productivity": 0.0,
-    "cybersecurity": 0.031,
+    "cybersecurity": 0.03,
     "creative_video": 0.0,
     "research_study": 0.0,
     "creative_voice": 0.0,
@@ -28,14 +28,14 @@
     "r/perplexity_ai": 0.0,
     "r/MachineLearning": 0.0,
     "r/cursor": 0.191,
-    "r/artificial": 0.165,
+    "r/artificial": 0.161,
     "r/technology": 0.0,
     "r/wallstreetbets": 0.0,
-    "r/hacking": 0.174,
+    "r/hacking": 0.169,
     "r/ElevenLabs": 0.0,
-    "r/cybersecurity": 0.097,
+    "r/cybersecurity": 0.094,
     "r/SaaS": 0.0,
-    "r/singularity": 0.325,
+    "r/singularity": 0.318,
     "r/indiehackers": 0.0,
     "r/FluxAI": 0.0,
     "r/ClaudeCode": 0.0,
@@ -45,13 +45,13 @@
     "r/SideProject": 0.0
   },
   "category": {
-    "UPDATE": 0.036,
+    "UPDATE": 0.035,
     "OPEN_SOURCE": 0.0,
     "LAUNCH": 0.0,
-    "BENCHMARK": 0.035,
+    "BENCHMARK": 0.034,
     "RELEASE": 0.011,
-    "DEAL": 0.128,
-    "PRICING": 0.12
+    "DEAL": 0.124,
+    "PRICING": 0.117
   },
   "exemplars": {
     "top": [
@@ -78,15 +78,15 @@
     ],
     "bottom": [
       {
-        "headline": "Unit 42 investigates an AI-assisted cyber attack",
+        "headline": "LunarXuan releases an image-prompt reverse-engineering skill for Codex",
         "reward": 0.0
       },
       {
-        "headline": "OpenAI commits $1 billion to protect essential services",
+        "headline": "TetreesAgent_EX offers an MCP agent for zero-GPU training and trading",
         "reward": 0.0
       },
       {
-        "headline": "Go grandmaster Shin defeats KataGo with a two-stone handicap",
+        "headline": "Suno users report download limits taking effect",
         "reward": 0.0
       }
     ]
