@@ -1,10 +1,10 @@
 {
-  "updated_at": "2026-09-05T04:33:47Z",
+  "updated_at": "2026-09-05T10:38:48Z",
   "half_life_days": 14,
-  "n_events": 7349,
+  "n_events": 7546,
   "topic": {
-    "company_investment": 0.117,
-    "coding": 0.006,
+    "company_investment": 0.114,
+    "coding": 0.007,
     "creative_image": 0.0,
     "research_productivity": 0.0,
     "cybersecurity": 0.03,
@@ -14,10 +14,10 @@
     "finance": 0.0
   },
   "source": {
-    "HN": 0.036,
+    "HN": 0.035,
     "huggingface": 0.0,
     "github": 0.0,
-    "official": 0.029,
+    "official": 0.028,
     "r/LocalLLaMA": 0.0,
     "r/comfyui": 0.0,
     "r/StableDiffusion": 0.0,
@@ -28,14 +28,14 @@
     "r/perplexity_ai": 0.0,
     "r/MachineLearning": 0.0,
     "r/cursor": 0.191,
-    "r/artificial": 0.161,
+    "r/artificial": 0.156,
     "r/technology": 0.0,
     "r/wallstreetbets": 0.0,
-    "r/hacking": 0.169,
+    "r/hacking": 0.164,
     "r/ElevenLabs": 0.0,
-    "r/cybersecurity": 0.094,
+    "r/cybersecurity": 0.092,
     "r/SaaS": 0.0,
-    "r/singularity": 0.318,
+    "r/singularity": 0.31,
     "r/indiehackers": 0.0,
     "r/FluxAI": 0.0,
     "r/ClaudeCode": 0.0,
@@ -48,10 +48,10 @@
     "UPDATE": 0.035,
     "OPEN_SOURCE": 0.0,
     "LAUNCH": 0.0,
-    "BENCHMARK": 0.034,
-    "RELEASE": 0.011,
-    "DEAL": 0.124,
-    "PRICING": 0.117
+    "BENCHMARK": 0.033,
+    "RELEASE": 0.01,
+    "DEAL": 0.121,
+    "PRICING": 0.115
   },
   "exemplars": {
     "top": [
@@ -78,15 +78,15 @@
     ],
     "bottom": [
       {
-        "headline": "LunarXuan releases an image-prompt reverse-engineering skill for Codex",
+        "headline": "Guizang Yingzao skill turns Chinese architecture photos into editorial posters",
         "reward": 0.0
       },
       {
-        "headline": "TetreesAgent_EX offers an MCP agent for zero-GPU training and trading",
+        "headline": "Creator tests MiniMax H3 video workflow on an 8GB RTX 3070",
         "reward": 0.0
       },
       {
-        "headline": "Suno users report download limits taking effect",
+        "headline": "ComfyUI workflow combines Krea 2 character sheets with Flux 2 Klein",
         "reward": 0.0
       }
     ]
