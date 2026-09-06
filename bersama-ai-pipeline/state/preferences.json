@@ -1,24 +1,24 @@
 {
-  "updated_at": "2026-09-06T20:26:33Z",
+  "updated_at": "2026-09-06T22:54:35Z",
   "half_life_days": 14,
-  "n_events": 9193,
+  "n_events": 9409,
   "topic": {
-    "company_investment": 0.096,
-    "coding": 0.01,
+    "company_investment": 0.094,
+    "coding": 0.011,
     "creative_image": 0.0,
     "research_productivity": 0.0,
-    "cybersecurity": 0.024,
+    "cybersecurity": 0.023,
     "creative_video": 0.0,
     "research_study": 0.0,
     "creative_voice": 0.0,
     "finance": 0.0
   },
   "source": {
-    "HN": 0.033,
+    "HN": 0.032,
     "huggingface": 0.0,
-    "github": 0.0,
+    "github": 0.001,
     "official": 0.026,
-    "r/LocalLLaMA": 0.028,
+    "r/LocalLLaMA": 0.033,
     "r/comfyui": 0.0,
     "r/StableDiffusion": 0.0,
     "r/deeplearning": 0.0,
@@ -28,14 +28,14 @@
     "r/perplexity_ai": 0.0,
     "r/MachineLearning": 0.0,
     "r/cursor": 0.191,
-    "r/artificial": 0.13,
+    "r/artificial": 0.127,
     "r/technology": 0.0,
     "r/wallstreetbets": 0.0,
-    "r/hacking": 0.128,
+    "r/hacking": 0.125,
     "r/ElevenLabs": 0.0,
-    "r/cybersecurity": 0.078,
+    "r/cybersecurity": 0.077,
     "r/SaaS": 0.0,
-    "r/singularity": 0.262,
+    "r/singularity": 0.257,
     "r/indiehackers": 0.0,
     "r/FluxAI": 0.0,
     "r/ClaudeCode": 0.0,
@@ -52,10 +52,10 @@
     "UPDATE": 0.032,
     "OPEN_SOURCE": 0.0,
     "LAUNCH": 0.003,
-    "BENCHMARK": 0.024,
+    "BENCHMARK": 0.023,
     "RELEASE": 0.008,
-    "DEAL": 0.103,
-    "PRICING": 0.1
+    "DEAL": 0.102,
+    "PRICING": 0.098
   },
   "exemplars": {
     "top": [
@@ -82,15 +82,15 @@
     ],
     "bottom": [
       {
-        "headline": "New research explores letting language models control their own attention",
+        "headline": "New Flux compiler skill turns character locks into structured prompts",
         "reward": 0.0
       },
       {
-        "headline": "Zairo uses LLMs to find vulnerabilities introduced by code changes",
+        "headline": "Awesome AI Agent Platforms catalogs open-source agent ecosystems",
         "reward": 0.0
       },
       {
-        "headline": "Indie developer gets a first paying customer for PostMCP AI",
+        "headline": "Pi Posthorse adds durable context rollover to the Pi coding agent",
         "reward": 0.0
       }
     ]
