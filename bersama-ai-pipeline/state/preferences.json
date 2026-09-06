@@ -1,24 +1,24 @@
 {
-  "updated_at": "2026-09-06T04:43:03Z",
+  "updated_at": "2026-09-06T11:00:51Z",
   "half_life_days": 14,
-  "n_events": 8584,
+  "n_events": 8798,
   "topic": {
-    "company_investment": 0.102,
-    "coding": 0.008,
+    "company_investment": 0.1,
+    "coding": 0.009,
     "creative_image": 0.0,
     "research_productivity": 0.0,
-    "cybersecurity": 0.026,
+    "cybersecurity": 0.025,
     "creative_video": 0.0,
     "research_study": 0.0,
     "creative_voice": 0.0,
     "finance": 0.0
   },
   "source": {
-    "HN": 0.034,
+    "HN": 0.033,
     "huggingface": 0.0,
     "github": 0.0,
     "official": 0.026,
-    "r/LocalLLaMA": 0.012,
+    "r/LocalLLaMA": 0.018,
     "r/comfyui": 0.0,
     "r/StableDiffusion": 0.0,
     "r/deeplearning": 0.0,
@@ -28,14 +28,14 @@
     "r/perplexity_ai": 0.0,
     "r/MachineLearning": 0.0,
     "r/cursor": 0.191,
-    "r/artificial": 0.139,
+    "r/artificial": 0.136,
     "r/technology": 0.0,
     "r/wallstreetbets": 0.0,
-    "r/hacking": 0.141,
+    "r/hacking": 0.136,
     "r/ElevenLabs": 0.0,
-    "r/cybersecurity": 0.082,
+    "r/cybersecurity": 0.08,
     "r/SaaS": 0.0,
-    "r/singularity": 0.278,
+    "r/singularity": 0.273,
     "r/indiehackers": 0.0,
     "r/FluxAI": 0.0,
     "r/ClaudeCode": 0.0,
@@ -44,16 +44,17 @@
     "r/SunoAI": 0.0,
     "r/SideProject": 0.0,
     "r/runwayml": 0.0,
-    "r/StartupSoloFounder": 0.0
+    "r/StartupSoloFounder": 0.0,
+    "r/micro_saas": 0.0
   },
   "category": {
     "UPDATE": 0.033,
     "OPEN_SOURCE": 0.0,
     "LAUNCH": 0.001,
-    "BENCHMARK": 0.027,
+    "BENCHMARK": 0.026,
     "RELEASE": 0.009,
-    "DEAL": 0.108,
-    "PRICING": 0.105
+    "DEAL": 0.106,
+    "PRICING": 0.103
   },
   "exemplars": {
     "top": [
@@ -80,15 +81,15 @@
     ],
     "bottom": [
       {
-        "headline": "DreamX-Creator targets native 2K audio-video generation",
+        "headline": "Solo builder reports $1,752 MRR from an AI-built LinkedIn automation tool",
         "reward": 0.0
       },
       {
-        "headline": "Cyberkimi claims it turned a fresh V8 patch into a Chrome exploit",
+        "headline": "Ontology-driven development toolkit targets AI-assisted application building",
         "reward": 0.0
       },
       {
-        "headline": "Report says OpenAI agents escaped without a formal investigation process",
+        "headline": "Qiaomu Book Reader brings local AI questions and notes to Obsidian",
         "reward": 0.0
       }
     ]
