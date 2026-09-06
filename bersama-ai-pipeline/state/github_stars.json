@@ -31,6 +31,10 @@
     "stars": 2320,
     "ts": "2026-07-24T22:21:15+00:00"
   },
+  "anthropics/commerce-agents": {
+    "stars": 2077,
+    "ts": "2026-09-06T04:43:51+00:00"
+  },
   "ccch1mneyyy/dsh-TUI": {
     "stars": 2076,
     "ts": "2026-08-19T21:43:56+00:00"
@@ -38,10 +42,6 @@
   "kvcache-ai/AgentENV": {
     "stars": 2050,
     "ts": "2026-07-29T22:15:45+00:00"
-  },
-  "anthropics/commerce-agents": {
-    "stars": 2044,
-    "ts": "2026-09-05T22:57:06+00:00"
   },
   "Nanako0129/sepia": {
     "stars": 1862,
@@ -140,8 +140,8 @@
     "ts": "2026-07-28T22:18:53+00:00"
   },
   "2akouwu/reverify": {
-    "stars": 922,
-    "ts": "2026-09-05T22:57:06+00:00"
+    "stars": 924,
+    "ts": "2026-09-06T04:43:51+00:00"
   },
   "vercel-labs/eve-software-factory-template": {
     "stars": 908,
@@ -307,6 +307,10 @@
     "stars": 507,
     "ts": "2026-08-06T14:38:24+00:00"
   },
+  "Human-Agent-Society/reef": {
+    "stars": 496,
+    "ts": "2026-09-06T04:43:51+00:00"
+  },
   "SheberDavid/v4-flash-godmode-opencode-go": {
     "stars": 492,
     "ts": "2026-08-21T21:42:14+00:00"
@@ -322,10 +326,6 @@
   "s0xDk/refactoring-ui-skill": {
     "stars": 481,
     "ts": "2026-09-01T23:21:23+00:00"
-  },
-  "Human-Agent-Society/reef": {
-    "stars": 481,
-    "ts": "2026-09-05T22:57:06+00:00"
   },
   "kgoedecke/doop": {
     "stars": 480,
@@ -360,8 +360,8 @@
     "ts": "2026-08-10T22:02:04+00:00"
   },
   "PhiloLabs/fable51-worlds": {
-    "stars": 437,
-    "ts": "2026-09-05T22:57:06+00:00"
+    "stars": 438,
+    "ts": "2026-09-06T04:43:51+00:00"
   },
   "danilo-znamerovszkij/draw-your-font": {
     "stars": 435,
@@ -451,6 +451,10 @@
     "stars": 347,
     "ts": "2026-08-08T21:48:08+00:00"
   },
+  "op7418/guizang-yingzao-skill": {
+    "stars": 345,
+    "ts": "2026-09-06T04:43:51+00:00"
+  },
   "OpenSparX/MasterAgent": {
     "stars": 344,
     "ts": "2026-08-16T21:36:27+00:00"
@@ -458,10 +462,6 @@
   "ChenShuo2004/cs-board": {
     "stars": 343,
     "ts": "2026-08-27T14:18:11+00:00"
-  },
-  "op7418/guizang-yingzao-skill": {
-    "stars": 341,
-    "ts": "2026-09-05T22:57:06+00:00"
   },
   "GamePhanes/GamePhanes": {
     "stars": 340,
@@ -492,8 +492,8 @@
     "ts": "2026-09-01T23:21:23+00:00"
   },
   "kydlikebtc/awesome-grokbot": {
-    "stars": 324,
-    "ts": "2026-09-05T22:57:06+00:00"
+    "stars": 325,
+    "ts": "2026-09-06T04:43:51+00:00"
   },
   "HanyuanWang/LiveStream-Agent-Studio": {
     "stars": 322,
@@ -510,6 +510,10 @@
   "oboroge0/hayamimi": {
     "stars": 317,
     "ts": "2026-08-31T20:54:07+00:00"
+  },
+  "vinzdg/codenotch": {
+    "stars": 317,
+    "ts": "2026-09-06T04:43:51+00:00"
   },
   "lingbol088-spec/5.6-JAILBREAK-NERV-codex-instruct-5.6": {
     "stars": 315,
@@ -539,6 +543,10 @@
     "stars": 299,
     "ts": "2026-08-11T22:07:17+00:00"
   },
+  "LunarXuan/image-prompt-reverse": {
+    "stars": 297,
+    "ts": "2026-09-06T04:43:51+00:00"
+  },
   "ddcat-ai/open-ai-canvas": {
     "stars": 296,
     "ts": "2026-07-28T22:18:53+00:00"
@@ -550,10 +558,6 @@
   "LBH-123-AI/Comfyui_Minimax_h3_latent_Upscaler": {
     "stars": 294,
     "ts": "2026-08-23T21:38:35+00:00"
-  },
-  "LunarXuan/image-prompt-reverse": {
-    "stars": 294,
-    "ts": "2026-09-05T22:57:06+00:00"
   },
   "antinomie-lab/pi-book": {
     "stars": 287,
@@ -672,8 +676,8 @@
     "ts": "2026-08-04T22:31:22+00:00"
   },
   "gozen3ji/consulting-pptx-skill": {
-    "stars": 237,
-    "ts": "2026-09-05T22:57:06+00:00"
+    "stars": 239,
+    "ts": "2026-09-06T04:43:51+00:00"
   },
   "cristicretu/diri": {
     "stars": 236,
@@ -699,6 +703,10 @@
     "stars": 230,
     "ts": "2026-08-09T21:50:37+00:00"
   },
+  "joeseesun/qiaomu-book-reader": {
+    "stars": 228,
+    "ts": "2026-09-06T04:46:36+00:00"
+  },
   "truespar/sentio": {
     "stars": 227,
     "ts": "2026-08-29T23:23:08+00:00"
@@ -711,6 +719,10 @@
     "stars": 225,
     "ts": "2026-09-01T23:22:29+00:00"
   },
+  "tigerless-labs/agent-memory": {
+    "stars": 224,
+    "ts": "2026-09-06T04:43:51+00:00"
+  },
   "AIMixer/ComfyUI_MiniMaxH3_Director": {
     "stars": 223,
     "ts": "2026-08-10T22:01:27+00:00"
@@ -722,10 +734,6 @@
   "disler/fixing-smartass-opus-5": {
     "stars": 223,
     "ts": "2026-08-22T21:38:43+00:00"
-  },
-  "joeseesun/qiaomu-book-reader": {
-    "stars": 223,
-    "ts": "2026-09-05T22:59:35+00:00"
   },
   "Merit-Systems/OpenInstinct": {
     "stars": 221,
@@ -787,6 +795,10 @@
     "stars": 207,
     "ts": "2026-08-20T21:46:04+00:00"
   },
+  "Agenta-AI/awesome-ai-agent-platforms": {
+    "stars": 207,
+    "ts": "2026-09-06T04:43:51+00:00"
+  },
   "ryanlab/bivor": {
     "stars": 206,
     "ts": "2026-08-20T21:46:04+00:00"
@@ -798,14 +810,6 @@
   "V1ki/dsh-plugin-subscriptions": {
     "stars": 205,
     "ts": "2026-08-20T21:46:04+00:00"
-  },
-  "Agenta-AI/awesome-ai-agent-platforms": {
-    "stars": 205,
-    "ts": "2026-09-05T22:57:06+00:00"
-  },
-  "vinzdg/codenotch": {
-    "stars": 205,
-    "ts": "2026-09-05T22:57:06+00:00"
   },
   "oliverb-io1902e8/agent-skills-collection": {
     "stars": 204,
@@ -867,6 +871,10 @@
     "stars": 191,
     "ts": "2026-08-09T21:50:10+00:00"
   },
+  "fitchmultz/pi-posthorse": {
+    "stars": 190,
+    "ts": "2026-09-06T04:43:51+00:00"
+  },
   "robbin/wechat-exporter": {
     "stars": 189,
     "ts": "2026-08-03T22:19:43+00:00"
@@ -890,10 +898,6 @@
   "Kronop/vibe-aso": {
     "stars": 186,
     "ts": "2026-08-18T21:41:28+00:00"
-  },
-  "fitchmultz/pi-posthorse": {
-    "stars": 185,
-    "ts": "2026-09-05T22:57:06+00:00"
   },
   "opentokenz/mcpx": {
     "stars": 184,
@@ -943,6 +947,10 @@
     "stars": 171,
     "ts": "2026-08-27T14:19:34+00:00"
   },
+  "AMAP-ML/DreamX-Creator": {
+    "stars": 171,
+    "ts": "2026-09-06T04:45:36+00:00"
+  },
   "0xtresser/Transcript-of-Liang-Wenfengs-DeepSeek-Founder-4-Hour-Investor-Meeting": {
     "stars": 170,
     "ts": "2026-07-29T22:15:45+00:00"
@@ -950,10 +958,6 @@
   "squall01337/mixamo-llm-mocap": {
     "stars": 170,
     "ts": "2026-08-23T21:38:08+00:00"
-  },
-  "AMAP-ML/DreamX-Creator": {
-    "stars": 170,
-    "ts": "2026-09-05T22:58:35+00:00"
   },
   "worldwonderer/novel-to-game": {
     "stars": 169,
@@ -977,15 +981,11 @@
   },
   "jarrenrocks/bot-crossing": {
     "stars": 167,
-    "ts": "2026-09-05T22:57:06+00:00"
+    "ts": "2026-09-06T04:43:51+00:00"
   },
   "Prism-Shadow/penguin-harness": {
     "stars": 166,
     "ts": "2026-07-25T22:12:59+00:00"
-  },
-  "tigerless-labs/agent-memory": {
-    "stars": 166,
-    "ts": "2026-09-05T22:57:06+00:00"
   },
   "SpatiaOS/Procedura": {
     "stars": 165,
