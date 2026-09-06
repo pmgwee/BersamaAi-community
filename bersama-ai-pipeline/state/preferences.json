@@ -1,13 +1,13 @@
 {
-  "updated_at": "2026-09-06T11:00:51Z",
+  "updated_at": "2026-09-06T15:30:31Z",
   "half_life_days": 14,
-  "n_events": 8798,
+  "n_events": 8978,
   "topic": {
-    "company_investment": 0.1,
+    "company_investment": 0.098,
     "coding": 0.009,
     "creative_image": 0.0,
     "research_productivity": 0.0,
-    "cybersecurity": 0.025,
+    "cybersecurity": 0.024,
     "creative_video": 0.0,
     "research_study": 0.0,
     "creative_voice": 0.0,
@@ -18,7 +18,7 @@
     "huggingface": 0.0,
     "github": 0.0,
     "official": 0.026,
-    "r/LocalLLaMA": 0.018,
+    "r/LocalLLaMA": 0.023,
     "r/comfyui": 0.0,
     "r/StableDiffusion": 0.0,
     "r/deeplearning": 0.0,
@@ -28,14 +28,14 @@
     "r/perplexity_ai": 0.0,
     "r/MachineLearning": 0.0,
     "r/cursor": 0.191,
-    "r/artificial": 0.136,
+    "r/artificial": 0.133,
     "r/technology": 0.0,
     "r/wallstreetbets": 0.0,
-    "r/hacking": 0.136,
+    "r/hacking": 0.131,
     "r/ElevenLabs": 0.0,
-    "r/cybersecurity": 0.08,
+    "r/cybersecurity": 0.079,
     "r/SaaS": 0.0,
-    "r/singularity": 0.273,
+    "r/singularity": 0.267,
     "r/indiehackers": 0.0,
     "r/FluxAI": 0.0,
     "r/ClaudeCode": 0.0,
@@ -48,13 +48,13 @@
     "r/micro_saas": 0.0
   },
   "category": {
-    "UPDATE": 0.033,
+    "UPDATE": 0.032,
     "OPEN_SOURCE": 0.0,
-    "LAUNCH": 0.001,
-    "BENCHMARK": 0.026,
-    "RELEASE": 0.009,
-    "DEAL": 0.106,
-    "PRICING": 0.103
+    "LAUNCH": 0.002,
+    "BENCHMARK": 0.025,
+    "RELEASE": 0.008,
+    "DEAL": 0.105,
+    "PRICING": 0.102
   },
   "exemplars": {
     "top": [
@@ -81,15 +81,15 @@
     ],
     "bottom": [
       {
-        "headline": "Solo builder reports $1,752 MRR from an AI-built LinkedIn automation tool",
+        "headline": "AI incident response may leave engineers disconnected from their systems",
         "reward": 0.0
       },
       {
-        "headline": "Ontology-driven development toolkit targets AI-assisted application building",
+        "headline": "Adaption Labs introduces dataset generation from task descriptions",
         "reward": 0.0
       },
       {
-        "headline": "Qiaomu Book Reader brings local AI questions and notes to Obsidian",
+        "headline": "Short chatbot conversations reduced conspiracy beliefs in two experiments",
         "reward": 0.0
       }
     ]
