@@ -1,44 +1,44 @@
 {
-  "updated_at": "2026-09-07T04:46:03Z",
+  "updated_at": "2026-09-07T12:38:36Z",
   "half_life_days": 14,
-  "n_events": 9623,
+  "n_events": 9350,
   "topic": {
-    "company_investment": 0.093,
-    "coding": 0.012,
-    "creative_image": 0.0,
-    "research_productivity": 0.0,
-    "cybersecurity": 0.022,
+    "coding": 0.013,
     "creative_video": 0.0,
     "research_study": 0.0,
+    "cybersecurity": 0.022,
+    "company_investment": 0.095,
+    "creative_image": 0.0,
     "creative_voice": 0.0,
-    "finance": 0.0
+    "finance": 0.0,
+    "research_productivity": 0.0
   },
   "source": {
-    "HN": 0.032,
-    "huggingface": 0.0,
-    "github": 0.001,
-    "official": 0.026,
-    "r/LocalLLaMA": 0.037,
-    "r/comfyui": 0.0,
+    "HN": 0.033,
+    "official": 0.028,
     "r/StableDiffusion": 0.0,
     "r/deeplearning": 0.0,
     "r/redteamsec": 0.0,
+    "huggingface": 0.0,
+    "github": 0.002,
     "r/netsec": 0.0,
     "r/AI_Agents": 0.0,
     "r/perplexity_ai": 0.0,
     "r/MachineLearning": 0.0,
     "r/cursor": 0.191,
-    "r/artificial": 0.124,
+    "r/artificial": 0.123,
     "r/technology": 0.0,
     "r/wallstreetbets": 0.0,
-    "r/hacking": 0.122,
+    "r/hacking": 0.119,
     "r/ElevenLabs": 0.0,
-    "r/cybersecurity": 0.076,
+    "r/LocalLLaMA": 0.049,
+    "r/cybersecurity": 0.075,
     "r/SaaS": 0.0,
-    "r/singularity": 0.252,
+    "r/singularity": 0.242,
     "r/indiehackers": 0.0,
     "r/FluxAI": 0.0,
     "r/ClaudeCode": 0.0,
+    "r/comfyui": 0.0,
     "r/ChatGPT": 0.0,
     "r/security": 0.0,
     "r/SunoAI": 0.0,
@@ -49,13 +49,13 @@
     "r/ClaudeAI": 0.0
   },
   "category": {
-    "UPDATE": 0.032,
-    "OPEN_SOURCE": 0.0,
-    "LAUNCH": 0.004,
-    "BENCHMARK": 0.023,
+    "UPDATE": 0.034,
+    "LAUNCH": 0.005,
     "RELEASE": 0.008,
-    "DEAL": 0.1,
-    "PRICING": 0.097
+    "BENCHMARK": 0.023,
+    "OPEN_SOURCE": 0.0,
+    "DEAL": 0.099,
+    "PRICING": 0.096
   },
   "exemplars": {
     "top": [
@@ -82,15 +82,15 @@
     ],
     "bottom": [
       {
-        "headline": "Rust vtables explained through interactive memory visualizations",
+        "headline": "Qwen3.8-27B gets an uncensored GGUF release",
         "reward": 0.0
       },
       {
-        "headline": "Codenotch puts AI coding-tool usage limits at the edge of macOS screens",
+        "headline": "Google Research releases WeatherNext 3 weather model",
         "reward": 0.0
       },
       {
-        "headline": "Bot-Crossing is a video game designed for AI agents",
+        "headline": "A developer builds a reverse-search engine for sheet music with Qwen",
         "reward": 0.0
       }
     ]
