@@ -1,40 +1,40 @@
 {
-  "updated_at": "2026-09-07T12:38:36Z",
+  "updated_at": "2026-09-07T19:11:36Z",
   "half_life_days": 14,
-  "n_events": 9350,
+  "n_events": 8978,
   "topic": {
-    "coding": 0.013,
+    "coding": 0.014,
+    "creative_voice": 0.0,
+    "cybersecurity": 0.023,
+    "company_investment": 0.1,
     "creative_video": 0.0,
     "research_study": 0.0,
-    "cybersecurity": 0.022,
-    "company_investment": 0.095,
-    "creative_image": 0.0,
-    "creative_voice": 0.0,
     "finance": 0.0,
-    "research_productivity": 0.0
+    "research_productivity": 0.0,
+    "creative_image": 0.0
   },
   "source": {
-    "HN": 0.033,
-    "official": 0.028,
-    "r/StableDiffusion": 0.0,
-    "r/deeplearning": 0.0,
-    "r/redteamsec": 0.0,
+    "official": 0.029,
     "huggingface": 0.0,
     "github": 0.002,
-    "r/netsec": 0.0,
-    "r/AI_Agents": 0.0,
+    "HN": 0.034,
     "r/perplexity_ai": 0.0,
+    "r/redteamsec": 0.0,
     "r/MachineLearning": 0.0,
     "r/cursor": 0.191,
-    "r/artificial": 0.123,
+    "r/artificial": 0.122,
+    "r/netsec": 0.0,
+    "r/AI_Agents": 0.0,
     "r/technology": 0.0,
     "r/wallstreetbets": 0.0,
-    "r/hacking": 0.119,
+    "r/deeplearning": 0.0,
+    "r/hacking": 0.116,
     "r/ElevenLabs": 0.0,
-    "r/LocalLLaMA": 0.049,
-    "r/cybersecurity": 0.075,
+    "r/LocalLLaMA": 0.053,
+    "r/StableDiffusion": 0.0,
+    "r/cybersecurity": 0.073,
     "r/SaaS": 0.0,
-    "r/singularity": 0.242,
+    "r/singularity": 0.232,
     "r/indiehackers": 0.0,
     "r/FluxAI": 0.0,
     "r/ClaudeCode": 0.0,
@@ -49,13 +49,13 @@
     "r/ClaudeAI": 0.0
   },
   "category": {
-    "UPDATE": 0.034,
     "LAUNCH": 0.005,
-    "RELEASE": 0.008,
-    "BENCHMARK": 0.023,
     "OPEN_SOURCE": 0.0,
-    "DEAL": 0.099,
-    "PRICING": 0.096
+    "RELEASE": 0.008,
+    "UPDATE": 0.035,
+    "DEAL": 0.113,
+    "PRICING": 0.112,
+    "BENCHMARK": 0.023
   },
   "exemplars": {
     "top": [
@@ -82,15 +82,15 @@
     ],
     "bottom": [
       {
-        "headline": "Qwen3.8-27B gets an uncensored GGUF release",
+        "headline": "Benchmark compares semantic-entropy methods across 1.5B to 120B models",
         "reward": 0.0
       },
       {
-        "headline": "Google Research releases WeatherNext 3 weather model",
+        "headline": "Replication of neural attention factor-model paper reports negative Sharpe",
         "reward": 0.0
       },
       {
-        "headline": "A developer builds a reverse-search engine for sheet music with Qwen",
+        "headline": "Google tests Ask and Assign modes in the Gemini desktop app",
         "reward": 0.0
       }
     ]
