@@ -1,39 +1,37 @@
 {
-  "updated_at": "2026-09-08T11:23:01Z",
+  "updated_at": "2026-09-08T16:40:50Z",
   "half_life_days": 14,
-  "n_events": 8802,
+  "n_events": 8818,
   "topic": {
-    "coding": 0.017,
-    "cybersecurity": 0.022,
-    "creative_video": 0.0,
-    "creative_voice": 0.0,
-    "company_investment": 0.09,
+    "coding": 0.018,
+    "company_investment": 0.08,
     "finance": 0.0,
     "research_productivity": 0.0,
     "research_study": 0.0,
+    "cybersecurity": 0.022,
+    "creative_voice": 0.0,
+    "creative_video": 0.0,
     "creative_image": 0.0
   },
   "source": {
     "HN": 0.035,
     "github": 0.004,
-    "r/AI_Agents": 0.0,
-    "r/technology": 0.0,
-    "official": 0.032,
+    "official": 0.025,
     "r/wallstreetbets": 0.0,
     "huggingface": 0.0,
     "r/MachineLearning": 0.0,
     "r/netsec": 0.0,
     "r/deeplearning": 0.0,
-    "r/hacking": 0.108,
+    "r/hacking": 0.106,
     "r/redteamsec": 0.0,
     "r/cursor": 0.0,
     "r/ElevenLabs": 0.0,
-    "r/LocalLLaMA": 0.064,
+    "r/LocalLLaMA": 0.067,
     "r/StableDiffusion": 0.0,
-    "r/artificial": 0.139,
-    "r/cybersecurity": 0.068,
+    "r/artificial": 0.135,
+    "r/cybersecurity": 0.067,
     "r/SaaS": 0.0,
-    "r/singularity": 0.21,
+    "r/singularity": 0.206,
     "r/indiehackers": 0.0,
     "r/FluxAI": 0.0,
     "r/ClaudeCode": 0.0,
@@ -43,28 +41,26 @@
     "r/SunoAI": 0.0,
     "r/SideProject": 0.0,
     "r/runwayml": 0.0,
+    "r/AI_Agents": 0.0,
     "r/StartupSoloFounder": 0.0,
     "r/micro_saas": 0.0,
     "r/ClaudeAI": 0.0,
+    "r/technology": 0.0,
     "r/learnmachinelearning": 0.0
   },
   "category": {
-    "LAUNCH": 0.007,
+    "LAUNCH": 0.008,
+    "BENCHMARK": 0.019,
     "OPEN_SOURCE": 0.0,
-    "UPDATE": 0.036,
     "RELEASE": 0.008,
-    "DEAL": 0.113,
-    "BENCHMARK": 0.02,
+    "DEAL": 0.088,
+    "UPDATE": 0.036,
     "PRICING": 0.0
   },
   "exemplars": {
     "top": [
       {
-        "headline": "Gamma acquires design startup Lica and brings its founders into a research team",
-        "reward": 0.6
-      },
-      {
-        "headline": "Gamma acquires design startup Lica and brings its founders into a research team",
+        "headline": "Analysis claims OpenAI’s Jalapeño chip outperforms Nvidia Blackwell",
         "reward": 0.6
       },
       {
@@ -72,7 +68,11 @@
         "reward": 0.6
       },
       {
-        "headline": "Gamma acquires design startup Lica and brings its founders into a research team",
+        "headline": "Analysis claims OpenAI’s Jalapeño chip outperforms Nvidia Blackwell",
+        "reward": 0.6
+      },
+      {
+        "headline": "Robotics startup Generalist reportedly reaches a $3B valuation",
         "reward": 0.6
       },
       {
