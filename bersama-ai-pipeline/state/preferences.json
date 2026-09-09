@@ -1,39 +1,37 @@
 {
-  "updated_at": "2026-09-09T16:40:59Z",
+  "updated_at": "2026-09-09T20:57:36Z",
   "half_life_days": 14,
-  "n_events": 8255,
+  "n_events": 8223,
   "topic": {
-    "coding": 0.019,
-    "creative_voice": 0.0,
-    "research_productivity": 0.0,
-    "company_investment": 0.055,
-    "cybersecurity": 0.022,
-    "research_study": 0.0,
+    "coding": 0.02,
     "creative_image": 0.0,
+    "research_study": 0.0,
+    "cybersecurity": 0.022,
+    "company_investment": 0.044,
     "creative_video": 0.0,
+    "research_productivity": 0.0,
+    "creative_voice": 0.0,
     "finance": 0.0
   },
   "source": {
-    "r/cursor": 0.0,
-    "official": 0.023,
-    "r/singularity": 0.187,
-    "r/deeplearning": 0.0,
     "github": 0.007,
     "HN": 0.025,
     "r/netsec": 0.0,
-    "r/cybersecurity": 0.066,
-    "r/hacking": 0.112,
+    "official": 0.024,
+    "r/cybersecurity": 0.064,
+    "r/hacking": 0.11,
     "huggingface": 0.0,
     "r/redteamsec": 0.0,
     "r/StableDiffusion": 0.0,
     "r/indiehackers": 0.0,
-    "r/LocalLLaMA": 0.097,
+    "r/LocalLLaMA": 0.1,
     "r/MachineLearning": 0.0,
     "r/FluxAI": 0.0,
     "r/ClaudeCode": 0.0,
     "r/artificial": 0.0,
     "r/comfyui": 0.0,
     "r/ChatGPT": 0.0,
+    "r/singularity": 0.0,
     "r/security": 0.0,
     "r/wallstreetbets": 0.0,
     "r/SunoAI": 0.0,
@@ -45,25 +43,26 @@
     "r/ClaudeAI": 0.0,
     "r/SaaS": 0.0,
     "r/technology": 0.0,
+    "r/deeplearning": 0.0,
     "r/learnmachinelearning": 0.0
   },
   "category": {
-    "UPDATE": 0.036,
     "RELEASE": 0.0,
+    "UPDATE": 0.033,
     "BENCHMARK": 0.0,
-    "LAUNCH": 0.011,
-    "DEAL": 0.072,
+    "LAUNCH": 0.012,
+    "DEAL": 0.071,
     "OPEN_SOURCE": 0.0,
     "PRICING": 0.0
   },
   "exemplars": {
     "top": [
       {
-        "headline": "Sam Altman says OpenAI could achieve AGI by the end of 2026",
+        "headline": "Nvidia agrees to acquire Hugging Face for $13 billion",
         "reward": 0.6
       },
       {
-        "headline": "Sam Altman says OpenAI could achieve AGI by the end of 2026",
+        "headline": "Russian-speaking cybercriminals reportedly used Cursor to hack seven companies",
         "reward": 0.6
       },
       {
@@ -75,7 +74,7 @@
         "reward": 0.6
       },
       {
-        "headline": "Sam Altman says OpenAI could achieve AGI by the end of 2026",
+        "headline": "Researchers demonstrate prompt laundering attack against OpenClaw",
         "reward": 0.6
       }
     ],
