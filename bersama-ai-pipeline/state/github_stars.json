@@ -72,8 +72,8 @@
     "ts": "2026-08-11T22:07:17+00:00"
   },
   "vinzdg/codenotch": {
-    "stars": 1279,
-    "ts": "2026-09-09T20:58:24+00:00"
+    "stars": 1284,
+    "ts": "2026-09-09T23:18:32+00:00"
   },
   "cinderline/northcinder": {
     "stars": 1206,
@@ -300,8 +300,8 @@
     "ts": "2026-08-19T21:43:56+00:00"
   },
   "okf-memory/okf-agent-memory": {
-    "stars": 515,
-    "ts": "2026-09-09T20:58:24+00:00"
+    "stars": 518,
+    "ts": "2026-09-09T23:18:32+00:00"
   },
   "disler/super-simple-software-factory": {
     "stars": 513,
@@ -375,6 +375,10 @@
     "stars": 438,
     "ts": "2026-08-10T22:02:04+00:00"
   },
+  "achimala/dream-loop": {
+    "stars": 438,
+    "ts": "2026-09-09T23:18:32+00:00"
+  },
   "danilo-znamerovszkij/draw-your-font": {
     "stars": 435,
     "ts": "2026-07-28T22:18:53+00:00"
@@ -382,10 +386,6 @@
   "0xwilliamortiz/ratchet": {
     "stars": 435,
     "ts": "2026-08-06T14:37:33+00:00"
-  },
-  "achimala/dream-loop": {
-    "stars": 432,
-    "ts": "2026-09-09T20:58:24+00:00"
   },
   "xmarre/ComfyUI-Spectrum-MiniMax-H3": {
     "stars": 431,
@@ -584,8 +584,8 @@
     "ts": "2026-08-23T21:38:35+00:00"
   },
   "i-am-manware/Manware-s-AI-Learning-Toolkit": {
-    "stars": 291,
-    "ts": "2026-09-09T21:00:30+00:00"
+    "stars": 294,
+    "ts": "2026-09-09T23:20:38+00:00"
   },
   "antinomie-lab/pi-book": {
     "stars": 287,
@@ -743,13 +743,13 @@
     "stars": 230,
     "ts": "2026-08-09T21:50:37+00:00"
   },
+  "alchaincyf/huashu-mac-use": {
+    "stars": 228,
+    "ts": "2026-09-09T23:18:32+00:00"
+  },
   "truespar/sentio": {
     "stars": 227,
     "ts": "2026-08-29T23:23:08+00:00"
-  },
-  "alchaincyf/huashu-mac-use": {
-    "stars": 227,
-    "ts": "2026-09-09T20:58:24+00:00"
   },
   "OpenLabs-so/openanalytics": {
     "stars": 225,
@@ -861,7 +861,7 @@
   },
   "Saganaki22/ComfyUI-VDN-H3": {
     "stars": 202,
-    "ts": "2026-09-09T20:58:50+00:00"
+    "ts": "2026-09-09T23:18:58+00:00"
   },
   "ccch1mneyyy/dsh-cc-tui": {
     "stars": 201,
@@ -935,6 +935,10 @@
     "stars": 189,
     "ts": "2026-08-19T21:43:56+00:00"
   },
+  "browser-use/browser-use-pi": {
+    "stars": 188,
+    "ts": "2026-09-09T23:18:32+00:00"
+  },
   "Polylayer-X/polylayer-app": {
     "stars": 187,
     "ts": "2026-08-26T04:08:08+00:00"
@@ -958,10 +962,6 @@
   "iamlukethedev/Hermes3D": {
     "stars": 178,
     "ts": "2026-08-23T21:38:08+00:00"
-  },
-  "browser-use/browser-use-pi": {
-    "stars": 178,
-    "ts": "2026-09-09T20:58:24+00:00"
   },
   "huiliyi37/dsh-tianshu-tui": {
     "stars": 175,
@@ -996,8 +996,8 @@
     "ts": "2026-08-31T20:54:07+00:00"
   },
   "noskillish/bankmcp": {
-    "stars": 172,
-    "ts": "2026-09-09T20:58:24+00:00"
+    "stars": 173,
+    "ts": "2026-09-09T23:18:32+00:00"
   },
   "0xohioism/polymarket-crypto-5m-15min-trading-bot": {
     "stars": 171,
