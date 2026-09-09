@@ -87,6 +87,10 @@
     "stars": 1201,
     "ts": "2026-09-01T23:22:29+00:00"
   },
+  "vinzdg/codenotch": {
+    "stars": 1194,
+    "ts": "2026-09-09T11:28:01+00:00"
+  },
   "cbrock84/headcount": {
     "stars": 1182,
     "ts": "2026-09-03T23:19:00+00:00"
@@ -114,10 +118,6 @@
   "nateherkai/scroll-craft": {
     "stars": 1132,
     "ts": "2026-08-28T15:26:43+00:00"
-  },
-  "vinzdg/codenotch": {
-    "stars": 1126,
-    "ts": "2026-09-09T04:47:25+00:00"
   },
   "Accio-org/RealReplicaBench": {
     "stars": 1042,
@@ -316,8 +316,8 @@
     "ts": "2026-08-06T14:38:24+00:00"
   },
   "okf-memory/okf-agent-memory": {
-    "stars": 498,
-    "ts": "2026-09-09T04:47:25+00:00"
+    "stars": 503,
+    "ts": "2026-09-09T11:28:01+00:00"
   },
   "SheberDavid/v4-flash-godmode-opencode-go": {
     "stars": 492,
@@ -411,6 +411,10 @@
     "stars": 411,
     "ts": "2026-08-12T22:06:02+00:00"
   },
+  "achimala/dream-loop": {
+    "stars": 409,
+    "ts": "2026-09-09T11:28:01+00:00"
+  },
   "furkankly/zoetrope": {
     "stars": 399,
     "ts": "2026-08-24T21:46:05+00:00"
@@ -418,10 +422,6 @@
   "lexmount/moli": {
     "stars": 398,
     "ts": "2026-08-16T21:36:27+00:00"
-  },
-  "achimala/dream-loop": {
-    "stars": 390,
-    "ts": "2026-09-09T04:47:25+00:00"
   },
   "DavidCarliez/trustmebro": {
     "stars": 389,
@@ -643,6 +643,10 @@
     "stars": 265,
     "ts": "2026-07-24T22:21:15+00:00"
   },
+  "i-am-manware/Manware-s-AI-Learning-Toolkit": {
+    "stars": 264,
+    "ts": "2026-09-09T11:30:05+00:00"
+  },
   "NVIDIA-NeMo/labs-OO-Agents": {
     "stars": 263,
     "ts": "2026-07-26T22:15:29+00:00"
@@ -678,10 +682,6 @@
   "ZSeven-W/dsh-ios": {
     "stars": 253,
     "ts": "2026-08-25T21:46:27+00:00"
-  },
-  "i-am-manware/Manware-s-AI-Learning-Toolkit": {
-    "stars": 251,
-    "ts": "2026-09-09T04:49:31+00:00"
   },
   "LeonQ8/ComfyUI-ALLinONE-MinimaxH3": {
     "stars": 250,
@@ -755,6 +755,10 @@
     "stars": 225,
     "ts": "2026-09-01T23:22:29+00:00"
   },
+  "alchaincyf/huashu-mac-use": {
+    "stars": 225,
+    "ts": "2026-09-09T11:28:01+00:00"
+  },
   "AIMixer/ComfyUI_MiniMaxH3_Director": {
     "stars": 223,
     "ts": "2026-08-10T22:01:27+00:00"
@@ -770,10 +774,6 @@
   "Merit-Systems/OpenInstinct": {
     "stars": 221,
     "ts": "2026-08-31T20:52:20+00:00"
-  },
-  "alchaincyf/huashu-mac-use": {
-    "stars": 221,
-    "ts": "2026-09-09T04:47:25+00:00"
   },
   "adnanakil/nobuzz": {
     "stars": 220,
@@ -991,6 +991,10 @@
     "stars": 171,
     "ts": "2026-08-27T14:19:34+00:00"
   },
+  "noskillish/bankmcp": {
+    "stars": 171,
+    "ts": "2026-09-09T11:28:01+00:00"
+  },
   "0xtresser/Transcript-of-Liang-Wenfengs-DeepSeek-Founder-4-Hour-Investor-Meeting": {
     "stars": 170,
     "ts": "2026-07-29T22:15:45+00:00"
@@ -1034,10 +1038,6 @@
   "Anionex/codex-deepseek-vision": {
     "stars": 164,
     "ts": "2026-08-02T08:38:50+00:00"
-  },
-  "noskillish/bankmcp": {
-    "stars": 164,
-    "ts": "2026-09-09T04:47:25+00:00"
   },
   "mrpulor-gh/nuphus-mcp": {
     "stars": 163,
