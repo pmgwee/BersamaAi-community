@@ -1,38 +1,37 @@
 {
-  "updated_at": "2026-09-09T11:27:14Z",
+  "updated_at": "2026-09-09T16:40:59Z",
   "half_life_days": 14,
-  "n_events": 8506,
+  "n_events": 8255,
   "topic": {
-    "coding": 0.022,
-    "creative_video": 0.0,
-    "creative_image": 0.0,
-    "company_investment": 0.064,
-    "cybersecurity": 0.021,
-    "finance": 0.0,
+    "coding": 0.019,
     "creative_voice": 0.0,
     "research_productivity": 0.0,
-    "research_study": 0.0
+    "company_investment": 0.055,
+    "cybersecurity": 0.022,
+    "research_study": 0.0,
+    "creative_image": 0.0,
+    "creative_video": 0.0,
+    "finance": 0.0
   },
   "source": {
-    "HN": 0.031,
-    "r/StableDiffusion": 0.0,
-    "r/artificial": 0.122,
-    "r/cybersecurity": 0.061,
-    "github": 0.006,
-    "r/SaaS": 0.0,
-    "official": 0.022,
-    "r/netsec": 0.0,
     "r/cursor": 0.0,
-    "r/singularity": 0.19,
+    "official": 0.023,
+    "r/singularity": 0.187,
     "r/deeplearning": 0.0,
-    "r/hacking": 0.114,
+    "github": 0.007,
+    "HN": 0.025,
+    "r/netsec": 0.0,
+    "r/cybersecurity": 0.066,
+    "r/hacking": 0.112,
     "huggingface": 0.0,
     "r/redteamsec": 0.0,
+    "r/StableDiffusion": 0.0,
     "r/indiehackers": 0.0,
-    "r/LocalLLaMA": 0.093,
+    "r/LocalLLaMA": 0.097,
     "r/MachineLearning": 0.0,
     "r/FluxAI": 0.0,
     "r/ClaudeCode": 0.0,
+    "r/artificial": 0.0,
     "r/comfyui": 0.0,
     "r/ChatGPT": 0.0,
     "r/security": 0.0,
@@ -44,22 +43,23 @@
     "r/StartupSoloFounder": 0.0,
     "r/micro_saas": 0.0,
     "r/ClaudeAI": 0.0,
+    "r/SaaS": 0.0,
     "r/technology": 0.0,
     "r/learnmachinelearning": 0.0
   },
   "category": {
-    "RELEASE": 0.008,
-    "OPEN_SOURCE": 0.0,
-    "UPDATE": 0.038,
-    "LAUNCH": 0.011,
-    "DEAL": 0.068,
+    "UPDATE": 0.036,
+    "RELEASE": 0.0,
     "BENCHMARK": 0.0,
+    "LAUNCH": 0.011,
+    "DEAL": 0.072,
+    "OPEN_SOURCE": 0.0,
     "PRICING": 0.0
   },
   "exemplars": {
     "top": [
       {
-        "headline": "Z.ai releases GLM-5.3-Flash",
+        "headline": "Sam Altman says OpenAI could achieve AGI by the end of 2026",
         "reward": 0.6
       },
       {
@@ -67,11 +67,11 @@
         "reward": 0.6
       },
       {
-        "headline": "Meta’s plan to replace more staff with AI reportedly collapses",
+        "headline": "Nvidia agrees to acquire Hugging Face for $13 billion",
         "reward": 0.6
       },
       {
-        "headline": "Z.ai releases GLM-5.3-Flash",
+        "headline": "Russian-speaking cybercriminals reportedly used Cursor to hack seven companies",
         "reward": 0.6
       },
       {
