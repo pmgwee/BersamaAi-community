@@ -116,8 +116,8 @@
     "ts": "2026-08-28T15:26:43+00:00"
   },
   "vinzdg/codenotch": {
-    "stars": 1092,
-    "ts": "2026-09-08T23:25:59+00:00"
+    "stars": 1126,
+    "ts": "2026-09-09T04:47:25+00:00"
   },
   "Accio-org/RealReplicaBench": {
     "stars": 1042,
@@ -315,6 +315,10 @@
     "stars": 507,
     "ts": "2026-08-06T14:38:24+00:00"
   },
+  "okf-memory/okf-agent-memory": {
+    "stars": 498,
+    "ts": "2026-09-09T04:47:25+00:00"
+  },
   "SheberDavid/v4-flash-godmode-opencode-go": {
     "stars": 492,
     "ts": "2026-08-21T21:42:14+00:00"
@@ -322,10 +326,6 @@
   "vibeinging/deepseek-harness-desktop-app": {
     "stars": 491,
     "ts": "2026-08-19T21:46:42+00:00"
-  },
-  "okf-memory/okf-agent-memory": {
-    "stars": 491,
-    "ts": "2026-09-08T23:25:59+00:00"
   },
   "ayi-ai/nie-grassroots-logic": {
     "stars": 486,
@@ -419,6 +419,10 @@
     "stars": 398,
     "ts": "2026-08-16T21:36:27+00:00"
   },
+  "achimala/dream-loop": {
+    "stars": 390,
+    "ts": "2026-09-09T04:47:25+00:00"
+  },
   "DavidCarliez/trustmebro": {
     "stars": 389,
     "ts": "2026-09-01T23:21:23+00:00"
@@ -454,10 +458,6 @@
   "deerwork-ai/deer-workflow": {
     "stars": 374,
     "ts": "2026-08-01T22:13:32+00:00"
-  },
-  "achimala/dream-loop": {
-    "stars": 373,
-    "ts": "2026-09-08T23:25:59+00:00"
   },
   "BoardUI/boardui": {
     "stars": 364,
@@ -679,6 +679,10 @@
     "stars": 253,
     "ts": "2026-08-25T21:46:27+00:00"
   },
+  "i-am-manware/Manware-s-AI-Learning-Toolkit": {
+    "stars": 251,
+    "ts": "2026-09-09T04:49:31+00:00"
+  },
   "LeonQ8/ComfyUI-ALLinONE-MinimaxH3": {
     "stars": 250,
     "ts": "2026-08-21T21:42:40+00:00"
@@ -690,10 +694,6 @@
   "TryCaspian/caspian-sdk": {
     "stars": 247,
     "ts": "2026-07-26T22:15:29+00:00"
-  },
-  "i-am-manware/Manware-s-AI-Learning-Toolkit": {
-    "stars": 247,
-    "ts": "2026-09-08T23:28:24+00:00"
   },
   "ryzqi/learn-agent": {
     "stars": 246,
@@ -771,6 +771,10 @@
     "stars": 221,
     "ts": "2026-08-31T20:52:20+00:00"
   },
+  "alchaincyf/huashu-mac-use": {
+    "stars": 221,
+    "ts": "2026-09-09T04:47:25+00:00"
+  },
   "adnanakil/nobuzz": {
     "stars": 220,
     "ts": "2026-08-27T14:16:25+00:00"
@@ -786,10 +790,6 @@
   "surya-koritala/loomfeed": {
     "stars": 216,
     "ts": "2026-08-15T21:37:02+00:00"
-  },
-  "alchaincyf/huashu-mac-use": {
-    "stars": 216,
-    "ts": "2026-09-08T23:25:59+00:00"
   },
   "N-allpass/modex-mh-agent": {
     "stars": 215,
@@ -1035,6 +1035,10 @@
     "stars": 164,
     "ts": "2026-08-02T08:38:50+00:00"
   },
+  "noskillish/bankmcp": {
+    "stars": 164,
+    "ts": "2026-09-09T04:47:25+00:00"
+  },
   "mrpulor-gh/nuphus-mcp": {
     "stars": 163,
     "ts": "2026-08-07T21:57:59+00:00"
@@ -1058,10 +1062,6 @@
   "jundizhou/easy-stock": {
     "stars": 162,
     "ts": "2026-08-13T22:08:54+00:00"
-  },
-  "noskillish/bankmcp": {
-    "stars": 162,
-    "ts": "2026-09-08T23:25:59+00:00"
   },
   "ericlitman/open-pstack": {
     "stars": 161,

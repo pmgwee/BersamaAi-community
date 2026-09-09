@@ -1,35 +1,34 @@
 {
-  "updated_at": "2026-09-08T23:25:10Z",
+  "updated_at": "2026-09-09T04:46:37Z",
   "half_life_days": 14,
-  "n_events": 8834,
+  "n_events": 8627,
   "topic": {
-    "company_investment": 0.072,
-    "coding": 0.02,
-    "finance": 0.0,
-    "cybersecurity": 0.021,
-    "creative_voice": 0.0,
-    "research_study": 0.0,
     "creative_video": 0.0,
+    "coding": 0.021,
+    "research_study": 0.0,
+    "company_investment": 0.064,
+    "creative_voice": 0.0,
+    "cybersecurity": 0.022,
     "creative_image": 0.0,
+    "finance": 0.0,
     "research_productivity": 0.0
   },
   "source": {
-    "official": 0.027,
-    "github": 0.005,
-    "r/deeplearning": 0.0,
-    "r/hacking": 0.103,
-    "r/redteamsec": 0.0,
-    "HN": 0.03,
     "huggingface": 0.0,
-    "r/cursor": 0.0,
-    "r/ElevenLabs": 0.0,
-    "r/LocalLLaMA": 0.074,
+    "HN": 0.03,
+    "official": 0.021,
+    "github": 0.006,
+    "r/LocalLLaMA": 0.077,
     "r/StableDiffusion": 0.0,
-    "r/artificial": 0.128,
-    "r/cybersecurity": 0.064,
+    "r/artificial": 0.125,
+    "r/cybersecurity": 0.063,
     "r/SaaS": 0.0,
     "r/netsec": 0.0,
-    "r/singularity": 0.198,
+    "r/cursor": 0.0,
+    "r/singularity": 0.194,
+    "r/deeplearning": 0.0,
+    "r/hacking": 0.115,
+    "r/redteamsec": 0.0,
     "r/indiehackers": 0.0,
     "r/MachineLearning": 0.0,
     "r/FluxAI": 0.0,
@@ -49,24 +48,16 @@
     "r/learnmachinelearning": 0.0
   },
   "category": {
-    "UPDATE": 0.037,
-    "DEAL": 0.091,
-    "LAUNCH": 0.009,
     "RELEASE": 0.008,
-    "PRICING": 0.0,
+    "DEAL": 0.065,
+    "UPDATE": 0.037,
     "OPEN_SOURCE": 0.0,
-    "BENCHMARK": 0.0
+    "LAUNCH": 0.01,
+    "BENCHMARK": 0.0,
+    "PRICING": 0.0
   },
   "exemplars": {
     "top": [
-      {
-        "headline": "Robotics startup Generalist reportedly reaches a $3B valuation",
-        "reward": 0.6
-      },
-      {
-        "headline": "Robotics startup Generalist reportedly reaches a $3B valuation",
-        "reward": 0.6
-      },
       {
         "headline": "Z.ai releases GLM-5.3-Flash",
         "reward": 0.6
@@ -76,7 +67,15 @@
         "reward": 0.6
       },
       {
-        "headline": "Robotics startup Generalist reportedly reaches a $3B valuation",
+        "headline": "Meta’s plan to replace more staff with AI reportedly collapses",
+        "reward": 0.6
+      },
+      {
+        "headline": "Z.ai releases GLM-5.3-Flash",
+        "reward": 0.6
+      },
+      {
+        "headline": "Sam Altman says OpenAI could achieve AGI by the end of 2026",
         "reward": 0.6
       }
     ],
