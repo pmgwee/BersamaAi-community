@@ -1,7 +1,7 @@
 {
-  "updated_at": "2026-09-10T20:54:07Z",
+  "updated_at": "2026-09-10T23:12:29Z",
   "half_life_days": 14,
-  "n_events": 8615,
+  "n_events": 8745,
   "topic": {
     "coding": 0.023,
     "creative_video": 0.0,
@@ -15,7 +15,7 @@
   },
   "source": {
     "official": 0.026,
-    "HN": 0.019,
+    "HN": 0.02,
     "r/cybersecurity": 0.0,
     "r/hacking": 0.103,
     "huggingface": 0.0,
@@ -24,7 +24,7 @@
     "r/StableDiffusion": 0.0,
     "r/indiehackers": 0.0,
     "r/netsec": 0.0,
-    "r/LocalLLaMA": 0.116,
+    "r/LocalLLaMA": 0.119,
     "r/MachineLearning": 0.0,
     "r/FluxAI": 0.0,
     "r/ClaudeCode": 0.0,

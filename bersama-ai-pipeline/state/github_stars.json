@@ -72,8 +72,8 @@
     "ts": "2026-08-11T22:07:17+00:00"
   },
   "vinzdg/codenotch": {
-    "stars": 1370,
-    "ts": "2026-09-10T20:54:57+00:00"
+    "stars": 1379,
+    "ts": "2026-09-10T23:13:18+00:00"
   },
   "cinderline/northcinder": {
     "stars": 1206,
@@ -195,17 +195,21 @@
     "stars": 727,
     "ts": "2026-08-23T21:38:08+00:00"
   },
+  "achimala/dream-loop": {
+    "stars": 718,
+    "ts": "2026-09-10T23:13:18+00:00"
+  },
   "kacperkapusciak/goldie": {
     "stars": 714,
     "ts": "2026-08-30T23:32:51+00:00"
   },
-  "achimala/dream-loop": {
-    "stars": 704,
-    "ts": "2026-09-10T20:54:57+00:00"
-  },
   "brayonpi/hexstellar": {
     "stars": 702,
     "ts": "2026-09-02T23:24:11+00:00"
+  },
+  "Vincentwei1021/anything2explainer": {
+    "stars": 690,
+    "ts": "2026-09-10T23:15:04+00:00"
   },
   "0xsline/awesome-deepseek-harness": {
     "stars": 687,
@@ -214,10 +218,6 @@
   "SigmanticAI/apex-inference-chip": {
     "stars": 682,
     "ts": "2026-08-23T21:38:08+00:00"
-  },
-  "Vincentwei1021/anything2explainer": {
-    "stars": 676,
-    "ts": "2026-09-10T20:56:43+00:00"
   },
   "gnipbao/story-to-handdrawn-video": {
     "stars": 667,
@@ -283,13 +283,13 @@
     "stars": 552,
     "ts": "2026-08-18T21:45:23+00:00"
   },
+  "okf-memory/okf-agent-memory": {
+    "stars": 549,
+    "ts": "2026-09-10T23:13:18+00:00"
+  },
   "AMAP-ML/LongHorizon-Harness": {
     "stars": 548,
     "ts": "2026-08-10T22:00:46+00:00"
-  },
-  "okf-memory/okf-agent-memory": {
-    "stars": 548,
-    "ts": "2026-09-10T20:54:57+00:00"
   },
   "Zyrexnn/Cybermes": {
     "stars": 543,
@@ -531,13 +531,13 @@
     "stars": 322,
     "ts": "2026-08-28T15:26:43+00:00"
   },
+  "i-am-manware/Manware-s-AI-Learning-Toolkit": {
+    "stars": 322,
+    "ts": "2026-09-10T23:15:28+00:00"
+  },
   "S1N6H/pentest-harness": {
     "stars": 321,
     "ts": "2026-09-01T23:25:37+00:00"
-  },
-  "i-am-manware/Manware-s-AI-Learning-Toolkit": {
-    "stars": 321,
-    "ts": "2026-09-10T20:57:21+00:00"
   },
   "inkboard/system-atlas": {
     "stars": 319,
@@ -653,7 +653,7 @@
   },
   "browser-use/browser-use-pi": {
     "stars": 265,
-    "ts": "2026-09-10T20:54:57+00:00"
+    "ts": "2026-09-10T23:13:18+00:00"
   },
   "NVIDIA-NeMo/labs-OO-Agents": {
     "stars": 263,
@@ -741,7 +741,7 @@
   },
   "alchaincyf/huashu-mac-use": {
     "stars": 232,
-    "ts": "2026-09-10T20:54:57+00:00"
+    "ts": "2026-09-10T23:13:18+00:00"
   },
   "finna/Finn-loop": {
     "stars": 231,
@@ -758,6 +758,10 @@
   "truespar/sentio": {
     "stars": 227,
     "ts": "2026-08-29T23:23:08+00:00"
+  },
+  "crwdla/tokentab": {
+    "stars": 227,
+    "ts": "2026-09-10T23:13:18+00:00"
   },
   "OpenLabs-so/openanalytics": {
     "stars": 225,
@@ -827,6 +831,10 @@
     "stars": 211,
     "ts": "2026-08-20T21:46:04+00:00"
   },
+  "Kablex/ComfyUI-Ref2VA-VSA": {
+    "stars": 211,
+    "ts": "2026-09-10T23:13:45+00:00"
+  },
   "KimGLee/Cambium": {
     "stars": 209,
     "ts": "2026-08-10T22:00:46+00:00"
@@ -847,10 +855,6 @@
     "stars": 206,
     "ts": "2026-08-20T21:46:04+00:00"
   },
-  "crwdla/tokentab": {
-    "stars": 206,
-    "ts": "2026-09-10T20:54:57+00:00"
-  },
   "livetennisapi/livetennisapi-mcp": {
     "stars": 205,
     "ts": "2026-07-24T22:21:15+00:00"
@@ -862,10 +866,6 @@
   "oliverb-io1902e8/agent-skills-collection": {
     "stars": 204,
     "ts": "2026-08-12T22:05:35+00:00"
-  },
-  "Kablex/ComfyUI-Ref2VA-VSA": {
-    "stars": 204,
-    "ts": "2026-09-10T20:55:39+00:00"
   },
   "icebird1998/scientific-illustrator": {
     "stars": 203,
@@ -976,8 +976,8 @@
     "ts": "2026-08-23T21:38:08+00:00"
   },
   "noskillish/bankmcp": {
-    "stars": 177,
-    "ts": "2026-09-10T20:54:57+00:00"
+    "stars": 178,
+    "ts": "2026-09-10T23:13:18+00:00"
   },
   "huiliyi37/dsh-tianshu-tui": {
     "stars": 175,
@@ -1051,6 +1051,10 @@
     "stars": 165,
     "ts": "2026-09-02T23:21:24+00:00"
   },
+  "casatrickdev/robinhood-trading-tools": {
+    "stars": 165,
+    "ts": "2026-09-10T23:16:28+00:00"
+  },
   "NextWeb4/official-document-ai-assistant": {
     "stars": 164,
     "ts": "2026-07-28T22:21:38+00:00"
@@ -1093,15 +1097,15 @@
   },
   "Omni-Interaction-Gander/Omni-Interaction-Agent": {
     "stars": 160,
-    "ts": "2026-09-10T20:56:43+00:00"
+    "ts": "2026-09-10T23:15:04+00:00"
   },
   "Dominic789654/awesome-deepseek-harness": {
     "stars": 159,
     "ts": "2026-08-19T21:46:42+00:00"
   },
-  "casatrickdev/robinhood-trading-tools": {
+  "showlab/Show-Harness": {
     "stars": 159,
-    "ts": "2026-09-10T20:58:23+00:00"
+    "ts": "2026-09-10T23:13:18+00:00"
   },
   "hsusul/lore": {
     "stars": 158,
@@ -1110,10 +1114,6 @@
   "chengyi-ai/native-subtitle-quote-image": {
     "stars": 158,
     "ts": "2026-08-22T21:38:43+00:00"
-  },
-  "showlab/Show-Harness": {
-    "stars": 158,
-    "ts": "2026-09-10T20:54:57+00:00"
   },
   "GENEXIS-AI/gpt-image-skill": {
     "stars": 157,
