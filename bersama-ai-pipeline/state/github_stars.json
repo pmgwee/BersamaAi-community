@@ -72,8 +72,8 @@
     "ts": "2026-08-11T22:07:17+00:00"
   },
   "vinzdg/codenotch": {
-    "stars": 1292,
-    "ts": "2026-09-10T04:47:36+00:00"
+    "stars": 1331,
+    "ts": "2026-09-10T11:24:39+00:00"
   },
   "cinderline/northcinder": {
     "stars": 1206,
@@ -239,6 +239,10 @@
     "stars": 588,
     "ts": "2026-07-27T22:20:34+00:00"
   },
+  "achimala/dream-loop": {
+    "stars": 587,
+    "ts": "2026-09-10T11:24:39+00:00"
+  },
   "0xwilliamortiz/ponytail-improved": {
     "stars": 585,
     "ts": "2026-08-03T22:19:43+00:00"
@@ -295,13 +299,13 @@
     "stars": 535,
     "ts": "2026-08-19T21:43:56+00:00"
   },
+  "okf-memory/okf-agent-memory": {
+    "stars": 535,
+    "ts": "2026-09-10T11:24:39+00:00"
+  },
   "decionis/agent-safe-pipeline": {
     "stars": 534,
     "ts": "2026-08-19T21:43:56+00:00"
-  },
-  "okf-memory/okf-agent-memory": {
-    "stars": 523,
-    "ts": "2026-09-10T04:47:36+00:00"
   },
   "disler/super-simple-software-factory": {
     "stars": 513,
@@ -314,10 +318,6 @@
   "Forsy-AI/biosecurity-agent": {
     "stars": 513,
     "ts": "2026-08-28T15:26:43+00:00"
-  },
-  "achimala/dream-loop": {
-    "stars": 511,
-    "ts": "2026-09-10T04:47:36+00:00"
   },
   "s1dashu/animated-voiceover": {
     "stars": 507,
@@ -338,6 +338,10 @@
   "s0xDk/refactoring-ui-skill": {
     "stars": 481,
     "ts": "2026-09-01T23:21:23+00:00"
+  },
+  "Vincentwei1021/anything2explainer": {
+    "stars": 481,
+    "ts": "2026-09-10T11:26:08+00:00"
   },
   "kgoedecke/doop": {
     "stars": 480,
@@ -551,6 +555,10 @@
     "stars": 312,
     "ts": "2026-08-04T22:31:22+00:00"
   },
+  "i-am-manware/Manware-s-AI-Learning-Toolkit": {
+    "stars": 306,
+    "ts": "2026-09-10T11:26:30+00:00"
+  },
   "0xwilliamortiz/andrej-karpathy-skills": {
     "stars": 305,
     "ts": "2026-07-27T22:20:34+00:00"
@@ -570,10 +578,6 @@
   "UditAkhourii/neuroarxiv": {
     "stars": 299,
     "ts": "2026-08-11T22:07:17+00:00"
-  },
-  "i-am-manware/Manware-s-AI-Learning-Toolkit": {
-    "stars": 298,
-    "ts": "2026-09-10T04:49:28+00:00"
   },
   "ddcat-ai/open-ai-canvas": {
     "stars": 296,
@@ -598,10 +602,6 @@
   "useagenthq/useagent": {
     "stars": 284,
     "ts": "2026-09-04T23:04:42+00:00"
-  },
-  "Vincentwei1021/anything2explainer": {
-    "stars": 281,
-    "ts": "2026-09-10T04:49:06+00:00"
   },
   "only-cli/oc": {
     "stars": 280,
@@ -675,6 +675,10 @@
     "stars": 259,
     "ts": "2026-09-02T23:21:24+00:00"
   },
+  "browser-use/browser-use-pi": {
+    "stars": 259,
+    "ts": "2026-09-10T11:24:39+00:00"
+  },
   "techjanitor/botmaker": {
     "stars": 255,
     "ts": "2026-09-07T23:32:31+00:00"
@@ -727,10 +731,6 @@
     "stars": 236,
     "ts": "2026-09-07T23:35:16+00:00"
   },
-  "browser-use/browser-use-pi": {
-    "stars": 236,
-    "ts": "2026-09-10T04:47:36+00:00"
-  },
   "apiframe-ai/seedance-2.0-api": {
     "stars": 232,
     "ts": "2026-08-20T21:47:08+00:00"
@@ -752,8 +752,8 @@
     "ts": "2026-08-09T21:50:37+00:00"
   },
   "alchaincyf/huashu-mac-use": {
-    "stars": 228,
-    "ts": "2026-09-10T04:47:36+00:00"
+    "stars": 230,
+    "ts": "2026-09-10T11:24:39+00:00"
   },
   "truespar/sentio": {
     "stars": 227,
@@ -987,6 +987,10 @@
     "stars": 174,
     "ts": "2026-08-30T23:32:51+00:00"
   },
+  "noskillish/bankmcp": {
+    "stars": 174,
+    "ts": "2026-09-10T11:24:39+00:00"
+  },
   "codejunkie99/graph-engineering": {
     "stars": 173,
     "ts": "2026-07-29T22:18:15+00:00"
@@ -998,10 +1002,6 @@
   "breezeblue-ai/breeze-tts": {
     "stars": 173,
     "ts": "2026-08-31T20:54:07+00:00"
-  },
-  "noskillish/bankmcp": {
-    "stars": 173,
-    "ts": "2026-09-10T04:47:36+00:00"
   },
   "0xohioism/polymarket-crypto-5m-15min-trading-bot": {
     "stars": 171,
@@ -1098,6 +1098,10 @@
   "GENEXIS-AI/gpt-image-skill": {
     "stars": 157,
     "ts": "2026-09-01T23:21:23+00:00"
+  },
+  "Omni-Interaction-Gander/Omni-Interaction-Agent": {
+    "stars": 156,
+    "ts": "2026-09-10T11:26:08+00:00"
   },
   "hewzhew/dsh-agent-rp": {
     "stars": 155,
