@@ -1,30 +1,30 @@
 {
-  "updated_at": "2026-09-10T11:23:53Z",
+  "updated_at": "2026-09-10T16:27:00Z",
   "half_life_days": 14,
-  "n_events": 8459,
+  "n_events": 8480,
   "topic": {
-    "company_investment": 0.045,
-    "cybersecurity": 0.021,
-    "research_study": 0.0,
     "coding": 0.022,
     "creative_video": 0.0,
+    "cybersecurity": 0.011,
+    "research_study": 0.0,
+    "company_investment": 0.032,
     "research_productivity": 0.0,
     "creative_voice": 0.0,
     "finance": 0.0,
     "creative_image": 0.0
   },
   "source": {
-    "HN": 0.026,
-    "r/cybersecurity": 0.061,
-    "official": 0.025,
-    "r/hacking": 0.105,
+    "official": 0.026,
+    "HN": 0.019,
+    "r/cybersecurity": 0.0,
+    "r/hacking": 0.104,
     "huggingface": 0.0,
-    "github": 0.008,
+    "github": 0.009,
     "r/redteamsec": 0.0,
     "r/StableDiffusion": 0.0,
     "r/indiehackers": 0.0,
     "r/netsec": 0.0,
-    "r/LocalLLaMA": 0.11,
+    "r/LocalLLaMA": 0.113,
     "r/MachineLearning": 0.0,
     "r/FluxAI": 0.0,
     "r/ClaudeCode": 0.0,
@@ -47,30 +47,30 @@
     "r/learnmachinelearning": 0.0
   },
   "category": {
-    "DEAL": 0.074,
-    "UPDATE": 0.033,
-    "RELEASE": 0.0,
     "LAUNCH": 0.013,
+    "UPDATE": 0.03,
     "BENCHMARK": 0.0,
+    "RELEASE": 0.0,
     "OPEN_SOURCE": 0.0,
+    "DEAL": 0.041,
     "PRICING": 0.0
   },
   "exemplars": {
     "top": [
       {
-        "headline": "Nvidia agrees to acquire Hugging Face for $13 billion",
+        "headline": "Researchers demonstrate prompt laundering attack against OpenClaw",
         "reward": 0.6
       },
       {
-        "headline": "Russian-speaking cybercriminals reportedly used Cursor to hack seven companies",
+        "headline": "Researchers demonstrate prompt laundering attack against OpenClaw",
         "reward": 0.6
       },
       {
-        "headline": "Nvidia agrees to acquire Hugging Face for $13 billion",
+        "headline": "Researchers demonstrate prompt laundering attack against OpenClaw",
         "reward": 0.6
       },
       {
-        "headline": "Russian-speaking cybercriminals reportedly used Cursor to hack seven companies",
+        "headline": "Researchers demonstrate prompt laundering attack against OpenClaw",
         "reward": 0.6
       },
       {
