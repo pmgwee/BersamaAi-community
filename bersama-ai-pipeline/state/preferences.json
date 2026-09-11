@@ -1,28 +1,28 @@
 {
-  "updated_at": "2026-09-11T11:25:38Z",
+  "updated_at": "2026-09-11T16:31:05Z",
   "half_life_days": 14,
-  "n_events": 8744,
+  "n_events": 8652,
   "topic": {
-    "coding": 0.025,
-    "cybersecurity": 0.0,
-    "company_investment": 0.033,
-    "research_productivity": 0.0,
+    "coding": 0.026,
+    "company_investment": 0.034,
     "creative_video": 0.0,
     "creative_voice": 0.0,
+    "cybersecurity": 0.0,
     "research_study": 0.0,
     "finance": 0.0,
-    "creative_image": 0.0
+    "creative_image": 0.0,
+    "research_productivity": 0.0
   },
   "source": {
-    "huggingface": 0.0,
-    "github": 0.01,
-    "r/redteamsec": 0.0,
-    "official": 0.028,
     "HN": 0.021,
+    "official": 0.029,
     "r/StableDiffusion": 0.0,
+    "github": 0.01,
+    "huggingface": 0.0,
     "r/indiehackers": 0.0,
     "r/netsec": 0.0,
-    "r/LocalLLaMA": 0.124,
+    "r/redteamsec": 0.0,
+    "r/LocalLLaMA": 0.127,
     "r/MachineLearning": 0.0,
     "r/cybersecurity": 0.0,
     "r/hacking": 0.0,
@@ -47,10 +47,10 @@
     "r/learnmachinelearning": 0.0
   },
   "category": {
-    "RELEASE": 0.0,
     "OPEN_SOURCE": 0.0,
     "UPDATE": 0.027,
-    "LAUNCH": 0.015,
+    "RELEASE": 0.0,
+    "LAUNCH": 0.016,
     "DEAL": 0.044,
     "BENCHMARK": 0.0,
     "PRICING": 0.0
