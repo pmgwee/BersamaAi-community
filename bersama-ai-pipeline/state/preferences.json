@@ -1,10 +1,10 @@
 {
-  "updated_at": "2026-09-11T21:00:04Z",
+  "updated_at": "2026-09-11T23:17:40Z",
   "half_life_days": 14,
-  "n_events": 8761,
+  "n_events": 8863,
   "topic": {
     "coding": 0.026,
-    "company_investment": 0.034,
+    "company_investment": 0.035,
     "creative_video": 0.0,
     "creative_voice": 0.0,
     "cybersecurity": 0.0,
@@ -15,14 +15,14 @@
   },
   "source": {
     "HN": 0.021,
-    "official": 0.029,
+    "official": 0.03,
     "r/StableDiffusion": 0.0,
     "github": 0.011,
     "huggingface": 0.0,
     "r/indiehackers": 0.0,
     "r/netsec": 0.0,
     "r/redteamsec": 0.0,
-    "r/LocalLLaMA": 0.129,
+    "r/LocalLLaMA": 0.132,
     "r/MachineLearning": 0.0,
     "r/cybersecurity": 0.0,
     "r/hacking": 0.0,
@@ -48,10 +48,10 @@
   },
   "category": {
     "OPEN_SOURCE": 0.0,
-    "UPDATE": 0.027,
+    "UPDATE": 0.028,
     "RELEASE": 0.0,
     "LAUNCH": 0.016,
-    "DEAL": 0.045,
+    "DEAL": 0.046,
     "BENCHMARK": 0.0,
     "PRICING": 0.0
   },

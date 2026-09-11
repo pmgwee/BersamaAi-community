@@ -72,8 +72,8 @@
     "ts": "2026-08-11T22:07:17+00:00"
   },
   "vinzdg/codenotch": {
-    "stars": 1456,
-    "ts": "2026-09-11T21:00:52+00:00"
+    "stars": 1465,
+    "ts": "2026-09-11T23:18:30+00:00"
   },
   "cinderline/northcinder": {
     "stars": 1206,
@@ -148,8 +148,8 @@
     "ts": "2026-09-06T22:55:22+00:00"
   },
   "Vincentwei1021/anything2explainer": {
-    "stars": 924,
-    "ts": "2026-09-11T21:02:52+00:00"
+    "stars": 928,
+    "ts": "2026-09-11T23:20:16+00:00"
   },
   "vercel-labs/eve-software-factory-template": {
     "stars": 908,
@@ -161,7 +161,7 @@
   },
   "iamzulx/crypto-rag": {
     "stars": 903,
-    "ts": "2026-09-11T21:00:52+00:00"
+    "ts": "2026-09-11T23:18:30+00:00"
   },
   "elie222/rakazo": {
     "stars": 892,
@@ -172,8 +172,8 @@
     "ts": "2026-08-19T21:43:56+00:00"
   },
   "achimala/dream-loop": {
-    "stars": 839,
-    "ts": "2026-09-11T21:00:52+00:00"
+    "stars": 842,
+    "ts": "2026-09-11T23:18:30+00:00"
   },
   "mikiarlo3/awesome-growth-hacking-skills": {
     "stars": 818,
@@ -263,13 +263,13 @@
     "stars": 581,
     "ts": "2026-08-23T09:45:16+00:00"
   },
+  "okf-memory/okf-agent-memory": {
+    "stars": 574,
+    "ts": "2026-09-11T23:18:30+00:00"
+  },
   "MarcosSete/awesome-free-ai-course-notes": {
     "stars": 573,
     "ts": "2026-08-09T21:52:41+00:00"
-  },
-  "okf-memory/okf-agent-memory": {
-    "stars": 573,
-    "ts": "2026-09-11T21:00:52+00:00"
   },
   "Human-Agent-Society/reef": {
     "stars": 571,
@@ -411,6 +411,10 @@
     "stars": 418,
     "ts": "2026-07-25T22:12:59+00:00"
   },
+  "crwdla/tokentab": {
+    "stars": 417,
+    "ts": "2026-09-11T23:18:30+00:00"
+  },
   "OnlyTerp/opengrok": {
     "stars": 416,
     "ts": "2026-09-02T23:21:24+00:00"
@@ -422,10 +426,6 @@
   "Larryvrh/ComfyUI-MiniMax-H3-Turbo": {
     "stars": 411,
     "ts": "2026-08-12T22:06:02+00:00"
-  },
-  "crwdla/tokentab": {
-    "stars": 402,
-    "ts": "2026-09-11T21:00:52+00:00"
   },
   "furkankly/zoetrope": {
     "stars": 399,
@@ -481,7 +481,7 @@
   },
   "i-am-manware/Manware-s-AI-Learning-Toolkit": {
     "stars": 353,
-    "ts": "2026-09-11T21:03:29+00:00"
+    "ts": "2026-09-11T23:20:39+00:00"
   },
   "i3T4AN/KADATH": {
     "stars": 352,
@@ -639,6 +639,10 @@
     "stars": 274,
     "ts": "2026-09-04T23:04:42+00:00"
   },
+  "browser-use/browser-use-pi": {
+    "stars": 273,
+    "ts": "2026-09-11T23:18:30+00:00"
+  },
   "Sateezg/codex-bridge": {
     "stars": 272,
     "ts": "2026-08-15T21:37:29+00:00"
@@ -646,10 +650,6 @@
   "Rimagination/h3lite": {
     "stars": 272,
     "ts": "2026-08-19T21:45:15+00:00"
-  },
-  "browser-use/browser-use-pi": {
-    "stars": 272,
-    "ts": "2026-09-11T21:00:52+00:00"
   },
   "alikon-art/DeterminFlow": {
     "stars": 271,
@@ -687,13 +687,17 @@
     "stars": 259,
     "ts": "2026-09-02T23:21:24+00:00"
   },
+  "showlab/Show-Harness": {
+    "stars": 258,
+    "ts": "2026-09-11T23:18:30+00:00"
+  },
+  "Kablex/ComfyUI-Ref2VA-VSA": {
+    "stars": 256,
+    "ts": "2026-09-11T23:18:57+00:00"
+  },
   "techjanitor/botmaker": {
     "stars": 255,
     "ts": "2026-09-07T23:32:31+00:00"
-  },
-  "showlab/Show-Harness": {
-    "stars": 255,
-    "ts": "2026-09-11T21:00:52+00:00"
   },
   "RinDig/icm-architect": {
     "stars": 254,
@@ -706,10 +710,6 @@
   "LeonQ8/ComfyUI-ALLinONE-MinimaxH3": {
     "stars": 250,
     "ts": "2026-08-21T21:42:40+00:00"
-  },
-  "Kablex/ComfyUI-Ref2VA-VSA": {
-    "stars": 250,
-    "ts": "2026-09-11T21:01:34+00:00"
   },
   "gozen3ji/consulting-pptx-skill": {
     "stars": 249,
@@ -741,7 +741,7 @@
   },
   "alchaincyf/huashu-mac-use": {
     "stars": 239,
-    "ts": "2026-09-11T21:00:52+00:00"
+    "ts": "2026-09-11T23:18:30+00:00"
   },
   "cristicretu/diri": {
     "stars": 236,
@@ -944,8 +944,8 @@
     "ts": "2026-09-07T23:32:31+00:00"
   },
   "casatrickdev/robinhood-trading-tools": {
-    "stars": 190,
-    "ts": "2026-09-11T21:04:29+00:00"
+    "stars": 191,
+    "ts": "2026-09-11T23:21:40+00:00"
   },
   "robbin/wechat-exporter": {
     "stars": 189,
@@ -972,8 +972,8 @@
     "ts": "2026-08-18T21:41:28+00:00"
   },
   "noskillish/bankmcp": {
-    "stars": 185,
-    "ts": "2026-09-11T21:00:52+00:00"
+    "stars": 186,
+    "ts": "2026-09-11T23:18:30+00:00"
   },
   "opentokenz/mcpx": {
     "stars": 184,
@@ -988,16 +988,16 @@
     "ts": "2026-09-07T23:34:16+00:00"
   },
   "VaderChen/YourDesk": {
-    "stars": 179,
-    "ts": "2026-09-11T21:00:52+00:00"
+    "stars": 180,
+    "ts": "2026-09-11T23:18:30+00:00"
   },
   "iamlukethedev/Hermes3D": {
     "stars": 178,
     "ts": "2026-08-23T21:38:08+00:00"
   },
   "Omni-Interaction-Gander/Omni-Interaction-Agent": {
-    "stars": 176,
-    "ts": "2026-09-11T21:02:52+00:00"
+    "stars": 177,
+    "ts": "2026-09-11T23:20:16+00:00"
   },
   "huiliyi37/dsh-tianshu-tui": {
     "stars": 175,
@@ -1031,13 +1031,13 @@
     "stars": 173,
     "ts": "2026-08-31T20:54:07+00:00"
   },
+  "viettranx/3dviz-pro-max": {
+    "stars": 172,
+    "ts": "2026-09-11T23:18:30+00:00"
+  },
   "0xohioism/polymarket-crypto-5m-15min-trading-bot": {
     "stars": 171,
     "ts": "2026-08-27T14:19:34+00:00"
-  },
-  "viettranx/3dviz-pro-max": {
-    "stars": 171,
-    "ts": "2026-09-11T21:00:52+00:00"
   },
   "0xtresser/Transcript-of-Liang-Wenfengs-DeepSeek-Founder-4-Hour-Investor-Meeting": {
     "stars": 170,
@@ -1107,6 +1107,10 @@
     "stars": 162,
     "ts": "2026-08-13T22:08:54+00:00"
   },
+  "punkpeye/awesome-remote-mcp-servers": {
+    "stars": 162,
+    "ts": "2026-09-11T23:18:30+00:00"
+  },
   "ericlitman/open-pstack": {
     "stars": 161,
     "ts": "2026-08-30T23:32:51+00:00"
@@ -1127,13 +1131,13 @@
     "stars": 158,
     "ts": "2026-08-22T21:38:43+00:00"
   },
-  "punkpeye/awesome-remote-mcp-servers": {
-    "stars": 158,
-    "ts": "2026-09-11T21:00:52+00:00"
-  },
   "GENEXIS-AI/gpt-image-skill": {
     "stars": 157,
     "ts": "2026-09-01T23:21:23+00:00"
+  },
+  "eternityspring/reelbench-skills": {
+    "stars": 156,
+    "ts": "2026-09-11T23:21:17+00:00"
   },
   "hewzhew/dsh-agent-rp": {
     "stars": 155,
@@ -1172,8 +1176,8 @@
     "ts": "2026-08-25T21:46:27+00:00"
   },
   "xiaYuTian11/maskit": {
-    "stars": 143,
-    "ts": "2026-09-11T21:05:34+00:00"
+    "stars": 145,
+    "ts": "2026-09-11T23:22:31+00:00"
   },
   "azrtydxb/procoder": {
     "stars": 140,
@@ -1211,12 +1215,12 @@
     "stars": 103,
     "ts": "2026-08-08T21:52:06+00:00"
   },
+  "aimeoa/hanshuang-codex": {
+    "stars": 103,
+    "ts": "2026-09-11T23:22:31+00:00"
+  },
   "d4ncboz/jailbreak": {
     "stars": 102,
     "ts": "2026-09-03T23:22:57+00:00"
-  },
-  "aimeoa/hanshuang-codex": {
-    "stars": 102,
-    "ts": "2026-09-11T21:05:34+00:00"
   }
 }
