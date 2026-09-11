@@ -1,31 +1,31 @@
 {
-  "updated_at": "2026-09-10T23:12:29Z",
+  "updated_at": "2026-09-11T04:44:47Z",
   "half_life_days": 14,
-  "n_events": 8745,
+  "n_events": 8632,
   "topic": {
-    "coding": 0.023,
-    "creative_video": 0.0,
-    "cybersecurity": 0.011,
-    "research_study": 0.0,
-    "company_investment": 0.032,
+    "coding": 0.025,
+    "cybersecurity": 0.0,
+    "company_investment": 0.033,
     "research_productivity": 0.0,
+    "creative_video": 0.0,
     "creative_voice": 0.0,
+    "research_study": 0.0,
     "finance": 0.0,
     "creative_image": 0.0
   },
   "source": {
-    "official": 0.026,
-    "HN": 0.02,
-    "r/cybersecurity": 0.0,
-    "r/hacking": 0.103,
     "huggingface": 0.0,
-    "github": 0.009,
+    "github": 0.01,
     "r/redteamsec": 0.0,
+    "official": 0.028,
+    "HN": 0.021,
     "r/StableDiffusion": 0.0,
     "r/indiehackers": 0.0,
     "r/netsec": 0.0,
-    "r/LocalLLaMA": 0.119,
+    "r/LocalLLaMA": 0.121,
     "r/MachineLearning": 0.0,
+    "r/cybersecurity": 0.0,
+    "r/hacking": 0.0,
     "r/FluxAI": 0.0,
     "r/ClaudeCode": 0.0,
     "r/artificial": 0.0,
@@ -47,34 +47,34 @@
     "r/learnmachinelearning": 0.0
   },
   "category": {
-    "LAUNCH": 0.014,
-    "UPDATE": 0.03,
-    "BENCHMARK": 0.0,
     "RELEASE": 0.0,
     "OPEN_SOURCE": 0.0,
-    "DEAL": 0.042,
+    "UPDATE": 0.026,
+    "LAUNCH": 0.015,
+    "DEAL": 0.043,
+    "BENCHMARK": 0.0,
     "PRICING": 0.0
   },
   "exemplars": {
     "top": [
       {
-        "headline": "Researchers demonstrate prompt laundering attack against OpenClaw",
+        "headline": "OpenAI says it will wind down its model contract with Cursor after SpaceX acquisition",
         "reward": 0.6
       },
       {
-        "headline": "Researchers demonstrate prompt laundering attack against OpenClaw",
+        "headline": "OpenAI says it will wind down its model contract with Cursor after SpaceX acquisition",
         "reward": 0.6
       },
       {
-        "headline": "Researchers demonstrate prompt laundering attack against OpenClaw",
+        "headline": "OpenAI says it will wind down its model contract with Cursor after SpaceX acquisition",
         "reward": 0.6
       },
       {
-        "headline": "Researchers demonstrate prompt laundering attack against OpenClaw",
+        "headline": "OpenAI says it will wind down its model contract with Cursor after SpaceX acquisition",
         "reward": 0.6
       },
       {
-        "headline": "Researchers demonstrate prompt laundering attack against OpenClaw",
+        "headline": "OpenAI says it will wind down its model contract with Cursor after SpaceX acquisition",
         "reward": 0.6
       }
     ],

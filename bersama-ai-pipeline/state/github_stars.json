@@ -72,8 +72,8 @@
     "ts": "2026-08-11T22:07:17+00:00"
   },
   "vinzdg/codenotch": {
-    "stars": 1379,
-    "ts": "2026-09-10T23:13:18+00:00"
+    "stars": 1399,
+    "ts": "2026-09-11T04:45:34+00:00"
   },
   "cinderline/northcinder": {
     "stars": 1206,
@@ -155,6 +155,10 @@
     "stars": 904,
     "ts": "2026-08-30T23:35:15+00:00"
   },
+  "iamzulx/crypto-rag": {
+    "stars": 899,
+    "ts": "2026-09-11T04:45:34+00:00"
+  },
   "elie222/rakazo": {
     "stars": 892,
     "ts": "2026-08-19T21:43:56+00:00"
@@ -183,6 +187,14 @@
     "stars": 764,
     "ts": "2026-09-02T23:21:24+00:00"
   },
+  "Vincentwei1021/anything2explainer": {
+    "stars": 760,
+    "ts": "2026-09-11T04:47:02+00:00"
+  },
+  "achimala/dream-loop": {
+    "stars": 753,
+    "ts": "2026-09-11T04:45:34+00:00"
+  },
   "Anionex/dsh-vision-toolkit": {
     "stars": 750,
     "ts": "2026-08-19T21:43:56+00:00"
@@ -195,10 +207,6 @@
     "stars": 727,
     "ts": "2026-08-23T21:38:08+00:00"
   },
-  "achimala/dream-loop": {
-    "stars": 718,
-    "ts": "2026-09-10T23:13:18+00:00"
-  },
   "kacperkapusciak/goldie": {
     "stars": 714,
     "ts": "2026-08-30T23:32:51+00:00"
@@ -206,10 +214,6 @@
   "brayonpi/hexstellar": {
     "stars": 702,
     "ts": "2026-09-02T23:24:11+00:00"
-  },
-  "Vincentwei1021/anything2explainer": {
-    "stars": 690,
-    "ts": "2026-09-10T23:15:04+00:00"
   },
   "0xsline/awesome-deepseek-harness": {
     "stars": 687,
@@ -284,8 +288,8 @@
     "ts": "2026-08-18T21:45:23+00:00"
   },
   "okf-memory/okf-agent-memory": {
-    "stars": 549,
-    "ts": "2026-09-10T23:13:18+00:00"
+    "stars": 551,
+    "ts": "2026-09-11T04:45:34+00:00"
   },
   "AMAP-ML/LongHorizon-Harness": {
     "stars": 548,
@@ -515,6 +519,10 @@
     "stars": 331,
     "ts": "2026-09-07T23:32:31+00:00"
   },
+  "i-am-manware/Manware-s-AI-Learning-Toolkit": {
+    "stars": 331,
+    "ts": "2026-09-11T04:47:24+00:00"
+  },
   "Eversmile12/leaked-llm-prompts": {
     "stars": 329,
     "ts": "2026-07-30T22:29:27+00:00"
@@ -530,10 +538,6 @@
   "HanyuanWang/LiveStream-Agent-Studio": {
     "stars": 322,
     "ts": "2026-08-28T15:26:43+00:00"
-  },
-  "i-am-manware/Manware-s-AI-Learning-Toolkit": {
-    "stars": 322,
-    "ts": "2026-09-10T23:15:28+00:00"
   },
   "S1N6H/pentest-harness": {
     "stars": 321,
@@ -615,6 +619,10 @@
     "stars": 278,
     "ts": "2026-09-03T23:19:00+00:00"
   },
+  "crwdla/tokentab": {
+    "stars": 278,
+    "ts": "2026-09-11T04:45:34+00:00"
+  },
   "nkxx188/ComfyUI-MiniMaxH3-Easy": {
     "stars": 276,
     "ts": "2026-08-11T22:08:22+00:00"
@@ -647,13 +655,13 @@
     "stars": 266,
     "ts": "2026-08-10T22:00:46+00:00"
   },
+  "browser-use/browser-use-pi": {
+    "stars": 266,
+    "ts": "2026-09-11T04:45:34+00:00"
+  },
   "joeseesun/qiaomu-cut-skill": {
     "stars": 265,
     "ts": "2026-07-24T22:21:15+00:00"
-  },
-  "browser-use/browser-use-pi": {
-    "stars": 265,
-    "ts": "2026-09-10T23:13:18+00:00"
   },
   "NVIDIA-NeMo/labs-OO-Agents": {
     "stars": 263,
@@ -731,6 +739,10 @@
     "stars": 236,
     "ts": "2026-09-07T23:35:16+00:00"
   },
+  "alchaincyf/huashu-mac-use": {
+    "stars": 233,
+    "ts": "2026-09-11T04:45:34+00:00"
+  },
   "apiframe-ai/seedance-2.0-api": {
     "stars": 232,
     "ts": "2026-08-20T21:47:08+00:00"
@@ -738,10 +750,6 @@
   "icesixgod/codex-trajectory": {
     "stars": 232,
     "ts": "2026-08-19T21:43:56+00:00"
-  },
-  "alchaincyf/huashu-mac-use": {
-    "stars": 232,
-    "ts": "2026-09-10T23:13:18+00:00"
   },
   "finna/Finn-loop": {
     "stars": 231,
@@ -758,10 +766,6 @@
   "truespar/sentio": {
     "stars": 227,
     "ts": "2026-08-29T23:23:08+00:00"
-  },
-  "crwdla/tokentab": {
-    "stars": 227,
-    "ts": "2026-09-10T23:13:18+00:00"
   },
   "OpenLabs-so/openanalytics": {
     "stars": 225,
@@ -782,6 +786,10 @@
   "disler/fixing-smartass-opus-5": {
     "stars": 223,
     "ts": "2026-08-22T21:38:43+00:00"
+  },
+  "Kablex/ComfyUI-Ref2VA-VSA": {
+    "stars": 222,
+    "ts": "2026-09-11T04:46:00+00:00"
   },
   "Merit-Systems/OpenInstinct": {
     "stars": 221,
@@ -830,10 +838,6 @@
   "Endokelp/Endoplexity": {
     "stars": 211,
     "ts": "2026-08-20T21:46:04+00:00"
-  },
-  "Kablex/ComfyUI-Ref2VA-VSA": {
-    "stars": 211,
-    "ts": "2026-09-10T23:13:45+00:00"
   },
   "KimGLee/Cambium": {
     "stars": 209,
@@ -935,6 +939,10 @@
     "stars": 191,
     "ts": "2026-09-07T23:32:31+00:00"
   },
+  "showlab/Show-Harness": {
+    "stars": 191,
+    "ts": "2026-09-11T04:45:34+00:00"
+  },
   "robbin/wechat-exporter": {
     "stars": 189,
     "ts": "2026-08-03T22:19:43+00:00"
@@ -977,7 +985,11 @@
   },
   "noskillish/bankmcp": {
     "stars": 178,
-    "ts": "2026-09-10T23:13:18+00:00"
+    "ts": "2026-09-11T04:45:34+00:00"
+  },
+  "casatrickdev/robinhood-trading-tools": {
+    "stars": 176,
+    "ts": "2026-09-11T04:48:23+00:00"
   },
   "huiliyi37/dsh-tianshu-tui": {
     "stars": 175,
@@ -1051,10 +1063,6 @@
     "stars": 165,
     "ts": "2026-09-02T23:21:24+00:00"
   },
-  "casatrickdev/robinhood-trading-tools": {
-    "stars": 165,
-    "ts": "2026-09-10T23:16:28+00:00"
-  },
   "NextWeb4/official-document-ai-assistant": {
     "stars": 164,
     "ts": "2026-07-28T22:21:38+00:00"
@@ -1062,6 +1070,10 @@
   "Anionex/codex-deepseek-vision": {
     "stars": 164,
     "ts": "2026-08-02T08:38:50+00:00"
+  },
+  "Omni-Interaction-Gander/Omni-Interaction-Agent": {
+    "stars": 164,
+    "ts": "2026-09-11T04:47:02+00:00"
   },
   "mrpulor-gh/nuphus-mcp": {
     "stars": 163,
@@ -1087,6 +1099,10 @@
     "stars": 162,
     "ts": "2026-08-13T22:08:54+00:00"
   },
+  "VaderChen/YourDesk": {
+    "stars": 162,
+    "ts": "2026-09-11T04:45:34+00:00"
+  },
   "ericlitman/open-pstack": {
     "stars": 161,
     "ts": "2026-08-30T23:32:51+00:00"
@@ -1095,17 +1111,9 @@
     "stars": 160,
     "ts": "2026-08-14T21:43:42+00:00"
   },
-  "Omni-Interaction-Gander/Omni-Interaction-Agent": {
-    "stars": 160,
-    "ts": "2026-09-10T23:15:04+00:00"
-  },
   "Dominic789654/awesome-deepseek-harness": {
     "stars": 159,
     "ts": "2026-08-19T21:46:42+00:00"
-  },
-  "showlab/Show-Harness": {
-    "stars": 159,
-    "ts": "2026-09-10T23:13:18+00:00"
   },
   "hsusul/lore": {
     "stars": 158,
