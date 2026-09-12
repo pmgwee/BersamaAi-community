@@ -1,7 +1,7 @@
 {
-  "updated_at": "2026-09-12T10:50:46Z",
+  "updated_at": "2026-09-12T15:34:11Z",
   "half_life_days": 14,
-  "n_events": 8464,
+  "n_events": 8545,
   "topic": {
     "coding": 0.028,
     "creative_video": 0.0,
@@ -16,10 +16,10 @@
   "source": {
     "huggingface": 0.0,
     "HN": 0.022,
-    "r/LocalLLaMA": 0.136,
+    "r/LocalLLaMA": 0.138,
     "r/StableDiffusion": 0.0,
     "r/MachineLearning": 0.0,
-    "official": 0.022,
+    "official": 0.023,
     "r/cybersecurity": 0.0,
     "r/hacking": 0.0,
     "github": 0.012,
@@ -47,11 +47,11 @@
   },
   "category": {
     "RELEASE": 0.0,
-    "UPDATE": 0.024,
+    "UPDATE": 0.025,
     "BENCHMARK": 0.0,
     "OPEN_SOURCE": 0.0,
-    "DEAL": 0.051,
-    "LAUNCH": 0.017,
+    "DEAL": 0.052,
+    "LAUNCH": 0.018,
     "PRICING": 0.0
   },
   "exemplars": {
