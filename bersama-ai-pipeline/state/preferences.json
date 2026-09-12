@@ -1,31 +1,31 @@
 {
-  "updated_at": "2026-09-11T23:17:40Z",
+  "updated_at": "2026-09-12T04:39:18Z",
   "half_life_days": 14,
-  "n_events": 8863,
+  "n_events": 8718,
   "topic": {
-    "coding": 0.026,
-    "company_investment": 0.035,
-    "creative_video": 0.0,
-    "creative_voice": 0.0,
-    "cybersecurity": 0.0,
+    "company_investment": 0.021,
+    "coding": 0.027,
     "research_study": 0.0,
+    "creative_voice": 0.0,
     "finance": 0.0,
+    "cybersecurity": 0.0,
+    "creative_video": 0.0,
     "creative_image": 0.0,
     "research_productivity": 0.0
   },
   "source": {
     "HN": 0.021,
-    "official": 0.03,
-    "r/StableDiffusion": 0.0,
-    "github": 0.011,
-    "huggingface": 0.0,
+    "official": 0.021,
     "r/indiehackers": 0.0,
     "r/netsec": 0.0,
     "r/redteamsec": 0.0,
-    "r/LocalLLaMA": 0.132,
+    "huggingface": 0.0,
+    "r/LocalLLaMA": 0.134,
+    "r/StableDiffusion": 0.0,
     "r/MachineLearning": 0.0,
     "r/cybersecurity": 0.0,
     "r/hacking": 0.0,
+    "github": 0.012,
     "r/FluxAI": 0.0,
     "r/ClaudeCode": 0.0,
     "r/artificial": 0.0,
@@ -47,34 +47,34 @@
     "r/learnmachinelearning": 0.0
   },
   "category": {
-    "OPEN_SOURCE": 0.0,
-    "UPDATE": 0.028,
+    "UPDATE": 0.023,
     "RELEASE": 0.0,
-    "LAUNCH": 0.016,
-    "DEAL": 0.046,
+    "OPEN_SOURCE": 0.0,
     "BENCHMARK": 0.0,
+    "DEAL": 0.05,
+    "LAUNCH": 0.017,
     "PRICING": 0.0
   },
   "exemplars": {
     "top": [
       {
-        "headline": "OpenAI says it will wind down its model contract with Cursor after SpaceX acquisition",
+        "headline": "Claude reports elevated errors across multiple models",
         "reward": 0.6
       },
       {
-        "headline": "OpenAI says it will wind down its model contract with Cursor after SpaceX acquisition",
+        "headline": "Claude reports elevated errors across multiple models",
         "reward": 0.6
       },
       {
-        "headline": "OpenAI says it will wind down its model contract with Cursor after SpaceX acquisition",
+        "headline": "Claude reports elevated errors across multiple models",
         "reward": 0.6
       },
       {
-        "headline": "OpenAI says it will wind down its model contract with Cursor after SpaceX acquisition",
+        "headline": "Google Antigravity warns third-party use can lead to account suspension",
         "reward": 0.6
       },
       {
-        "headline": "OpenAI says it will wind down its model contract with Cursor after SpaceX acquisition",
+        "headline": "Claude reports elevated errors across multiple models",
         "reward": 0.6
       }
     ],
