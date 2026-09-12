@@ -1,12 +1,12 @@
 {
-  "updated_at": "2026-09-12T20:35:31Z",
+  "updated_at": "2026-09-12T23:04:06Z",
   "half_life_days": 14,
-  "n_events": 8280,
+  "n_events": 8172,
   "topic": {
-    "coding": 0.029,
-    "company_investment": 0.023,
+    "coding": 0.03,
     "creative_voice": 0.0,
     "creative_image": 0.0,
+    "company_investment": 0.024,
     "cybersecurity": 0.0,
     "research_study": 0.0,
     "creative_video": 0.0,
@@ -14,8 +14,7 @@
     "finance": 0.0
   },
   "source": {
-    "HN": 0.022,
-    "official": 0.023,
+    "official": 0.025,
     "r/StableDiffusion": 0.0,
     "github": 0.013,
     "r/FluxAI": 0.0,
@@ -25,8 +24,9 @@
     "r/artificial": 0.0,
     "r/comfyui": 0.0,
     "r/ChatGPT": 0.0,
+    "HN": 0.023,
     "r/singularity": 0.0,
-    "r/LocalLLaMA": 0.17,
+    "r/LocalLLaMA": 0.168,
     "r/hacking": 0.0,
     "r/security": 0.0,
     "r/cybersecurity": 0.0,
@@ -46,13 +46,13 @@
     "r/learnmachinelearning": 0.0
   },
   "category": {
-    "OPEN_SOURCE": 0.0,
-    "UPDATE": 0.026,
     "RELEASE": 0.0,
-    "DEAL": 0.053,
+    "OPEN_SOURCE": 0.0,
     "LAUNCH": 0.018,
     "PRICING": 0.0,
-    "BENCHMARK": 0.0
+    "BENCHMARK": 0.0,
+    "UPDATE": 0.026,
+    "DEAL": 0.056
   },
   "exemplars": {
     "top": [
