@@ -70,6 +70,11 @@ _effort = os.environ.get("LLM_REASONING_EFFORT")
 LLM_REASONING_EFFORT = ("xhigh" if _effort is None else _effort).strip().lower()
 if LLM_REASONING_EFFORT in ("off", "none"):
     LLM_REASONING_EFFORT = ""
+elif LLM_REASONING_EFFORT and LLM_REASONING_EFFORT not in ("low", "medium", "high", "xhigh"):
+    # Mirrors pipeline/llm.py: a typo degrades to the default rather than making
+    # the provider 400 every single reply (which members would only ever see as
+    # "⚠️ The AI hit an error"). Logged at startup via the on_ready AI line.
+    LLM_REASONING_EFFORT = "xhigh"
 AI_EXTRA = {"reasoning": {"effort": LLM_REASONING_EFFORT}} if LLM_REASONING_EFFORT else {}
 
 GUILD_ID = int(CONFIG["guild_id"])
