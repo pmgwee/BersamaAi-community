@@ -27,10 +27,11 @@ import re
 import sqlite3
 import sys
 import time
+import uuid
 from collections import deque
 from contextlib import contextmanager
 from pathlib import Path
-from urllib.parse import urlparse
+from urllib.parse import urlparse, urlsplit
 
 import aiohttp
 import discord
@@ -76,6 +77,28 @@ elif LLM_REASONING_EFFORT and LLM_REASONING_EFFORT not in ("low", "medium", "hig
     # "⚠️ The AI hit an error"). Logged at startup via the on_ready AI line.
     LLM_REASONING_EFFORT = "xhigh"
 AI_EXTRA = {"reasoning": {"effort": LLM_REASONING_EFFORT}} if LLM_REASONING_EFFORT else {}
+
+# OpenCode Go REJECTS any request without x-opencode-session — HTTP 400
+# MissingSessionID — so without this every @mention reply dies as the generic
+# "⚠️ The AI hit an error". pipeline/llm.py supplies the same two headers for the
+# pipeline's own client; the bot builds its own client and needs its own copy.
+CLIENT_USER_AGENT = "BersamaAi-bot/1.0"
+
+
+def _llm_headers(conversation_key: str) -> dict:
+    """Identify this client and give OpenCode a stable conversation affinity key.
+
+    The bot feeds recent CHANNEL context into every call, so the channel — not
+    the individual message — is the conversation unit; keying the opaque UUID on
+    it is what the header is actually for ("cannot be routed efficiently").
+    Host-gated like pipeline/llm.py so pointing LLM_BASE_URL at another vendor
+    doesn't send it a header it never asked for.
+    """
+    headers = {"User-Agent": CLIENT_USER_AGENT}
+    host = (urlsplit(LLM_BASE_URL).hostname or "").lower()
+    if host == "opencode.ai" or host.endswith(".opencode.ai"):
+        headers["x-opencode-session"] = str(uuid.uuid5(uuid.NAMESPACE_URL, conversation_key))
+    return headers
 
 GUILD_ID = int(CONFIG["guild_id"])
 CHANNELS = {k: int(v) for k, v in CONFIG["channels"].items()}
@@ -623,6 +646,7 @@ async def handle_ai(message: discord.Message, override_text: str | None = None):
                         model=LLM_MODEL,
                         max_output_tokens=8000,
                         input=messages_for_llm,
+                        extra_headers=_llm_headers(f"bersama-bot/channel/{message.channel.id}"),
                         **AI_EXTRA,
                     ),
                     timeout=AI_TIMEOUT,
