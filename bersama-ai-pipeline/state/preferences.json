@@ -1,7 +1,7 @@
 {
-  "updated_at": "2026-09-13T07:59:20Z",
+  "updated_at": "2026-09-13T11:56:45Z",
   "half_life_days": 14,
-  "n_events": 7720,
+  "n_events": 7766,
   "topic": {
     "coding": 0.032,
     "creative_video": 0.0,
@@ -16,13 +16,13 @@
   "source": {
     "official": 0.027,
     "r/StableDiffusion": 0.0,
-    "github": 0.014,
+    "github": 0.015,
     "r/ChatGPT": 0.0,
     "huggingface": 0.0,
     "HN": 0.023,
     "r/ClaudeCode": 0.0,
     "r/singularity": 0.0,
-    "r/LocalLLaMA": 0.165,
+    "r/LocalLLaMA": 0.164,
     "r/hacking": 0.0,
     "r/redteamsec": 0.0,
     "r/security": 0.0,
