@@ -1,28 +1,28 @@
 {
-  "updated_at": "2026-09-13T11:56:45Z",
+  "updated_at": "2026-09-13T16:20:47Z",
   "half_life_days": 14,
-  "n_events": 7766,
+  "n_events": 7571,
   "topic": {
-    "coding": 0.032,
-    "creative_video": 0.0,
-    "company_investment": 0.026,
-    "research_productivity": 0.0,
     "research_study": 0.0,
+    "creative_video": 0.0,
+    "coding": 0.033,
     "creative_voice": 0.0,
+    "research_productivity": 0.0,
     "cybersecurity": 0.0,
+    "company_investment": 0.027,
     "creative_image": 0.0,
     "finance": 0.0
   },
   "source": {
-    "official": 0.027,
-    "r/StableDiffusion": 0.0,
-    "github": 0.015,
     "r/ChatGPT": 0.0,
+    "github": 0.016,
     "huggingface": 0.0,
     "HN": 0.023,
+    "r/StableDiffusion": 0.0,
+    "official": 0.029,
     "r/ClaudeCode": 0.0,
     "r/singularity": 0.0,
-    "r/LocalLLaMA": 0.164,
+    "r/LocalLLaMA": 0.162,
     "r/hacking": 0.0,
     "r/redteamsec": 0.0,
     "r/security": 0.0,
@@ -45,13 +45,13 @@
     "r/learnmachinelearning": 0.0
   },
   "category": {
-    "LAUNCH": 0.019,
     "RELEASE": 0.0,
-    "OPEN_SOURCE": 0.0,
-    "UPDATE": 0.027,
+    "UPDATE": 0.028,
+    "LAUNCH": 0.019,
     "PRICING": 0.0,
+    "OPEN_SOURCE": 0.0,
     "BENCHMARK": 0.0,
-    "DEAL": 0.056
+    "DEAL": 0.055
   },
   "exemplars": {
     "top": [
