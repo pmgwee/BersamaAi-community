@@ -18,7 +18,7 @@ PIPELINE 1 — talk summarizer (GCP VM)
   YouTube talk
      │  [fetch]    yt-dlp captions (json3) — fallback: youtube-transcript-api
      │  [asr]      no captions? → yt-dlp audio → ffmpeg → Groq Whisper
-     │  [summarize] gpt-5.6-luna · forced tool call → exactly 5 points
+     │  [summarize] grok-4.6 (xhigh) · forced tool call → exactly 5 points
      │  [gate]     short/bad transcript? → content/_review/, do NOT publish
      │  [publish]  Discord webhook (embed) + Telegram  ── auto
      │  [stage]    content/<date>_<slug>_<id>/ (post.threads.txt, post.facebook.txt) ── manual paste
@@ -157,7 +157,7 @@ Tags: **`[VM]`** = GCP pipeline VM (summarizer + portal + `/share` + stock diges
 **`[GH]`** = GitHub Actions secret (news + engagement) · **`[both]`** = set in both.
 
 **LLM + transcription** — the provider (currently **OpenCode Go**, model
-`gpt-5.6-luna`, Responses API) lives behind one module, `pipeline/llm.py`; feature
+`grok-4.6`, Responses API) lives behind one module, `pipeline/llm.py`; feature
 code only ever sees these neutral variables. Production needs `LLM_API_KEY` set as a
 GitHub Actions **secret** AND in the VM's `.env` (never in the repo).
 
@@ -165,7 +165,8 @@ GitHub Actions **secret** AND in the VM's `.env` (never in the repo).
 |---|---|---|
 | `LLM_API_KEY` | `[both]` req | LLM provider API key (OpenCode Go today) — never commit it |
 | `LLM_BASE_URL` | `[both]` | `https://opencode.ai/zen/go/v1` (base only — the SDK appends `/responses`) |
-| `LLM_MODEL` | `[both]` | `gpt-5.6-luna` (default) |
+| `LLM_MODEL` | `[both]` | `grok-4.6` (default) |
+| `LLM_REASONING_EFFORT` | `[both]` opt | `low`\|`medium`\|`high`\|`xhigh` — grok-4.6 reasoning depth. Unset = `xhigh` (deepest). Empty or `off` omits the parameter, needed only if `LLM_MODEL` points at a non-reasoning model |
 | `GROQ_API_KEY` (alt `GROQ_KEY`) | `[VM]` | Whisper ASR — caption-less videos + social-video `/share`. Free key at console.groq.com |
 | `GROQ_WHISPER_MODEL` | `[VM]` opt | default `whisper-large-v3` |
 | `MAX_DURATION_MIN` | `[VM]` | `60` — skip videos longer than this |
@@ -356,7 +357,7 @@ final line — telemetry never halts the run.
   `content/_review/`, skips → `content/_skipped/`.
 
 ## Notes
-- **Which LLM?** `gpt-5.6-luna` through **OpenCode Go**'s Responses API (`https://opencode.ai/zen/go/v1`), driven by the `openai` SDK. The provider lives behind ONE module — `pipeline/llm.py` — so switching vendors means editing that file and the three `LLM_*` env vars, not the feature code.
+- **Which LLM?** `grok-4.6` at **xhigh** ("extra high") reasoning effort, through **OpenCode Go**'s Responses API (`https://opencode.ai/zen/go/v1`), driven by the `openai` SDK. The provider lives behind ONE module — `pipeline/llm.py` — so switching vendors means editing that file and the `LLM_*` env vars, not the feature code. Because the Responses API charges reasoning tokens against `max_output_tokens` and xhigh thinks hard before emitting the tool call, the per-call budgets are sized for it (judge 12288 / share 8192 / summary 12288 / Serenity tag 4096, floor 2048); a blown cap returns `status="incomplete"`, not a partial card. Swapped from `gpt-5.6-luna` on 2026-09-14.
 - **Why not Twitter/X for the news digest?** X's API is paid ($200/mo Basic) and anonymous scraping is blocked from datacenter IPs. Reddit + HN + GitHub Trending + HuggingFace + official RSS catch the same AI news within hours for free. The **stock digest** (PIPELINE 4) does follow one curated X account — via its **Bluesky mirror**, not X directly (the cookie never expires, the API is keyless); see [STOCK-DIGEST-CHALLENGES.md](STOCK-DIGEST-CHALLENGES.md).
 - **Why not the `discord-mcp` connector?** That MCP is a local stdio process for *interactive* Claude Code use; it isn't reachable from cloud cron. This pipeline posts to Discord via webhooks directly.
 - **Engagement loop (dormant by default).** The news-digest workflow also sweeps reactions on posted cards (`engagement.py`) and computes per-topic/source taste (`preferences.py`, gated by `PREFS_ENABLED` + a minimum event count). With enough signal the owner can opt in to a bandit actuator that dynamically retunes per-topic quotas + post caps; until then the static quotas run byte-identical. The community bot seeds 👍🔥👎 on every news card every 15 min so members have something to click. A weekly digest (`engagement-digest.yml`, Sun 22:23 UTC) posts one analytics card to `🔒-staff-chat`.

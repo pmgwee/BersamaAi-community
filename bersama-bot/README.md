@@ -89,14 +89,15 @@ cp .env.example .env
 
 Open `.env` and set:
 - `DISCORD_TOKEN` = the **same** bot token the MCP jar uses (from your main `.env`).
-- `LLM_API_KEY` = your **OpenCode Go** API key. Enables member-facing AI (`gpt-5.6-luna`). Leave blank to disable; everything else still works. Never commit it.
+- `LLM_API_KEY` = your **OpenCode Go** API key. Enables member-facing AI (`grok-4.6`). Leave blank to disable; everything else still works. Never commit it.
 - `LLM_BASE_URL` = `https://opencode.ai/zen/go/v1` (default — base URL only; the SDK appends `/responses`).
-- `LLM_MODEL` = `gpt-5.6-luna` (default).
+- `LLM_MODEL` = `grok-4.6` (default).
+- `LLM_REASONING_EFFORT` = `xhigh` (default) — grok-4.6's reasoning depth: `low` | `medium` | `high` | `xhigh` ("extra high", deepest). **This is the latency knob for chat:** at `xhigh` the bot thinks before replying, so answers are better but land noticeably slower. Drop it to `low`/`medium` if `@BersamaAi` feels sluggish; `off` removes the parameter (needed only for a non-reasoning `LLM_MODEL`).
 - `JINA_API_KEY` = *(optional)* a [Jina Reader](https://jina.ai/reader) key. When a member shares a link and @mentions the bot, it fetches the page content (JS-rendered pages too) so it can answer questions about it. Works without a key (rate-limited); leave blank to skip link fetch.
 
 > Channels, roles, reaction-role menus, level rewards, and the AI system prompt live in
-> [`config.json`](config.json) — **not** `.env`. `setup.sh` writes the four core env vars
-> above for you (hardcoding `gpt-5.6-luna` + the OpenCode Go URL); `JINA_API_KEY` you add by hand.
+> [`config.json`](config.json) — **not** `.env`. `setup.sh` writes the core env vars
+> above for you (hardcoding `grok-4.6` + `xhigh` + the OpenCode Go URL); `JINA_API_KEY` you add by hand.
 
 ## Step 4 — Test it locally
 
@@ -112,7 +113,7 @@ You should see:
 [2026-07-21 01:47:53] [INFO    ] discord.client: logging in using static token
 [2026-07-21 01:47:57] [INFO    ] bersama: Logged in as BersamaAi#2383 (1528479915635245258)
 [2026-07-21 01:47:57] [INFO    ] bersama: Reaction-role menus: ['1528687776801886249']
-[2026-07-21 01:47:57] [INFO    ] bersama: AI (https://opencode.ai/zen/go/v1): ON (gpt-5.6-luna)
+[2026-07-21 01:47:57] [INFO    ] bersama: AI (https://opencode.ai/zen/go/v1): ON (grok-4.6, effort=xhigh)
 [2026-07-21 01:47:58] [INFO    ] bersama: Synced 3 slash commands.
 ```
 
@@ -201,7 +202,8 @@ For anything native AutoMod can't express, ask Claude (via the MCP) to handle it
 
 ## Cost & safety notes
 
-- **AI cost:** the bot uses **`gpt-5.6-luna` via OpenCode Go** (set `LLM_API_KEY`). The bot bounds usage four ways — a **30 s per-user cooldown** (`AI_COOLDOWN`), a **server-wide cap of 20 calls/min** (`AI_GLOBAL_MAX`), at most **3 concurrent calls** (`AI_CONCURRENCY`), **input truncated to 1 500 chars** (`AI_INPUT_MAX`), plus a 1 600-token reply cap (the Responses API counts reasoning tokens against it, so it is 2× the old visible-text budget). Tune any of these constants at the top of `bot.py`. To disable AI entirely, clear `LLM_API_KEY`.
+- **AI cost:** the bot uses **`grok-4.6` at `xhigh` reasoning effort via OpenCode Go** (set `LLM_API_KEY`). The bot bounds usage four ways — a **30 s per-user cooldown** (`AI_COOLDOWN`), a **server-wide cap of 20 calls/min** (`AI_GLOBAL_MAX`), at most **3 concurrent calls** (`AI_CONCURRENCY`), **input truncated to 1 500 chars** (`AI_INPUT_MAX`), plus an **8 000-token reply cap**. Tune any of these constants at the top of `bot.py`. To disable AI entirely, clear `LLM_API_KEY`.
+  > ⚠️ **xhigh changes the cost and latency profile.** The Responses API charges *reasoning* tokens against the reply cap, and at xhigh those dwarf the visible answer — hence 8 000 (was 1 600) and `AI_TIMEOUT = 120` s (was 30). A member now waits appreciably longer for a reply, and each reply bills more tokens. Both are one env var away: set `LLM_REASONING_EFFORT=low` (or `medium`) for snappy, cheaper chat without touching the pipeline, which stays at xhigh.
 - **Token safety:** `DISCORD_TOKEN` is a full-admin credential. Never commit `.env` to git, never paste it in public. This folder's `.gitignore` already excludes it.
 - **Shared token:** because the bot and the MCP share one token, if you ever **reset/regenerate** the token in the Developer Portal, update it in **both** the MCP `.env` and this bot's `.env`.
 

@@ -57,11 +57,20 @@ load_dotenv(BASE / ".env")          # auto-load .env when present (local runs)
 CONFIG = json.loads((BASE / "config.json").read_text(encoding="utf-8"))
 
 TOKEN = os.environ.get("DISCORD_TOKEN")        # same token as the MCP jar; validated in main()
-# Provider-neutral LLM config. Defaults = OpenCode Go / gpt-5.6-luna; the SDK
+# Provider-neutral LLM config. Defaults = OpenCode Go / grok-4.6; the SDK
 # appends "/responses" to the base URL (do NOT include it here).
 LLM_API_KEY = os.environ.get("LLM_API_KEY", "").strip()
 LLM_BASE_URL = (os.environ.get("LLM_BASE_URL") or "https://opencode.ai/zen/go/v1").strip().rstrip("/")
-LLM_MODEL = (os.environ.get("LLM_MODEL") or "gpt-5.6-luna").strip()
+LLM_MODEL = (os.environ.get("LLM_MODEL") or "grok-4.6").strip()
+# grok-4.6 reasoning depth: low | medium | high | xhigh ("extra high", deepest).
+# Deeper = better answers but a longer wait for the member who @mentioned us, so
+# this is the one knob to turn if chat replies feel sluggish; empty/"off" drops
+# the parameter entirely (required if LLM_MODEL is ever a non-reasoning model).
+_effort = os.environ.get("LLM_REASONING_EFFORT")
+LLM_REASONING_EFFORT = ("xhigh" if _effort is None else _effort).strip().lower()
+if LLM_REASONING_EFFORT in ("off", "none"):
+    LLM_REASONING_EFFORT = ""
+AI_EXTRA = {"reasoning": {"effort": LLM_REASONING_EFFORT}} if LLM_REASONING_EFFORT else {}
 
 GUILD_ID = int(CONFIG["guild_id"])
 CHANNELS = {k: int(v) for k, v in CONFIG["channels"].items()}
@@ -96,7 +105,11 @@ AI_INPUT_MAX = 1500       # truncate user input to bound cost
 AI_GLOBAL_MAX = 20        # max AI calls per rolling window (server-wide)
 AI_GLOBAL_WINDOW = 60     # ...seconds
 AI_CONCURRENCY = 3        # max simultaneous in-flight AI calls
-AI_TIMEOUT = 30           # seconds to wait for one LLM response (bounds hung calls)
+AI_TIMEOUT = 120          # seconds to wait for one LLM response (bounds hung calls).
+# grok-4.6 at xhigh effort reasons before answering, so a good reply routinely
+# takes far longer than the 30s that sufficed for gpt-5.6-luna. Lower this
+# together with LLM_REASONING_EFFORT, never on its own — a timeout costs the
+# member their answer AND still burns the tokens the model already spent.
 AI_CONTEXT_MSGS = 50      # recent channel messages fed as conversation context (raise for longer "memory"; cost scales linearly)
 AI_CONTEXT_PER_MSG = 500  # cap each context message (text + link-preview embed) length
 AI_LINK_FETCH = True       # fetch full page content for recent links via Jina Reader (JS pages too)
@@ -227,7 +240,8 @@ async def on_ready():
     global _synced, _hb_started, _seed_started
     log.info("Logged in as %s (%s)", bot.user, getattr(bot.user, "id", "?"))
     log.info("Reaction-role menus: %s", list(REACTION_ROLES))
-    log.info("AI (%s): %s", LLM_BASE_URL, f"ON ({LLM_MODEL})" if ai_client else "OFF")
+    log.info("AI (%s): %s", LLM_BASE_URL,
+             f"ON ({LLM_MODEL}, effort={LLM_REASONING_EFFORT or 'default'})" if ai_client else "OFF")
     log.info("Seed reactions: %s",
              f"{len(NEWS_CHANNELS)} news channel(s)" if NEWS_CHANNELS else "OFF (no news_channels in config)")
 
@@ -597,11 +611,14 @@ async def handle_ai(message: discord.Message, override_text: str | None = None):
                 resp = await asyncio.wait_for(
                     # Responses API: `input` takes the same role/content list the
                     # chat endpoint took, and max_output_tokens ALSO covers the
-                    # model's reasoning tokens -> 2x the old visible-text budget.
+                    # model's reasoning tokens — at xhigh effort those dwarf the
+                    # visible reply, and a blown cap returns EMPTY text (which
+                    # surfaces to the member as "…"), so the budget is generous.
                     ai_client.responses.create(
                         model=LLM_MODEL,
-                        max_output_tokens=1600,
+                        max_output_tokens=8000,
                         input=messages_for_llm,
+                        **AI_EXTRA,
                     ),
                     timeout=AI_TIMEOUT,
                 )

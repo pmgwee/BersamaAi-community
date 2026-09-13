@@ -56,10 +56,13 @@ FIRST_RUN_MAX = 3      # bound day-1 volume so the first run isn't a wall of old
 # Largest observed gap between posts is 2.0 days → alert at 2×, well inside
 # MAX_AGE_DAYS=7 (where posts start being dropped silently instead).
 STALE_AFTER_DAYS = 4
-LLM_TIMEOUT_S = 30     # per tagging call; the SDK default (600s ×3) could
-LLM_MAX_RETRIES = 1    # stall a 12-post run for hours on a hung endpoint
-# The Responses API counts reasoning tokens against the cap -> 2x the old 512.
-TAG_MAX_OUTPUT_TOKENS = 1024
+LLM_TIMEOUT_S = 90     # per tagging call; the SDK default (600s ×3) could
+LLM_MAX_RETRIES = 1    # stall a 12-post run for hours on a hung endpoint.
+# 30s was enough for gpt-5.6-luna but cuts off grok-4.6 at xhigh effort, which
+# thinks before answering; 90 × (1 retry) × 12 posts caps the run at ~36 min.
+# The Responses API counts reasoning tokens against the cap, and xhigh spends
+# thousands of them even on a task this small.
+TAG_MAX_OUTPUT_TOKENS = 4096
 
 # ── topic taxonomy (ported 1:1 from subscription-agent lib/serenity/topics.ts) ─
 # Canonical display order; the LLM is told to use these EXACT strings.

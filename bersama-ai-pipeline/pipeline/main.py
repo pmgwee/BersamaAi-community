@@ -86,8 +86,10 @@ def youtube_webhook() -> str:
 def llm_creds() -> dict:
     """Resolve LLM settings from the provider-neutral env vars
     (LLM_API_KEY / LLM_BASE_URL / LLM_MODEL). The provider itself — currently
-    OpenCode Go's Responses API with gpt-5.6-luna — is configured in
-    `pipeline/llm.py`; nothing outside that module knows the vendor."""
+    OpenCode Go's Responses API with grok-4.6 at xhigh reasoning effort — is
+    configured in `pipeline/llm.py`; nothing outside that module knows the
+    vendor. The effort is deliberately absent from this dict (callers splat it);
+    `llm.structured_call` reads LLM_REASONING_EFFORT itself."""
     return llm_config()
 
 

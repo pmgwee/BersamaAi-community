@@ -50,8 +50,9 @@ if [ ! -f .env ]; then
   read -r -s -p "LLM_API_KEY (blank = disable AI): " LLM_KEY; echo
   cat > .env <<EOF
 DISCORD_TOKEN=$TOKEN
-LLM_MODEL=gpt-5.6-luna
+LLM_MODEL=grok-4.6
 LLM_BASE_URL=https://opencode.ai/zen/go/v1
+LLM_REASONING_EFFORT=xhigh
 LLM_API_KEY=$LLM_KEY
 EOF
   chmod 600 .env

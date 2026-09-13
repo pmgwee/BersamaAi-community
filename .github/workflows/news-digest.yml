@@ -66,7 +66,8 @@ jobs:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}                           # legacy youtube fallback (rename)
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_DM_CHAT_ID: ${{ secrets.TELEGRAM_DM_CHAT_ID }}
-          LLM_MODEL: ${{ vars.LLM_MODEL || 'gpt-5.6-luna' }}
+          LLM_MODEL: ${{ vars.LLM_MODEL || 'grok-4.6' }}
+          LLM_REASONING_EFFORT: ${{ vars.LLM_REASONING_EFFORT || 'xhigh' }}   # grok-4.6 depth: low|medium|high|xhigh
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   # authenticated GitHub search -> no rate limit
           DISCORD_IMAGE_CREATION_WEBHOOK_URL: ${{ secrets.DISCORD_IMAGE_CREATION_WEBHOOK_URL }}
           DISCORD_VIDEO_CREATION_WEBHOOK_URL: ${{ secrets.DISCORD_VIDEO_CREATION_WEBHOOK_URL }}

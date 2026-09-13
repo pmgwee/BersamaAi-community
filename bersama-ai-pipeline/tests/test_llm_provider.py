@@ -17,9 +17,11 @@ import httpx
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from pipeline import llm  # noqa: E402
-from pipeline.llm import (DEFAULT_BASE_URL, DEFAULT_MODEL, LLMError,  # noqa: E402
-                          MalformedOutput, NoToolCall, extract_tool_args,
-                          llm_config, require_api_key, structured_call)
+from pipeline.llm import (DEFAULT_BASE_URL, DEFAULT_MODEL,  # noqa: E402
+                          DEFAULT_REASONING_EFFORT, LLMError, MalformedOutput,
+                          NoToolCall, extract_tool_args, llm_config,
+                          require_api_key, resolve_reasoning_effort,
+                          structured_call)
 
 FAKE_KEY = "test-key-not-a-real-secret"
 
@@ -90,11 +92,16 @@ class RecordingProvider:
 # ── provider configuration ───────────────────────────────────────────────────
 
 class TestConfig(unittest.TestCase):
-    def test_defaults_are_opencode_go_and_luna(self):
+    def test_defaults_are_opencode_go_and_grok(self):
         cfg = llm_config({})
         self.assertEqual(cfg["base_url"], "https://opencode.ai/zen/go/v1")
-        self.assertEqual(cfg["model"], "gpt-5.6-luna")
+        self.assertEqual(cfg["model"], "grok-4.6")
         self.assertEqual(cfg["api_key"], "")
+
+    def test_config_does_not_carry_effort_into_the_creds_splat(self):
+        # main.py does `summarize(..., **llm_creds())`; a 4th key here would be
+        # an unexpected kwarg on every feature function.
+        self.assertEqual(set(llm_config({})), {"api_key", "model", "base_url"})
 
     def test_reads_neutral_env_vars(self):
         cfg = llm_config({"LLM_API_KEY": FAKE_KEY,
@@ -122,6 +129,54 @@ class TestConfig(unittest.TestCase):
         with self.assertRaises(LLMError):
             require_api_key({}, "summarize")
         require_api_key({"api_key": FAKE_KEY}, "summarize")  # no raise
+
+
+# ── reasoning effort (grok-4.6: low | medium | high | xhigh) ─────────────────
+
+class TestReasoningEffort(unittest.TestCase):
+    def test_unset_means_xhigh_not_the_providers_own_default(self):
+        # The provider defaults to "high"; this project wants the deepest level,
+        # so an absent variable must still resolve to xhigh.
+        self.assertEqual(resolve_reasoning_effort({}), "xhigh")
+        self.assertEqual(DEFAULT_REASONING_EFFORT, "xhigh")
+
+    def test_every_documented_level_is_accepted(self):
+        for level in ("low", "medium", "high", "xhigh"):
+            self.assertEqual(resolve_reasoning_effort({"LLM_REASONING_EFFORT": level}), level)
+        self.assertEqual(resolve_reasoning_effort({"LLM_REASONING_EFFORT": " XHigh "}), "xhigh")
+
+    def test_opt_out_values_mean_send_no_parameter(self):
+        for raw in ("", "   ", "off", "none"):
+            self.assertEqual(resolve_reasoning_effort({"LLM_REASONING_EFFORT": raw}), "")
+
+    def test_unknown_level_degrades_to_default_instead_of_failing_a_run(self):
+        self.assertEqual(resolve_reasoning_effort({"LLM_REASONING_EFFORT": "extra-high"}),
+                         "xhigh")
+
+    def test_effort_is_sent_in_the_responses_api_shape(self):
+        prov = RecordingProvider(_response_body([_function_call('{"value": "ok"}')]))
+        structured_call(system="s", user="u", tool=TOOL, api_key=FAKE_KEY,
+                        model=DEFAULT_MODEL, base_url=DEFAULT_BASE_URL,
+                        max_output_tokens=512, effort="xhigh", client=prov.client())
+        self.assertEqual(prov.last_json["reasoning"], {"effort": "xhigh"})
+
+    def test_empty_effort_omits_the_parameter_entirely(self):
+        # A model without reasoning support would 400 on reasoning:{effort:null}.
+        prov = RecordingProvider(_response_body([_function_call('{"value": "ok"}')]))
+        structured_call(system="s", user="u", tool=TOOL, api_key=FAKE_KEY,
+                        model=DEFAULT_MODEL, base_url=DEFAULT_BASE_URL,
+                        max_output_tokens=512, effort="", client=prov.client())
+        self.assertNotIn("reasoning", prov.last_json)
+
+    def test_output_budget_floor_leaves_room_for_reasoning_tokens(self):
+        # max_output_tokens covers reasoning too, so a caller asking for a tiny
+        # budget must still be clamped up or xhigh returns status=incomplete.
+        prov = RecordingProvider(_response_body([_function_call('{"value": "ok"}')]))
+        structured_call(system="s", user="u", tool=TOOL, api_key=FAKE_KEY,
+                        model=DEFAULT_MODEL, base_url=DEFAULT_BASE_URL,
+                        max_output_tokens=16, effort="xhigh", client=prov.client())
+        self.assertEqual(prov.last_json["max_output_tokens"], llm.MIN_OUTPUT_TOKENS)
+        self.assertGreaterEqual(llm.MIN_OUTPUT_TOKENS, 2048)
 
 
 # ── routing / request shape ──────────────────────────────────────────────────
@@ -153,7 +208,7 @@ class TestRouting(unittest.TestCase):
                                max_output_tokens=512, client=prov.client(**{}), **cfg)
         self.assertEqual(data, {"value": "ok"})
         self.assertEqual(str(prov.requests[-1].url), "https://opencode.ai/zen/go/v1/responses")
-        self.assertEqual(prov.last_json["model"], "gpt-5.6-luna")
+        self.assertEqual(prov.last_json["model"], "grok-4.6")
 
     def test_no_double_responses_segment_when_base_url_has_it(self):
         prov = RecordingProvider(_response_body([_function_call('{"value": "ok"}')]))

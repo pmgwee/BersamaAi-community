@@ -18,7 +18,8 @@ from .llm import DEFAULT_BASE_URL, DEFAULT_MODEL, structured_call
 from .prompts import SYSTEM_PROMPT, EMIT_SUMMARY_TOOL, build_user_message
 
 MAX_SUMMARY_ATTEMPTS = 3   # the model doesn't strictly enforce the tool schema; retry a malformed reply
-SUMMARY_MAX_OUTPUT_TOKENS = 4096  # Responses API counts reasoning tokens too
+SUMMARY_MAX_OUTPUT_TOKENS = 12288  # Responses API counts reasoning tokens too,
+# and grok-4.6 at xhigh effort spends thousands of them before the tool call.
 
 
 @dataclass

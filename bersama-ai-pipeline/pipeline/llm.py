@@ -3,15 +3,21 @@
 Everything else in the pipeline (summarizer, news judge, /share card writer,
 Serenity topic tagger) calls `structured_call()` here and never learns which
 vendor is behind it. Swapping providers again should mean editing this file and
-three env vars, not another repo-wide refactor.
+the LLM_* env vars, not another repo-wide refactor.
 
 Current provider: **OpenCode Go** (https://opencode.ai/docs/go/), model
-`gpt-5.6-luna`, reached through its **Responses API**. The official `openai`
+`grok-4.6`, reached through its **Responses API**. The official `openai`
 Python SDK speaks that wire format, so we point it at OpenCode Go's base URL:
 
     LLM_BASE_URL = https://opencode.ai/zen/go/v1     (no "/responses" — the SDK
                                                       appends it, giving
                                                       .../v1/responses)
+
+Reasoning effort: grok-4.6 is a reasoning model whose depth is dialled with
+`reasoning.effort` — low / medium / high / xhigh (xhigh = "extra high", the
+deepest, and grok-4.6's alone; grok-4.5 silently treats it as high). We run
+**xhigh** by default. The provider's own default is `high`, so the parameter is
+always sent explicitly rather than left implicit.
 
 Structured output: every caller wants ONE strict JSON object, so we keep the
 proven idiom — declare a single function tool and force it with
@@ -22,9 +28,12 @@ malformed or truncated reply raises `LLMError` and the caller's existing
 retry / graceful-degradation path takes over.
 
 Config (neutral names only — no provider-specific fallbacks):
-    LLM_API_KEY   (required to call anything)
-    LLM_BASE_URL  (default: OpenCode Go zen/go/v1)
-    LLM_MODEL     (default: gpt-5.6-luna)
+    LLM_API_KEY           (required to call anything)
+    LLM_BASE_URL          (default: OpenCode Go zen/go/v1)
+    LLM_MODEL             (default: grok-4.6)
+    LLM_REASONING_EFFORT  (default: xhigh; set empty/"off" to omit the parameter
+                           entirely — needed if LLM_MODEL is ever pointed at a
+                           model that rejects `reasoning.effort`)
 
 The key is read from the environment and never logged or echoed — error text
 mentions the variable NAME only.
@@ -41,13 +50,22 @@ from openai import OpenAI
 
 PROVIDER_LABEL = "OpenCode Go"
 DEFAULT_BASE_URL = "https://opencode.ai/zen/go/v1"
-DEFAULT_MODEL = "gpt-5.6-luna"
+DEFAULT_MODEL = "grok-4.6"
 CLIENT_USER_AGENT = "BersamaAi-pipeline/1.0"
+
+# grok-4.6's reasoning depth. "xhigh" (extra high) is the deepest level and is
+# what this project runs on; anything outside this set falls back to the default
+# rather than failing a run on a typo.
+DEFAULT_REASONING_EFFORT = "xhigh"
+REASONING_EFFORTS = ("low", "medium", "high", "xhigh")
 
 # The Responses API counts REASONING tokens against max_output_tokens, so the
 # old chat-completions budgets (which only had to cover the visible tool JSON)
-# are raised at the call sites. This is the floor we clamp to.
-MIN_OUTPUT_TOKENS = 512
+# are raised at the call sites. At xhigh the model can think for thousands of
+# tokens before emitting the tool call, and blowing the cap yields
+# status="incomplete" (a hard LLMError), never a partial answer — so this floor
+# is deliberately generous. Caps are not spend: unused budget costs nothing.
+MIN_OUTPUT_TOKENS = 2048
 
 
 class LLMError(Exception):
@@ -77,12 +95,35 @@ def llm_config(env: Optional[dict] = None) -> dict:
     """Resolve LLM settings from the neutral env vars. A missing key resolves to
     "" so callers that degrade gracefully (Serenity tagging, /share) can check it
     themselves; `require_api_key()` is for paths that must fail loudly."""
+    # NOTE: deliberately does NOT carry the reasoning effort. Callers splat this
+    # dict (`summarize(..., **llm_creds())`), so every key here becomes a
+    # required keyword on four feature functions; `structured_call` reads the
+    # effort from the environment itself instead.
     e = os.environ if env is None else env
     return {
         "api_key": (e.get("LLM_API_KEY") or "").strip(),
         "model": (e.get("LLM_MODEL") or "").strip() or DEFAULT_MODEL,
         "base_url": _normalize_base_url(e.get("LLM_BASE_URL") or DEFAULT_BASE_URL),
     }
+
+
+def resolve_reasoning_effort(env: Optional[dict] = None) -> str:
+    """Read LLM_REASONING_EFFORT -> one of REASONING_EFFORTS, or "" for "don't
+    send the parameter at all".
+
+    Unset means xhigh (this project's choice, not the provider's default of
+    high). An explicitly empty value, or "off"/"none", opts out — the escape
+    hatch for pointing LLM_MODEL at a non-reasoning model. An unrecognised value
+    degrades to the default instead of failing the run.
+    """
+    e = os.environ if env is None else env
+    raw = e.get("LLM_REASONING_EFFORT")
+    if raw is None:
+        return DEFAULT_REASONING_EFFORT
+    value = raw.strip().lower()
+    if value in ("", "off", "none"):
+        return ""
+    return value if value in REASONING_EFFORTS else DEFAULT_REASONING_EFFORT
 
 
 def require_api_key(cfg: dict, what: str) -> None:
@@ -144,6 +185,7 @@ def structured_call(
     max_output_tokens: int,
     timeout: Optional[float] = None,
     max_retries: Optional[int] = None,
+    effort: Optional[str] = None,
     client: Optional[OpenAI] = None,
 ) -> dict:
     """Force `tool` and return its arguments as a dict.
@@ -151,12 +193,16 @@ def structured_call(
     Raises LLMError on transport failure, a refused/absent tool call, a
     truncated ("incomplete") response, or non-JSON arguments — the caller
     decides whether that means retry, skip, or fall back.
+    `effort` overrides the reasoning depth for one call; None resolves it from
+    the environment (xhigh unless LLM_REASONING_EFFORT says otherwise).
     `client` is an injection point for tests; production passes nothing.
     """
     if not api_key:
         raise LLMError("LLM_API_KEY is missing — cannot call the model.")
     cl = client or build_client(api_key=api_key, base_url=base_url,
                                 timeout=timeout, max_retries=max_retries)
+    effort = resolve_reasoning_effort() if effort is None else effort
+    extra: dict[str, Any] = {"reasoning": {"effort": effort}} if effort else {}
     try:
         resp = cl.responses.create(
             model=model,
@@ -168,6 +214,7 @@ def structured_call(
             extra_headers=_request_headers(base_url=base_url, model=model,
                                            system=system, user=user,
                                            tool_name=tool["name"]),
+            **extra,
         )
     except Exception as e:  # noqa: BLE001 — transport/auth/rate-limit surprises
         raise LLMError(f"{PROVIDER_LABEL} API call failed: {_safe_err(e)}") from e

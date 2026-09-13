@@ -1159,10 +1159,11 @@ def _build_judge_user_message(candidates: list[dict], recent: list[dict] | None 
 
 
 # Output budgets for the Responses API. It counts REASONING tokens against the
-# cap, so these are 2x the old chat-completions numbers — a digest truncated
-# mid-tool-JSON would post nothing at all.
-JUDGE_MAX_OUTPUT_TOKENS = 4096
-SHARE_MAX_OUTPUT_TOKENS = 2048
+# cap, and grok-4.6 at xhigh effort thinks for thousands of them before emitting
+# the tool call — so these are 3-4x the pre-grok numbers. A digest truncated
+# mid-tool-JSON posts nothing at all, and an unused cap costs nothing, so err high.
+JUDGE_MAX_OUTPUT_TOKENS = 12288
+SHARE_MAX_OUTPUT_TOKENS = 8192
 
 
 def judge(candidates: list[dict], *, api_key: str, model: str, base_url: str,
