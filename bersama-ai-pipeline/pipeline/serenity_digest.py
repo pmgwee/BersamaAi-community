@@ -7,19 +7,14 @@ subscription-agent project. This module streams HIS new X posts into
 auto-tagged with 1-4 topics (bullet chips) plus a pill row of every $TICKER
 it mentions.
 
-Source: **trackserenity.com's public `/data/signals.json`** — a keyless,
-cookieless near-real-time mirror of his posts (robots.txt `Allow: /`). This is
-the SAME feed the Stocks Page reads, so the two stay in parity by
-construction. The Bluesky account (aleabitoreddit.bsky.social) was rejected as
-a source: it stopped updating 2026-07-21. signals.json carries `cashtags[]`
-and the direct X link but NO images — and it truncates every post at
-~280-305 chars — so the card's image AND its full text (longest measured:
-3,387 chars, t.co links already expanded) come from fxtwitter's keyless status
-API; ~5 of 7 recent posts carry a photo. Both are third-party free services,
-so the x-digest staleness doctrine applies: a reachable feed whose newest post
-is too old raises a staff alert instead of failing silently, and a fxtwitter
-failure just posts the card from the mirror's truncated text (with a
-read-more link) instead of failing.
+Source: **FxTwitter's public profile-timeline API** — a documented, keyless,
+cookieless feed carrying the direct X link, full post text, cashtags, dates and
+media in one response. It replaced trackserenity.com's signals.json after that
+mirror stopped updating on 2026-09-02. The Bluesky account
+(aleabitoreddit.bsky.social) was already rejected because it stopped updating
+2026-07-21. FxTwitter is a third-party free service, so the x-digest staleness
+doctrine still applies: a reachable feed whose newest post is too old raises a
+staff alert instead of failing silently.
 
 Tagging: the LLM (the pipeline's own neutral LLM_* config) picks 1-3 topics from the
 19-area taxonomy ported from subscription-agent's `lib/serenity/topics.ts`,
@@ -46,8 +41,7 @@ from .news import _post_resilient, _is_staff_webhook, _staff_alert, BRAND_COLOR
 from .x_digest import (_http_get, _clean_multiline, _md_escape, _parse_date,
                        _load_seen, _save_seen)
 
-SIGNALS_URL = "https://www.trackserenity.com/data/signals.json"
-FXTWITTER_STATUS = "https://api.fxtwitter.com/status/{tweet_id}"
+TIMELINE_URL = "https://api.fxtwitter.com/2/profile/aleabitoreddit/statuses?count=100"
 WEBHOOK_ENV = "DISCORD_SERENITY_X_POSTS_WEBHOOK_URL"
 SCREEN = "Serenity"          # dedup key → state/x_seen_serenity.json (x-digest family)
 BADGE = "📈 @Serenity · X"
@@ -233,52 +227,44 @@ def _tag_topics(text: str, *, api_key: str, model: str, base_url: str) -> list[s
 # ── feed parsing + images ────────────────────────────────────────────────────
 
 def _parse_serenity_posts(payload: dict) -> list[dict]:
-    """Pure parser: a signals.json payload → normalized post dicts, newest
-    first, retweets skipped. Factored out so it can be exercised offline
-    against a saved payload."""
+    """Pure FxTwitter-v2 parser: normalize own posts newest-first."""
     posts: list[dict] = []
     ids: set[str] = set()  # a duplicated id in one payload must not double-post
-    for tw in (payload or {}).get("tweets") or []:
-        if not isinstance(tw, dict) or tw.get("isRetweet"):
+    for tw in (payload or {}).get("results") or []:
+        if (not isinstance(tw, dict) or tw.get("type") != "status"
+                or tw.get("reposted_by")):
             continue
         text = _clean_multiline(str(tw.get("text") or ""))
         pid = str(tw.get("id") or "").strip()
         if not text or not pid or pid in ids:
             continue
         ids.add(pid)
+        facets = ((tw.get("raw_text") or {}).get("facets")) or []
+        cashtags = [str(f.get("original") or "") for f in facets
+                    if isinstance(f, dict) and f.get("type") == "symbol"
+                    and f.get("original")]
+        media = tw.get("media") or {}
+        photos = media.get("photos") or []
+        videos = media.get("videos") or []
+        image = ""
+        if photos:
+            image = str(photos[0].get("url") or "").strip()
+        elif videos:
+            image = str(videos[0].get("thumbnail_url") or "").strip()
+        if not image.startswith(("http://", "https://")):
+            image = ""
         posts.append({
             "id": pid,
             "text": text,
             "url": str(tw.get("url") or f"https://x.com/aleabitoreddit/status/{pid}"),
-            "cashtags": [str(c) for c in (tw.get("cashtags") or [])],
-            "created_at": _parse_date(str(tw.get("createdAt") or "")),
+            "cashtags": cashtags,
+            "created_at": _parse_date(str(tw.get("created_at") or "")),
+            "body": text,
+            "image": image,
+            "source_cut": False,
         })
     posts.sort(key=lambda p: p["created_at"] or datetime.min.replace(tzinfo=timezone.utc), reverse=True)
     return posts
-
-
-def _fetch_fxtweet(tweet_id: str) -> tuple[str, str]:
-    """(first photo, FULL post text) from fxtwitter's keyless status API.
-
-    signals.json truncates every post at ~280-305 chars (64 of 80 measured end
-    mid-sentence), while fxtwitter carries the complete text (longest measured:
-    3,387 chars) with t.co shorteners already expanded away. One call feeds the
-    card's body AND its image (durable pbs.twimg.com URLs). Any failure returns
-    ("", "") and the caller falls back to the mirror's truncated text."""
-    r = _http_get(FXTWITTER_STATUS.format(tweet_id=tweet_id))
-    if r is None:
-        return "", ""
-    try:
-        tw = r.json().get("tweet") or {}
-        photos = ((tw.get("media") or {}).get("photos")) or []
-        image = ""
-        if photos:  # most posts carry no picture — that's a shape, not a failure
-            u = str(photos[0].get("url") or "").strip()
-            image = u if u.startswith(("http://", "https://")) else ""
-        return image, str(tw.get("text") or "")
-    except Exception as e:  # noqa: BLE001 — malformed body → no extras, keep going
-        print(f"[serenity] fxtwitter parse failed for {tweet_id}: {e}")
-        return "", ""
 
 
 # ── card ─────────────────────────────────────────────────────────────────────
@@ -294,8 +280,7 @@ def build_serenity_card(post: dict, topics: list[str], tickers: list[str]) -> di
     lead, rest = lead.strip(), rest.strip("\n")
     head = (f"**[{_md_escape(lead)}]({post['url']})**" if lead and post["url"]
             else (f"**{lead}**" if lead else ""))
-    # Cut honestly: our own BODY_LIMIT cut OR the mirror's ~300-char truncation
-    # (fxtwitter unreachable → we only have the source-truncated text).
+    # Cut honestly when the full FxTwitter text exceeds Discord's card budget.
     cut = post.get("source_cut", False)
     if len(rest) > BODY_LIMIT:
         rest = rest[:BODY_LIMIT].rsplit(" ", 1)[0].rstrip(",;:") + " …"
@@ -321,7 +306,7 @@ def build_serenity_card(post: dict, topics: list[str], tickers: list[str]) -> di
 
 def run_serenity_digest(*, dry_run: bool = False, alert_fn=None,
                         api_key: str = "", model: str = "", base_url: str = "") -> list[str]:
-    """Daily Serenity digest. Fetch the mirror, drop already-posted/old posts,
+    """Daily Serenity digest. Fetch the public timeline, drop already-posted/old posts,
     tag each new one (topics via LLM∪keywords, tickers via cashtags∪regex),
     attach its photo when it has one, and post the card. Returns one-line
     status strings. In dry-run, cards are printed (not posted) and no state is
@@ -331,19 +316,21 @@ def run_serenity_digest(*, dry_run: bool = False, alert_fn=None,
     now = datetime.now(timezone.utc)
     cutoff = now - timedelta(days=MAX_AGE_DAYS)
 
-    r = _http_get(SIGNALS_URL)
+    r = _http_get(TIMELINE_URL)
     if r is None:
         _staff_alert(
-            f"⚠️ **serenity digest: signals.json fetch failed** — no posts fetched "
-            f"(`{SIGNALS_URL}`). Is trackserenity.com still publishing the feed?", dry_run)
+            f"⚠️ **serenity digest: FxTwitter timeline fetch failed** — no posts fetched "
+            f"(`{TIMELINE_URL}`).", dry_run)
         return ["SERENITY_FETCH_FAILED"]
 
     try:
-        posts = _parse_serenity_posts(r.json())
+        feed_payload = r.json()
+        posts = _parse_serenity_posts(feed_payload)
     except Exception as e:  # noqa: BLE001 — malformed body → alert + skip
-        _staff_alert(f"⚠️ **serenity digest: signals.json parse failed**: {e}", dry_run)
+        _staff_alert(f"⚠️ **serenity digest: FxTwitter timeline parse failed**: {e}", dry_run)
         return ["SERENITY_PARSE_FAILED"]
-    print(f"[serenity] {SIGNALS_URL} -> {len(posts)} own posts (of {len((r.json().get('tweets') or []))} items)")
+    print(f"[serenity] {TIMELINE_URL} -> {len(posts)} own posts "
+          f"(of {len(feed_payload.get('results') or [])} items)")
 
     # Third-party mirror ⇒ the x-digest staleness doctrine: a reachable feed
     # that stops advancing is the main failure mode, and it looks like a quiet
@@ -351,22 +338,22 @@ def run_serenity_digest(*, dry_run: bool = False, alert_fn=None,
     newest = next((p["created_at"] for p in posts if p["created_at"]), None)
     if not posts:
         _staff_alert(
-            f"⚠️ **serenity digest: feed is reachable but EMPTY** (`{SIGNALS_URL}`). "
-            f"Mirror deleted, or the payload shape changed?", dry_run)
+            f"⚠️ **serenity digest: feed is reachable but EMPTY** (`{TIMELINE_URL}`). "
+            f"Timeline unavailable, or the payload shape changed?", dry_run)
         results.append("SERENITY_EMPTY")
     elif newest is None:
         # Posts exist but NOT ONE timestamp parsed — a payload-shape change, which
         # otherwise disarms both the STALE check and the age filter silently.
         _staff_alert(
-            f"⚠️ **serenity digest: {len(posts)} posts but no parsable createdAt** "
-            f"(`{SIGNALS_URL}`) — did the mirror change its date format?", dry_run)
+            f"⚠️ **serenity digest: {len(posts)} posts but no parsable created_at** "
+            f"(`{TIMELINE_URL}`) — did FxTwitter change its date format?", dry_run)
         results.append("SERENITY_NO_DATES")
     elif (now - newest).days >= STALE_AFTER_DAYS:
         age = (now - newest).days
         _staff_alert(
             f"⚠️ **serenity digest: feed looks STALE** — newest Serenity post is "
-            f"{age} days old (threshold {STALE_AFTER_DAYS}d). trackserenity.com may "
-            f"have stopped mirroring his X account.", dry_run)
+            f"{age} days old (threshold {STALE_AFTER_DAYS}d). FxTwitter may have "
+            f"stopped returning current posts.", dry_run)
         results.append(f"SERENITY_STALE {age}d")
 
     seen = _load_seen(SCREEN)
@@ -396,18 +383,11 @@ def run_serenity_digest(*, dry_run: bool = False, alert_fn=None,
 
     posted = 0
     # Seen ids are committed AFTER EACH successful post, not once at the end:
-    # this loop is slow (full-text/image fetch + LLM tag per card), and a
-    # mid-run kill (VM reboot, Ctrl-C on a hung call) must not re-post cards
-    # already sent.
+    # a mid-run kill (VM reboot, Ctrl-C on a hung LLM call) must not re-post
+    # cards already sent.
     saved: list[str] = list(seen)
     for p in to_post:
-        image, full_text = _fetch_fxtweet(p["id"])
-        p["image"] = image
-        # Full text from fxtwitter (t.co-stripped); the mirror's ~300-char
-        # truncation is the fallback. `source_cut` marks the fallback case so
-        # the card shows a read-more link even though WE didn't cut it.
-        p["body"] = _clean_multiline(_TCO_RE.sub("", full_text or p["text"]))
-        p["source_cut"] = not full_text and len(p["text"]) >= 270
+        p["body"] = _clean_multiline(_TCO_RE.sub("", p["body"]))
         topics = _tag_topics(p["body"], api_key=api_key, model=model, base_url=base_url)
         tickers = _extract_tickers(p["body"], p["cashtags"])
         payload = build_serenity_card(p, topics, tickers)

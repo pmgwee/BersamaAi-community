@@ -127,6 +127,25 @@ class TestConfig(unittest.TestCase):
 # ── routing / request shape ──────────────────────────────────────────────────
 
 class TestRouting(unittest.TestCase):
+    def test_opencode_request_identifies_client_and_conversation(self):
+        providers = [
+            RecordingProvider(_response_body([_function_call('{"value": "ok"}')]))
+            for _ in range(2)
+        ]
+        sessions = []
+        for prov in providers:
+            structured_call(system="same-system", user="same-user", tool=TOOL,
+                            api_key=FAKE_KEY, model=DEFAULT_MODEL,
+                            base_url=DEFAULT_BASE_URL, max_output_tokens=512,
+                            client=prov.client())
+            request = prov.requests[-1]
+            self.assertEqual(request.headers["user-agent"], "BersamaAi-pipeline/1.0")
+            sessions.append(request.headers["x-opencode-session"])
+
+        self.assertRegex(sessions[0],
+                         r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$")
+        self.assertEqual(sessions[0], sessions[1])
+
     def test_request_hits_v1_responses_with_the_configured_model(self):
         prov = RecordingProvider(_response_body([_function_call('{"value": "ok"}')]))
         cfg = llm_config({"LLM_API_KEY": FAKE_KEY})

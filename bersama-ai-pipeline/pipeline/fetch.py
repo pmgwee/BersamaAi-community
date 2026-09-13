@@ -47,9 +47,12 @@ _RSS_UA = (
 )
 
 # Mid-2026 best-hope YouTube player_client orderings. YouTube rotates which
-# clients are LOGIN_REQUIRED roughly weekly (yt-dlp #15751, #15865), so we try
-# several and take the first that returns real metadata. None is guaranteed.
+# clients are LOGIN_REQUIRED or return 403-bound CDN URLs roughly weekly, so we
+# try several and take the first that returns real metadata/media. Plain Android
+# currently avoids the SABR/CDN regression that broke the other anonymous
+# clients (yt-dlp #17456).
 PLAYER_CLIENT_ORDERINGS = [
+    ["android"],                                      # working non-SABR media URLs as of 2026-09
     None,                                              # yt-dlp's built-in default client set (best on residential IPs)
     ["default", "-web"],                               # drop the PO-token-gated web client (most-cited CI fix)
     ["ios", "mediaconnect", "web_safari"],

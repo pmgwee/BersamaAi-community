@@ -14,7 +14,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from pipeline import ytaudio  # noqa: E402
-from pipeline.fetch import ydl_network_opts, video_id_from_url  # noqa: E402
+from pipeline.fetch import PLAYER_CLIENT_ORDERINGS, ydl_network_opts, video_id_from_url  # noqa: E402
 
 
 class _Resp:
@@ -298,6 +298,9 @@ class TestNetworkOpts(unittest.TestCase):
 
 
 class TestAsrRungOrder(unittest.TestCase):
+    def test_plain_android_client_is_first_for_current_youtube_cdn_urls(self):
+        self.assertEqual(PLAYER_CLIENT_ORDERINGS[0], ["android"])
+
     def test_mirror_rung_runs_only_after_ytdlp_fails(self):
         from pipeline import asr
         seen = []

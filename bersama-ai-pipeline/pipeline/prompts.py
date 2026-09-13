@@ -75,7 +75,9 @@ def build_user_message(meta, transcript, lang_hint="other"):
     anyway — the hint is a guardrail."""
     title = meta.get("title", "(untitled)")
     speaker = meta.get("speaker") or meta.get("channel") or meta.get("uploader", "")
-    url = meta.get("url") or meta.get("webpage_url", "")
+    # yt-dlp's ``url`` is often a short-lived googlevideo media URL. Keep the
+    # stable watch page in the prompt so the model returns a durable card link.
+    url = meta.get("webpage_url") or meta.get("url", "")
     duration = int(meta.get("duration") or 0)
 
     return f"""\

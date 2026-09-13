@@ -33,13 +33,16 @@ from __future__ import annotations
 
 import json
 import os
+import uuid
 from typing import Any, Optional
+from urllib.parse import urlsplit
 
 from openai import OpenAI
 
 PROVIDER_LABEL = "OpenCode Go"
 DEFAULT_BASE_URL = "https://opencode.ai/zen/go/v1"
 DEFAULT_MODEL = "gpt-5.6-luna"
+CLIENT_USER_AGENT = "BersamaAi-pipeline/1.0"
 
 # The Responses API counts REASONING tokens against max_output_tokens, so the
 # old chat-completions budgets (which only had to cover the visible tool JSON)
@@ -103,6 +106,22 @@ def function_tool(spec: dict) -> dict:
     }
 
 
+def _request_headers(*, base_url: str, model: str, system: str,
+                     user: str, tool_name: str) -> dict[str, str]:
+    """Identify this client and give OpenCode a stable conversation affinity key.
+
+    Every pipeline model call is a one-shot conversation. Deriving the opaque
+    UUID from that call's stable inputs preserves the ID across retries without
+    putting prompt text in a header or persistent state.
+    """
+    headers = {"User-Agent": CLIENT_USER_AGENT}
+    host = (urlsplit(base_url).hostname or "").lower()
+    if host == "opencode.ai" or host.endswith(".opencode.ai"):
+        conversation = "\0".join((model, tool_name, system, user))
+        headers["x-opencode-session"] = str(uuid.uuid5(uuid.NAMESPACE_URL, conversation))
+    return headers
+
+
 def build_client(*, api_key: str, base_url: str, timeout: Optional[float] = None,
                  max_retries: Optional[int] = None) -> OpenAI:
     """The one place that constructs a provider client."""
@@ -146,6 +165,9 @@ def structured_call(
             tools=[function_tool(tool)],
             tool_choice="required",   # one tool declared => this tool
             max_output_tokens=max(max_output_tokens, MIN_OUTPUT_TOKENS),
+            extra_headers=_request_headers(base_url=base_url, model=model,
+                                           system=system, user=user,
+                                           tool_name=tool["name"]),
         )
     except Exception as e:  # noqa: BLE001 — transport/auth/rate-limit surprises
         raise LLMError(f"{PROVIDER_LABEL} API call failed: {_safe_err(e)}") from e
