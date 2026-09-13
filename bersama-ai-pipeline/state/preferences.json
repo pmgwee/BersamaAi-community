@@ -1,9 +1,9 @@
 {
-  "updated_at": "2026-09-13T18:01:06Z",
+  "updated_at": "2026-09-13T20:52:53Z",
   "half_life_days": 14,
-  "n_events": 7437,
+  "n_events": 7466,
   "topic": {
-    "coding": 0.034,
+    "coding": 0.033,
     "creative_video": 0.0,
     "creative_voice": 0.0,
     "research_study": 0.0,
@@ -21,7 +21,7 @@
     "official": 0.029,
     "r/ClaudeCode": 0.0,
     "r/singularity": 0.0,
-    "r/LocalLLaMA": 0.161,
+    "r/LocalLLaMA": 0.16,
     "r/hacking": 0.0,
     "r/redteamsec": 0.0,
     "r/security": 0.0,
@@ -45,7 +45,7 @@
   },
   "category": {
     "RELEASE": 0.0,
-    "UPDATE": 0.029,
+    "UPDATE": 0.028,
     "PRICING": 0.0,
     "OPEN_SOURCE": 0.0,
     "LAUNCH": 0.019,
