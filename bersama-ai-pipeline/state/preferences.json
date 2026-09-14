@@ -1,29 +1,29 @@
 {
-  "updated_at": "2026-09-14T12:53:04Z",
+  "updated_at": "2026-09-14T19:51:25Z",
   "half_life_days": 14,
-  "n_events": 7062,
+  "n_events": 6925,
   "topic": {
-    "cybersecurity": 0.0,
-    "coding": 0.036,
-    "research_study": 0.0,
-    "company_investment": 0.027,
     "creative_video": 0.0,
+    "coding": 0.036,
+    "company_investment": 0.029,
+    "cybersecurity": 0.0,
     "creative_image": 0.0,
+    "research_study": 0.0,
     "creative_voice": 0.0,
     "research_productivity": 0.0,
     "finance": 0.0
   },
   "source": {
-    "HN": 0.024,
-    "r/LocalLLaMA": 0.156,
-    "official": 0.03,
+    "HN": 0.025,
     "huggingface": 0.0,
+    "official": 0.031,
     "r/ClaudeCode": 0.0,
     "r/StableDiffusion": 0.0,
     "r/hacking": 0.0,
     "r/redteamsec": 0.0,
     "github": 0.017,
     "r/security": 0.0,
+    "r/LocalLLaMA": 0.199,
     "r/artificial": 0.0,
     "r/cybersecurity": 0.0,
     "r/netsec": 0.0,
@@ -45,8 +45,8 @@
     "r/notebooklm": 0.0
   },
   "category": {
-    "UPDATE": 0.03,
     "RELEASE": 0.0,
+    "UPDATE": 0.031,
     "PRICING": 0.0,
     "OPEN_SOURCE": 0.0,
     "LAUNCH": 0.019,
@@ -78,15 +78,15 @@
     ],
     "bottom": [
       {
-        "headline": "Beltdown2 reports an escape from the Cursor CLI sandbox",
+        "headline": "Mistral details a 40,000-line Fortran 77 to C++ migration with AI agents",
         "reward": 0.0
       },
       {
-        "headline": "H3 camera-control workflow adds a new update for image generation",
+        "headline": "YC’s Garry Tan wants US open-weight labs to distill frontier models too",
         "reward": 0.0
       },
       {
-        "headline": "A builder reports monetizing five mobile games made with Claude Code",
+        "headline": "TaoMate-H3 3-step turbo LoRAs are now ComfyUI-friendly",
         "reward": 0.0
       }
     ]
