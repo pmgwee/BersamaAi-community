@@ -91,6 +91,10 @@
     "stars": 1201,
     "ts": "2026-09-01T23:22:29+00:00"
   },
+  "Vincentwei1021/anything2explainer": {
+    "stars": 1200,
+    "ts": "2026-09-14T05:03:05+00:00"
+  },
   "cbrock84/headcount": {
     "stars": 1182,
     "ts": "2026-09-03T23:19:00+00:00"
@@ -98,10 +102,6 @@
   "Jakubantalik/thinking-orbs": {
     "stars": 1164,
     "ts": "2026-07-27T22:20:34+00:00"
-  },
-  "Vincentwei1021/anything2explainer": {
-    "stars": 1164,
-    "ts": "2026-09-13T23:14:05+00:00"
   },
   "eternityspring/shuohao-skills": {
     "stars": 1161,
@@ -275,6 +275,10 @@
     "stars": 573,
     "ts": "2026-08-09T21:52:41+00:00"
   },
+  "eternityspring/reelbench-skills": {
+    "stars": 573,
+    "ts": "2026-09-14T05:04:05+00:00"
+  },
   "Human-Agent-Society/reef": {
     "stars": 571,
     "ts": "2026-09-06T22:55:22+00:00"
@@ -318,10 +322,6 @@
   "decionis/agent-safe-pipeline": {
     "stars": 534,
     "ts": "2026-08-19T21:43:56+00:00"
-  },
-  "eternityspring/reelbench-skills": {
-    "stars": 514,
-    "ts": "2026-09-13T23:15:05+00:00"
   },
   "disler/super-simple-software-factory": {
     "stars": 513,
@@ -390,6 +390,10 @@
   "totec448-spec/chat-on-steroids": {
     "stars": 444,
     "ts": "2026-08-28T15:26:43+00:00"
+  },
+  "kruzovic7/ai-data-extractor": {
+    "stars": 441,
+    "ts": "2026-09-14T05:01:20+00:00"
   },
   "SandAI-org/MAGI-2-preview": {
     "stars": 438,
@@ -474,10 +478,6 @@
   "deerwork-ai/deer-workflow": {
     "stars": 374,
     "ts": "2026-08-01T22:13:32+00:00"
-  },
-  "kruzovic7/ai-data-extractor": {
-    "stars": 365,
-    "ts": "2026-09-13T23:12:34+00:00"
   },
   "BoardUI/boardui": {
     "stars": 364,
@@ -623,6 +623,10 @@
     "stars": 284,
     "ts": "2026-09-04T23:04:42+00:00"
   },
+  "Phyzicalorg/Phyzical_org": {
+    "stars": 281,
+    "ts": "2026-09-14T05:01:20+00:00"
+  },
   "only-cli/oc": {
     "stars": 280,
     "ts": "2026-08-24T21:46:05+00:00"
@@ -682,10 +686,6 @@
   "OrRon/EpicInfographics": {
     "stars": 263,
     "ts": "2026-08-29T23:23:08+00:00"
-  },
-  "Phyzicalorg/Phyzical_org": {
-    "stars": 263,
-    "ts": "2026-09-13T23:12:34+00:00"
   },
   "liujunxibaba/douyin-tiktok-story-skill-agent": {
     "stars": 262,
@@ -811,6 +811,10 @@
     "stars": 221,
     "ts": "2026-08-31T20:52:20+00:00"
   },
+  "viettranx/3dviz-pro-max": {
+    "stars": 221,
+    "ts": "2026-09-14T05:01:20+00:00"
+  },
   "adnanakil/nobuzz": {
     "stars": 220,
     "ts": "2026-08-27T14:16:25+00:00"
@@ -826,10 +830,6 @@
   "surya-koritala/loomfeed": {
     "stars": 216,
     "ts": "2026-08-15T21:37:02+00:00"
-  },
-  "viettranx/3dviz-pro-max": {
-    "stars": 216,
-    "ts": "2026-09-13T23:12:34+00:00"
   },
   "N-allpass/modex-mh-agent": {
     "stars": 215,
@@ -871,6 +871,10 @@
     "stars": 209,
     "ts": "2026-08-10T22:00:46+00:00"
   },
+  "feitangyuan/motion-web": {
+    "stars": 208,
+    "ts": "2026-09-14T05:01:20+00:00"
+  },
   "nuyoah-ai-works/nuyoah-xiezhen-prompt": {
     "stars": 207,
     "ts": "2026-08-04T22:31:22+00:00"
@@ -894,6 +898,10 @@
   "V1ki/dsh-plugin-subscriptions": {
     "stars": 205,
     "ts": "2026-08-20T21:46:04+00:00"
+  },
+  "xiaYuTian11/maskit": {
+    "stars": 205,
+    "ts": "2026-09-14T05:05:33+00:00"
   },
   "oliverb-io1902e8/agent-skills-collection": {
     "stars": 204,
@@ -919,6 +927,10 @@
     "stars": 201,
     "ts": "2026-08-20T21:46:04+00:00"
   },
+  "VaderChen/YourDesk": {
+    "stars": 201,
+    "ts": "2026-09-14T05:01:20+00:00"
+  },
   "Streamdririddle/expressvpn-panel-2026": {
     "stars": 200,
     "ts": "2026-08-17T09:59:54+00:00"
@@ -926,14 +938,6 @@
   "DEEP-JLU/Awesome-Graph-Engineering": {
     "stars": 200,
     "ts": "2026-08-26T20:06:18+00:00"
-  },
-  "VaderChen/YourDesk": {
-    "stars": 200,
-    "ts": "2026-09-13T23:12:34+00:00"
-  },
-  "xiaYuTian11/maskit": {
-    "stars": 200,
-    "ts": "2026-09-13T23:16:33+00:00"
   },
   "risa-labs-inc/BossConsole": {
     "stars": 199,
@@ -946,10 +950,6 @@
   "pgrundev/pgbot": {
     "stars": 198,
     "ts": "2026-08-17T21:43:43+00:00"
-  },
-  "feitangyuan/motion-web": {
-    "stars": 198,
-    "ts": "2026-09-13T23:12:34+00:00"
   },
   "miqdadbadjuber/anti-slop": {
     "stars": 195,
@@ -973,7 +973,7 @@
   },
   "punkpeye/awesome-remote-mcp-servers": {
     "stars": 192,
-    "ts": "2026-09-13T23:12:34+00:00"
+    "ts": "2026-09-14T05:01:20+00:00"
   },
   "Mr-funny/hbg-classical-poem-silk-video": {
     "stars": 191,
@@ -1003,6 +1003,10 @@
     "stars": 189,
     "ts": "2026-08-19T21:43:56+00:00"
   },
+  "xiaomoBoy/pi-bluebook": {
+    "stars": 189,
+    "ts": "2026-09-14T05:01:20+00:00"
+  },
   "Polylayer-X/polylayer-app": {
     "stars": 187,
     "ts": "2026-08-26T04:08:08+00:00"
@@ -1021,10 +1025,6 @@
   },
   "Jakeschincariol/linkedin-agent-skill": {
     "stars": 184,
-    "ts": "2026-09-13T23:12:34+00:00"
-  },
-  "xiaomoBoy/pi-bluebook": {
-    "stars": 181,
     "ts": "2026-09-13T23:12:34+00:00"
   },
   "AMAP-ML/DreamX-Creator": {
@@ -1199,6 +1199,10 @@
     "stars": 151,
     "ts": "2026-08-25T21:46:27+00:00"
   },
+  "Loopera-ai/loopera": {
+    "stars": 151,
+    "ts": "2026-09-14T05:04:28+00:00"
+  },
   "azrtydxb/procoder": {
     "stars": 140,
     "ts": "2026-08-22T21:42:25+00:00"
@@ -1234,6 +1238,10 @@
   "Apeireth/apeireth-rust": {
     "stars": 104,
     "ts": "2026-08-23T21:42:05+00:00"
+  },
+  "SyntaxMethod/CVE-2026-42978-PoC-Research": {
+    "stars": 104,
+    "ts": "2026-09-14T05:05:33+00:00"
   },
   "alex193a/Root-My-Pixel": {
     "stars": 103,
