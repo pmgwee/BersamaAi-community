@@ -179,13 +179,13 @@
     "stars": 821,
     "ts": "2026-09-13T23:12:34+00:00"
   },
+  "kruzovic7/ai-data-extractor": {
+    "stars": 820,
+    "ts": "2026-09-15T21:24:39+00:00"
+  },
   "mikiarlo3/awesome-growth-hacking-skills": {
     "stars": 818,
     "ts": "2026-08-10T22:00:46+00:00"
-  },
-  "kruzovic7/ai-data-extractor": {
-    "stars": 818,
-    "ts": "2026-09-15T17:03:00+00:00"
   },
   "Player-YN/PawWork_ZhuaZhua": {
     "stars": 794,
@@ -225,7 +225,7 @@
   },
   "eternityspring/reelbench-skills": {
     "stars": 695,
-    "ts": "2026-09-15T17:05:28+00:00"
+    "ts": "2026-09-15T21:27:08+00:00"
   },
   "0xsline/awesome-deepseek-harness": {
     "stars": 687,
@@ -283,6 +283,10 @@
     "stars": 573,
     "ts": "2026-08-09T21:52:41+00:00"
   },
+  "agentverse-os/AgentVerse-OS": {
+    "stars": 573,
+    "ts": "2026-09-15T21:24:39+00:00"
+  },
   "Human-Agent-Society/reef": {
     "stars": 571,
     "ts": "2026-09-06T22:55:22+00:00"
@@ -310,10 +314,6 @@
   "Zyrexnn/Cybermes": {
     "stars": 543,
     "ts": "2026-08-25T21:50:25+00:00"
-  },
-  "agentverse-os/AgentVerse-OS": {
-    "stars": 542,
-    "ts": "2026-09-15T17:03:00+00:00"
   },
   "bawadou/ai-data-extractor": {
     "stars": 541,
@@ -403,6 +403,10 @@
     "stars": 438,
     "ts": "2026-08-10T22:02:04+00:00"
   },
+  "youngyangyang04/llm-master": {
+    "stars": 436,
+    "ts": "2026-09-15T21:24:39+00:00"
+  },
   "danilo-znamerovszkij/draw-your-font": {
     "stars": 435,
     "ts": "2026-07-28T22:18:53+00:00"
@@ -410,10 +414,6 @@
   "0xwilliamortiz/ratchet": {
     "stars": 435,
     "ts": "2026-08-06T14:37:33+00:00"
-  },
-  "youngyangyang04/llm-master": {
-    "stars": 435,
-    "ts": "2026-09-15T17:03:00+00:00"
   },
   "xmarre/ComfyUI-Spectrum-MiniMax-H3": {
     "stars": 431,
@@ -447,13 +447,13 @@
     "stars": 399,
     "ts": "2026-08-24T21:46:05+00:00"
   },
+  "viettranx/3dviz-pro-max": {
+    "stars": 399,
+    "ts": "2026-09-15T21:24:39+00:00"
+  },
   "lexmount/moli": {
     "stars": 398,
     "ts": "2026-08-16T21:36:27+00:00"
-  },
-  "viettranx/3dviz-pro-max": {
-    "stars": 393,
-    "ts": "2026-09-15T17:03:00+00:00"
   },
   "DavidCarliez/trustmebro": {
     "stars": 389,
@@ -589,7 +589,7 @@
   },
   "Phyzicalorg/Phyzical_org": {
     "stars": 311,
-    "ts": "2026-09-15T17:03:00+00:00"
+    "ts": "2026-09-15T21:24:39+00:00"
   },
   "0xwilliamortiz/andrej-karpathy-skills": {
     "stars": 305,
@@ -598,6 +598,10 @@
   "jaredrhod/fullstack-agent": {
     "stars": 305,
     "ts": "2026-08-23T21:39:38+00:00"
+  },
+  "atria-asi/Atria-Dawn-Preview": {
+    "stars": 305,
+    "ts": "2026-09-15T21:24:39+00:00"
   },
   "ZJU-REAL/Easel": {
     "stars": 304,
@@ -626,10 +630,6 @@
   "LBH-123-AI/Comfyui_Minimax_h3_latent_Upscaler": {
     "stars": 294,
     "ts": "2026-08-23T21:38:35+00:00"
-  },
-  "atria-asi/Atria-Dawn-Preview": {
-    "stars": 288,
-    "ts": "2026-09-15T17:03:00+00:00"
   },
   "antinomie-lab/pi-book": {
     "stars": 287,
@@ -686,6 +686,10 @@
   "alikon-art/DeterminFlow": {
     "stars": 271,
     "ts": "2026-08-08T21:48:08+00:00"
+  },
+  "letorig/video-generator-client": {
+    "stars": 269,
+    "ts": "2026-09-15T21:25:28+00:00"
   },
   "crawfordxx/xiaoma-durex-copywriter": {
     "stars": 266,
@@ -833,7 +837,7 @@
   },
   "xiaYuTian11/maskit": {
     "stars": 222,
-    "ts": "2026-09-15T17:06:54+00:00"
+    "ts": "2026-09-15T21:28:37+00:00"
   },
   "Merit-Systems/OpenInstinct": {
     "stars": 221,
@@ -1079,6 +1083,10 @@
     "stars": 173,
     "ts": "2026-08-31T20:54:07+00:00"
   },
+  "agent-launch/agent-launcher": {
+    "stars": 173,
+    "ts": "2026-09-15T21:24:39+00:00"
+  },
   "0xohioism/polymarket-crypto-5m-15min-trading-bot": {
     "stars": 171,
     "ts": "2026-08-27T14:19:34+00:00"
@@ -1091,6 +1099,14 @@
     "stars": 170,
     "ts": "2026-08-23T21:38:08+00:00"
   },
+  "Matthew0822/ToolReplay": {
+    "stars": 170,
+    "ts": "2026-09-15T21:28:37+00:00"
+  },
+  "AetherLabsAI/RSIAgent": {
+    "stars": 170,
+    "ts": "2026-09-15T21:24:39+00:00"
+  },
   "worldwonderer/novel-to-game": {
     "stars": 169,
     "ts": "2026-07-24T22:21:15+00:00"
@@ -1098,10 +1114,6 @@
   "Vistyy/nopus": {
     "stars": 169,
     "ts": "2026-08-21T21:42:14+00:00"
-  },
-  "Matthew0822/ToolReplay": {
-    "stars": 169,
-    "ts": "2026-09-15T17:06:54+00:00"
   },
   "seyedehsanhadi/sloptrim": {
     "stars": 168,
@@ -1114,10 +1126,6 @@
   "exachormocontheo1970/Python-Bot": {
     "stars": 167,
     "ts": "2026-08-25T21:49:35+00:00"
-  },
-  "agent-launch/agent-launcher": {
-    "stars": 167,
-    "ts": "2026-09-15T17:03:00+00:00"
   },
   "Prism-Shadow/penguin-harness": {
     "stars": 166,
