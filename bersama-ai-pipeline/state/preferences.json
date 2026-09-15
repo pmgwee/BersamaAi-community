@@ -1,27 +1,27 @@
 {
-  "updated_at": "2026-09-15T11:47:37Z",
+  "updated_at": "2026-09-15T17:02:13Z",
   "half_life_days": 14,
-  "n_events": 6282,
+  "n_events": 6084,
   "topic": {
-    "cybersecurity": 0.0,
-    "creative_video": 0.0,
-    "coding": 0.038,
+    "coding": 0.039,
     "research_study": 0.0,
-    "creative_voice": 0.0,
-    "company_investment": 0.036,
+    "creative_video": 0.0,
+    "company_investment": 0.039,
+    "cybersecurity": 0.0,
     "research_productivity": 0.0,
+    "creative_voice": 0.0,
     "finance": 0.0,
     "creative_image": 0.0
   },
   "source": {
     "HN": 0.026,
-    "github": 0.018,
-    "official": 0.034,
+    "github": 0.02,
+    "official": 0.036,
     "r/artificial": 0.0,
     "r/cybersecurity": 0.0,
     "r/netsec": 0.0,
     "huggingface": 0.0,
-    "r/wallstreetbets": 0.0,
+    "r/wallstreetbets": 0.031,
     "r/SunoAI": 0.0,
     "r/hacking": 0.0,
     "r/redteamsec": 0.0,
@@ -32,7 +32,7 @@
     "r/runwayml": 0.0,
     "r/AI_Agents": 0.0,
     "r/StartupSoloFounder": 0.0,
-    "r/LocalLLaMA": 0.272,
+    "r/LocalLLaMA": 0.261,
     "r/micro_saas": 0.0,
     "r/ClaudeAI": 0.0,
     "r/SaaS": 0.0,
@@ -41,16 +41,17 @@
     "r/deeplearning": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/notebooklm": 0.0,
-    "r/OpenAI": 0.0
+    "r/OpenAI": 0.0,
+    "r/ClaudeCode": 0.6
   },
   "category": {
-    "UPDATE": 0.035,
-    "OPEN_SOURCE": 0.0,
-    "RELEASE": 0.0,
     "LAUNCH": 0.021,
     "BENCHMARK": 0.0,
+    "OPEN_SOURCE": 0.0,
+    "UPDATE": 0.036,
     "DEAL": 0.054,
-    "PRICING": 0.0
+    "RELEASE": 0.0,
+    "PRICING": 0.025
   },
   "exemplars": {
     "top": [
@@ -77,15 +78,15 @@
     ],
     "bottom": [
       {
-        "headline": "DeepSeek V4.1 Flash beats Astra on Artificial Analysis's new benchmark",
+        "headline": "NVIDIA releases RTX PRO 5500 Blackwell with 84GB of memory",
         "reward": 0.0
       },
       {
-        "headline": "Claude builds a from-scratch OS that boots on a real laptop",
+        "headline": "Xi Jinping proposes a BRICS open-source AI zone",
         "reward": 0.0
       },
       {
-        "headline": "Reverse-engineering Claude Web's MicroVM uncovers Anthropic's Antspace",
+        "headline": "Suno V6 draws user complaints over audio quality versus v5.5",
         "reward": 0.0
       }
     ]

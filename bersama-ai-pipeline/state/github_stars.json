@@ -184,8 +184,8 @@
     "ts": "2026-08-10T22:00:46+00:00"
   },
   "kruzovic7/ai-data-extractor": {
-    "stars": 814,
-    "ts": "2026-09-15T11:48:24+00:00"
+    "stars": 818,
+    "ts": "2026-09-15T17:03:00+00:00"
   },
   "Player-YN/PawWork_ZhuaZhua": {
     "stars": 794,
@@ -224,8 +224,8 @@
     "ts": "2026-09-02T23:24:11+00:00"
   },
   "eternityspring/reelbench-skills": {
-    "stars": 690,
-    "ts": "2026-09-15T11:51:07+00:00"
+    "stars": 695,
+    "ts": "2026-09-15T17:05:28+00:00"
   },
   "0xsline/awesome-deepseek-harness": {
     "stars": 687,
@@ -311,6 +311,10 @@
     "stars": 543,
     "ts": "2026-08-25T21:50:25+00:00"
   },
+  "agentverse-os/AgentVerse-OS": {
+    "stars": 542,
+    "ts": "2026-09-15T17:03:00+00:00"
+  },
   "bawadou/ai-data-extractor": {
     "stars": 541,
     "ts": "2026-08-22T21:38:43+00:00"
@@ -363,10 +367,6 @@
     "stars": 480,
     "ts": "2026-08-28T15:26:43+00:00"
   },
-  "agentverse-os/AgentVerse-OS": {
-    "stars": 475,
-    "ts": "2026-09-15T11:48:24+00:00"
-  },
   "PhiloLabs/fable51-worlds": {
     "stars": 470,
     "ts": "2026-09-08T23:25:59+00:00"
@@ -411,6 +411,10 @@
     "stars": 435,
     "ts": "2026-08-06T14:37:33+00:00"
   },
+  "youngyangyang04/llm-master": {
+    "stars": 435,
+    "ts": "2026-09-15T17:03:00+00:00"
+  },
   "xmarre/ComfyUI-Spectrum-MiniMax-H3": {
     "stars": 431,
     "ts": "2026-08-09T21:51:14+00:00"
@@ -447,9 +451,9 @@
     "stars": 398,
     "ts": "2026-08-16T21:36:27+00:00"
   },
-  "youngyangyang04/llm-master": {
-    "stars": 398,
-    "ts": "2026-09-15T11:48:24+00:00"
+  "viettranx/3dviz-pro-max": {
+    "stars": 393,
+    "ts": "2026-09-15T17:03:00+00:00"
   },
   "DavidCarliez/trustmebro": {
     "stars": 389,
@@ -486,10 +490,6 @@
   "deerwork-ai/deer-workflow": {
     "stars": 374,
     "ts": "2026-08-01T22:13:32+00:00"
-  },
-  "viettranx/3dviz-pro-max": {
-    "stars": 370,
-    "ts": "2026-09-15T11:48:24+00:00"
   },
   "BoardUI/boardui": {
     "stars": 364,
@@ -588,8 +588,8 @@
     "ts": "2026-08-04T22:31:22+00:00"
   },
   "Phyzicalorg/Phyzical_org": {
-    "stars": 310,
-    "ts": "2026-09-15T11:48:24+00:00"
+    "stars": 311,
+    "ts": "2026-09-15T17:03:00+00:00"
   },
   "0xwilliamortiz/andrej-karpathy-skills": {
     "stars": 305,
@@ -626,6 +626,10 @@
   "LBH-123-AI/Comfyui_Minimax_h3_latent_Upscaler": {
     "stars": 294,
     "ts": "2026-08-23T21:38:35+00:00"
+  },
+  "atria-asi/Atria-Dawn-Preview": {
+    "stars": 288,
+    "ts": "2026-09-15T17:03:00+00:00"
   },
   "antinomie-lab/pi-book": {
     "stars": 287,
@@ -807,10 +811,6 @@
     "stars": 227,
     "ts": "2026-08-29T23:23:08+00:00"
   },
-  "atria-asi/Atria-Dawn-Preview": {
-    "stars": 226,
-    "ts": "2026-09-15T11:48:24+00:00"
-  },
   "OpenLabs-so/openanalytics": {
     "stars": 225,
     "ts": "2026-08-17T21:43:43+00:00"
@@ -831,13 +831,13 @@
     "stars": 223,
     "ts": "2026-08-22T21:38:43+00:00"
   },
+  "xiaYuTian11/maskit": {
+    "stars": 222,
+    "ts": "2026-09-15T17:06:54+00:00"
+  },
   "Merit-Systems/OpenInstinct": {
     "stars": 221,
     "ts": "2026-08-31T20:52:20+00:00"
-  },
-  "xiaYuTian11/maskit": {
-    "stars": 221,
-    "ts": "2026-09-15T11:52:34+00:00"
   },
   "adnanakil/nobuzz": {
     "stars": 220,
@@ -1100,8 +1100,8 @@
     "ts": "2026-08-21T21:42:14+00:00"
   },
   "Matthew0822/ToolReplay": {
-    "stars": 168,
-    "ts": "2026-09-15T11:52:34+00:00"
+    "stars": 169,
+    "ts": "2026-09-15T17:06:54+00:00"
   },
   "seyedehsanhadi/sloptrim": {
     "stars": 168,
@@ -1114,6 +1114,10 @@
   "exachormocontheo1970/Python-Bot": {
     "stars": 167,
     "ts": "2026-08-25T21:49:35+00:00"
+  },
+  "agent-launch/agent-launcher": {
+    "stars": 167,
+    "ts": "2026-09-15T17:03:00+00:00"
   },
   "Prism-Shadow/penguin-harness": {
     "stars": 166,
@@ -1166,10 +1170,6 @@
   "Dominic789654/awesome-deepseek-harness": {
     "stars": 159,
     "ts": "2026-08-19T21:46:42+00:00"
-  },
-  "agent-launch/agent-launcher": {
-    "stars": 159,
-    "ts": "2026-09-15T11:48:24+00:00"
   },
   "hsusul/lore": {
     "stars": 158,
