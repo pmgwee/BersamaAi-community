@@ -1,27 +1,26 @@
 {
-  "updated_at": "2026-09-15T04:57:52Z",
+  "updated_at": "2026-09-15T11:47:37Z",
   "half_life_days": 14,
-  "n_events": 6485,
+  "n_events": 6282,
   "topic": {
+    "cybersecurity": 0.0,
     "creative_video": 0.0,
     "coding": 0.038,
     "research_study": 0.0,
-    "company_investment": 0.033,
     "creative_voice": 0.0,
-    "cybersecurity": 0.0,
+    "company_investment": 0.036,
     "research_productivity": 0.0,
     "finance": 0.0,
     "creative_image": 0.0
   },
   "source": {
-    "huggingface": 0.0,
-    "r/LocalLLaMA": 0.199,
-    "github": 0.018,
-    "official": 0.033,
     "HN": 0.026,
+    "github": 0.018,
+    "official": 0.034,
     "r/artificial": 0.0,
     "r/cybersecurity": 0.0,
     "r/netsec": 0.0,
+    "huggingface": 0.0,
     "r/wallstreetbets": 0.0,
     "r/SunoAI": 0.0,
     "r/hacking": 0.0,
@@ -33,6 +32,7 @@
     "r/runwayml": 0.0,
     "r/AI_Agents": 0.0,
     "r/StartupSoloFounder": 0.0,
+    "r/LocalLLaMA": 0.272,
     "r/micro_saas": 0.0,
     "r/ClaudeAI": 0.0,
     "r/SaaS": 0.0,
@@ -44,12 +44,12 @@
     "r/OpenAI": 0.0
   },
   "category": {
-    "RELEASE": 0.0,
-    "UPDATE": 0.033,
+    "UPDATE": 0.035,
     "OPEN_SOURCE": 0.0,
+    "RELEASE": 0.0,
     "LAUNCH": 0.021,
     "BENCHMARK": 0.0,
-    "DEAL": 0.055,
+    "DEAL": 0.054,
     "PRICING": 0.0
   },
   "exemplars": {
@@ -77,15 +77,15 @@
     ],
     "bottom": [
       {
-        "headline": "Fable 5.1 solves the Cyphral Distich, a 370-year-old cipher",
+        "headline": "DeepSeek V4.1 Flash beats Astra on Artificial Analysis's new benchmark",
         "reward": 0.0
       },
       {
-        "headline": "GLM-5.3-Flash appears on Hugging Face as an image-text-to-text model",
+        "headline": "Claude builds a from-scratch OS that boots on a real laptop",
         "reward": 0.0
       },
       {
-        "headline": "GPT-6 Astra plays Anno 117 for 6 hours from screenshots and mouse",
+        "headline": "Reverse-engineering Claude Web's MicroVM uncovers Anthropic's Antspace",
         "reward": 0.0
       }
     ]
