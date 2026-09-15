@@ -76,8 +76,8 @@
     "ts": "2026-09-11T23:18:30+00:00"
   },
   "Vincentwei1021/anything2explainer": {
-    "stars": 1309,
-    "ts": "2026-09-14T19:53:43+00:00"
+    "stars": 1317,
+    "ts": "2026-09-14T23:55:12+00:00"
   },
   "cinderline/northcinder": {
     "stars": 1206,
@@ -187,6 +187,10 @@
     "stars": 794,
     "ts": "2026-09-03T23:19:00+00:00"
   },
+  "kruzovic7/ai-data-extractor": {
+    "stars": 786,
+    "ts": "2026-09-14T23:53:44+00:00"
+  },
   "pireel/pireel": {
     "stars": 770,
     "ts": "2026-07-26T22:16:33+00:00"
@@ -232,12 +236,8 @@
     "ts": "2026-07-27T22:21:23+00:00"
   },
   "eternityspring/reelbench-skills": {
-    "stars": 662,
-    "ts": "2026-09-14T19:54:43+00:00"
-  },
-  "kruzovic7/ai-data-extractor": {
-    "stars": 657,
-    "ts": "2026-09-14T19:52:13+00:00"
+    "stars": 666,
+    "ts": "2026-09-14T23:56:11+00:00"
   },
   "gavamedia/deltafin": {
     "stars": 656,
@@ -577,7 +577,7 @@
   },
   "Phyzicalorg/Phyzical_org": {
     "stars": 310,
-    "ts": "2026-09-14T19:52:13+00:00"
+    "ts": "2026-09-14T23:53:44+00:00"
   },
   "0xwilliamortiz/andrej-karpathy-skills": {
     "stars": 305,
@@ -671,6 +671,10 @@
     "stars": 271,
     "ts": "2026-08-08T21:48:08+00:00"
   },
+  "agentverse-os/AgentVerse-OS": {
+    "stars": 268,
+    "ts": "2026-09-14T23:53:44+00:00"
+  },
   "crawfordxx/xiaoma-durex-copywriter": {
     "stars": 266,
     "ts": "2026-08-10T22:00:46+00:00"
@@ -690,6 +694,10 @@
   "liujunxibaba/douyin-tiktok-story-skill-agent": {
     "stars": 262,
     "ts": "2026-08-11T22:07:17+00:00"
+  },
+  "viettranx/3dviz-pro-max": {
+    "stars": 261,
+    "ts": "2026-09-14T23:53:44+00:00"
   },
   "aws/context-ontology-accelerator": {
     "stars": 260,
@@ -718,10 +726,6 @@
   "ZSeven-W/dsh-ios": {
     "stars": 253,
     "ts": "2026-08-25T21:46:27+00:00"
-  },
-  "viettranx/3dviz-pro-max": {
-    "stars": 251,
-    "ts": "2026-09-14T19:52:13+00:00"
   },
   "LeonQ8/ComfyUI-ALLinONE-MinimaxH3": {
     "stars": 250,
@@ -769,7 +773,7 @@
   },
   "feitangyuan/motion-web": {
     "stars": 233,
-    "ts": "2026-09-14T19:52:13+00:00"
+    "ts": "2026-09-14T23:53:44+00:00"
   },
   "apiframe-ai/seedance-2.0-api": {
     "stars": 232,
@@ -791,13 +795,13 @@
     "stars": 230,
     "ts": "2026-08-09T21:50:37+00:00"
   },
+  "VaderChen/YourDesk": {
+    "stars": 228,
+    "ts": "2026-09-14T23:53:44+00:00"
+  },
   "truespar/sentio": {
     "stars": 227,
     "ts": "2026-08-29T23:23:08+00:00"
-  },
-  "VaderChen/YourDesk": {
-    "stars": 227,
-    "ts": "2026-09-14T19:52:13+00:00"
   },
   "OpenLabs-so/openanalytics": {
     "stars": 225,
@@ -843,9 +847,9 @@
     "stars": 215,
     "ts": "2026-08-20T21:46:04+00:00"
   },
-  "agentverse-os/AgentVerse-OS": {
+  "punkpeye/awesome-remote-mcp-servers": {
     "stars": 215,
-    "ts": "2026-09-14T19:52:13+00:00"
+    "ts": "2026-09-14T23:53:44+00:00"
   },
   "luvrix/fluxmend": {
     "stars": 214,
@@ -877,11 +881,7 @@
   },
   "xiaYuTian11/maskit": {
     "stars": 211,
-    "ts": "2026-09-14T19:56:11+00:00"
-  },
-  "punkpeye/awesome-remote-mcp-servers": {
-    "stars": 211,
-    "ts": "2026-09-14T19:52:13+00:00"
+    "ts": "2026-09-14T23:57:22+00:00"
   },
   "KimGLee/Cambium": {
     "stars": 209,
@@ -967,13 +967,13 @@
     "stars": 195,
     "ts": "2026-08-14T21:45:13+00:00"
   },
+  "xiaomoBoy/pi-bluebook": {
+    "stars": 195,
+    "ts": "2026-09-14T23:53:44+00:00"
+  },
   "Agenta-AI/awesome-ai-agent-platforms": {
     "stars": 194,
     "ts": "2026-09-08T23:25:59+00:00"
-  },
-  "xiaomoBoy/pi-bluebook": {
-    "stars": 194,
-    "ts": "2026-09-14T19:52:13+00:00"
   },
   "0xwilliamortiz/agents-council": {
     "stars": 193,
@@ -1077,7 +1077,7 @@
   },
   "Matthew0822/ToolReplay": {
     "stars": 171,
-    "ts": "2026-09-14T19:56:11+00:00"
+    "ts": "2026-09-14T23:57:22+00:00"
   },
   "0xtresser/Transcript-of-Liang-Wenfengs-DeepSeek-Founder-4-Hour-Investor-Meeting": {
     "stars": 170,
@@ -1193,7 +1193,7 @@
   },
   "Loopera-ai/loopera": {
     "stars": 152,
-    "ts": "2026-09-14T19:55:20+00:00"
+    "ts": "2026-09-14T23:56:33+00:00"
   },
   "RopemakerEnd/ds4windows-lab-2026": {
     "stars": 151,

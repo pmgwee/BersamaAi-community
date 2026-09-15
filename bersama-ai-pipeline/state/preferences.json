@@ -1,34 +1,33 @@
 {
-  "updated_at": "2026-09-14T19:51:25Z",
+  "updated_at": "2026-09-14T23:52:57Z",
   "half_life_days": 14,
-  "n_events": 6925,
+  "n_events": 6692,
   "topic": {
-    "creative_video": 0.0,
-    "coding": 0.036,
-    "company_investment": 0.029,
-    "cybersecurity": 0.0,
+    "coding": 0.037,
     "creative_image": 0.0,
+    "cybersecurity": 0.0,
+    "creative_video": 0.0,
     "research_study": 0.0,
+    "company_investment": 0.032,
     "creative_voice": 0.0,
     "research_productivity": 0.0,
     "finance": 0.0
   },
   "source": {
-    "HN": 0.025,
     "huggingface": 0.0,
-    "official": 0.031,
-    "r/ClaudeCode": 0.0,
-    "r/StableDiffusion": 0.0,
-    "r/hacking": 0.0,
-    "r/redteamsec": 0.0,
+    "official": 0.032,
     "github": 0.017,
+    "HN": 0.026,
     "r/security": 0.0,
+    "r/redteamsec": 0.0,
     "r/LocalLLaMA": 0.199,
     "r/artificial": 0.0,
     "r/cybersecurity": 0.0,
     "r/netsec": 0.0,
     "r/wallstreetbets": 0.0,
     "r/SunoAI": 0.0,
+    "r/hacking": 0.0,
+    "r/StableDiffusion": 0.0,
     "r/comfyui": 0.0,
     "r/MachineLearning": 0.0,
     "r/SideProject": 0.0,
@@ -42,16 +41,17 @@
     "r/technology": 0.0,
     "r/deeplearning": 0.0,
     "r/learnmachinelearning": 0.0,
-    "r/notebooklm": 0.0
+    "r/notebooklm": 0.0,
+    "r/OpenAI": 0.0
   },
   "category": {
-    "RELEASE": 0.0,
-    "UPDATE": 0.031,
-    "PRICING": 0.0,
     "OPEN_SOURCE": 0.0,
+    "UPDATE": 0.033,
     "LAUNCH": 0.019,
+    "RELEASE": 0.0,
     "BENCHMARK": 0.0,
-    "DEAL": 0.055
+    "DEAL": 0.055,
+    "PRICING": 0.0
   },
   "exemplars": {
     "top": [
@@ -78,15 +78,15 @@
     ],
     "bottom": [
       {
-        "headline": "Mistral details a 40,000-line Fortran 77 to C++ migration with AI agents",
+        "headline": "Fable 5.1 solves the Cyphral Distich, a 370-year-old cipher",
         "reward": 0.0
       },
       {
-        "headline": "YC’s Garry Tan wants US open-weight labs to distill frontier models too",
+        "headline": "GLM-5.3-Flash appears on Hugging Face as an image-text-to-text model",
         "reward": 0.0
       },
       {
-        "headline": "TaoMate-H3 3-step turbo LoRAs are now ComfyUI-friendly",
+        "headline": "GPT-6 Astra plays Anno 117 for 6 hours from screenshots and mouse",
         "reward": 0.0
       }
     ]
