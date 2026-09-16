@@ -1,12 +1,12 @@
 {
-  "updated_at": "2026-09-15T21:23:52Z",
+  "updated_at": "2026-09-16T04:52:46Z",
   "half_life_days": 14,
-  "n_events": 5962,
+  "n_events": 5607,
   "topic": {
-    "coding": 0.039,
-    "company_investment": 0.042,
     "cybersecurity": 0.0,
+    "coding": 0.042,
     "creative_video": 0.0,
+    "company_investment": 0.055,
     "research_productivity": 0.0,
     "creative_voice": 0.0,
     "research_study": 0.0,
@@ -14,45 +14,45 @@
     "creative_image": 0.0
   },
   "source": {
-    "HN": 0.027,
-    "official": 0.037,
-    "r/artificial": 0.0,
-    "r/cybersecurity": 0.0,
-    "r/netsec": 0.0,
-    "huggingface": 0.0,
-    "github": 0.021,
-    "r/wallstreetbets": 0.059,
-    "r/SunoAI": 0.0,
+    "official": 0.039,
     "r/hacking": 0.0,
     "r/redteamsec": 0.0,
+    "github": 0.022,
     "r/StableDiffusion": 0.0,
+    "HN": 0.028,
     "r/comfyui": 0.0,
+    "r/SunoAI": 0.0,
+    "huggingface": 0.0,
     "r/MachineLearning": 0.0,
     "r/SideProject": 0.0,
+    "r/cybersecurity": 0.0,
     "r/runwayml": 0.0,
     "r/AI_Agents": 0.0,
     "r/StartupSoloFounder": 0.0,
-    "r/LocalLLaMA": 0.246,
+    "r/LocalLLaMA": 0.228,
+    "r/netsec": 0.0,
     "r/micro_saas": 0.0,
     "r/ClaudeAI": 0.0,
     "r/SaaS": 0.0,
     "r/singularity": 0.0,
     "r/technology": 0.0,
     "r/deeplearning": 0.0,
+    "r/artificial": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/notebooklm": 0.0,
     "r/OpenAI": 0.0,
     "r/ClaudeCode": 0.6,
+    "r/wallstreetbets": 0.6,
     "r/ElevenLabs": 0.0
   },
   "category": {
-    "UPDATE": 0.036,
-    "BENCHMARK": 0.0,
-    "LAUNCH": 0.022,
-    "DEAL": 0.054,
+    "UPDATE": 0.04,
+    "LAUNCH": 0.023,
     "OPEN_SOURCE": 0.0,
     "RELEASE": 0.0,
-    "PRICING": 0.048
+    "BENCHMARK": 0.0,
+    "DEAL": 0.058,
+    "PRICING": 0.069
   },
   "exemplars": {
     "top": [
@@ -79,15 +79,15 @@
     ],
     "bottom": [
       {
-        "headline": "Community YuE2 encoder lets users tokenize their own music",
+        "headline": "Axios frames Anthropic’s IPO path against the AI slowdown split",
         "reward": 0.0
       },
       {
-        "headline": "ElevenLabs MCP adds voice, music, image, and video generation to assistants",
+        "headline": "Two authorization bypasses found in n8n AI agents",
         "reward": 0.0
       },
       {
-        "headline": "Sanders bill would ban superintelligent AI, with 20-year prison terms",
+        "headline": "GitHub Copilot auto model selection adds cost and quality tiers",
         "reward": 0.0
       }
     ]
