@@ -1,25 +1,25 @@
 {
-  "updated_at": "2026-09-16T17:01:00Z",
+  "updated_at": "2026-09-16T21:20:52Z",
   "half_life_days": 14,
-  "n_events": 5150,
+  "n_events": 5048,
   "topic": {
-    "coding": 0.044,
-    "creative_video": 0.0,
-    "company_investment": 0.068,
+    "coding": 0.045,
     "research_study": 0.0,
     "cybersecurity": 0.0,
+    "creative_video": 0.0,
+    "company_investment": 0.075,
     "finance": 0.0,
     "creative_image": 0.0,
     "creative_voice": 0.0,
     "research_productivity": 0.0
   },
   "source": {
-    "HN": 0.031,
-    "huggingface": 0.0,
-    "official": 0.044,
     "github": 0.024,
+    "HN": 0.032,
     "r/MachineLearning": 0.0,
     "r/StableDiffusion": 0.0,
+    "official": 0.048,
+    "huggingface": 0.0,
     "r/comfyui": 0.0,
     "r/SideProject": 0.0,
     "r/redteamsec": 0.0,
@@ -27,7 +27,7 @@
     "r/runwayml": 0.0,
     "r/AI_Agents": 0.0,
     "r/StartupSoloFounder": 0.0,
-    "r/LocalLLaMA": 0.196,
+    "r/LocalLLaMA": 0.182,
     "r/netsec": 0.0,
     "r/hacking": 0.0,
     "r/micro_saas": 0.0,
@@ -40,19 +40,19 @@
     "r/artificial": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/notebooklm": 0.0,
-    "r/OpenAI": 0.046,
+    "r/OpenAI": 0.058,
     "r/ClaudeCode": 0.6,
     "r/wallstreetbets": 0.6,
     "r/ElevenLabs": 0.0
   },
   "category": {
-    "RELEASE": 0.0,
     "OPEN_SOURCE": 0.0,
-    "LAUNCH": 0.029,
-    "DEAL": 0.057,
-    "BENCHMARK": 0.0,
+    "RELEASE": 0.0,
     "UPDATE": 0.046,
-    "PRICING": 0.107
+    "DEAL": 0.061,
+    "BENCHMARK": 0.0,
+    "LAUNCH": 0.031,
+    "PRICING": 0.123
   },
   "exemplars": {
     "top": [
@@ -79,15 +79,15 @@
     ],
     "bottom": [
       {
-        "headline": "AEF-1 evaluator standard emerges, cosigned by xAI, OpenAI, and Anthropic",
-        "reward": 0.0
-      },
-      {
-        "headline": "AgentVerse-OS: a personal cloud OS for developers and their AI agents",
-        "reward": 0.0
-      },
-      {
         "headline": "OpenArm: an open-source 7DOF humanoid robot arm",
+        "reward": 0.0
+      },
+      {
+        "headline": "Google DeepMind introduces Gemini 3.8 Live and 3.8 Live Extended Thinking",
+        "reward": 0.0
+      },
+      {
+        "headline": "YuE2 Instrumental LoRA covers 2,700 tracks and 100+ genres",
         "reward": 0.0
       }
     ]
