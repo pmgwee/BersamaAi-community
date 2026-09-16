@@ -1,36 +1,36 @@
 {
-  "updated_at": "2026-09-16T04:52:46Z",
+  "updated_at": "2026-09-16T11:39:48Z",
   "half_life_days": 14,
-  "n_events": 5607,
+  "n_events": 5429,
   "topic": {
-    "cybersecurity": 0.0,
     "coding": 0.042,
-    "creative_video": 0.0,
-    "company_investment": 0.055,
+    "company_investment": 0.06,
     "research_productivity": 0.0,
+    "cybersecurity": 0.0,
     "creative_voice": 0.0,
+    "creative_video": 0.0,
     "research_study": 0.0,
     "finance": 0.0,
     "creative_image": 0.0
   },
   "source": {
-    "official": 0.039,
-    "r/hacking": 0.0,
-    "r/redteamsec": 0.0,
-    "github": 0.022,
-    "r/StableDiffusion": 0.0,
     "HN": 0.028,
-    "r/comfyui": 0.0,
+    "official": 0.041,
+    "github": 0.023,
     "r/SunoAI": 0.0,
     "huggingface": 0.0,
     "r/MachineLearning": 0.0,
+    "r/StableDiffusion": 0.0,
+    "r/comfyui": 0.0,
     "r/SideProject": 0.0,
+    "r/redteamsec": 0.0,
     "r/cybersecurity": 0.0,
     "r/runwayml": 0.0,
     "r/AI_Agents": 0.0,
     "r/StartupSoloFounder": 0.0,
-    "r/LocalLLaMA": 0.228,
+    "r/LocalLLaMA": 0.213,
     "r/netsec": 0.0,
+    "r/hacking": 0.0,
     "r/micro_saas": 0.0,
     "r/ClaudeAI": 0.0,
     "r/SaaS": 0.0,
@@ -40,19 +40,19 @@
     "r/artificial": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/notebooklm": 0.0,
-    "r/OpenAI": 0.0,
+    "r/OpenAI": 0.028,
     "r/ClaudeCode": 0.6,
     "r/wallstreetbets": 0.6,
     "r/ElevenLabs": 0.0
   },
   "category": {
-    "UPDATE": 0.04,
-    "LAUNCH": 0.023,
+    "LAUNCH": 0.025,
+    "UPDATE": 0.042,
     "OPEN_SOURCE": 0.0,
-    "RELEASE": 0.0,
     "BENCHMARK": 0.0,
+    "RELEASE": 0.0,
     "DEAL": 0.058,
-    "PRICING": 0.069
+    "PRICING": 0.088
   },
   "exemplars": {
     "top": [
@@ -79,15 +79,15 @@
     ],
     "bottom": [
       {
-        "headline": "Axios frames Anthropic’s IPO path against the AI slowdown split",
+        "headline": "Amazon Science asks why ML research agents don’t overfit",
         "reward": 0.0
       },
       {
-        "headline": "Two authorization bypasses found in n8n AI agents",
+        "headline": "Ex-FTC chair Khan urges criminal cases against AI CEOs, citing 1934 precedent",
         "reward": 0.0
       },
       {
-        "headline": "GitHub Copilot auto model selection adds cost and quality tiers",
+        "headline": "Sakana proposes Augmented Lagrangian Predictive Coding as a backprop alternative",
         "reward": 0.0
       }
     ]
