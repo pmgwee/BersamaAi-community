@@ -1,24 +1,23 @@
 {
-  "updated_at": "2026-09-16T11:39:48Z",
+  "updated_at": "2026-09-16T17:01:00Z",
   "half_life_days": 14,
-  "n_events": 5429,
+  "n_events": 5150,
   "topic": {
-    "coding": 0.042,
-    "company_investment": 0.06,
-    "research_productivity": 0.0,
-    "cybersecurity": 0.0,
-    "creative_voice": 0.0,
+    "coding": 0.044,
     "creative_video": 0.0,
+    "company_investment": 0.068,
     "research_study": 0.0,
+    "cybersecurity": 0.0,
     "finance": 0.0,
-    "creative_image": 0.0
+    "creative_image": 0.0,
+    "creative_voice": 0.0,
+    "research_productivity": 0.0
   },
   "source": {
-    "HN": 0.028,
-    "official": 0.041,
-    "github": 0.023,
-    "r/SunoAI": 0.0,
+    "HN": 0.031,
     "huggingface": 0.0,
+    "official": 0.044,
+    "github": 0.024,
     "r/MachineLearning": 0.0,
     "r/StableDiffusion": 0.0,
     "r/comfyui": 0.0,
@@ -28,7 +27,7 @@
     "r/runwayml": 0.0,
     "r/AI_Agents": 0.0,
     "r/StartupSoloFounder": 0.0,
-    "r/LocalLLaMA": 0.213,
+    "r/LocalLLaMA": 0.196,
     "r/netsec": 0.0,
     "r/hacking": 0.0,
     "r/micro_saas": 0.0,
@@ -36,23 +35,24 @@
     "r/SaaS": 0.0,
     "r/singularity": 0.0,
     "r/technology": 0.0,
+    "r/SunoAI": 0.0,
     "r/deeplearning": 0.0,
     "r/artificial": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/notebooklm": 0.0,
-    "r/OpenAI": 0.028,
+    "r/OpenAI": 0.046,
     "r/ClaudeCode": 0.6,
     "r/wallstreetbets": 0.6,
     "r/ElevenLabs": 0.0
   },
   "category": {
-    "LAUNCH": 0.025,
-    "UPDATE": 0.042,
-    "OPEN_SOURCE": 0.0,
-    "BENCHMARK": 0.0,
     "RELEASE": 0.0,
-    "DEAL": 0.058,
-    "PRICING": 0.088
+    "OPEN_SOURCE": 0.0,
+    "LAUNCH": 0.029,
+    "DEAL": 0.057,
+    "BENCHMARK": 0.0,
+    "UPDATE": 0.046,
+    "PRICING": 0.107
   },
   "exemplars": {
     "top": [
@@ -79,15 +79,15 @@
     ],
     "bottom": [
       {
-        "headline": "Amazon Science asks why ML research agents don’t overfit",
+        "headline": "AEF-1 evaluator standard emerges, cosigned by xAI, OpenAI, and Anthropic",
         "reward": 0.0
       },
       {
-        "headline": "Ex-FTC chair Khan urges criminal cases against AI CEOs, citing 1934 precedent",
+        "headline": "AgentVerse-OS: a personal cloud OS for developers and their AI agents",
         "reward": 0.0
       },
       {
-        "headline": "Sakana proposes Augmented Lagrangian Predictive Coding as a backprop alternative",
+        "headline": "OpenArm: an open-source 7DOF humanoid robot arm",
         "reward": 0.0
       }
     ]

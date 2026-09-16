@@ -176,8 +176,8 @@
     "ts": "2026-08-19T21:43:56+00:00"
   },
   "kruzovic7/ai-data-extractor": {
-    "stars": 824,
-    "ts": "2026-09-16T11:40:35+00:00"
+    "stars": 825,
+    "ts": "2026-09-16T17:01:48+00:00"
   },
   "crwdla/tokentab": {
     "stars": 821,
@@ -220,8 +220,8 @@
     "ts": "2026-08-30T23:32:51+00:00"
   },
   "eternityspring/reelbench-skills": {
-    "stars": 704,
-    "ts": "2026-09-16T11:43:03+00:00"
+    "stars": 705,
+    "ts": "2026-09-16T17:04:30+00:00"
   },
   "brayonpi/hexstellar": {
     "stars": 702,
@@ -239,13 +239,13 @@
     "stars": 667,
     "ts": "2026-07-27T22:21:23+00:00"
   },
+  "agentverse-os/AgentVerse-OS": {
+    "stars": 663,
+    "ts": "2026-09-16T17:01:48+00:00"
+  },
   "gavamedia/deltafin": {
     "stars": 656,
     "ts": "2026-08-03T22:19:43+00:00"
-  },
-  "agentverse-os/AgentVerse-OS": {
-    "stars": 633,
-    "ts": "2026-09-16T11:40:35+00:00"
   },
   "missuo/herdrm": {
     "stars": 631,
@@ -303,6 +303,10 @@
     "stars": 561,
     "ts": "2026-08-13T22:05:38+00:00"
   },
+  "youngyangyang04/llm-master": {
+    "stars": 558,
+    "ts": "2026-09-16T17:01:48+00:00"
+  },
   "DrHazemAli/enterprise-system-design": {
     "stars": 552,
     "ts": "2026-08-18T21:45:23+00:00"
@@ -310,10 +314,6 @@
   "AMAP-ML/LongHorizon-Harness": {
     "stars": 548,
     "ts": "2026-08-10T22:00:46+00:00"
-  },
-  "youngyangyang04/llm-master": {
-    "stars": 544,
-    "ts": "2026-09-16T11:40:35+00:00"
   },
   "Zyrexnn/Cybermes": {
     "stars": 543,
@@ -337,7 +337,7 @@
   },
   "letorig/video-generator-client": {
     "stars": 516,
-    "ts": "2026-09-16T11:41:24+00:00"
+    "ts": "2026-09-16T17:03:06+00:00"
   },
   "disler/super-simple-software-factory": {
     "stars": 513,
@@ -428,8 +428,8 @@
     "ts": "2026-08-10T22:00:46+00:00"
   },
   "viettranx/3dviz-pro-max": {
-    "stars": 420,
-    "ts": "2026-09-16T11:40:35+00:00"
+    "stars": 424,
+    "ts": "2026-09-16T17:01:48+00:00"
   },
   "adtexterry-lgtm/unigit-ecosystem": {
     "stars": 419,
@@ -451,6 +451,10 @@
     "stars": 411,
     "ts": "2026-08-12T22:06:02+00:00"
   },
+  "atria-asi/Atria-Dawn-Preview": {
+    "stars": 411,
+    "ts": "2026-09-16T17:01:48+00:00"
+  },
   "furkankly/zoetrope": {
     "stars": 399,
     "ts": "2026-08-24T21:46:05+00:00"
@@ -458,10 +462,6 @@
   "lexmount/moli": {
     "stars": 398,
     "ts": "2026-08-16T21:36:27+00:00"
-  },
-  "atria-asi/Atria-Dawn-Preview": {
-    "stars": 392,
-    "ts": "2026-09-16T11:40:35+00:00"
   },
   "DavidCarliez/trustmebro": {
     "stars": 389,
@@ -771,6 +771,10 @@
     "stars": 241,
     "ts": "2026-09-12T23:04:54+00:00"
   },
+  "AetherLabsAI/RSIAgent": {
+    "stars": 241,
+    "ts": "2026-09-16T17:01:48+00:00"
+  },
   "uczltw6/trace-file-lineage": {
     "stars": 240,
     "ts": "2026-08-04T22:31:22+00:00"
@@ -786,10 +790,6 @@
   "feitangyuan/motion-web": {
     "stars": 233,
     "ts": "2026-09-14T23:53:44+00:00"
-  },
-  "AetherLabsAI/RSIAgent": {
-    "stars": 233,
-    "ts": "2026-09-16T11:40:35+00:00"
   },
   "apiframe-ai/seedance-2.0-api": {
     "stars": 232,
@@ -939,6 +939,10 @@
     "stars": 203,
     "ts": "2026-07-30T22:29:27+00:00"
   },
+  "agent-launch/agent-launcher": {
+    "stars": 203,
+    "ts": "2026-09-16T17:01:48+00:00"
+  },
   "Polylayer-X/polylayer-trading-app": {
     "stars": 202,
     "ts": "2026-08-26T13:21:37+00:00"
@@ -986,10 +990,6 @@
   "xiaomoBoy/pi-bluebook": {
     "stars": 195,
     "ts": "2026-09-14T23:53:44+00:00"
-  },
-  "agent-launch/agent-launcher": {
-    "stars": 195,
-    "ts": "2026-09-16T11:40:35+00:00"
   },
   "Agenta-AI/awesome-ai-agent-platforms": {
     "stars": 194,
@@ -1051,6 +1051,10 @@
     "stars": 184,
     "ts": "2026-09-13T23:12:34+00:00"
   },
+  "mpociot/claude-siri-ai": {
+    "stars": 183,
+    "ts": "2026-09-16T17:01:48+00:00"
+  },
   "AMAP-ML/DreamX-Creator": {
     "stars": 180,
     "ts": "2026-09-07T23:34:16+00:00"
@@ -1091,17 +1095,13 @@
     "stars": 173,
     "ts": "2026-08-31T20:54:07+00:00"
   },
-  "mpociot/claude-siri-ai": {
+  "Matthew0822/ToolReplay": {
     "stars": 173,
-    "ts": "2026-09-16T11:40:35+00:00"
+    "ts": "2026-09-16T17:05:56+00:00"
   },
   "0xohioism/polymarket-crypto-5m-15min-trading-bot": {
     "stars": 171,
     "ts": "2026-08-27T14:19:34+00:00"
-  },
-  "Matthew0822/ToolReplay": {
-    "stars": 171,
-    "ts": "2026-09-16T11:44:30+00:00"
   },
   "0xtresser/Transcript-of-Liang-Wenfengs-DeepSeek-Founder-4-Hour-Investor-Meeting": {
     "stars": 170,
@@ -1203,6 +1203,10 @@
     "stars": 155,
     "ts": "2026-08-30T23:32:51+00:00"
   },
+  "pliablepixels/gap-trap": {
+    "stars": 154,
+    "ts": "2026-09-16T17:01:48+00:00"
+  },
   "lincwang123-bot/moonlit-stories": {
     "stars": 153,
     "ts": "2026-08-10T22:03:06+00:00"
@@ -1210,10 +1214,6 @@
   "YINGLINGH/limioryn": {
     "stars": 153,
     "ts": "2026-08-13T22:05:38+00:00"
-  },
-  "pliablepixels/gap-trap": {
-    "stars": 153,
-    "ts": "2026-09-16T11:40:35+00:00"
   },
   "arcships/aimux": {
     "stars": 152,
@@ -1270,6 +1270,10 @@
   "zorost/AI-Engineering-Lab": {
     "stars": 108,
     "ts": "2026-08-23T21:40:15+00:00"
+  },
+  "LanyXiaosheng/bookflow-skill": {
+    "stars": 108,
+    "ts": "2026-09-16T17:04:08+00:00"
   },
   "Arcanum-Sec/wraith": {
     "stars": 106,
