@@ -1,31 +1,30 @@
 {
-  "updated_at": "2026-09-17T17:02:15Z",
+  "updated_at": "2026-09-17T21:24:55Z",
   "half_life_days": 14,
-  "n_events": 4578,
+  "n_events": 4428,
   "topic": {
-    "coding": 0.043,
-    "cybersecurity": 0.0,
-    "company_investment": 0.097,
+    "coding": 0.045,
     "research_study": 0.0,
+    "cybersecurity": 0.0,
     "creative_image": 0.0,
     "finance": 0.0,
     "creative_voice": 0.0,
+    "company_investment": 0.103,
     "creative_video": 0.0,
     "research_productivity": 0.0
   },
   "source": {
-    "HN": 0.018,
-    "r/redteamsec": 0.0,
-    "r/cybersecurity": 0.0,
-    "official": 0.058,
+    "HN": 0.02,
+    "official": 0.062,
     "r/comfyui": 0.0,
-    "github": 0.026,
+    "github": 0.025,
     "r/StableDiffusion": 0.0,
     "r/runwayml": 0.0,
     "r/AI_Agents": 0.0,
     "r/StartupSoloFounder": 0.0,
-    "r/LocalLLaMA": 0.144,
+    "r/LocalLLaMA": 0.133,
     "huggingface": 0.0,
+    "r/redteamsec": 0.0,
     "r/netsec": 0.0,
     "r/hacking": 0.0,
     "r/micro_saas": 0.0,
@@ -35,23 +34,24 @@
     "r/singularity": 0.0,
     "r/technology": 0.0,
     "r/SunoAI": 0.0,
+    "r/cybersecurity": 0.0,
     "r/deeplearning": 0.0,
     "r/artificial": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/notebooklm": 0.0,
-    "r/OpenAI": 0.081,
-    "r/ClaudeCode": 0.6,
+    "r/OpenAI": 0.085,
+    "r/ClaudeCode": 0.54,
     "r/wallstreetbets": 0.6,
     "r/ElevenLabs": 0.0
   },
   "category": {
-    "LAUNCH": 0.037,
-    "UPDATE": 0.043,
-    "DEAL": 0.072,
+    "UPDATE": 0.046,
     "BENCHMARK": 0.0,
+    "LAUNCH": 0.042,
     "RELEASE": 0.0,
+    "DEAL": 0.08,
     "OPEN_SOURCE": 0.0,
-    "PRICING": 0.162
+    "PRICING": 0.17
   },
   "exemplars": {
     "top": [
@@ -78,15 +78,15 @@
     ],
     "bottom": [
       {
-        "headline": "Why I'm still bearish on LLMs after Navier-Stokes",
+        "headline": "Anthropic merges Claude chat and Cowork into one interface",
         "reward": 0.0
       },
       {
-        "headline": "Claude users say new usage limits make Max and Team plans unusable for work",
+        "headline": "Anthropic tells shareholders adjusted operating income is positive",
         "reward": 0.0
       },
       {
-        "headline": "llm-master：覆盖 Prompt、RAG、Agent 与 MCP 的大模型中文全栈教程",
+        "headline": "Apple weighs AI servers with M8 chips and Nvidia networking",
         "reward": 0.0
       }
     ]
