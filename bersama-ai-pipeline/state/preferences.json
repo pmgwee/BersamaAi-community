@@ -1,11 +1,11 @@
 {
-  "updated_at": "2026-09-17T11:45:34Z",
+  "updated_at": "2026-09-17T17:02:15Z",
   "half_life_days": 14,
-  "n_events": 4594,
+  "n_events": 4578,
   "topic": {
-    "coding": 0.051,
-    "company_investment": 0.09,
+    "coding": 0.043,
     "cybersecurity": 0.0,
+    "company_investment": 0.097,
     "research_study": 0.0,
     "creative_image": 0.0,
     "finance": 0.0,
@@ -14,18 +14,18 @@
     "research_productivity": 0.0
   },
   "source": {
-    "huggingface": 0.0,
-    "HN": 0.035,
+    "HN": 0.018,
     "r/redteamsec": 0.0,
     "r/cybersecurity": 0.0,
-    "official": 0.055,
+    "official": 0.058,
     "r/comfyui": 0.0,
     "github": 0.026,
     "r/StableDiffusion": 0.0,
     "r/runwayml": 0.0,
     "r/AI_Agents": 0.0,
     "r/StartupSoloFounder": 0.0,
-    "r/LocalLLaMA": 0.154,
+    "r/LocalLLaMA": 0.144,
+    "huggingface": 0.0,
     "r/netsec": 0.0,
     "r/hacking": 0.0,
     "r/micro_saas": 0.0,
@@ -39,32 +39,24 @@
     "r/artificial": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/notebooklm": 0.0,
-    "r/OpenAI": 0.075,
+    "r/OpenAI": 0.081,
     "r/ClaudeCode": 0.6,
     "r/wallstreetbets": 0.6,
     "r/ElevenLabs": 0.0
   },
   "category": {
-    "RELEASE": 0.0,
-    "DEAL": 0.066,
-    "UPDATE": 0.052,
-    "LAUNCH": 0.035,
+    "LAUNCH": 0.037,
+    "UPDATE": 0.043,
+    "DEAL": 0.072,
     "BENCHMARK": 0.0,
+    "RELEASE": 0.0,
     "OPEN_SOURCE": 0.0,
-    "PRICING": 0.154
+    "PRICING": 0.162
   },
   "exemplars": {
     "top": [
       {
-        "headline": "Claude reports elevated errors across multiple models",
-        "reward": 0.6
-      },
-      {
-        "headline": "Claude reports elevated errors across multiple models",
-        "reward": 0.6
-      },
-      {
-        "headline": "Claude reports elevated errors across multiple models",
+        "headline": "Google Antigravity warns third-party use can lead to account suspension",
         "reward": 0.6
       },
       {
@@ -72,21 +64,29 @@
         "reward": 0.6
       },
       {
-        "headline": "Claude reports elevated errors across multiple models",
+        "headline": "Google Antigravity warns third-party use can lead to account suspension",
+        "reward": 0.6
+      },
+      {
+        "headline": "Google Antigravity warns third-party use can lead to account suspension",
+        "reward": 0.6
+      },
+      {
+        "headline": "Google Antigravity warns third-party use can lead to account suspension",
         "reward": 0.6
       }
     ],
     "bottom": [
       {
-        "headline": "Write-up publishes a hacker's guide to attacking AI agents",
+        "headline": "Why I'm still bearish on LLMs after Navier-Stokes",
         "reward": 0.0
       },
       {
-        "headline": "ComfyUI stable release adds YuE2 music support",
+        "headline": "Claude users say new usage limits make Max and Team plans unusable for work",
         "reward": 0.0
       },
       {
-        "headline": "ShadeNet-2 20M does single-pass inverse rendering from RGB",
+        "headline": "llm-master：覆盖 Prompt、RAG、Agent 与 MCP 的大模型中文全栈教程",
         "reward": 0.0
       }
     ]
