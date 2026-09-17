@@ -1,37 +1,37 @@
 {
-  "updated_at": "2026-09-16T21:20:52Z",
+  "updated_at": "2026-09-17T04:56:10Z",
   "half_life_days": 14,
-  "n_events": 5048,
+  "n_events": 4713,
   "topic": {
-    "coding": 0.045,
-    "research_study": 0.0,
-    "cybersecurity": 0.0,
+    "coding": 0.049,
+    "company_investment": 0.083,
     "creative_video": 0.0,
-    "company_investment": 0.075,
     "finance": 0.0,
+    "cybersecurity": 0.0,
+    "research_study": 0.0,
     "creative_image": 0.0,
     "creative_voice": 0.0,
     "research_productivity": 0.0
   },
   "source": {
-    "github": 0.024,
-    "HN": 0.032,
-    "r/MachineLearning": 0.0,
-    "r/StableDiffusion": 0.0,
-    "official": 0.048,
+    "HN": 0.035,
     "huggingface": 0.0,
+    "official": 0.052,
     "r/comfyui": 0.0,
     "r/SideProject": 0.0,
     "r/redteamsec": 0.0,
     "r/cybersecurity": 0.0,
+    "github": 0.027,
+    "r/StableDiffusion": 0.0,
     "r/runwayml": 0.0,
     "r/AI_Agents": 0.0,
     "r/StartupSoloFounder": 0.0,
-    "r/LocalLLaMA": 0.182,
+    "r/LocalLLaMA": 0.167,
     "r/netsec": 0.0,
     "r/hacking": 0.0,
     "r/micro_saas": 0.0,
     "r/ClaudeAI": 0.0,
+    "r/MachineLearning": 0.0,
     "r/SaaS": 0.0,
     "r/singularity": 0.0,
     "r/technology": 0.0,
@@ -40,19 +40,19 @@
     "r/artificial": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/notebooklm": 0.0,
-    "r/OpenAI": 0.058,
+    "r/OpenAI": 0.068,
     "r/ClaudeCode": 0.6,
     "r/wallstreetbets": 0.6,
     "r/ElevenLabs": 0.0
   },
   "category": {
+    "UPDATE": 0.05,
     "OPEN_SOURCE": 0.0,
-    "RELEASE": 0.0,
-    "UPDATE": 0.046,
-    "DEAL": 0.061,
+    "DEAL": 0.06,
     "BENCHMARK": 0.0,
-    "LAUNCH": 0.031,
-    "PRICING": 0.123
+    "RELEASE": 0.0,
+    "LAUNCH": 0.033,
+    "PRICING": 0.139
   },
   "exemplars": {
     "top": [
@@ -79,15 +79,15 @@
     ],
     "bottom": [
       {
-        "headline": "OpenArm: an open-source 7DOF humanoid robot arm",
+        "headline": "Write-up documents two escapes from OpenAI's Codex sandbox",
         "reward": 0.0
       },
       {
-        "headline": "Google DeepMind introduces Gemini 3.8 Live and 3.8 Live Extended Thinking",
+        "headline": "44M quantized LLM trained from scratch runs at ~1,900 tok/s on CPU",
         "reward": 0.0
       },
       {
-        "headline": "YuE2 Instrumental LoRA covers 2,700 tracks and 100+ genres",
+        "headline": "LynnReal-Omni open-weights a 32B MiniMax H3-style model for unified video",
         "reward": 0.0
       }
     ]
