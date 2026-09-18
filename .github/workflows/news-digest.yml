@@ -58,16 +58,19 @@ jobs:
 
       - name: Run news digest
         env:
-          LLM_AUTH_MODE: api
-          LLM_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-          LLM_BASE_URL: https://openrouter.ai/api/v1
+          # Repository variables are optional defaults; these fallbacks keep
+          # the manual job usable even if a variable is absent. Prefer the
+          # provider-specific secret name, but accept the existing neutral one.
+          LLM_AUTH_MODE: ${{ vars.LLM_AUTH_MODE || 'api' }}
+          LLM_API_KEY: ${{ secrets.OPENROUTER_API_KEY || secrets.LLM_API_KEY }}
+          LLM_BASE_URL: ${{ vars.LLM_BASE_URL || 'https://openrouter.ai/api/v1' }}
           DISCORD_LLM_TOOLS_WEBHOOK_URL: ${{ secrets.DISCORD_LLM_TOOLS_WEBHOOK_URL }}       # #ai-llm-tools (coding)
           DISCORD_YOUTUBE_WEBHOOK_URL: ${{ secrets.DISCORD_YOUTUBE_WEBHOOK_URL }}           # #youtube-ai-video (summarizer)
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}                           # legacy youtube fallback (rename)
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_DM_CHAT_ID: ${{ secrets.TELEGRAM_DM_CHAT_ID }}
-          LLM_MODEL: z-ai/glm-5.3-flash
-          LLM_REASONING_EFFORT: high
+          LLM_MODEL: ${{ vars.LLM_MODEL || 'z-ai/glm-5.3-flash' }}
+          LLM_REASONING_EFFORT: ${{ vars.LLM_REASONING_EFFORT || 'high' }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   # authenticated GitHub search -> no rate limit
           DISCORD_IMAGE_CREATION_WEBHOOK_URL: ${{ secrets.DISCORD_IMAGE_CREATION_WEBHOOK_URL }}
           DISCORD_VIDEO_CREATION_WEBHOOK_URL: ${{ secrets.DISCORD_VIDEO_CREATION_WEBHOOK_URL }}
