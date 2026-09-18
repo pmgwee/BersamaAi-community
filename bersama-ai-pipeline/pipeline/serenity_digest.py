@@ -23,7 +23,7 @@ Page uses when no LLM credential is present — here it also covers an LLM outag
 the card still posts). No stance signal — deliberately dropped per owner.
 
 Runtime: pipeline VM cron (01:07 UTC, staggered after the 01:00 EconomyApp
-x-digest; uses the VM's Codex OAuth login). No LLM ⇒ keyword topics only. The
+x-digest; uses the VM's OpenRouter API key). No LLM ⇒ keyword topics only. The
 on-demand `/share` path never imports this module.
 """
 from __future__ import annotations
@@ -58,7 +58,7 @@ FIRST_RUN_MAX = 3      # bound day-1 volume so the first run isn't a wall of old
 STALE_AFTER_DAYS = 4
 LLM_TIMEOUT_S = 90     # per tagging call; the SDK default (600s ×3) could
 LLM_MAX_RETRIES = 1    # stall a 12-post run for hours on a hung endpoint.
-# Max-effort OAuth turns may think before answering; 90s keeps one bad tag from
+# Reasoning turns may think before answering; 90s keeps one bad tag from
 # stalling the digest. The caller falls back to deterministic keyword topics.
 TAG_MAX_OUTPUT_TOKENS = 4096
 

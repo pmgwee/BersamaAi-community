@@ -14,7 +14,7 @@ and admin tooling, all in one repo.
 | Path | What it is | Runs where |
 |---|---|---|
 | [`PROJECT-CONTEXT.md`](PROJECT-CONTEXT.md) | **Start here** — full project onboarding doc | — |
-| [`bersama-ai-pipeline/`](bersama-ai-pipeline/) | Content engine — creator-watch summarizer + topic-routed news digest + `@EconomyApp` stock digest + on-demand portal (`/run`, `/share`) | Pipeline VM (news uses Codex + ChatGPT OAuth); weekly analytics on GitHub Actions |
+| [`bersama-ai-pipeline/`](bersama-ai-pipeline/) | Content engine — creator-watch summarizer + topic-routed news digest + `@EconomyApp` stock digest + on-demand portal (`/run`, `/share`) | Pipeline VM (LLM uses OpenRouter credits); weekly analytics on GitHub Actions |
 | [`bersama-bot/`](bersama-bot/) | discord.py event bot — welcome, reaction roles, leveling, commands, `@mention` AI | GCP VM, systemd (24/7) |
 | [`discord-mcp/`](discord-mcp/) | SaseQ discord-mcp jar — interactive admin via the claude.ai connector | On demand (localhost:8085) |
 | [`FEATURES.md`](FEATURES.md) | Feature registry & community tracker | — |
@@ -29,5 +29,5 @@ pipeline GCP VM. GitHub Actions retains the weekly engagement analytics and a ma
 API-key news fallback. (`SESSION-HANDOFF.md` is a dated
 snapshot, not current — use `PROJECT-CONTEXT.md`.)
 
-> **OAuth note:** this is a public repository, so personal Codex `auth.json` credentials
-> stay on the trusted VM and never enter GitHub Actions or the repository.
+> **Secret note:** the OpenRouter API key stays in the pipeline VM's `.env` and,
+> for the manual fallback only, the GitHub Actions `OPENROUTER_API_KEY` secret.

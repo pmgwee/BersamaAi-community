@@ -5,15 +5,14 @@ Serenity topic tagger) calls `structured_call()` here and never learns which
 vendor is behind it. Swapping providers again should mean editing this file and
 the LLM_* env vars, not another repo-wide refactor.
 
-Current provider: **Codex with ChatGPT OAuth**, model `gpt-5.6-luna`, invoked
-through `codex exec`. This lets the trusted pipeline VM use the owner's ChatGPT
-subscription instead of a separately billed API key. The CLI owns OAuth token
-storage and refresh; this module never reads or copies `auth.json`.
+Current provider: **OpenRouter**, model `z-ai/glm-5.3-flash`, paid from the
+workspace's prepaid OpenRouter credits. OpenRouter exposes the same Responses
+API shape used here, so the provider stays behind this one adapter.
 
-Reasoning effort: GPT-5.6 Luna supports low / medium / high / xhigh / max. We
-run **max** by default, as requested. The Codex subprocess is non-agentic here:
-shell, web, apps, and subagents are disabled; it receives only the prompt and a
-JSON output schema inside an otherwise empty temporary directory.
+Reasoning effort: GLM 5.3 Flash supports low / high / max. We run **high** by
+default: these classification and summarization tasks benefit from deliberate
+reasoning without paying the latency of max on every card. OpenRouter maps
+unsupported gateway levels, but the default is kept native to this model.
 
 Structured output: every caller wants ONE strict JSON object, so we keep the
 proven idiom — declare a single function tool and force it with
@@ -24,11 +23,11 @@ malformed or truncated reply raises `LLMError` and the caller's existing
 retry / graceful-degradation path takes over.
 
 Config:
-    LLM_AUTH_MODE         codex (default, ChatGPT OAuth) | api (OpenAI API key)
-    LLM_API_KEY           required only when LLM_AUTH_MODE=api
-    LLM_BASE_URL          API mode only (default: https://api.openai.com/v1)
-    LLM_MODEL             default: gpt-5.6-luna
-    LLM_REASONING_EFFORT  default: max; empty/"off" omits it in API mode
+    LLM_AUTH_MODE         api (default, OpenRouter key) | codex (ChatGPT OAuth)
+    LLM_API_KEY           required when LLM_AUTH_MODE=api
+    LLM_BASE_URL          API mode (default: https://openrouter.ai/api/v1)
+    LLM_MODEL             default: z-ai/glm-5.3-flash
+    LLM_REASONING_EFFORT  default: high; empty/"off" omits it in API mode
     CODEX_CLI_PATH        optional path/name override for the `codex` executable
 
 The key is read from the environment and never logged or echoed — error text
@@ -46,16 +45,16 @@ from typing import Any, Optional
 
 from openai import OpenAI
 
-PROVIDER_LABEL = "OpenAI"
-DEFAULT_AUTH_MODE = "codex"
-DEFAULT_BASE_URL = "https://api.openai.com/v1"
-DEFAULT_MODEL = "gpt-5.6-luna"
+PROVIDER_LABEL = "OpenRouter"
+DEFAULT_AUTH_MODE = "api"
+DEFAULT_BASE_URL = "https://openrouter.ai/api/v1"
+DEFAULT_MODEL = "z-ai/glm-5.3-flash"
 CODEX_AUTH_SENTINEL = "__codex_chatgpt_oauth__"
 CODEX_TIMEOUT_SECONDS = 300
 
-# GPT-5.6 Luna reasoning depth. Anything outside this set falls back to max
-# rather than failing a scheduled run on a typo.
-DEFAULT_REASONING_EFFORT = "max"
+# OpenRouter gateway reasoning depth. Anything outside this set falls back to
+# the project default rather than failing a scheduled run on a typo.
+DEFAULT_REASONING_EFFORT = "high"
 REASONING_EFFORTS = ("low", "medium", "high", "xhigh", "max")
 
 # The Responses API counts REASONING tokens against max_output_tokens, so the
@@ -111,7 +110,7 @@ def llm_config(env: Optional[dict] = None) -> dict:
 
 
 def resolve_auth_mode(env: Optional[dict] = None) -> str:
-    """Resolve the backend. Unknown values fall back to the OAuth default."""
+    """Resolve the backend. Unknown values fall back to the API default."""
     e = os.environ if env is None else env
     value = (e.get("LLM_AUTH_MODE") or DEFAULT_AUTH_MODE).strip().lower()
     return value if value in ("codex", "api") else DEFAULT_AUTH_MODE
@@ -121,7 +120,7 @@ def resolve_reasoning_effort(env: Optional[dict] = None) -> str:
     """Read LLM_REASONING_EFFORT -> one of REASONING_EFFORTS, or "" for "don't
     send the parameter at all".
 
-    Unset means max (this project's choice). An explicitly empty value, or
+    Unset means high (this project's choice). An explicitly empty value, or
     "off"/"none", opts out — the escape
     hatch for pointing LLM_MODEL at a non-reasoning model. An unrecognised value
     degrades to the default instead of failing the run.
@@ -161,6 +160,11 @@ def build_client(*, api_key: str, base_url: str, timeout: Optional[float] = None
                  max_retries: Optional[int] = None) -> OpenAI:
     """The one place that constructs a provider client."""
     kwargs: dict[str, Any] = {"api_key": api_key, "base_url": base_url}
+    if "openrouter.ai" in base_url.lower():
+        kwargs["default_headers"] = {
+            "HTTP-Referer": "https://github.com/pmgwee/BersamaAi-community",
+            "X-Title": "BersamaAi Pipeline",
+        }
     if timeout is not None:
         kwargs["timeout"] = timeout
     if max_retries is not None:
@@ -188,7 +192,7 @@ def structured_call(
     truncated ("incomplete") response, or non-JSON arguments — the caller
     decides whether that means retry, skip, or fall back.
     `effort` overrides the reasoning depth for one call; None resolves it from
-    the environment (max unless LLM_REASONING_EFFORT says otherwise).
+    the environment (high unless LLM_REASONING_EFFORT says otherwise).
     `client` is an injection point for tests; production passes nothing.
     """
     if api_key == CODEX_AUTH_SENTINEL:

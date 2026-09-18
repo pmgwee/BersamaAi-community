@@ -2,11 +2,8 @@ name: news-digest
 
 # Manual pay-as-you-go fallback for the trending AI news digest.
 #
-# The recurring job moved to the trusted pipeline VM so Codex can reuse the
-# owner's refreshable ChatGPT OAuth login. This repository is public, and the
-# official Codex guidance says not to place personal auth.json credentials in a
-# public-repository CI workflow. Run this workflow manually only with an OpenAI
-# API key when the VM is unavailable.
+# The recurring job runs on the trusted pipeline VM. This manual fallback uses
+# the same prepaid OpenRouter account and GLM model when the VM is unavailable.
 #
 # NOTE: pipeline code lives in bersama-ai-pipeline/, so this job runs there.
 
@@ -62,15 +59,15 @@ jobs:
       - name: Run news digest
         env:
           LLM_AUTH_MODE: api
-          LLM_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          LLM_BASE_URL: https://api.openai.com/v1
+          LLM_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          LLM_BASE_URL: https://openrouter.ai/api/v1
           DISCORD_LLM_TOOLS_WEBHOOK_URL: ${{ secrets.DISCORD_LLM_TOOLS_WEBHOOK_URL }}       # #ai-llm-tools (coding)
           DISCORD_YOUTUBE_WEBHOOK_URL: ${{ secrets.DISCORD_YOUTUBE_WEBHOOK_URL }}           # #youtube-ai-video (summarizer)
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}                           # legacy youtube fallback (rename)
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_DM_CHAT_ID: ${{ secrets.TELEGRAM_DM_CHAT_ID }}
-          LLM_MODEL: gpt-5.6-luna
-          LLM_REASONING_EFFORT: max
+          LLM_MODEL: z-ai/glm-5.3-flash
+          LLM_REASONING_EFFORT: high
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   # authenticated GitHub search -> no rate limit
           DISCORD_IMAGE_CREATION_WEBHOOK_URL: ${{ secrets.DISCORD_IMAGE_CREATION_WEBHOOK_URL }}
           DISCORD_VIDEO_CREATION_WEBHOOK_URL: ${{ secrets.DISCORD_VIDEO_CREATION_WEBHOOK_URL }}

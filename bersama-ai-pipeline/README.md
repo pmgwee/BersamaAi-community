@@ -8,7 +8,7 @@ The recurring content engine for the BersamaAi Malaysia AI community. **Four mod
 4. **`@EconomyApp` stock digest** — mirrors an X account via its **Bluesky mirror** (public AT Protocol API — free, keyless, cookieless, IP-agnostic) and posts the day's posts to `#stock-financial-report`. No LLM (the post text IS the card); VM cron ~09:00 MYT daily.
 
 **Runs split across two clouds** (see [`PROJECT-CONTEXT.md`](../PROJECT-CONTEXT.md) for the full picture):
-- **Pipeline GCP VM** — creator-watch summarizer, news digest + engagement sweep (every 3h), on-demand portal + `/share`, and the `@EconomyApp` stock digest. The VM keeps the owner's refreshable Codex OAuth login; personal OAuth credentials never enter this public repository's CI.
+- **Pipeline GCP VM** — creator-watch summarizer, news digest + engagement sweep (every 3h), on-demand portal + `/share`, and the `@EconomyApp` stock digest. The VM reads a prepaid OpenRouter API key from its local `.env`.
 - **GitHub Actions** — the weekly engagement digest (`engagement-digest.yml`, Sun 22:23 UTC → one analytics card to `🔒-staff-chat`). `news-digest.yml` is now a manual, API-key fallback only.
 
 Card *content* keeps the source's original language (Chinese source → Chinese card); channel names / UI / the small category badge stay English.
@@ -18,7 +18,7 @@ PIPELINE 1 — talk summarizer (GCP VM)
   YouTube talk
      │  [fetch]    yt-dlp captions (json3) — fallback: youtube-transcript-api
      │  [asr]      no captions? → yt-dlp audio → ffmpeg → Groq Whisper
-     │  [summarize] GPT-5.6 Luna (max) via Codex OAuth → exactly 5 points
+     │  [summarize] GLM 5.3 Flash (high) via OpenRouter → exactly 5 points
      │  [gate]     short/bad transcript? → content/_review/, do NOT publish
      │  [publish]  Discord webhook (embed) + Telegram  ── auto
      │  [stage]    content/<date>_<slug>_<id>/ (post.threads.txt, post.facebook.txt) ── manual paste
@@ -59,10 +59,10 @@ python -m pip install -U yt-dlp
 
 ### 2. Provision secrets
 Copy [`.env.example`](.env.example) → `.env` and fill it in. Every key is tagged with where it's needed:
-- `[VM]` — the GCP pipeline VM: one-time `codex login --device-auth`, `LLM_AUTH_MODE=codex`, `GROQ_API_KEY`, Discord webhooks/tokens, a fine-grained `GITHUB_TOKEN` with Contents read/write, `PREFS_ENABLED`, portal and Telegram settings.
-- `[GH]` — weekly analytics secrets. Optional manual news fallback uses `OPENAI_API_KEY` (pay-as-you-go), never personal Codex OAuth.
+- `[VM]` — the GCP pipeline VM: `LLM_AUTH_MODE=api`, an OpenRouter key, `GROQ_API_KEY`, Discord webhooks/tokens, a fine-grained `GITHUB_TOKEN` with Contents read/write, `PREFS_ENABLED`, portal and Telegram settings.
+- `[GH]` — weekly analytics secrets. The optional manual news fallback uses the `OPENROUTER_API_KEY` repository secret.
 
-Locally and on the VM, keep configuration in `.env` (gitignored). Codex stores the VM's OAuth login under `~/.codex`; treat it like a password and never copy it into the repo or GitHub Actions.
+Locally and on the VM, keep configuration in `.env` (gitignored). Treat the OpenRouter key like a password and never commit it.
 
 ### 3. Curate playlists (talk summarizer only)
 Edit [`playlists.txt`](playlists.txt) — one YouTube playlist URL per line. Aim for "talks by the people who built the tools".
@@ -162,19 +162,18 @@ Quality-gate failures park in `content/_review/`; no-caption / too-long videos l
 Tags: **`[VM]`** = GCP pipeline VM (all recurring pipeline workloads) ·
 **`[GH]`** = GitHub Actions weekly analytics or manual API fallback.
 
-**LLM + transcription** — production uses **Codex with ChatGPT OAuth**, model
-`gpt-5.6-luna` at `max`, behind `pipeline/llm.py`. The trusted VM performs and
-refreshes the login; feature code receives the same three legacy kwargs and never
-touches OAuth tokens. Direct OpenAI API-key mode remains an explicit fallback.
+**LLM + transcription** — production uses prepaid **OpenRouter** credits, model
+`z-ai/glm-5.3-flash` at `high`, behind `pipeline/llm.py`. Feature code receives
+the same three provider-neutral kwargs and never logs or echoes the API key.
 
 | Key | Tag | Purpose |
 |---|---|---|
-| `LLM_AUTH_MODE` | `[VM]` | `codex` (default, ChatGPT OAuth) or `api` |
-| `LLM_API_KEY` | `[VM]` opt | Required only for `LLM_AUTH_MODE=api`; never commit it |
-| `LLM_BASE_URL` | `[VM]` opt | API mode only; default `https://api.openai.com/v1` |
-| `LLM_MODEL` | `[VM]` | `gpt-5.6-luna` (default) |
-| `LLM_REASONING_EFFORT` | `[VM]` | `low`\|`medium`\|`high`\|`xhigh`\|`max`; default `max` |
-| `CODEX_CLI_PATH` | `[VM]` opt | Absolute CLI path for cron, normally `/home/ngxiaohao123/.local/bin/codex` |
+| `LLM_AUTH_MODE` | `[VM/GH]` | `api` (default, OpenRouter key); `codex` remains an optional VM fallback |
+| `LLM_API_KEY` | `[VM/GH]` | OpenRouter key; never commit it |
+| `LLM_BASE_URL` | `[VM/GH]` | default `https://openrouter.ai/api/v1` |
+| `LLM_MODEL` | `[VM/GH]` | `z-ai/glm-5.3-flash` (default) |
+| `LLM_REASONING_EFFORT` | `[VM/GH]` | GLM Flash: `low`\|`high`\|`max`; default `high` |
+| `CODEX_CLI_PATH` | `[VM]` opt | Only for the optional Codex fallback |
 | `GROQ_API_KEY` (alt `GROQ_KEY`) | `[VM]` | Whisper ASR — caption-less videos + social-video `/share`. Free key at console.groq.com |
 | `GROQ_WHISPER_MODEL` | `[VM]` opt | default `whisper-large-v3` |
 | `MAX_DURATION_MIN` | `[VM]` | `60` — skip videos longer than this |
@@ -365,9 +364,9 @@ final line — telemetry never halts the run.
   `content/_review/`, skips → `content/_skipped/`.
 
 ## Notes
-- **Which LLM?** `gpt-5.6-luna` at **max** reasoning effort through Codex CLI + the owner's ChatGPT OAuth subscription. `pipeline/llm.py` runs schema-constrained, ephemeral turns with shell/web/apps/subagents disabled and a secret-scrubbed environment. API-key Responses mode remains available with `LLM_AUTH_MODE=api`.
+- **Which LLM?** `z-ai/glm-5.3-flash` at **high** reasoning effort through OpenRouter's Responses API. `pipeline/llm.py` forces one schema-shaped function call and validates the returned JSON locally.
 - **Why not Twitter/X for the news digest?** X's API is paid ($200/mo Basic) and anonymous scraping is blocked from datacenter IPs. Reddit + HN + GitHub Trending + HuggingFace + official RSS catch the same AI news within hours for free. The **stock digest** (PIPELINE 4) does follow one curated X account — via its **Bluesky mirror**, not X directly (the cookie never expires, the API is keyless); see [STOCK-DIGEST-CHALLENGES.md](STOCK-DIGEST-CHALLENGES.md).
 - **Why not the `discord-mcp` connector?** That MCP is a local stdio process for *interactive* Claude Code use; it isn't reachable from cloud cron. This pipeline posts to Discord via webhooks directly.
 - **Engagement loop (dormant by default).** The VM's `run-news.sh` sweeps reactions and computes per-topic/source taste before each news run (`PREFS_ENABLED` + minimum event count). The weekly GitHub Actions digest remains unchanged.
-- **Cost:** model use draws from the logged-in ChatGPT/Codex subscription; the manual GitHub fallback uses separately billed OpenAI API credits.
+- **Cost:** VM and manual GitHub fallback both draw from prepaid OpenRouter credits.
 - **Keep `main` unprotected** while relying on the VM runner's state commit/push, or configure a deploy key/PAT that can update the branch.

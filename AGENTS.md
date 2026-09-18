@@ -24,16 +24,16 @@ Three independent components that all reach the same Discord server (guild `1528
 > - **Pipeline VM** `beresama-ai-news-pipelines` — checkout `~/bersama/` (repo root); runs the pipeline from `bersama-ai-pipeline/`: news + engagement sweep (`run-news.sh` every 3h), summarizer cron, on-demand portal (`on_demand.py` :8080), `/share`, and stock/Serenity cron jobs.
 > - **Bot VM** `bersama-ai-bot` — checkout `~/BersamaAi-community/` (repo root); runs `bersama-bot/` (systemd `bersama`, 24/7).
 >
-> The recurring **news digest moved from GitHub Actions to the pipeline VM on 2026-09-18** so it can use persistent ChatGPT OAuth safely. `.github/workflows/news-digest.yml` is manual API-key fallback only; weekly engagement analytics still runs on GitHub Actions.
+> The recurring **news digest moved from GitHub Actions to the pipeline VM on 2026-09-18** so it can preserve state alongside the other pipeline workloads. `.github/workflows/news-digest.yml` is manual API-key fallback only; weekly engagement analytics still runs on GitHub Actions.
 >
 > **Rule: every code change must explicitly name WHICH checkout (pipeline vs bot) AND which VM it lives on, and whether that VM needs a pull.** News/engagement now runs from the pipeline checkout on the pipeline VM. Never leave "which checkout/VM" for the owner to guess — say it every time.
 
 The bot and the MCP jar deliberately **share one Discord bot token** (Discord allows concurrent Gateway sessions). If the token is reset, update both `.env` files together.
 
 ## Key facts
-- **Pipeline LLM = `gpt-5.6-luna` at `max` via Codex + ChatGPT OAuth.** `pipeline/llm.py` invokes `codex exec` in an empty temporary directory with shell/web/apps/subagents disabled and a secret-scrubbed environment. The trusted pipeline VM owns and refreshes `~/.codex/auth.json`; never commit/copy it into this public repo or GitHub Actions. Config: `LLM_AUTH_MODE=codex`, `LLM_MODEL`, `LLM_REASONING_EFFORT`, optional `CODEX_CLI_PATH`. Direct OpenAI API fallback is `LLM_AUTH_MODE=api` + `LLM_API_KEY`/`LLM_BASE_URL`.
-  - **`LLM_REASONING_EFFORT`** = `low` | `medium` | `high` | `xhigh` | `max`; unset means `max`. It deliberately remains outside `llm_config()` because callers splat that three-key dict into four feature functions.
-  - **Bot is unchanged and still uses its separate OpenCode Go block.** The pipeline OAuth migration does not silently alter the latency-sensitive community bot; migrate it separately if member-facing AI must resume after the OpenCode subscription cancellation.
+- **Pipeline LLM = `z-ai/glm-5.3-flash` at `high` via prepaid OpenRouter credits.** `pipeline/llm.py` uses OpenRouter's OpenAI-compatible Responses API and forces schema-shaped function calls. Config: `LLM_AUTH_MODE=api`, `LLM_API_KEY`, `LLM_BASE_URL=https://openrouter.ai/api/v1`, `LLM_MODEL`, and `LLM_REASONING_EFFORT`.
+  - **`LLM_REASONING_EFFORT`** for GLM Flash = `low` | `high` | `max`; unset means `high`. It deliberately remains outside `llm_config()` because callers splat that three-key dict into four feature functions.
+  - **Bot is unchanged and still uses its separate OpenCode Go block.** The pipeline OpenRouter migration does not silently alter the latency-sensitive community bot; migrate it separately if member-facing AI must resume after the OpenCode subscription cancellation.
 - **English-only** server (bilingual was tried and retired 2026-07-20). Card *content* may keep a source's original language (relaxed 2026-07-22); channel names / UI / the small category badge stay English.
 - **Docker Desktop is broken on this machine** → `discord-mcp` runs as a native Java 19 JAR via `run.cmd`, not via Docker.
 - **Caption-less YouTube videos** (`nocaption_asr_blocked`): YouTube 403s media downloads from the pipeline VM's datacenter IP, so the Groq-Whisper ASR fallback had no audio. `pipeline/asr.py` now falls back to yt-dlp-via-`YTDLP_PROXY`/`YTDLP_COOKIES_FILE` (only if set) and then to public Invidious/Piped mirrors (`pipeline/ytaudio.py`, list overridable via `YT_AUDIO_MIRRORS`). Diagnose from the VM with `python check_audio_sources.py <url>`. Metadata/captions were never the problem — only the audio bytes.
@@ -71,12 +71,12 @@ sudo systemctl restart bersama && tail -n 4 ~/BersamaAi-community/bersama-bot/be
 
 ### News digest cron (the pipeline VM's crontab — `crontab -e`)
 ```cron
-# News + engagement sweep every 3h. ChatGPT OAuth lives only on this trusted VM.
+# News + engagement sweep every 3h. OpenRouter key lives in this VM's .env.
 17 */3 * * * /home/ngxiaohao123/bersama/bersama-ai-pipeline/run-news.sh >> /home/ngxiaohao123/bersama/news-digest.log 2>&1
 ```
-> One-time setup on the VM: install Codex, run `~/.local/bin/codex login --device-auth`,
-> set `LLM_AUTH_MODE=codex`, `LLM_MODEL=gpt-5.6-luna`, `LLM_REASONING_EFFORT=max`, and
-> `CODEX_CLI_PATH=/home/ngxiaohao123/.local/bin/codex` in `.env`. The runner sweeps
+> One-time setup on the VM: set `LLM_AUTH_MODE=api`, an OpenRouter `LLM_API_KEY`,
+> `LLM_BASE_URL=https://openrouter.ai/api/v1`, `LLM_MODEL=z-ai/glm-5.3-flash`, and
+> `LLM_REASONING_EFFORT=high` in `.env`. The runner sweeps
 > engagement, computes preferences, posts news, and commits/pushes the exact state files.
 > The VM's `GITHUB_TOKEN` must be a fine-grained PAT with Contents read/write; the
 > askpass helper keeps it out of the remote URL and process arguments.
@@ -98,7 +98,7 @@ sudo systemctl restart bersama && tail -n 4 ~/BersamaAi-community/bersama-bot/be
 # @Serenity (@aleabitoreddit, the AI-semis stock-picker) → #serenity-x-posts, twice a
 # day. Reads FxTwitter's documented, keyless profile-timeline API (full text,
 # dates, cashtags, and media in one request), tags 1-4 topics via the pipeline LLM
-# (Codex OAuth; keyword-rule fallback), and pills every $TICKER (cashtags ∪ $-regex).
+# (OpenRouter; keyword-rule fallback), and pills every $TICKER (cashtags ∪ $-regex).
 # Uses no X login or cookie. Same load-bearing `cd` as the stock digest.
 #
 # 01:07 UTC = 09:07 MYT morning — digests the MYT night (his overnight + US-session
@@ -111,7 +111,7 @@ sudo systemctl restart bersama && tail -n 4 ~/BersamaAi-community/bersama-bot/be
 
 ## Env & secrets
 Each component has a complete, tagged `.env.example` (copy → `.env`; never commit the real one):
-- `bersama-ai-pipeline/.env.example` — every key tagged `[VM]` / `[GH]`; pipeline LLM OAuth is VM-only.
+- `bersama-ai-pipeline/.env.example` — every key tagged `[VM]` / `[GH]`; the OpenRouter key is required on the VM and as `OPENROUTER_API_KEY` for the manual GitHub fallback.
 - `bersama-bot/.env.example` — `DISCORD_TOKEN`, `LLM_API_KEY`/`LLM_BASE_URL`/`LLM_MODEL`, optional `JINA_API_KEY`.
 
 Bot channels / roles / levels live in `bersama-bot/config.json`, not env.
@@ -184,7 +184,7 @@ to main). Mid-task WIP commits still need asking.
    but **not pushed**, say that first: unpushed work reaches neither the VM nor GitHub Actions.
 4. **Flag any new env/secrets**, and say *where* each must be set (these are NOT interchangeable):
    - **GitHub repo secret** (Settings → Secrets and variables → Actions) → weekly analytics or the manual API-key news fallback.
-   - **VM `.env`** (`~/bersama/bersama-ai-pipeline/.env`) → news, summarizer, Serenity, and on-demand portal. ChatGPT OAuth itself is created by `codex login`, not stored in `.env`.
+   - **VM `.env`** (`~/bersama/bersama-ai-pipeline/.env`) → news, summarizer, Serenity, and on-demand portal. The OpenRouter key is stored only as `LLM_API_KEY` there.
    - **Local `.env`** (`bersama-ai-pipeline/.env`) → local dev/test only; never the source of truth.
    Verify a webhook/token with a GET before declaring done (Discord webhooks return 200) — a working local value does NOT prove the GH secret is set.
 

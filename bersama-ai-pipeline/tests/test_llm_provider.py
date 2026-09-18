@@ -19,7 +19,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from pipeline import llm  # noqa: E402
 from pipeline.llm import (CODEX_AUTH_SENTINEL, DEFAULT_BASE_URL, DEFAULT_MODEL,  # noqa: E402
                           DEFAULT_REASONING_EFFORT, LLMError, MalformedOutput,
-                          NoToolCall, extract_tool_args, llm_config,
+                          NoToolCall, build_client, extract_tool_args, llm_config,
                           require_api_key, resolve_auth_mode, resolve_reasoning_effort,
                           structured_call)
 
@@ -92,16 +92,28 @@ class RecordingProvider:
 # ── provider configuration ───────────────────────────────────────────────────
 
 class TestConfig(unittest.TestCase):
-    def test_defaults_are_codex_oauth_and_luna(self):
+    def test_defaults_are_openrouter_api_and_glm_flash(self):
         cfg = llm_config({})
-        self.assertEqual(cfg["base_url"], "https://api.openai.com/v1")
-        self.assertEqual(cfg["model"], "gpt-5.6-luna")
+        self.assertEqual(cfg["base_url"], "https://openrouter.ai/api/v1")
+        self.assertEqual(cfg["model"], "z-ai/glm-5.3-flash")
+        self.assertEqual(cfg["api_key"], "")
+        self.assertEqual(resolve_auth_mode({}), "api")
+
+    def test_codex_mode_remains_an_explicit_vm_fallback(self):
+        cfg = llm_config({"LLM_AUTH_MODE": "codex"})
         self.assertEqual(cfg["api_key"], CODEX_AUTH_SENTINEL)
 
     def test_api_mode_requires_and_reads_the_key(self):
         cfg = llm_config({"LLM_AUTH_MODE": "api", "LLM_API_KEY": FAKE_KEY})
         self.assertEqual(cfg["api_key"], FAKE_KEY)
         self.assertEqual(resolve_auth_mode({"LLM_AUTH_MODE": "api"}), "api")
+
+    def test_openrouter_client_identifies_the_application(self):
+        client = build_client(api_key=FAKE_KEY, base_url=DEFAULT_BASE_URL)
+        self.addCleanup(client.close)
+        self.assertEqual(client.default_headers["HTTP-Referer"],
+                         "https://github.com/pmgwee/BersamaAi-community")
+        self.assertEqual(client.default_headers["X-Title"], "BersamaAi Pipeline")
 
     def test_config_does_not_carry_effort_into_the_creds_splat(self):
         # main.py does `summarize(..., **llm_creds())`; a 4th key here would be
@@ -124,8 +136,8 @@ class TestConfig(unittest.TestCase):
 
     def test_full_documented_endpoint_is_normalized(self):
         # Guards against the .../responses/responses double-append.
-        cfg = llm_config({"LLM_BASE_URL": "https://api.openai.com/v1/responses"})
-        self.assertEqual(cfg["base_url"], "https://api.openai.com/v1")
+        cfg = llm_config({"LLM_BASE_URL": "https://openrouter.ai/api/v1/responses"})
+        self.assertEqual(cfg["base_url"], "https://openrouter.ai/api/v1")
 
     def test_require_api_key_names_the_var_but_never_a_value(self):
         with self.assertRaises(LLMError) as ctx:
@@ -136,12 +148,12 @@ class TestConfig(unittest.TestCase):
         require_api_key({"api_key": FAKE_KEY}, "summarize")  # no raise
 
 
-# ── reasoning effort (GPT-5.6 Luna: low | medium | high | xhigh | max) ──────
+# ── reasoning effort (OpenRouter gateway levels; GLM Flash defaults to high) ─
 
 class TestReasoningEffort(unittest.TestCase):
-    def test_unset_means_max(self):
-        self.assertEqual(resolve_reasoning_effort({}), "max")
-        self.assertEqual(DEFAULT_REASONING_EFFORT, "max")
+    def test_unset_means_high(self):
+        self.assertEqual(resolve_reasoning_effort({}), "high")
+        self.assertEqual(DEFAULT_REASONING_EFFORT, "high")
 
     def test_every_documented_level_is_accepted(self):
         for level in ("low", "medium", "high", "xhigh", "max"):
@@ -154,7 +166,7 @@ class TestReasoningEffort(unittest.TestCase):
 
     def test_unknown_level_degrades_to_default_instead_of_failing_a_run(self):
         self.assertEqual(resolve_reasoning_effort({"LLM_REASONING_EFFORT": "extra-high"}),
-                         "max")
+                         "high")
 
     def test_effort_is_sent_in_the_responses_api_shape(self):
         prov = RecordingProvider(_response_body([_function_call('{"value": "ok"}')]))
@@ -221,13 +233,13 @@ class TestRouting(unittest.TestCase):
         data = structured_call(system="sys", user="usr", tool=TOOL,
                                max_output_tokens=512, client=prov.client(**{}), **cfg)
         self.assertEqual(data, {"value": "ok"})
-        self.assertEqual(str(prov.requests[-1].url), "https://api.openai.com/v1/responses")
-        self.assertEqual(prov.last_json["model"], "gpt-5.6-luna")
+        self.assertEqual(str(prov.requests[-1].url), "https://openrouter.ai/api/v1/responses")
+        self.assertEqual(prov.last_json["model"], "z-ai/glm-5.3-flash")
 
     def test_no_double_responses_segment_when_base_url_has_it(self):
         prov = RecordingProvider(_response_body([_function_call('{"value": "ok"}')]))
         cfg = llm_config({"LLM_AUTH_MODE": "api", "LLM_API_KEY": FAKE_KEY,
-                          "LLM_BASE_URL": "https://api.openai.com/v1/responses/"})
+                          "LLM_BASE_URL": "https://openrouter.ai/api/v1/responses/"})
         structured_call(system="s", user="u", tool=TOOL, max_output_tokens=512,
                         client=prov.client(base_url=cfg["base_url"]), **cfg)
         self.assertNotIn("/responses/responses", str(prov.requests[-1].url))
@@ -360,7 +372,7 @@ class TestSummarizer(unittest.TestCase):
 
         def fake(**kw):
             calls.append(kw)
-            raise LLMError("Codex OAuth call failed: boom")
+            raise LLMError("OpenRouter API call failed: boom")
         with _patched(sm, "structured_call", fake):
             with self.assertRaises(sm.SummarizeError):
                 sm.summarize({"title": "t"}, "transcript", api_key=FAKE_KEY)
@@ -400,7 +412,7 @@ class TestNewsJudge(unittest.TestCase):
         from pipeline import news
 
         def fake(**kw):
-            raise LLMError("Codex OAuth call failed: ConnectError: down")
+            raise LLMError("OpenRouter API call failed: ConnectError: down")
         with _patched(news, "structured_call", fake):
             with self.assertRaises(news.NewsError):
                 news.judge([], api_key=FAKE_KEY, model=DEFAULT_MODEL,
@@ -435,7 +447,7 @@ class TestSerenityGracefulFallback(unittest.TestCase):
         from pipeline import serenity_digest as sd
 
         def fake(**kw):
-            raise LLMError("Codex OAuth call failed: ReadTimeout")
+            raise LLMError("OpenRouter API call failed: ReadTimeout")
         with _patched(sd, "structured_call", fake):
             topics = sd._tag_topics(self.TEXT, api_key=FAKE_KEY, model=DEFAULT_MODEL,
                                     base_url=DEFAULT_BASE_URL)

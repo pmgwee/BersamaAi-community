@@ -86,7 +86,7 @@ def youtube_webhook() -> str:
 def llm_creds() -> dict:
     """Resolve LLM settings from the provider-neutral env vars
     (LLM_AUTH_MODE / LLM_API_KEY / LLM_BASE_URL / LLM_MODEL). The backend —
-    currently Codex with ChatGPT OAuth and GPT-5.6 Luna at max effort — is
+    currently OpenRouter with GLM 5.3 Flash at high effort — is
     configured in `pipeline/llm.py`; nothing outside that module knows it. The
     effort is deliberately absent from this dict (callers splat it);
     `llm.structured_call` reads LLM_REASONING_EFFORT itself."""

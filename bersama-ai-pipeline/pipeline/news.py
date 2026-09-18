@@ -1158,8 +1158,8 @@ def _build_judge_user_message(candidates: list[dict], recent: list[dict] | None 
     return "\n".join(lines)
 
 
-# Output budgets for the direct Responses API fallback. Codex OAuth mode owns
-# its turn budget, while the schema still guarantees an all-or-nothing JSON card.
+# Output budgets for the Responses API. The schema still guarantees an
+# all-or-nothing JSON card.
 JUDGE_MAX_OUTPUT_TOKENS = 12288
 SHARE_MAX_OUTPUT_TOKENS = 8192
 

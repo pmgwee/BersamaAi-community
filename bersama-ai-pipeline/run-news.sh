@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Trusted-VM runner for the 3-hour news digest. Codex reads the persistent
-# ChatGPT OAuth login from ~/.codex; no OAuth credential enters GitHub Actions.
+# Trusted-VM runner for the 3-hour news digest. The pipeline reads its
+# OpenRouter key from the local .env; the secret is never placed in git.
 set -uo pipefail
 
 cd "$(dirname "$0")"
@@ -11,14 +11,20 @@ if ! flock -n 9; then
   exit 0
 fi
 
-CODEX_BIN="${CODEX_CLI_PATH:-$HOME/.local/bin/codex}"
-if ! "$CODEX_BIN" login status; then
-  echo "Codex OAuth login missing; run: codex login --device-auth" >&2
+PYTHON="./.venv/bin/python"
+LLM_AUTH_MODE="$("$PYTHON" -c 'from dotenv import dotenv_values; print((dotenv_values().get("LLM_AUTH_MODE") or "api").strip().lower())')"
+if [ "$LLM_AUTH_MODE" = "codex" ]; then
+  CODEX_BIN="${CODEX_CLI_PATH:-$HOME/.local/bin/codex}"
+  if ! "$CODEX_BIN" login status; then
+    echo "Codex OAuth login missing; run: codex login --device-auth" >&2
+    exit 1
+  fi
+  export CODEX_CLI_PATH="$CODEX_BIN"
+elif [ "$("$PYTHON" -c 'from dotenv import dotenv_values; print("yes" if (dotenv_values().get("LLM_API_KEY") or "").strip() else "no")')" != "yes" ]; then
+  echo "LLM_API_KEY is missing from .env; add an OpenRouter API key" >&2
   exit 1
 fi
-export CODEX_CLI_PATH="$CODEX_BIN"
 
-PYTHON="./.venv/bin/python"
 GITHUB_TOKEN="$("$PYTHON" -c 'from dotenv import dotenv_values; print(dotenv_values().get("GITHUB_TOKEN", ""))')"
 export GITHUB_TOKEN
 

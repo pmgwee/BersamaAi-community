@@ -18,8 +18,7 @@ from .llm import DEFAULT_BASE_URL, DEFAULT_MODEL, structured_call
 from .prompts import SYSTEM_PROMPT, EMIT_SUMMARY_TOOL, build_user_message
 
 MAX_SUMMARY_ATTEMPTS = 3   # the model doesn't strictly enforce the tool schema; retry a malformed reply
-SUMMARY_MAX_OUTPUT_TOKENS = 12288  # direct Responses API fallback budget;
-# Codex OAuth mode owns its turn budget and enforces the same output schema.
+SUMMARY_MAX_OUTPUT_TOKENS = 12288  # Responses API budget; includes reasoning.
 
 
 @dataclass
