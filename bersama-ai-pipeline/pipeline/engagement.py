@@ -1,7 +1,7 @@
 """Engagement sweep — the sensor that reads reactions off posted news cards.
 
-Runs as `python -m pipeline.engagement` (a step in the news-digest workflow,
-every ~3h). For every news card in state/posted_log.jsonl that is 24h–8d old,
+Runs as `python -m pipeline.engagement` (a step in the pipeline VM's
+`run-news.sh`, every ~3h). For every news card in state/posted_log.jsonl that is 24h–8d old,
 fetch its current reactions + reply count via Discord REST (bot token, read-only
 — no Gateway), compute a reward, and append a snapshot to state/engagement.jsonl.
 

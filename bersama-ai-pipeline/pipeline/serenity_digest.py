@@ -19,11 +19,11 @@ staff alert instead of failing silently.
 Tagging: the LLM (the pipeline's own neutral LLM_* config) picks 1-3 topics from the
 19-area taxonomy ported from subscription-agent's `lib/serenity/topics.ts`,
 unioned with the deterministic keyword rules (the same fallback the Stocks
-Page uses when no LLM key is present — here it also covers an LLM outage, and
+Page uses when no LLM credential is present — here it also covers an LLM outage, and
 the card still posts). No stance signal — deliberately dropped per owner.
 
 Runtime: pipeline VM cron (01:07 UTC, staggered after the 01:00 EconomyApp
-x-digest; needs the VM's LLM_API_KEY). No LLM ⇒ keyword topics only. The
+x-digest; uses the VM's Codex OAuth login). No LLM ⇒ keyword topics only. The
 on-demand `/share` path never imports this module.
 """
 from __future__ import annotations
@@ -58,10 +58,8 @@ FIRST_RUN_MAX = 3      # bound day-1 volume so the first run isn't a wall of old
 STALE_AFTER_DAYS = 4
 LLM_TIMEOUT_S = 90     # per tagging call; the SDK default (600s ×3) could
 LLM_MAX_RETRIES = 1    # stall a 12-post run for hours on a hung endpoint.
-# 30s was enough for gpt-5.6-luna but cuts off grok-4.6 at xhigh effort, which
-# thinks before answering; 90 × (1 retry) × 12 posts caps the run at ~36 min.
-# The Responses API counts reasoning tokens against the cap, and xhigh spends
-# thousands of them even on a task this small.
+# Max-effort OAuth turns may think before answering; 90s keeps one bad tag from
+# stalling the digest. The caller falls back to deterministic keyword topics.
 TAG_MAX_OUTPUT_TOKENS = 4096
 
 # ── topic taxonomy (ported 1:1 from subscription-agent lib/serenity/topics.ts) ─

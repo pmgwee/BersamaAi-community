@@ -6,11 +6,10 @@ is atomic (tmp + os.replace, mirroring state.py) and every JSONL reader is
 defensive: a truncated final line from a mid-run crash is SKIPPED, not raised
 on — losing one telemetry row is fine, halting the news run is not.
 
-State files (all under state/, all committed by the news-digest workflow):
-  posted_log.jsonl       append-only; one row per AUTO-NEWS card (news.py, GH Actions)
+State files (all under state/, all committed by the pipeline VM runner):
+  posted_log.jsonl       append-only; one row per AUTO-NEWS card (news.py, VM)
   posted_log_share.jsonl append-only; one row per owner /SHARE card (news.py, VM portal —
-                         the VM is sole writer + pushes it to the repo so the GH Actions
-                         sweep sees /share cards too)
+                         the VM is sole writer; run-news.sh commits it)
   engagement.jsonl       append-only; one row per sweep snapshot (engagement.py)
   preferences.json       whole-file rewrite; the model (preferences.py)
   activity_baseline.json whole-file rewrite; 7d active-member count (engagement.py)
@@ -38,7 +37,7 @@ def _ensure_dir() -> None:
 def atomic_write_json(path: Path, data: dict) -> None:
     """Write a JSON file atomically: write to a .tmp sibling, then os.replace.
     Safe against a mid-write crash (the old file is untouched until the replace)
-    and safe under the serialized `pipeline-state` workflow group."""
+    and safe under the VM runner's `flock` serialization."""
     _ensure_dir()
     tmp = path.with_suffix(path.suffix + ".tmp")
     tmp.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -81,8 +80,8 @@ def read_jsonl(path: Path):
 
 
 def read_posted_log() -> list[dict]:
-    """Union of posted_log.jsonl (auto-news, written by GH Actions) + posted_log_share.jsonl
-    (owner /share cards, written by the VM portal) — deduped by message_id. The engagement
+    """Union of posted_log.jsonl (auto-news, written by the VM runner) +
+    posted_log_share.jsonl (owner /share cards, written by the VM portal) — deduped by message_id. The engagement
     sweep + preferences read this so BOTH card origins feed the reward loop."""
     rows: dict[str, dict] = {}
     for path in (POSTED_LOG, POSTED_LOG_SHARE):

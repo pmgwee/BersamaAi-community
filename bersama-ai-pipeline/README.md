@@ -8,8 +8,8 @@ The recurring content engine for the BersamaAi Malaysia AI community. **Four mod
 4. **`@EconomyApp` stock digest** — mirrors an X account via its **Bluesky mirror** (public AT Protocol API — free, keyless, cookieless, IP-agnostic) and posts the day's posts to `#stock-financial-report`. No LLM (the post text IS the card); VM cron ~09:00 MYT daily.
 
 **Runs split across two clouds** (see [`PROJECT-CONTEXT.md`](../PROJECT-CONTEXT.md) for the full picture):
-- **GCP VM** — creator-watch summarizer (daily ~09:03 MYT) + the on-demand portal + `/share` + the `@EconomyApp` stock digest (cron daily ~09:00 MYT). YouTube bot-blocks Azure/GitHub-Actions datacenter IPs but not GCP, and the VM already hosts the always-on bot.
-- **GitHub Actions** — the news digest + engagement loop (`.github/workflows/news-digest.yml`, every 3h) and the weekly engagement digest (`engagement-digest.yml`, Sun 22:23 UTC → one analytics card to `🔒-staff-chat`).
+- **Pipeline GCP VM** — creator-watch summarizer, news digest + engagement sweep (every 3h), on-demand portal + `/share`, and the `@EconomyApp` stock digest. The VM keeps the owner's refreshable Codex OAuth login; personal OAuth credentials never enter this public repository's CI.
+- **GitHub Actions** — the weekly engagement digest (`engagement-digest.yml`, Sun 22:23 UTC → one analytics card to `🔒-staff-chat`). `news-digest.yml` is now a manual, API-key fallback only.
 
 Card *content* keeps the source's original language (Chinese source → Chinese card); channel names / UI / the small category badge stay English.
 
@@ -18,13 +18,13 @@ PIPELINE 1 — talk summarizer (GCP VM)
   YouTube talk
      │  [fetch]    yt-dlp captions (json3) — fallback: youtube-transcript-api
      │  [asr]      no captions? → yt-dlp audio → ffmpeg → Groq Whisper
-     │  [summarize] grok-4.6 (xhigh) · forced tool call → exactly 5 points
+     │  [summarize] GPT-5.6 Luna (max) via Codex OAuth → exactly 5 points
      │  [gate]     short/bad transcript? → content/_review/, do NOT publish
      │  [publish]  Discord webhook (embed) + Telegram  ── auto
      │  [stage]    content/<date>_<slug>_<id>/ (post.threads.txt, post.facebook.txt) ── manual paste
      ▼  [state]    state/processed.json (dedup by video_id)
 
-PIPELINE 2 — trending news digest (GitHub Actions, every ~3h)
+PIPELINE 2 — trending news digest (pipeline VM cron, every ~3h)
   Reddit (per-topic subs) + Hacker News + GitHub Trending (star-velocity gate)
   + HuggingFace trending (boombastic only) + official lab/newsroom RSS
      │  [gather]  AI-relevant candidates (keyword pre-filter, score-ranked);
@@ -59,11 +59,10 @@ python -m pip install -U yt-dlp
 
 ### 2. Provision secrets
 Copy [`.env.example`](.env.example) → `.env` and fill it in. Every key is tagged with where it's needed:
-- `[VM]` — the GCP pipeline VM (summarizer + on-demand portal + `/share`): `LLM_API_KEY`, `GROQ_API_KEY`, `DISCORD_YOUTUBE_WEBHOOK_URL` (legacy `DISCORD_WEBHOOK_URL`), the creative/research webhook URLs, `ON_DEMAND_TOKEN`, Telegram trio.
-- `[GH]` — a GitHub Actions secret (news digest + engagement loop): `LLM_API_KEY`, `GITHUB_TOKEN`, all the webhook URLs, `DISCORD_TOKEN` (⚠️ private repo only), `PREFS_ENABLED`.
-- `[both]` — needed in both.
+- `[VM]` — the GCP pipeline VM: one-time `codex login --device-auth`, `LLM_AUTH_MODE=codex`, `GROQ_API_KEY`, Discord webhooks/tokens, a fine-grained `GITHUB_TOKEN` with Contents read/write, `PREFS_ENABLED`, portal and Telegram settings.
+- `[GH]` — weekly analytics secrets. Optional manual news fallback uses `OPENAI_API_KEY` (pay-as-you-go), never personal Codex OAuth.
 
-In GitHub Actions, set each `[GH]`/`[both]` value as a repository secret (Settings → Secrets and variables → Actions). Locally and on the VM, keep them in `.env` (gitignored).
+Locally and on the VM, keep configuration in `.env` (gitignored). Codex stores the VM's OAuth login under `~/.codex`; treat it like a password and never copy it into the repo or GitHub Actions.
 
 ### 3. Curate playlists (talk summarizer only)
 Edit [`playlists.txt`](playlists.txt) — one YouTube playlist URL per line. Aim for "talks by the people who built the tools".
@@ -90,7 +89,14 @@ python -m pipeline.main --mode scheduled
 ```
 
 ### Trending news digest
-Runs automatically every ~3h on GitHub Actions. To test locally:
+Runs automatically every ~3h through `run-news.sh` on the pipeline VM. One-time VM setup:
+```bash
+curl -fsSL https://chatgpt.com/codex/install.sh | sh
+~/.local/bin/codex login --device-auth
+crontab -e
+# 17 */3 * * * /home/ngxiaohao123/bersama/bersama-ai-pipeline/run-news.sh >> /home/ngxiaohao123/bersama/news-digest.log 2>&1
+```
+To test locally (requires a local `codex login`):
 ```powershell
 python -m pipeline.main --mode news
 ```
@@ -153,20 +159,22 @@ Quality-gate failures park in `content/_review/`; no-caption / too-long videos l
 
 ### Environment variables (`.env.example`)
 
-Tags: **`[VM]`** = GCP pipeline VM (summarizer + portal + `/share` + stock digest) ·
-**`[GH]`** = GitHub Actions secret (news + engagement) · **`[both]`** = set in both.
+Tags: **`[VM]`** = GCP pipeline VM (all recurring pipeline workloads) ·
+**`[GH]`** = GitHub Actions weekly analytics or manual API fallback.
 
-**LLM + transcription** — the provider (currently **OpenCode Go**, model
-`grok-4.6`, Responses API) lives behind one module, `pipeline/llm.py`; feature
-code only ever sees these neutral variables. Production needs `LLM_API_KEY` set as a
-GitHub Actions **secret** AND in the VM's `.env` (never in the repo).
+**LLM + transcription** — production uses **Codex with ChatGPT OAuth**, model
+`gpt-5.6-luna` at `max`, behind `pipeline/llm.py`. The trusted VM performs and
+refreshes the login; feature code receives the same three legacy kwargs and never
+touches OAuth tokens. Direct OpenAI API-key mode remains an explicit fallback.
 
 | Key | Tag | Purpose |
 |---|---|---|
-| `LLM_API_KEY` | `[both]` req | LLM provider API key (OpenCode Go today) — never commit it |
-| `LLM_BASE_URL` | `[both]` | `https://opencode.ai/zen/go/v1` (base only — the SDK appends `/responses`) |
-| `LLM_MODEL` | `[both]` | `grok-4.6` (default) |
-| `LLM_REASONING_EFFORT` | `[both]` opt | `low`\|`medium`\|`high`\|`xhigh` — grok-4.6 reasoning depth. Unset = `xhigh` (deepest). Empty or `off` omits the parameter, needed only if `LLM_MODEL` points at a non-reasoning model |
+| `LLM_AUTH_MODE` | `[VM]` | `codex` (default, ChatGPT OAuth) or `api` |
+| `LLM_API_KEY` | `[VM]` opt | Required only for `LLM_AUTH_MODE=api`; never commit it |
+| `LLM_BASE_URL` | `[VM]` opt | API mode only; default `https://api.openai.com/v1` |
+| `LLM_MODEL` | `[VM]` | `gpt-5.6-luna` (default) |
+| `LLM_REASONING_EFFORT` | `[VM]` | `low`\|`medium`\|`high`\|`xhigh`\|`max`; default `max` |
+| `CODEX_CLI_PATH` | `[VM]` opt | Absolute CLI path for cron, normally `/home/ngxiaohao123/.local/bin/codex` |
 | `GROQ_API_KEY` (alt `GROQ_KEY`) | `[VM]` | Whisper ASR — caption-less videos + social-video `/share`. Free key at console.groq.com |
 | `GROQ_WHISPER_MODEL` | `[VM]` opt | default `whisper-large-v3` |
 | `MAX_DURATION_MIN` | `[VM]` | `60` — skip videos longer than this |
@@ -270,15 +278,15 @@ round-robin merged, drops items older than `RSS_MAX_AGE_DAYS=14`. Reddit uses OA
 > `github_keywords` (which only matches repos *created in the last 7 days*). See the comment
 > above `TOPICS` for the two-list cost-model rules.
 
-### State files (`state/` — committed by the news-digest workflow)
+### State files (`state/` — committed by the pipeline VM runner)
 
 | File | What it tracks | Writer | Bounded by |
 |---|---|---|---|
 | `processed.json` | summarized video IDs (dedup) | summarizer | — (forever) |
 | `news_seen.json` | posted-news story keys (dedup, filtered **before** the judge) | news | newest 500 |
 | `github_stars.json` | per-repo star counts (→ star velocity) | github_trending | top 1000 by stars |
-| `posted_log.jsonl` | one row per **auto-news** card (telemetry for the sweep) | news (GH Actions) | 14 d |
-| `posted_log_share.jsonl` | one row per **owner `/share`** card | news (VM portal — sole writer, pushed to repo so the GH Actions sweep sees it) | 14 d |
+| `posted_log.jsonl` | one row per **auto-news** card (telemetry for the sweep) | news (VM) | 14 d |
+| `posted_log_share.jsonl` | one row per **owner `/share`** card | news (VM portal) | 14 d |
 | `engagement.jsonl` | one row per reaction-sweep snapshot | engagement | 60 d |
 | `preferences.json` | the bandit model (EMA preference scores) | preferences | recompute-from-raw |
 | `activity_baseline.json` | 7-day active-member count (reward normalizer) | engagement | latest |
@@ -357,9 +365,9 @@ final line — telemetry never halts the run.
   `content/_review/`, skips → `content/_skipped/`.
 
 ## Notes
-- **Which LLM?** `grok-4.6` at **xhigh** ("extra high") reasoning effort, through **OpenCode Go**'s Responses API (`https://opencode.ai/zen/go/v1`), driven by the `openai` SDK. The provider lives behind ONE module — `pipeline/llm.py` — so switching vendors means editing that file and the `LLM_*` env vars, not the feature code. Because the Responses API charges reasoning tokens against `max_output_tokens` and xhigh thinks hard before emitting the tool call, the per-call budgets are sized for it (judge 12288 / share 8192 / summary 12288 / Serenity tag 4096, floor 2048); a blown cap returns `status="incomplete"`, not a partial card. Swapped from `gpt-5.6-luna` on 2026-09-14.
+- **Which LLM?** `gpt-5.6-luna` at **max** reasoning effort through Codex CLI + the owner's ChatGPT OAuth subscription. `pipeline/llm.py` runs schema-constrained, ephemeral turns with shell/web/apps/subagents disabled and a secret-scrubbed environment. API-key Responses mode remains available with `LLM_AUTH_MODE=api`.
 - **Why not Twitter/X for the news digest?** X's API is paid ($200/mo Basic) and anonymous scraping is blocked from datacenter IPs. Reddit + HN + GitHub Trending + HuggingFace + official RSS catch the same AI news within hours for free. The **stock digest** (PIPELINE 4) does follow one curated X account — via its **Bluesky mirror**, not X directly (the cookie never expires, the API is keyless); see [STOCK-DIGEST-CHALLENGES.md](STOCK-DIGEST-CHALLENGES.md).
 - **Why not the `discord-mcp` connector?** That MCP is a local stdio process for *interactive* Claude Code use; it isn't reachable from cloud cron. This pipeline posts to Discord via webhooks directly.
-- **Engagement loop (dormant by default).** The news-digest workflow also sweeps reactions on posted cards (`engagement.py`) and computes per-topic/source taste (`preferences.py`, gated by `PREFS_ENABLED` + a minimum event count). With enough signal the owner can opt in to a bandit actuator that dynamically retunes per-topic quotas + post caps; until then the static quotas run byte-identical. The community bot seeds 👍🔥👎 on every news card every 15 min so members have something to click. A weekly digest (`engagement-digest.yml`, Sun 22:23 UTC) posts one analytics card to `🔒-staff-chat`.
-- **Cost:** a digest run is a handful of model calls; GitHub Actions free tier covers the news + engagement schedules.
-- **Keep `main` unprotected** while relying on the news run's auto-commit (the `GITHUB_TOKEN` can't push to a protected branch). Decide on a bot PAT before enabling branch protection.
+- **Engagement loop (dormant by default).** The VM's `run-news.sh` sweeps reactions and computes per-topic/source taste before each news run (`PREFS_ENABLED` + minimum event count). The weekly GitHub Actions digest remains unchanged.
+- **Cost:** model use draws from the logged-in ChatGPT/Codex subscription; the manual GitHub fallback uses separately billed OpenAI API credits.
+- **Keep `main` unprotected** while relying on the VM runner's state commit/push, or configure a deploy key/PAT that can update the branch.

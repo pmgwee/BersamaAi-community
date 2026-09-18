@@ -15,26 +15,25 @@ Three independent components that all reach the same Discord server (guild `1528
 |---|---|
 | Summarizer + on-demand portal (`on_demand.py`, port 8080) + `/share` | **Pipeline VM** `beresama-ai-news-pipelines` (`~/bersama/bersama-ai-pipeline/`) |
 | Community bot | **Bot VM** `bersama-ai-bot` (`~/BersamaAi-community/bersama-bot/`), systemd service `bersama`, 24/7 |
-| News digest + engagement loop | GitHub Actions (`.github/workflows/news-digest.yml` every 3h; `engagement-digest.yml` weekly) |
+| News digest + engagement sweep | **Pipeline VM** cron every 3h via `run-news.sh`; weekly analytics remains GitHub Actions (`engagement-digest.yml`) |
 | Stock digest (`@EconomyApp` → `#stock-financial-report`) | **Pipeline VM** cron (no LLM) — but the fetch is now **IP-agnostic**, so it could equally run on GitHub Actions. Reads `@EconomyApp`'s **Bluesky mirror** (`did:plc:kio5ffqovakoioxtxbuat6mr`) via the public AT Protocol API: free, keyless, cookieless. X blocks anonymous scraping from datacenter IPs; **RSSHub + `TWITTER_AUTH_TOKEN` was abandoned** because the cookie expires and the job rots silently. See [STOCK-DIGEST-CHALLENGES.md](STOCK-DIGEST-CHALLENGES.md). |
 | Serenity digest (`@aleabitoreddit` → `#serenity-x-posts`) | **Pipeline VM** cron **twice daily** — 01:07 + 13:07 UTC = 09:07/21:07 MYT (morning = US-close recap, evening = pre-bell; he posts around the clock, only 11% in US regular hours). Reads **FxTwitter's documented keyless profile-timeline API** (full text, dates, cashtags, and media in one request; trackserenity was retired after its feed stopped updating on 2026-09-02), tags topics via the LLM, and pills every `$TICKER` (cashtags ∪ regex). |
 | discord-mcp admin jar | Local only, on-demand (`localhost:8085`) |
 
 > **TWO GCP VMs** (split 2026-08-07; was one VM with two directories):
-> - **Pipeline VM** `beresama-ai-news-pipelines` — checkout `~/bersama/` (repo root); runs the pipeline from `bersama-ai-pipeline/`: summarizer cron + on-demand portal (`on_demand.py` :8080) + `/share` + the `@EconomyApp` stock-digest cron. `pipeline/news.py` *lives* here, though the news *digest* runs on GitHub Actions.
+> - **Pipeline VM** `beresama-ai-news-pipelines` — checkout `~/bersama/` (repo root); runs the pipeline from `bersama-ai-pipeline/`: news + engagement sweep (`run-news.sh` every 3h), summarizer cron, on-demand portal (`on_demand.py` :8080), `/share`, and stock/Serenity cron jobs.
 > - **Bot VM** `bersama-ai-bot` — checkout `~/BersamaAi-community/` (repo root); runs `bersama-bot/` (systemd `bersama`, 24/7).
 >
-> The **news digest + engagement loop run on GitHub Actions, NOT on either VM.** (The old "no news VM" line meant the *digest* isn't VM-cron-scheduled — true — but the pipeline/portal/summarizer now have their own dedicated VM.)
+> The recurring **news digest moved from GitHub Actions to the pipeline VM on 2026-09-18** so it can use persistent ChatGPT OAuth safely. `.github/workflows/news-digest.yml` is manual API-key fallback only; weekly engagement analytics still runs on GitHub Actions.
 >
-> **Rule: every code change must explicitly name WHICH checkout (pipeline vs bot) AND which VM it lives on, and whether that VM needs a pull.** News/engagement code lives in the pipeline checkout but runs on GH Actions → **no VM pull**. Never leave "which checkout/VM" for the owner to guess — say it every time.
+> **Rule: every code change must explicitly name WHICH checkout (pipeline vs bot) AND which VM it lives on, and whether that VM needs a pull.** News/engagement now runs from the pipeline checkout on the pipeline VM. Never leave "which checkout/VM" for the owner to guess — say it every time.
 
 The bot and the MCP jar deliberately **share one Discord bot token** (Discord allows concurrent Gateway sessions). If the token is reset, update both `.env` files together.
 
 ## Key facts
-- **LLM = `grok-4.6` at `xhigh` reasoning effort, via OpenCode Go**'s Responses API (`https://opencode.ai/zen/go/v1` — base URL only; the `openai` SDK appends `/responses`). Config is provider-NEUTRAL: `LLM_API_KEY` / `LLM_BASE_URL` / `LLM_MODEL` / `LLM_REASONING_EFFORT`, and the provider lives behind ONE module, `bersama-ai-pipeline/pipeline/llm.py` (the bot has its own 4-var block in `bot.py`). OpenCode Go **rejects any request without `x-opencode-session`** (HTTP 400 `MissingSessionID`), so both clients must send it plus their own `User-Agent`: `llm.py::_request_headers` for the pipeline (keyed per one-shot call), `bot.py::_llm_headers` for the bot (keyed per CHANNEL, since the bot feeds channel context). Migrated off Z.ai/GLM on 2026-08-24, off `gpt-5.6-luna` on 2026-09-14 — swapping again = edit `llm.py` + the env vars, not the feature code.
-  - **`LLM_REASONING_EFFORT`** = `low` | `medium` | `high` | `xhigh`. Unset means **`xhigh`** (the deepest; grok-4.6-only — grok-4.5 silently downgrades it to `high`). The *provider's* own default is `high`, so the parameter is always sent explicitly. Empty or `off` omits it entirely — required only if `LLM_MODEL` ever points at a non-reasoning model. It is deliberately **not** a key in `llm_config()`: callers splat that dict (`summarize(..., **llm_creds())`), so a 4th key would become a required kwarg on four feature functions; `structured_call` reads the env var itself.
-  - **Reasoning tokens are charged against `max_output_tokens`**, and xhigh spends thousands before emitting the forced tool call. A blown cap returns `status="incomplete"` (a hard `LLMError`), never a partial card — so the budgets were raised for grok: judge 12288 / share 8192 / summary 12288 / Serenity tag 4096, `MIN_OUTPUT_TOKENS` floor 2048, bot reply cap 8000. Caps are not spend; unused budget costs nothing. Serenity's per-call timeout went 30s → 90s and the bot's `AI_TIMEOUT` 30s → 120s for the same reason.
-  - **The bot is the latency-sensitive one.** xhigh makes `@BersamaAi` visibly slower to answer a member. If that becomes a complaint, set `LLM_REASONING_EFFORT=low` in the **bot VM's `.env` only** — the pipeline (where slow is free) stays at xhigh.
+- **Pipeline LLM = `gpt-5.6-luna` at `max` via Codex + ChatGPT OAuth.** `pipeline/llm.py` invokes `codex exec` in an empty temporary directory with shell/web/apps/subagents disabled and a secret-scrubbed environment. The trusted pipeline VM owns and refreshes `~/.codex/auth.json`; never commit/copy it into this public repo or GitHub Actions. Config: `LLM_AUTH_MODE=codex`, `LLM_MODEL`, `LLM_REASONING_EFFORT`, optional `CODEX_CLI_PATH`. Direct OpenAI API fallback is `LLM_AUTH_MODE=api` + `LLM_API_KEY`/`LLM_BASE_URL`.
+  - **`LLM_REASONING_EFFORT`** = `low` | `medium` | `high` | `xhigh` | `max`; unset means `max`. It deliberately remains outside `llm_config()` because callers splat that three-key dict into four feature functions.
+  - **Bot is unchanged and still uses its separate OpenCode Go block.** The pipeline OAuth migration does not silently alter the latency-sensitive community bot; migrate it separately if member-facing AI must resume after the OpenCode subscription cancellation.
 - **English-only** server (bilingual was tried and retired 2026-07-20). Card *content* may keep a source's original language (relaxed 2026-07-22); channel names / UI / the small category badge stay English.
 - **Docker Desktop is broken on this machine** → `discord-mcp` runs as a native Java 19 JAR via `run.cmd`, not via Docker.
 - **Caption-less YouTube videos** (`nocaption_asr_blocked`): YouTube 403s media downloads from the pipeline VM's datacenter IP, so the Groq-Whisper ASR fallback had no audio. `pipeline/asr.py` now falls back to yt-dlp-via-`YTDLP_PROXY`/`YTDLP_COOKIES_FILE` (only if set) and then to public Invidious/Piped mirrors (`pipeline/ytaudio.py`, list overridable via `YT_AUDIO_MIRRORS`). Diagnose from the VM with `python check_audio_sources.py <url>`. Metadata/captions were never the problem — only the audio bytes.
@@ -70,6 +69,18 @@ sudo systemctl restart bersama && tail -n 4 ~/BersamaAi-community/bersama-bot/be
 ```
 > The script ends with `|| true`, so cron always reports success — failures surface only via the `alert()` → 🔒-staff-chat path (set `DISCORD_STAFF_CHAT_WEBHOOK_URL`) and in `logs/daily.log`. Safe manual test: `cd ~/bersama/bersama-ai-pipeline && source .venv/bin/activate && python -m pipeline.main --mode scheduled --dry-run` (posts/marks nothing).
 
+### News digest cron (the pipeline VM's crontab — `crontab -e`)
+```cron
+# News + engagement sweep every 3h. ChatGPT OAuth lives only on this trusted VM.
+17 */3 * * * /home/ngxiaohao123/bersama/bersama-ai-pipeline/run-news.sh >> /home/ngxiaohao123/bersama/news-digest.log 2>&1
+```
+> One-time setup on the VM: install Codex, run `~/.local/bin/codex login --device-auth`,
+> set `LLM_AUTH_MODE=codex`, `LLM_MODEL=gpt-5.6-luna`, `LLM_REASONING_EFFORT=max`, and
+> `CODEX_CLI_PATH=/home/ngxiaohao123/.local/bin/codex` in `.env`. The runner sweeps
+> engagement, computes preferences, posts news, and commits/pushes the exact state files.
+> The VM's `GITHUB_TOKEN` must be a fine-grained PAT with Contents read/write; the
+> askpass helper keeps it out of the remote URL and process arguments.
+
 ### Stock-digest daily cron (the VM's crontab — `crontab -e`)
 ```cron
 # @EconomyApp → #stock-financial-report, once a day. 01:00 UTC = 09:00 MYT, ~4h after the
@@ -86,8 +97,8 @@ sudo systemctl restart bersama && tail -n 4 ~/BersamaAi-community/bersama-bot/be
 ```cron
 # @Serenity (@aleabitoreddit, the AI-semis stock-picker) → #serenity-x-posts, twice a
 # day. Reads FxTwitter's documented, keyless profile-timeline API (full text,
-# dates, cashtags, and media in one request), tags 1-4 topics via the LLM (needs
-# LLM_API_KEY; keyword-rule fallback), and pills every $TICKER (cashtags ∪ $-regex).
+# dates, cashtags, and media in one request), tags 1-4 topics via the pipeline LLM
+# (Codex OAuth; keyword-rule fallback), and pills every $TICKER (cashtags ∪ $-regex).
 # Uses no X login or cookie. Same load-bearing `cd` as the stock digest.
 #
 # 01:07 UTC = 09:07 MYT morning — digests the MYT night (his overnight + US-session
@@ -100,7 +111,7 @@ sudo systemctl restart bersama && tail -n 4 ~/BersamaAi-community/bersama-bot/be
 
 ## Env & secrets
 Each component has a complete, tagged `.env.example` (copy → `.env`; never commit the real one):
-- `bersama-ai-pipeline/.env.example` — every key tagged `[VM]` / `[GH]` / `[both]`.
+- `bersama-ai-pipeline/.env.example` — every key tagged `[VM]` / `[GH]`; pipeline LLM OAuth is VM-only.
 - `bersama-bot/.env.example` — `DISCORD_TOKEN`, `LLM_API_KEY`/`LLM_BASE_URL`/`LLM_MODEL`, optional `JINA_API_KEY`.
 
 Bot channels / roles / levels live in `bersama-bot/config.json`, not env.
@@ -132,11 +143,11 @@ to main). Mid-task WIP commits still need asking.
    Never `git add -A` blind: local pipeline runs rewrite `state/*.json` (CI owns those)
    and Windows CRLF can create phantom whole-file diffs. Stage only the files you edited.
 2. **Commit + push** to `main`. End the commit message with the co-author trailer.
-3. **Hand back the sync command — decide by WHAT CHANGED.** It's TWO GCP VMs — pipeline `beresama-ai-news-pipelines` (`~/bersama/`) and bot `bersama-ai-bot` (`~/BersamaAi-community/`); the news digest runs on neither (GitHub Actions):
+3. **Hand back the sync command — decide by WHAT CHANGED.** It's TWO GCP VMs — pipeline `beresama-ai-news-pipelines` (`~/bersama/`) and bot `bersama-ai-bot` (`~/BersamaAi-community/`); recurring news now runs on the pipeline VM:
 
    | What you changed | VM pull? | Restart? |
    |---|---|---|
-   | **News / engagement pipeline, gather-side** (`pipeline/news.py` sources+quotas, `engagement*.py`, `preferences.py`, `.github/workflows/news-digest.yml`) | **No** — runs on GitHub Actions; picks up pushed code on the next scheduled run | no |
+   | **News / engagement pipeline, gather-side** (`pipeline/news.py` sources+quotas, `engagement*.py`, `preferences.py`, `run-news.sh`) | `cd ~/bersama/bersama-ai-pipeline && git pull --ff-only` | no |
    | **`news.py` code that `/share` also executes** (see the ⚠️ below) | `cd ~/bersama/bersama-ai-pipeline && git pull --ff-only` | portal restart |
    | **Summarizer / portal / `/share`** (other `bersama-ai-pipeline/` code, `on_demand.py`, `playlists.txt`) | `cd ~/bersama/bersama-ai-pipeline && git pull --ff-only` | restart portal only if a runtime change (see below) |
    | **Bot** (`bersama-bot/`, `config.json`) | `cd ~/BersamaAi-community && git pull --ff-only` | `sudo systemctl restart bersama` |
@@ -145,7 +156,7 @@ to main). Mid-task WIP commits still need asking.
 
    Portal restart (only if `on_demand.py`/`/share`/summarizer runtime changed): `pkill -f on_demand.py; cd ~/bersama/bersama-ai-pipeline && source .venv/bin/activate && nohup python on_demand.py > on_demand.log 2>&1 &`
 
-   > Note: `news.py` *lives* under `bersama-ai-pipeline/`, but the news **digest** is executed by GitHub Actions — so a digest-only `news.py` change needs **no VM pull** to reach production (pulling the pipeline VM is optional, just to keep its copy in sync for local testing).
+   > Note: recurring news executes on the pipeline VM. Gather-only changes need a pipeline pull but no portal restart; shared `/share` symbols need both pull and portal restart.
    >
    > ⚠️ **`news.py` is NOT purely a GH-Actions file.** The VM's `/share` shells out to
    > `python -m pipeline.main --mode share`, which imports `pipeline/news.py`. So decide by
@@ -163,7 +174,7 @@ to main). Mid-task WIP commits still need asking.
    **Rule: EVERY task handoff must END with a sync block naming the EXACT TARGET** — always
    present, even when the answer is "nothing to do", and never left for the owner to infer.
    State it as exactly one of these three, copy-pasteable:
-   - **No VM action — GitHub Actions** (gather-side news/engagement, docs)
+   - **No VM action — GitHub Actions** (weekly analytics or docs only)
    - **Pull the pipeline VM** (`beresama-ai-news-pipelines`): `cd ~/bersama/bersama-ai-pipeline && git pull --ff-only` (+ portal restart line if runtime changed)
    - **Pull the bot VM** (`bersama-ai-bot`): `cd ~/BersamaAi-community && git pull --ff-only && sudo systemctl restart bersama`
 
@@ -172,8 +183,8 @@ to main). Mid-task WIP commits still need asking.
    BOTH commands — never just the one that seems more important. And if the work is committed
    but **not pushed**, say that first: unpushed work reaches neither the VM nor GitHub Actions.
 4. **Flag any new env/secrets**, and say *where* each must be set (these are NOT interchangeable):
-   - **GitHub repo secret** (Settings → Secrets and variables → Actions) → anything the news-digest / engagement workflows read.
-   - **VM `.env`** (`~/bersama/bersama-ai-pipeline/.env`) → summarizer + on-demand portal.
+   - **GitHub repo secret** (Settings → Secrets and variables → Actions) → weekly analytics or the manual API-key news fallback.
+   - **VM `.env`** (`~/bersama/bersama-ai-pipeline/.env`) → news, summarizer, Serenity, and on-demand portal. ChatGPT OAuth itself is created by `codex login`, not stored in `.env`.
    - **Local `.env`** (`bersama-ai-pipeline/.env`) → local dev/test only; never the source of truth.
    Verify a webhook/token with a GET before declaring done (Discord webhooks return 200) — a working local value does NOT prove the GH secret is set.
 

@@ -1158,10 +1158,8 @@ def _build_judge_user_message(candidates: list[dict], recent: list[dict] | None 
     return "\n".join(lines)
 
 
-# Output budgets for the Responses API. It counts REASONING tokens against the
-# cap, and grok-4.6 at xhigh effort thinks for thousands of them before emitting
-# the tool call — so these are 3-4x the pre-grok numbers. A digest truncated
-# mid-tool-JSON posts nothing at all, and an unused cap costs nothing, so err high.
+# Output budgets for the direct Responses API fallback. Codex OAuth mode owns
+# its turn budget, while the schema still guarantees an all-or-nothing JSON card.
 JUDGE_MAX_OUTPUT_TOKENS = 12288
 SHARE_MAX_OUTPUT_TOKENS = 8192
 
@@ -1226,10 +1224,8 @@ def _save_seen(seen_list: list[str]) -> None:
 def _share_seen_keys() -> set:
     """Dedup keys for cards the owner posted via /share (the VM's posted_log_share.jsonl
     shard), unioned into `seen` at the start of each digest run so the auto-digest skips a
-    story the owner already shared. This is the split-brain-safe direction: the digest
-    SOLE-owns news_seen.json (git-committed by GH Actions); /share never writes it.
-    Instead the digest reads the /share shard each run. Returns {} when the shard is
-    absent on this machine (e.g. the GH Actions runner before the VM's shard syncs)."""
+    story the owner already shared. The digest owns news_seen.json; /share never writes it.
+    Instead the digest reads the /share shard each run. Returns {} when the shard is absent."""
     keys: set = set()
     if not POSTED_LOG_SHARE.exists():
         return keys
@@ -1722,8 +1718,8 @@ def _log_posted(msg: dict, item: NewsItem, cand: dict | None, topic: Topic,
 
 def _push_share_shard() -> None:
     """Best-effort: push the VM's /share telemetry shard (posted_log_share.jsonl) to the
-    repo so the GitHub Actions engagement sweep + preferences see /share cards. The VM is
-    the SOLE writer of this file → no merge conflicts with GH Actions' posted_log.jsonl.
+    repo so weekly analytics sees /share cards promptly. The VM is the sole writer of
+    this file; run-news.sh also includes it in the next scheduled state commit.
     Fire-and-forget on a daemon thread; the file is durable on disk, so a failed push is
     retried on the next /share (the whole file is re-pushed, so no row is ever lost)."""
     import threading
@@ -1971,7 +1967,7 @@ def post_url_as_news(url: str, *, api_key: str, model: str, base_url: str,
     # so source/score/star_velocity write as ""/0 — _log_posted null-guards it.
     if msg and msg.get("id"):
         _log_posted(msg, item, cand=None, topic=t, origin="share", log_path=POSTED_LOG_SHARE)
-        _push_share_shard()   # best-effort: sync the VM shard to the repo so the GH Actions sweep sees it
+        _push_share_shard()   # best-effort immediate sync; run-news.sh is the durable path
     return f"SHARED {topic} {item.headline[:40]}"
 
 
