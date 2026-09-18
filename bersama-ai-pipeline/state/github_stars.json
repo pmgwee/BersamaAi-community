@@ -76,8 +76,8 @@
     "ts": "2026-09-11T23:18:30+00:00"
   },
   "tamaratran/fast-jev-compaction": {
-    "stars": 1398,
-    "ts": "2026-09-18T06:27:48+00:00"
+    "stars": 1451,
+    "ts": "2026-09-18T06:43:24+00:00"
   },
   "Vincentwei1021/anything2explainer": {
     "stars": 1317,
@@ -208,8 +208,8 @@
     "ts": "2026-09-02T23:21:24+00:00"
   },
   "agentverse-os/AgentVerse-OS": {
-    "stars": 757,
-    "ts": "2026-09-18T06:27:48+00:00"
+    "stars": 758,
+    "ts": "2026-09-18T06:43:24+00:00"
   },
   "Anionex/dsh-vision-toolkit": {
     "stars": 750,
@@ -237,7 +237,7 @@
   },
   "youngyangyang04/llm-master": {
     "stars": 701,
-    "ts": "2026-09-18T06:27:48+00:00"
+    "ts": "2026-09-18T06:43:24+00:00"
   },
   "0xsline/awesome-deepseek-harness": {
     "stars": 687,
@@ -257,7 +257,7 @@
   },
   "shinthink/blitzstrike": {
     "stars": 634,
-    "ts": "2026-09-18T06:32:00+00:00"
+    "ts": "2026-09-18T06:47:32+00:00"
   },
   "missuo/herdrm": {
     "stars": 631,
@@ -345,7 +345,7 @@
   },
   "letorig/video-generator-client": {
     "stars": 533,
-    "ts": "2026-09-18T06:29:07+00:00"
+    "ts": "2026-09-18T06:44:27+00:00"
   },
   "disler/super-simple-software-factory": {
     "stars": 513,
@@ -385,7 +385,7 @@
   },
   "atria-asi/Atria-Dawn-Preview": {
     "stars": 476,
-    "ts": "2026-09-18T06:27:48+00:00"
+    "ts": "2026-09-18T06:43:24+00:00"
   },
   "PhiloLabs/fable51-worlds": {
     "stars": 470,
@@ -571,6 +571,10 @@
     "stars": 328,
     "ts": "2026-09-08T23:25:59+00:00"
   },
+  "mcncarl/jianying-headless": {
+    "stars": 328,
+    "ts": "2026-09-18T06:43:24+00:00"
+  },
   "saurabhkumar8112/cyclomatic-complexity-skill": {
     "stars": 325,
     "ts": "2026-09-01T23:21:23+00:00"
@@ -589,7 +593,7 @@
   },
   "AetherLabsAI/RSIAgent": {
     "stars": 318,
-    "ts": "2026-09-18T06:27:48+00:00"
+    "ts": "2026-09-18T06:43:24+00:00"
   },
   "oboroge0/hayamimi": {
     "stars": 317,
@@ -623,17 +627,13 @@
     "stars": 304,
     "ts": "2026-09-03T23:21:07+00:00"
   },
-  "mcncarl/jianying-headless": {
+  "Mak5er/AirCard": {
     "stars": 304,
-    "ts": "2026-09-18T06:27:48+00:00"
+    "ts": "2026-09-18T06:47:32+00:00"
   },
   "showlab/Show-Harness": {
     "stars": 303,
     "ts": "2026-09-13T23:12:34+00:00"
-  },
-  "Mak5er/AirCard": {
-    "stars": 303,
-    "ts": "2026-09-18T06:32:00+00:00"
   },
   "ruudkoeyvoets/polymarket-trading-bot-twap": {
     "stars": 302,
@@ -801,7 +801,7 @@
   },
   "fhshaik/typesafe-mario": {
     "stars": 238,
-    "ts": "2026-09-18T06:27:48+00:00"
+    "ts": "2026-09-18T06:43:24+00:00"
   },
   "cristicretu/diri": {
     "stars": 236,
@@ -961,7 +961,7 @@
   },
   "mpociot/claude-siri-ai": {
     "stars": 205,
-    "ts": "2026-09-18T06:27:48+00:00"
+    "ts": "2026-09-18T06:43:24+00:00"
   },
   "oliverb-io1902e8/agent-skills-collection": {
     "stars": 204,
@@ -1031,6 +1031,10 @@
     "stars": 192,
     "ts": "2026-09-05T22:57:06+00:00"
   },
+  "devagrawal09/jev-review": {
+    "stars": 192,
+    "ts": "2026-09-18T06:43:24+00:00"
+  },
   "Mr-funny/hbg-classical-poem-silk-video": {
     "stars": 191,
     "ts": "2026-08-09T21:50:10+00:00"
@@ -1038,10 +1042,6 @@
   "jarrenrocks/bot-crossing": {
     "stars": 191,
     "ts": "2026-09-07T23:32:31+00:00"
-  },
-  "devagrawal09/jev-review": {
-    "stars": 191,
-    "ts": "2026-09-18T06:27:48+00:00"
   },
   "Omni-Interaction-Gander/Omni-Interaction-Agent": {
     "stars": 190,
@@ -1089,7 +1089,7 @@
   },
   "Matthew0822/ToolReplay": {
     "stars": 179,
-    "ts": "2026-09-18T06:32:00+00:00"
+    "ts": "2026-09-18T06:47:32+00:00"
   },
   "iamlukethedev/Hermes3D": {
     "stars": 178,
@@ -1157,7 +1157,7 @@
   },
   "pliablepixels/gap-trap": {
     "stars": 168,
-    "ts": "2026-09-18T06:27:48+00:00"
+    "ts": "2026-09-18T06:43:24+00:00"
   },
   "exachormocontheo1970/Python-Bot": {
     "stars": 167,
@@ -1271,13 +1271,13 @@
     "stars": 151,
     "ts": "2026-08-25T21:46:27+00:00"
   },
+  "Qiuner/agent-isles": {
+    "stars": 149,
+    "ts": "2026-09-18T06:45:29+00:00"
+  },
   "azrtydxb/procoder": {
     "stars": 140,
     "ts": "2026-08-22T21:42:25+00:00"
-  },
-  "Qiuner/agent-isles": {
-    "stars": 138,
-    "ts": "2026-09-18T06:30:10+00:00"
   },
   "ADScanPro/Claude-AD": {
     "stars": 137,

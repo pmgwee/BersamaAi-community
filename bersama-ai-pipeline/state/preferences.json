@@ -1,7 +1,7 @@
 {
-  "updated_at": "2026-09-18T06:27:01Z",
+  "updated_at": "2026-09-18T06:42:37Z",
   "half_life_days": 14,
-  "n_events": 3982,
+  "n_events": 4091,
   "topic": {
     "creative_image": 0.0,
     "coding": 0.039,
@@ -9,19 +9,19 @@
     "finance": 0.0,
     "research_productivity": 0.0,
     "creative_voice": 0.0,
-    "company_investment": 0.108,
+    "company_investment": 0.107,
     "creative_video": 0.0,
     "research_study": 0.0
   },
   "source": {
     "r/StableDiffusion": 0.0,
     "r/runwayml": 0.0,
-    "official": 0.072,
+    "official": 0.074,
     "r/AI_Agents": 0.0,
     "r/StartupSoloFounder": 0.0,
-    "HN": 0.001,
+    "HN": 0.002,
     "github": 0.028,
-    "r/LocalLLaMA": 0.122,
+    "r/LocalLLaMA": 0.113,
     "huggingface": 0.0,
     "r/redteamsec": 0.0,
     "r/netsec": 0.0,
@@ -39,19 +39,19 @@
     "r/artificial": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/notebooklm": 0.0,
-    "r/OpenAI": 0.089,
-    "r/ClaudeCode": 0.499,
+    "r/OpenAI": 0.092,
+    "r/ClaudeCode": 0.469,
     "r/wallstreetbets": 0.6,
     "r/ElevenLabs": 0.0
   },
   "category": {
     "OPEN_SOURCE": 0.0,
-    "LAUNCH": 0.048,
-    "UPDATE": 0.042,
+    "LAUNCH": 0.049,
+    "UPDATE": 0.043,
     "BENCHMARK": 0.0,
-    "DEAL": 0.091,
+    "DEAL": 0.089,
     "RELEASE": 0.0,
-    "PRICING": 0.176
+    "PRICING": 0.182
   },
   "exemplars": {
     "top": [
