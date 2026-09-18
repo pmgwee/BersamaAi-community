@@ -1,28 +1,27 @@
 {
-  "updated_at": "2026-09-17T21:24:55Z",
+  "updated_at": "2026-09-18T06:27:01Z",
   "half_life_days": 14,
-  "n_events": 4428,
+  "n_events": 3982,
   "topic": {
-    "coding": 0.045,
-    "research_study": 0.0,
-    "cybersecurity": 0.0,
     "creative_image": 0.0,
+    "coding": 0.039,
+    "cybersecurity": 0.0,
     "finance": 0.0,
+    "research_productivity": 0.0,
     "creative_voice": 0.0,
-    "company_investment": 0.103,
+    "company_investment": 0.108,
     "creative_video": 0.0,
-    "research_productivity": 0.0
+    "research_study": 0.0
   },
   "source": {
-    "HN": 0.02,
-    "official": 0.062,
-    "r/comfyui": 0.0,
-    "github": 0.025,
     "r/StableDiffusion": 0.0,
     "r/runwayml": 0.0,
+    "official": 0.072,
     "r/AI_Agents": 0.0,
     "r/StartupSoloFounder": 0.0,
-    "r/LocalLLaMA": 0.133,
+    "HN": 0.001,
+    "github": 0.028,
+    "r/LocalLLaMA": 0.122,
     "huggingface": 0.0,
     "r/redteamsec": 0.0,
     "r/netsec": 0.0,
@@ -31,6 +30,7 @@
     "r/ClaudeAI": 0.0,
     "r/MachineLearning": 0.0,
     "r/SaaS": 0.0,
+    "r/comfyui": 0.0,
     "r/singularity": 0.0,
     "r/technology": 0.0,
     "r/SunoAI": 0.0,
@@ -39,54 +39,54 @@
     "r/artificial": 0.0,
     "r/learnmachinelearning": 0.0,
     "r/notebooklm": 0.0,
-    "r/OpenAI": 0.085,
-    "r/ClaudeCode": 0.54,
+    "r/OpenAI": 0.089,
+    "r/ClaudeCode": 0.499,
     "r/wallstreetbets": 0.6,
     "r/ElevenLabs": 0.0
   },
   "category": {
-    "UPDATE": 0.046,
-    "BENCHMARK": 0.0,
-    "LAUNCH": 0.042,
-    "RELEASE": 0.0,
-    "DEAL": 0.08,
     "OPEN_SOURCE": 0.0,
-    "PRICING": 0.17
+    "LAUNCH": 0.048,
+    "UPDATE": 0.042,
+    "BENCHMARK": 0.0,
+    "DEAL": 0.091,
+    "RELEASE": 0.0,
+    "PRICING": 0.176
   },
   "exemplars": {
     "top": [
       {
-        "headline": "Google Antigravity warns third-party use can lead to account suspension",
+        "headline": "Nvidia acquires Hugging Face for $12.93 billion",
         "reward": 0.6
       },
       {
-        "headline": "Google Antigravity warns third-party use can lead to account suspension",
+        "headline": "Nvidia acquires Hugging Face for $12.93 billion",
         "reward": 0.6
       },
       {
-        "headline": "Google Antigravity warns third-party use can lead to account suspension",
+        "headline": "OpenAI launches GPT-6 Astra across ChatGPT and its API",
         "reward": 0.6
       },
       {
-        "headline": "Google Antigravity warns third-party use can lead to account suspension",
+        "headline": "Nvidia acquires Hugging Face for $12.93 billion",
         "reward": 0.6
       },
       {
-        "headline": "Google Antigravity warns third-party use can lead to account suspension",
+        "headline": "OpenAI launches GPT-6 Astra across ChatGPT and its API",
         "reward": 0.6
       }
     ],
     "bottom": [
       {
-        "headline": "Anthropic merges Claude chat and Cowork into one interface",
+        "headline": "Community reverse-engineers a Jev-like model",
         "reward": 0.0
       },
       {
-        "headline": "Anthropic tells shareholders adjusted operating income is positive",
+        "headline": "HarnessTax measures how much the harness matters for coding agents",
         "reward": 0.0
       },
       {
-        "headline": "Apple weighs AI servers with M8 chips and Nvidia networking",
+        "headline": "DeepSeek-v4.1 Flash architecture write-up focuses on KV cache compression",
         "reward": 0.0
       }
     ]
